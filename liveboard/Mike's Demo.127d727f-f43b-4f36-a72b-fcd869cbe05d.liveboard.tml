@@ -896,42 +896,6 @@ liveboard:
         description: ""
       dynamic_name: Period Comparison Sales Report
     viz_guid: 6548ef98-05f5-4cbf-a3c0-6a60eef71d38
-  - id: Viz_18
-    answer:
-      name: Query Activity Summary
-      tables:
-      - id: Query History
-        name: Query History
-        fqn: 17beffa8-3b6f-4038-a6ad-7911dcbd09fb
-      search_query: "[Query Count] [Query ID]"
-      answer_columns:
-      - name: Query Count
-      - name: Query ID
-      table:
-        table_columns:
-        - column_id: Query Count
-          show_headline: false
-        - column_id: Query ID
-          show_headline: false
-        ordered_column_ids:
-        - Query ID
-        - Query Count
-        client_state: ""
-        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
-      chart:
-        type: COLUMN
-        chart_columns:
-        - column_id: Query Count
-        - column_id: Query ID
-        axis_configs:
-        - x:
-          - Query ID
-          "y":
-          - Query Count
-        client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_OFF\",\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Query ID\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Query Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"7a44438d-437f-4195-ac17-8ea65cb7dbb0\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"1203227d-4529-48c5-bb2f-35b622d50297\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"1c3f52b5-c399-4d53-9b6c-9ff29925661e\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Query Count\"],\"isOpposite\": false}},{\"id\": \"14518dd0-2a5a-4857-a0a0-5c1b64d35f95\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Query ID\"]}}],\"systemSeriesColors\": [{\"serieName\": \"Query Count\",\"color\": \"#25fb8a\"}]}"
-      display_mode: TABLE_MODE
-    viz_guid: f4c9a956-667f-4f98-8ae1-d68d48ec2008
   filters:
   - column:
     - Retail Apparel with AGO With Instructions::Region
@@ -1050,11 +1014,6 @@ liveboard:
       - visualization_id: Viz_17
         x: 0
         "y": 28
-        height: 8
-        width: 12
-      - visualization_id: Viz_18
-        x: 0
-        "y": 36
         height: 8
         width: 12
       id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2

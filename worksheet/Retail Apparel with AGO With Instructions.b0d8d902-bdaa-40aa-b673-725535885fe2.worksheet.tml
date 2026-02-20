@@ -1,0 +1,382 @@
+guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+model:
+  name: Retail Apparel with AGO With Instructions
+  description: The "Retail Apparel" worksheet provides a comprehensive overview of sales transactions across various store locations. It captures details about each product, including its category, name, price, and the quantity sold, along with the average number of items ordered per transaction. Additionally, it includes geographical and identification information for each store, such as the city, county, state, zip code, and precise latitude and longitude, as well as the specific transaction dates and IDs. (AI generated)
+  model_tables:
+  - name: DIM_RETAPP_PRODUCTS
+    fqn: ad7d476f-1be7-42da-8f25-816af6ee5d16
+  - name: DIM_RETAPP_STORES
+    fqn: 8cd69308-f086-4751-bb1d-ad487e7f503b
+  - name: FACT_RETAPP_SALES
+    fqn: 1277592f-16a9-4f7d-8ffc-88970f6bd18c
+    joins:
+    - with: DIM_RETAPP_PRODUCTS
+      'on': '[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]'
+      type: OUTER
+      cardinality: MANY_TO_ONE
+    - with: DIM_RETAPP_STORES
+      'on': '[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]'
+      type: OUTER
+      cardinality: MANY_TO_ONE
+    - with: Retail Apparel AGO Dim
+      'on': '[FACT_RETAPP_SALES::Transaction Date] = [Retail Apparel AGO Dim::Day(Transaction Date)]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: Retail Apparel AGO Dim
+    fqn: 34342a9a-871b-4524-82d9-e4a3fd1b27b2
+  - name: Product Colocate - Product_Catigory
+    fqn: 6d427f70-b09c-4537-b973-d21dfb41113f
+    joins:
+    - with: DIM_RETAPP_PRODUCTS
+      'on': '[Product Colocate - Product_Catigory::Product Category] = [DIM_RETAPP_PRODUCTS::Product Category]'
+      type: INNER
+      cardinality: ONE_TO_ONE
+  formulas:
+  - id: formula_Average Items Ordered
+    name: Average Items Ordered
+    expr: sum ( [FACT_RETAPP_SALES::Quantity] ) / unique count ( [FACT_RETAPP_SALES::Transaction ID] )
+  - id: formula_Data Set Filter
+    name: Data Set Filter
+    expr: if ( ( [Data Set Selection] = "Set A" and [DIM_RETAPP_PRODUCTS::Product Category] = 'Pants' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else if ( ( [Data Set Selection] = "Set B" and [Product Colocate - Product_Catigory::Product Category] = 'Shirts' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else false
+  - id: formula_Github Testing
+    name: Github Testing
+    expr: if ( [FACT_RETAPP_SALES::Sales] > 0 ) then 'Mike is Awesome' else "Not So Much"
+  - id: formula_Global Date Filter
+    name: Global Date Filter
+    expr: if ( [Date Column Picker] = "Shipping Date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "Transaction Date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
+  - id: formula_Metric
+    name: Metric
+    expr: if ( [Metric Selector] = 'Transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'Sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null
+  - id: formula_NJ Zip Code
+    name: NJ Zip Code
+    expr: if ( [DIM_RETAPP_STORES::Store Zip Code] = "80301" ) then "07101" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "60642" ) then "07102" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "49512" ) then "07103" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "02215" ) then "070104" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "21045" ) then "07105" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "55369" ) then "07302" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "86001" ) then "07304" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "89145" ) then "07305" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "48103" ) then "07307" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "94702" ) then "07310" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "91006" ) then "08540" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "59718" ) then "08542" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "89052" ) then "08522" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "85226" ) then "08401" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "01701" ) then "08404" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "59106" ) then "08608" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "80920" ) then "07030" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "07936" ) then "07501" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "19702" ) then "07502" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "50266" ) then "07503" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "83704" ) then "08099" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "55420" ) then "07207" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "06854" ) then "07962" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "30329" ) then "08023" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "63144" ) then "07846" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "30022" ) then "08362" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "06110" ) then "07099" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "03860" ) then "07091" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "60062" ) then "07007" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "46250" ) then "07303" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "28217" ) then "08641" else [DIM_RETAPP_STORES::Store Zip Code]
+  - id: formula_Region Share
+    name: Region Share
+    expr: sum ( [FACT_RETAPP_SALES::Sales] ) / group_aggregate ( sum ( [FACT_RETAPP_SALES::Sales] ) , query_groups ( ) - { [DIM_RETAPP_STORES::Region] } , query_filters ( ) )
+  - id: formula_Shipping Date
+    name: Shipping Date
+    expr: add_days ( [FACT_RETAPP_SALES::Transaction Date] , [FACT_RETAPP_SALES::Quantity] )
+  - id: formula_Store ID Filter
+    name: Store ID Filter
+    expr: '[Store ID Parameter] = [FACT_RETAPP_SALES::Store ID]'
+  - id: formula_Transactions
+    name: Transactions
+    expr: count ( [FACT_RETAPP_SALES::Transaction ID] )
+  columns:
+  - name: Global Date Filter
+    formula_id: formula_Global Date Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods.
+  - name: Region Share
+    formula_id: formula_Region Share
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      ai_context: Percentage contribution of regional performance to total business metrics, supporting market penetration analysis.
+  - name: NJ Zip Code (Demo Only)
+    formula_id: formula_NJ Zip Code
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      geo_config:
+        region_name:
+          country: UNITED STATES
+          region_name: zip code
+      ai_context: Specialized postal code filter for New Jersey locations enabling focused analysis of specific state market performance.
+  - name: Store ID Filter
+    formula_id: formula_Store ID Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      ai_context: Boolean filter control for selecting specific retail locations in analytical queries and focused store performance analysis.
+  - name: Transactions
+    formula_id: formula_Transactions
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Count of completed purchase events aggregated at monthly level for frequency analysis and customer engagement measurement.
+  - name: Average Items Ordered
+    formula_id: formula_Average Items Ordered
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      ai_context: Mean quantity of items per transaction, indicating customer basket size and purchasing behavior patterns.
+  - name: Shipping Date
+    formula_id: formula_Shipping Date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      ai_context: Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.
+  - name: Metric
+    formula_id: formula_Metric
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      ai_context: General business performance indicator providing flexible measurement capability for various analytical calculations.
+  - name: Product Category
+    description: Product categories are used to group similar product together
+    column_id: DIM_RETAPP_PRODUCTS::Product Category
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Classification
+      - Grouping
+      synonym_type: AUTO_GENERATED
+      ai_context: Hierarchical classification system grouping similar apparel products together for strategic analysis and inventory management across retail operations.
+  - name: Month To Date Filter
+    column_id: Retail Apparel AGO Dim::Month To Date Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      ai_context: Current month cumulative filter enabling analysis of performance from month beginning to current date.
+  - name: Weeks Ago
+    column_id: Retail Apparel AGO Dim::Weeks Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      ai_context: Historical comparison metric showing performance data from previous weeks for trend analysis and period-over-period evaluation. Weeks ago starts a week=1 for the current week.
+  - name: Months Ago
+    column_id: Retail Apparel AGO Dim::Months Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      ai_context: Historical comparison metric displaying performance data from previous months for seasonal analysis and monthly trending.
+  - name: Year To Date Filter
+    column_id: Retail Apparel AGO Dim::Year To Date Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      spotiq_preference: EXCLUDE
+      ai_context: Current year cumulative filter enabling analysis of performance from year beginning to current date.
+  - name: Years Ago
+    column_id: Retail Apparel AGO Dim::Years Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      spotiq_preference: EXCLUDE
+      ai_context: Historical comparison metric presenting performance data from previous years for annual growth analysis and long-term trending.
+  - name: Product Name
+    description: This column is not indexed
+    column_id: DIM_RETAPP_PRODUCTS::Product Name
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Commodity
+      - Goods
+      synonym_type: AUTO_GENERATED
+      ai_context: Specific apparel item identifier providing detailed product-level information for individual merchandise tracking and performance analysis.
+  - name: SKU
+    column_id: DIM_RETAPP_PRODUCTS::SKU
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Unique numeric stock keeping unit identifier for precise inventory tracking and product identification across retail operations.
+  - name: Store Name
+    column_id: DIM_RETAPP_STORES::Store Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Descriptive name identifier for retail locations providing human-readable store identification for reporting purposes.
+  - name: Store Latitude
+    column_id: DIM_RETAPP_STORES::Store Latitude
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      geo_config:
+        longitude: true
+      synonym_type: USER_DEFINED
+      ai_context: Geographic coordinate indicating north-south position of retail locations for mapping and proximity analysis.
+  - name: Region
+    column_id: DIM_RETAPP_STORES::Region
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Zone
+      - Area
+      synonym_type: AUTO_GENERATED
+      custom_order:
+      - East
+      - South
+      - West
+      - Midwest
+      - Southwest
+      ai_context: Broader geographical grouping of retail stores enabling macro-level market analysis and regional strategy development.
+  - name: Store City
+    column_id: DIM_RETAPP_STORES::Store City
+    properties:
+      column_type: ATTRIBUTE
+      synonym_type: USER_DEFINED
+      ai_context: Municipal location of retail stores enabling city-level market analysis and urban performance comparison.
+  - name: Store Zip Code
+    column_id: DIM_RETAPP_STORES::Store Zip Code
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Postal Code
+      - ZIP Code
+      geo_config:
+        region_name:
+          country: UNITED STATES
+          region_name: zip code
+      synonym_type: AUTO_GENERATED
+      ai_context: Postal code location identifier for retail stores enabling precise demographic analysis and local market targeting.
+  - name: Store State
+    column_id: DIM_RETAPP_STORES::Store State
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Province
+      - Territory
+      synonym_type: AUTO_GENERATED
+      ai_context: State-level geographical location of retail stores enabling statewide market analysis and regulatory compliance tracking.
+  - name: Store Longitude
+    column_id: DIM_RETAPP_STORES::Store Longitude
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      geo_config:
+        longitude: true
+      synonym_type: USER_DEFINED
+      ai_context: Geographic coordinate indicating east-west position of retail locations for spatial analysis and territory mapping.
+  - name: Store Id
+    column_id: DIM_RETAPP_STORES::Store ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Unique numeric identifier for individual retail locations enabling store-specific performance tracking and comparison.
+  - name: Store County
+    column_id: DIM_RETAPP_STORES::Store County
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - District
+      - Parish
+      synonym_type: AUTO_GENERATED
+      ai_context: Administrative district location of retail stores supporting regional market analysis and territorial performance assessment.
+  - name: Sales
+    description: This shows the total sales for a item but does not include shipping cost
+    column_id: FACT_RETAPP_SALES::Sales
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      currency_type:
+        iso_code: USD
+      synonym_type: USER_DEFINED
+      ai_context: Total revenue amount for items sold excluding shipping costs, providing core financial performance measurement for business analysis.
+  - name: Item Price
+    column_id: FACT_RETAPP_SALES::Item Price
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_additive: true
+      currency_type:
+        iso_code: USD
+      synonym_type: USER_DEFINED
+      ai_context: Unit price value for individual merchandise items, supporting pricing strategy analysis and revenue calculations.
+  - name: Transaction Date
+    column_id: FACT_RETAPP_SALES::Transaction Date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      default_date_bucket: WEEKLY
+      ai_context: Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.
+  - name: Quantity
+    column_id: FACT_RETAPP_SALES::Quantity
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Number of units purchased in each transaction, supporting volume analysis and customer purchasing behavior insights.
+  - name: Transaction Id
+    column_id: FACT_RETAPP_SALES::Transaction ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Unique numeric identifier for individual purchase transactions, aggregated at monthly level for business reporting and analysis purposes.
+  - name: Data Set Filter
+    formula_id: formula_Data Set Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      ai_context: Boolean filter control for segmenting data subsets enabling targeted analysis of specific business data categories.
+  - name: Github Testing
+    formula_id: formula_Github Testing
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true
+  parameters:
+  - id: 83434443-22ab-42bd-849f-c0f0aaeedc27
+    name: Combined Filter Parameter
+    data_type: CHAR
+    default_value: Shirts
+    description: ''
+  - id: 114c5646-40e2-4c19-a202-a4f6fc3e7b5d
+    name: Data Set Selection
+    data_type: CHAR
+    default_value: Set A
+    list_config:
+      list_choice:
+      - value: Set A
+      - value: Set B
+    description: ''
+  - id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+    name: Date Column Picker
+    data_type: CHAR
+    default_value: Shipping Date
+    list_config:
+      list_choice:
+      - value: Shipping Date
+      - value: Transaction Date
+    description: ''
+  - id: a547a241-a459-4b12-bfd8-3941a6679237
+    name: Metric Selector
+    data_type: CHAR
+    default_value: Sales
+    list_config:
+      list_choice:
+      - value: Sales
+        display_name: Sales
+      - value: Transactions
+        display_name: Transactions
+    description: ''
+  - id: 24f93e44-b67d-4607-b426-ce9f254e13ff
+    name: Product Category Per
+    data_type: CHAR
+    default_value: pants
+    list_config:
+      list_choice:
+      - value: pants
+      - value: shirts
+    description: ''
+  - id: 3006f74d-9425-4ae7-bbf7-21e1bc5daf64
+    name: Select a Date
+    data_type: DATE
+    default_value: 06/01/2025
+    description: ''
+  - id: ef52aa76-c1f1-4f92-a128-19d8038a073d
+    name: Store ID Parameter
+    data_type: INT64
+    default_value: '5'
+    description: ''

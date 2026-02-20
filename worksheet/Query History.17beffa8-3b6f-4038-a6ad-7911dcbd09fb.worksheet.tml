@@ -1,0 +1,676 @@
+guid: 17beffa8-3b6f-4038-a6ad-7911dcbd09fb
+model:
+  name: Query History
+  description: The Query History Account Usage view can be used to query Snowflake query history by various dimensions (time range, session, user, warehouse, etc.) within the last 365 days (1 year). Latency for the view may be up to 45 minutes.
+  model_tables:
+  - name: QUERY_HISTORY
+    fqn: 27e76e55-fd36-4f19-934c-56846b04b9d7
+  formulas:
+  - id: formula_Avg Partitions Scanned
+    name: Avg Partitions Scanned
+    expr: safe_divide ( sum ( [QUERY_HISTORY::PARTITIONS_SCANNED] ) , sum ( [QUERY_HISTORY::PARTITIONS_TOTAL] ) ) * 100
+  - id: formula_Avg Scanned from Cache
+    name: Avg Scanned from Cache
+    expr: ( [QUERY_HISTORY::PERCENTAGE_SCANNED_FROM_CACHE] * 100 )
+  - id: formula_Cloud Service Type
+    name: Cloud Service Type
+    expr: if ( isnull ( [QUERY_HISTORY::WAREHOUSE_ID] ) ) then 'cloud' else 'non-cloud'
+  - id: formula_Flag Spilled to Local Storage
+    name: Flag Spilled to Local Storage
+    expr: if ( [QUERY_HISTORY::BYTES_SPILLED_TO_LOCAL_STORAGE] > 0 ) then true else false
+  - id: formula_Flag Spilled to Remote Storage
+    name: Flag Spilled to Remote Storage
+    expr: if ( [QUERY_HISTORY::BYTES_SPILLED_TO_REMOTE_STORAGE] > 0 ) then 'spilled remote' else 'memory'
+  - id: formula_Hour of Day
+    name: Hour of Day
+    expr: hour_of_day ( [QUERY_HISTORY::START_TIME] )
+  - id: formula_Month
+    name: Month
+    expr: month ( [QUERY_HISTORY::START_TIME] )
+  - id: formula_Quarter
+    name: Quarter
+    expr: quarter_number ( [QUERY_HISTORY::START_TIME] )
+  - id: formula_Query Est. Costs
+    name: Query Est. Costs
+    expr: '[formula_Query Est. Credits] * [formula_Static Cost per Credit]'
+  - id: formula_Query Est. Credits
+    name: Query Est. Credits
+    expr: safe_divide ( [formula_Time to Execute (secs)] , 360 ) * [formula_Static Unit of Credit]
+  - id: formula_Queued Query Status
+    name: Queued Query Status
+    expr: if ( [QUERY_HISTORY::QUEUED_REPAIR_TIME] > 0 or [QUERY_HISTORY::QUEUED_OVERLOAD_TIME] > 0 or [QUERY_HISTORY::QUEUED_PROVISIONING_TIME] > 0 ) then 'query in queue' else 'query not in queue'
+  - id: formula_Ratio Cloud Queries
+    name: Ratio Cloud Queries
+    expr: safe_divide ( count_if ( [formula_Flag Cloud Services] , [QUERY_HISTORY::QUERY_ID] ) , [formula_Query Count] ) * 100
+  - id: formula_Flag Cloud Services
+    name: Flag Cloud Services
+    expr: if ( isnull ( [QUERY_HISTORY::WAREHOUSE_ID] ) ) then true else false
+  - id: formula_Ratio Queued Queries
+    name: Ratio Queued Queries
+    expr: safe_divide ( count_if ( [formula_Flag Queued Query] , [QUERY_HISTORY::QUERY_ID] ) , [formula_Query Count] ) * 100
+  - id: formula_Flag Queued Query
+    name: Flag Queued Query
+    expr: if ( [QUERY_HISTORY::QUEUED_REPAIR_TIME] > 0 or [QUERY_HISTORY::QUEUED_OVERLOAD_TIME] > 0 or [QUERY_HISTORY::QUEUED_PROVISIONING_TIME] > 0 ) then true else false
+  - id: formula_Ratio TS Queries
+    name: Ratio TS Queries
+    expr: safe_divide ( count_if ( [formula_Flag TS Index Query] , [QUERY_HISTORY::QUERY_ID] ) , [formula_Query Count] ) * 100
+  - id: formula_Flag TS Index Query
+    name: Flag TS Index Query
+    expr: if ( [formula_Flag TS Index Query (Count)] or [formula_Flag TS Index Query (Values)] ) then true else false
+  - id: formula_Query Count
+    name: Query Count
+    expr: count ( [QUERY_HISTORY::QUERY_ID] )
+  - id: formula_Start Date
+    name: Start Date
+    expr: date ( [QUERY_HISTORY::START_TIME] )
+  - id: formula_Static Cost per Credit
+    name: Static Cost per Credit
+    expr: '3'
+  - id: formula_Static Unit of Credit
+    name: Static Unit of Credit
+    expr: if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = 'x-small' ) then 1 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = 'small' ) then 2 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = 'medium' ) then 4 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = 'large' ) then 8 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = 'x-large' ) then 16 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = '2x-large' ) then 32 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = '3x-large' ) then 64 else if ( [QUERY_HISTORY::WAREHOUSE_SIZE] = '4x-large' ) then 128 else 1
+  - id: formula_TS Index Query Type
+    name: TS Index Query Type
+    expr: if ( [formula_Flag TS Index Query (Count)] or [formula_Flag TS Index Query (Values)] ) then 'indexing' else 'non-indexing'
+  - id: formula_Flag TS Index Query (Count)
+    name: Flag TS Index Query (Count)
+    expr: if ( contains ( [QUERY_HISTORY::QUERY_TEXT] , 'select approx_count_distinct' ) ) then true else false
+  - id: formula_Flag TS Index Query (Values)
+    name: Flag TS Index Query (Values)
+    expr: if ( contains ( [QUERY_HISTORY::QUERY_TEXT] , 'true "ca_3"' ) ) then true else false
+  - id: formula_Time Elapsed (secs)
+    name: Time Elapsed (secs)
+    expr: safe_divide ( [QUERY_HISTORY::TOTAL_ELAPSED_TIME] , 1000 )
+  - id: formula_Time Queued Overload (secs)
+    name: Time Queued Overload (secs)
+    expr: safe_divide ( [QUERY_HISTORY::QUEUED_OVERLOAD_TIME] , 1000 )
+  - id: formula_Time Queued Provisioning (secs)
+    name: Time Queued Provisioning (secs)
+    expr: safe_divide ( [QUERY_HISTORY::QUEUED_PROVISIONING_TIME] , 1000 )
+  - id: formula_Time to Compile (secs)
+    name: Time to Compile (secs)
+    expr: safe_divide ( [QUERY_HISTORY::COMPILATION_TIME] , 1000 )
+  - id: formula_Time to Execute (secs)
+    name: Time to Execute (secs)
+    expr: safe_divide ( [QUERY_HISTORY::EXECUTION_TIME] , 1000 )
+  - id: formula_Year
+    name: Year
+    expr: year ( [QUERY_HISTORY::START_TIME] )
+  columns:
+  - name: Error Message
+    description: Error message, if the query returned an error
+    column_id: QUERY_HISTORY::ERROR_MESSAGE
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag Queued Query
+    formula_id: formula_Flag Queued Query
+    properties:
+      column_type: ATTRIBUTE
+  - name: Static Cost per Credit
+    description: static variable to define the cost per credit
+    formula_id: formula_Static Cost per Credit
+    properties:
+      column_type: MEASURE
+      aggregation: AVERAGE
+  - name: Session ID
+    description: Session that executed the statement.
+    column_id: QUERY_HISTORY::SESSION_ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Year
+    description: Start Time year
+    formula_id: formula_Year
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag Spilled to Remote Storage
+    description: Flag indicating if query results in memory spilled to remote storage
+    formula_id: formula_Flag Spilled to Remote Storage
+    properties:
+      column_type: ATTRIBUTE
+  - name: TS Index Query Type
+    description: Indicator if the query is generated by ThoughtSpot for indexing purposes
+    formula_id: formula_TS Index Query Type
+    properties:
+      column_type: ATTRIBUTE
+  - name: Avg Partitions Scanned
+    description: Number of micro-partitions scanned divided by Total micro-partitions of all tables included in this query.
+    formula_id: formula_Avg Partitions Scanned
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Query ID
+    description: Internal/system-generated identifier for the SQL statement.
+    column_id: QUERY_HISTORY::QUERY_ID
+    properties:
+      column_type: ATTRIBUTE
+      custom_order:
+      - 01a153a0-0403-4e84-0000-468542eb834e
+      - 01a153a0-0403-4e84-0000-468542eb8362
+      - 01a153a0-0403-4e8c-0000-468542eb676a
+      - 01a153a0-0403-4e84-0000-468542eb835e
+      - 01a153a0-0403-4e84-0000-468542eb835a
+      - 01a153a0-0403-4e84-0000-468542eb8356
+      - 01a153a1-0403-4e84-0000-468542eb836e
+      - 01a153a1-0403-4e84-0000-468542eb8376
+      - 01a153a1-0403-4e84-0000-468542eb837e
+      - 01a153a1-0403-4e8c-0000-468542eb677e
+      - 01a153a1-0403-4e8c-0000-468542eb6796
+      - 01a153a2-0403-4e84-0000-468542eb839a
+      - 01a153a2-0403-4e84-0000-468542eb839e
+      - 01a153a2-0403-4e84-0000-468542eb83a6
+      - 01a153a2-0403-4e84-0000-468542eb83ae
+      - 01a153a2-0403-4e84-0000-468542eb83ba
+      - 01a153a2-0403-4e84-0000-468542eb83c2
+      - 01a153a2-0403-4e84-0000-468542eb83d2
+      - 01a153a2-0403-4e84-0000-468542eb83da
+      - 01a153a0-0403-4e84-0000-468542eb8352
+      - 01a153a0-0403-4e8c-0000-468542eb676e
+      - 01a153a2-0403-4e84-0000-468542eb83a2
+      - 01a153a2-0403-4e84-0000-468542eb83aa
+      - 01a153a2-0403-4e84-0000-468542eb83b2
+      - 01a153a2-0403-4e84-0000-468542eb83ca
+      - 01a153a2-0403-4e84-0000-468542eb83e6
+      - 01a153a2-0403-4e84-0000-468542eb83ea
+      - 01a153a2-0403-4e84-0000-468542eb83ee
+      - 01a153a2-0403-4e84-0000-468542eb83f6
+      - 01a153a2-0403-4e84-0000-468542eb83fa
+      - 01a153a2-0403-4e84-0000-468542eb83fe
+      - 01a153a2-0403-4e84-0000-468542eb8402
+      - 01a153a2-0403-4e84-0000-468542eb8406
+      - 01a153a2-0403-4e84-0000-468542eb840a
+      - 01a153a2-0403-4e84-0000-468542eb840e
+      - 01a153a2-0403-4e84-0000-468542eb8416
+      - 01a153a2-0403-4e84-0000-468542eb841a
+      - 01a153a2-0403-4e84-0000-468542eb841e
+      - 01a153a2-0403-4e84-0000-468542eb8422
+      - 01a153a2-0403-4e84-0000-468542eb8426
+      - 01a153a2-0403-4e84-0000-468542eb842e
+      - 01a153a2-0403-4e84-0000-468542eb8432
+      - 01a153a2-0403-4e84-0000-468542eb8436
+      - 01a153a2-0403-4e84-0000-468542eb843a
+      - 01a153a2-0403-4e84-0000-468542eb843e
+      - 01a153a2-0403-4e84-0000-468542eb8442
+      - 01a153a2-0403-4e84-0000-468542eb844e
+      - 01a153a2-0403-4e84-0000-468542eb8452
+      - 01a153a2-0403-4e8c-0000-468542eb679a
+      - 01a153a2-0403-4e8c-0000-468542eb679e
+      - 01a153a2-0403-4e8c-0000-468542eb67a2
+      - 01a153a2-0403-4e8c-0000-468542eb67aa
+      - 01a153a2-0403-4e8c-0000-468542eb67ae
+      - 01a153a2-0403-4e8c-0000-468542eb67b2
+      - 01a153a2-0403-4e8c-0000-468542eb67c2
+      - 01a153a2-0403-4e8c-0000-468542eb67c6
+      - 01a153a2-0403-4e8c-0000-468542eb67ca
+      - 01a153a2-0403-4e8c-0000-468542eb67ce
+      - 01a153a2-0403-4e8c-0000-468542eb67d2
+      - 01a153a2-0403-4e8c-0000-468542eb67d6
+      - 01a153a2-0403-4e8c-0000-468542eb67da
+      - 01a153a2-0403-4e8c-0000-468542eb67de
+      - 01a153a2-0403-4e8c-0000-468542eb67e2
+      - 01a153a2-0403-4e8c-0000-468542eb67e6
+      - 01a153a2-0403-4e8c-0000-468542eb67ea
+      - 01a153a2-0403-4e8c-0000-468542eb67ee
+      - 01a153a2-0403-4e8c-0000-468542eb67f2
+      - 01a153a2-0403-4e8c-0000-468542eb67f6
+      - 01a153a2-0403-4e8c-0000-468542eb6802
+      - 01a153a2-0403-4e8c-0000-468542eb6806
+      - 01a153a2-0403-4e8c-0000-468542eb680a
+      - 01a153a2-0403-4e8c-0000-468542eb680e
+      - 01a153a2-0403-4e8c-0000-468542eb6812
+      - 01a153a2-0403-4e8c-0000-468542eb6816
+      - 01a153a2-0403-4e8c-0000-468542eb681a
+      - 01a153a2-0403-4e8c-0000-468542eb681e
+      - 01a153a2-0403-4e8c-0000-468542eb6822
+      - 01a153a2-0403-4e8c-0000-468542eb6826
+      - 01a153a2-0403-4e8c-0000-468542eb682a
+      - 01a153a2-0403-4e8c-0000-468542eb682e
+      - 01a153a2-0403-4e8c-0000-468542eb6832
+      - 01a153a2-0403-4e8c-0000-468542eb6836
+      - 01a153a2-0403-4e8c-0000-468542eb683a
+      - 01a153a2-0403-4e8c-0000-468542eb683e
+      - 01a153a2-0403-4e8c-0000-468542eb6846
+      - 01a153a2-0403-4e8c-0000-468542eb684a
+      - 01a153a2-0403-4e8c-0000-468542eb684e
+      - 01a153a2-0403-4e8c-0000-468542eb6856
+      - 01a153a3-0403-4e4a-0000-468542eb72f2
+      - 01a153a3-0403-4e4a-0000-468542eb72f6
+      - 01a153a3-0403-4e4a-0000-468542eb72fa
+      - 01a153a3-0403-4e4a-0000-468542eb72fe
+      - 01a153a3-0403-4e4a-0000-468542eb7302
+      - 01a153a3-0403-4e4a-0000-468542eb7306
+      - 01a153a3-0403-4e4a-0000-468542eb730a
+      - 01a153a3-0403-4e4a-0000-468542eb730e
+      - 01a153a3-0403-4e4a-0000-468542eb7312
+      - 01a153a3-0403-4e4a-0000-468542eb7316
+      - 01a153a3-0403-4e4a-0000-468542eb731a
+      - 01a153a3-0403-4e4a-0000-468542eb731e
+      - 01a153a3-0403-4e4a-0000-468542eb7322
+      - 01a153a3-0403-4e4a-0000-468542eb7326
+      - 01a153a3-0403-4e4a-0000-468542eb732a
+      - 01a153a3-0403-4e4a-0000-468542eb732e
+      - 01a153a3-0403-4e4a-0000-468542eb7332
+      - 01a153a3-0403-4e4a-0000-468542eb7336
+      - 01a153a3-0403-4e4a-0000-468542eb733a
+      - 01a153a3-0403-4e4a-0000-468542eb733e
+      - 01a153a3-0403-4e4a-0000-468542eb7342
+      - 01a153a3-0403-4e64-0000-468542eb5046
+      - 01a153a3-0403-4e64-0000-468542eb504a
+      - 01a153a3-0403-4e64-0000-468542eb504e
+      - 01a153a3-0403-4e64-0000-468542eb5052
+      - 01a153a3-0403-4e64-0000-468542eb5056
+      - 01a153a3-0403-4e64-0000-468542eb505a
+      - 01a153a3-0403-4e64-0000-468542eb505e
+      - 01a153a3-0403-4e64-0000-468542eb5062
+      - 01a153a3-0403-4e64-0000-468542eb5066
+      - 01a153a3-0403-4e64-0000-468542eb506a
+      - 01a153a3-0403-4e64-0000-468542eb506e
+      - 01a153a3-0403-4e64-0000-468542eb5072
+      - 01a153a3-0403-4e64-0000-468542eb5076
+      - 01a153a3-0403-4e64-0000-468542eb507a
+      - 01a153a3-0403-4e64-0000-468542eb507e
+      - 01a153a3-0403-4e64-0000-468542eb5082
+      - 01a153a3-0403-4e64-0000-468542eb5086
+      - 01a153a3-0403-4e64-0000-468542eb508a
+      - 01a153a3-0403-4e64-0000-468542eb508e
+      - 01a153a3-0403-4e64-0000-468542eb5092
+      - 01a153a3-0403-4e64-0000-468542eb5096
+      - 01a153a3-0403-4e64-0000-468542eb509a
+      - 01a153a3-0403-4e64-0000-468542eb509e
+      - 01a153a3-0403-4e64-0000-468542eb50a2
+      - 01a153a3-0403-4e84-0000-468542eb8456
+      - 01a153a3-0403-4e84-0000-468542eb845a
+      - 01a153a3-0403-4e84-0000-468542eb845e
+      - 01a153a3-0403-4e84-0000-468542eb8462
+      - 01a153a3-0403-4e84-0000-468542eb8466
+      - 01a153a3-0403-4e84-0000-468542eb846a
+      - 01a153a3-0403-4e84-0000-468542eb846e
+      - 01a153a3-0403-4e84-0000-468542eb8472
+      - 01a153a3-0403-4e84-0000-468542eb8476
+      - 01a153a3-0403-4e84-0000-468542eb847a
+      - 01a153a3-0403-4e84-0000-468542eb847e
+      - 01a153a3-0403-4e84-0000-468542eb8482
+      - 01a153a3-0403-4e84-0000-468542eb8486
+      - 01a153a3-0403-4e84-0000-468542eb848a
+      - 01a153a3-0403-4e84-0000-468542eb848e
+      - 01a153a3-0403-4e84-0000-468542eb8492
+      - 01a153a3-0403-4e84-0000-468542eb8496
+      - 01a153a3-0403-4e84-0000-468542eb849a
+      - 01a153a3-0403-4e84-0000-468542eb849e
+      - 01a153a3-0403-4e84-0000-468542eb84a2
+      - 01a153a3-0403-4e84-0000-468542eb84a6
+      - 01a153a3-0403-4e84-0000-468542eb84aa
+      - 01a153a3-0403-4e8c-0000-468542eb685a
+      - 01a153a3-0403-4e8c-0000-468542eb685e
+      - 01a153a3-0403-4e8c-0000-468542eb6862
+      - 01a153a3-0403-4e8c-0000-468542eb6866
+      - 01a153a3-0403-4e8c-0000-468542eb686a
+      - 01a153a3-0403-4e8c-0000-468542eb686e
+      - 01a153a3-0403-4e8c-0000-468542eb6872
+      - 01a153a3-0403-4e8c-0000-468542eb6876
+      - 01a153a3-0403-4e8c-0000-468542eb687a
+      - 01a153a3-0403-4e8c-0000-468542eb687e
+      - 01a153a3-0403-4e8c-0000-468542eb6882
+      - 01a153a3-0403-4e8c-0000-468542eb6886
+      - 01a153a3-0403-4e8c-0000-468542eb688a
+      - 01a153a3-0403-4e8c-0000-468542eb688e
+      - 01a153a3-0403-4e8c-0000-468542eb6892
+      - 01a153a3-0403-4e8c-0000-468542eb6896
+      - 01a153a3-0403-4e8c-0000-468542eb689a
+      - 01a153a3-0403-4e8c-0000-468542eb689e
+      - 01a153a3-0403-4e8c-0000-468542eb68a2
+      - 01a153a3-0403-4e8c-0000-468542eb68a6
+      - 01a153a3-0403-4e8c-0000-468542eb68aa
+      - 01a153a3-0403-4e8c-0000-468542eb68ae
+      - 01a153a3-0403-4e8c-0000-468542eb68b2
+      - 01a153a3-0403-4e8c-0000-468542eb68b6
+      - 01a153a3-0403-4e8c-0000-468542eb68ba
+      - 01a153a3-0403-4e8c-0000-468542eb68be
+      - 01a153a3-0403-4e8c-0000-468542eb68c2
+      - 01a153a3-0403-4e8c-0000-468542eb68c6
+      - 01a153a3-0403-4e8c-0000-468542eb68ca
+      - 01a153a3-0403-4e8c-0000-468542eb68ce
+      - 01a153a3-0403-4e8c-0000-468542eb68d2
+      - 01a153a4-0403-4e4a-0000-468542eb7346
+      - 01a153a4-0403-4e4a-0000-468542eb734a
+      - 01a153a4-0403-4e4a-0000-468542eb734e
+      - 01a153a4-0403-4e4a-0000-468542eb7352
+      - 01a153a4-0403-4e4a-0000-468542eb7356
+      - 01a153a4-0403-4e4a-0000-468542eb735a
+      - 01a153a4-0403-4e4a-0000-468542eb735e
+      - 01a153a4-0403-4e4a-0000-468542eb7362
+      - 01a153a4-0403-4e64-0000-468542eb50a6
+      - 01a153a4-0403-4e64-0000-468542eb50aa
+      - 01a153a4-0403-4e64-0000-468542eb50ae
+      - 01a153a4-0403-4e64-0000-468542eb50b2
+      - 01a153a4-0403-4e64-0000-468542eb50b6
+      - 01a153a4-0403-4e64-0000-468542eb50ba
+      - 01a153a4-0403-4e64-0000-468542eb50be
+      - 01a153a4-0403-4e64-0000-468542eb50c2
+      - 01a153a4-0403-4e64-0000-468542eb50c6
+      - 01a153a4-0403-4e64-0000-468542eb50ca
+      - 01a153a4-0403-4e64-0000-468542eb50ce
+      - 01a153a4-0403-4e84-0000-468542eb84ae
+      - 01a153a4-0403-4e84-0000-468542eb84b2
+      - 01a153a4-0403-4e84-0000-468542eb84b6
+      - 01a153a4-0403-4e84-0000-468542eb84ba
+      - 01a153a4-0403-4e84-0000-468542eb84be
+      - 01a153a4-0403-4e84-0000-468542eb84c2
+      - 01a153a4-0403-4e84-0000-468542eb84c6
+      - 01a153a4-0403-4e84-0000-468542eb84ca
+      - 01a153a4-0403-4e84-0000-468542eb84ce
+      - 01a153a4-0403-4e8c-0000-468542eb68d6
+      - 01a153a4-0403-4e8c-0000-468542eb68da
+      - 01a153a4-0403-4e8c-0000-468542eb68de
+      - 01a153a4-0403-4e8c-0000-468542eb68e2
+      - 01a153a4-0403-4e8c-0000-468542eb68e6
+      - 01a153a4-0403-4e8c-0000-468542eb68ea
+      - 01a153a5-0403-4e4a-0000-468542eb7366
+      - 01a153a5-0403-4e4a-0000-468542eb736a
+      - 01a153a5-0403-4e4a-0000-468542eb736e
+      - 01a153a5-0403-4e4a-0000-468542eb7372
+      - 01a153a5-0403-4e4a-0000-468542eb7376
+      - 01a153a5-0403-4e4a-0000-468542eb737a
+      - 01a153a5-0403-4e4a-0000-468542eb737e
+      - 01a153a5-0403-4e4a-0000-468542eb7382
+      - 01a153a5-0403-4e4a-0000-468542eb7386
+      - 01a153a5-0403-4e4a-0000-468542eb738a
+      - 01a153a5-0403-4e4a-0000-468542eb738e
+      - 01a153a5-0403-4e4a-0000-468542eb7392
+      - 01a153a5-0403-4e4a-0000-468542eb7396
+      - 01a153a5-0403-4e4a-0000-468542eb739a
+      - 01a153a5-0403-4e4a-0000-468542eb739e
+      - 01a153a5-0403-4e4a-0000-468542eb73a6
+      - 01a153a5-0403-4e4a-0000-468542eb73aa
+      - 01a153a5-0403-4e64-0000-468542eb50d2
+      - 01a153a5-0403-4e64-0000-468542eb50d6
+      - 01a153a5-0403-4e64-0000-468542eb50da
+      - 01a153a5-0403-4e64-0000-468542eb50e2
+      - 01a153a5-0403-4e64-0000-468542eb50e6
+      - 01a153a5-0403-4e64-0000-468542eb50ea
+      - 01a153a5-0403-4e64-0000-468542eb50ee
+      - 01a153a5-0403-4e64-0000-468542eb50f2
+      - 01a153a5-0403-4e64-0000-468542eb50f6
+      - 01a153a5-0403-4e64-0000-468542eb50fa
+      - 01a153a5-0403-4e64-0000-468542eb50fe
+      - 01a153a5-0403-4e64-0000-468542eb5102
+      - 01a153a5-0403-4e64-0000-468542eb5106
+      - 01a153a5-0403-4e84-0000-468542eb84d2
+      - 01a153a5-0403-4e84-0000-468542eb84d6
+      - 01a153a5-0403-4e84-0000-468542eb84da
+      - 01a153a5-0403-4e84-0000-468542eb84de
+      - 01a153a5-0403-4e84-0000-468542eb84e2
+      - 01a153a5-0403-4e84-0000-468542eb84e6
+      - 01a153a5-0403-4e84-0000-468542eb84ea
+      - 01a153a5-0403-4e84-0000-468542eb84ee
+      - 01a153a5-0403-4e84-0000-468542eb84f2
+      - 01a153a5-0403-4e84-0000-468542eb84f6
+      - 01a153a5-0403-4e84-0000-468542eb84fa
+      - 01a153a5-0403-4e8c-0000-468542eb68ee
+      - 01a153a5-0403-4e8c-0000-468542eb68f2
+      - 01a153a5-0403-4e8c-0000-468542eb68f6
+      - 01a153a5-0403-4e8c-0000-468542eb68fa
+      - 01a153a5-0403-4e8c-0000-468542eb68fe
+      - 01a153a5-0403-4e8c-0000-468542eb6902
+      - 01a153a5-0403-4e8c-0000-468542eb6906
+      - 01a153a5-0403-4e8c-0000-468542eb690a
+      - 01a153a5-0403-4e8c-0000-468542eb690e
+      - 01a153a5-0403-4e8c-0000-468542eb6912
+      - 01a153a5-0403-4e8c-0000-468542eb6916
+      - 01a153a5-0403-4e8c-0000-468542eb691a
+      - 01a153a5-0403-4e8c-0000-468542eb691e
+      - 01a153a5-0403-4e8c-0000-468542eb6922
+      - 01a153a5-0403-4e8c-0000-468542eb6926
+      - 01a153a5-0403-4e8c-0000-468542eb692a
+      - 01a153a6-0403-4e4a-0000-468542eb73ae
+      - 01a153a6-0403-4e4a-0000-468542eb73b2
+      - 01a153a6-0403-4e4a-0000-468542eb73b6
+      - 01a153a6-0403-4e4a-0000-468542eb73ba
+      - 01a153a6-0403-4e4a-0000-468542eb73be
+      - 01a153a6-0403-4e4a-0000-468542eb73c2
+      - 01a153a6-0403-4e4a-0000-468542eb73c6
+      - 01a153a6-0403-4e4a-0000-468542eb73ca
+      - 01a153a6-0403-4e4a-0000-468542eb73ce
+      - 01a153a6-0403-4e64-0000-468542eb510a
+      - 01a153a6-0403-4e64-0000-468542eb510e
+      - 01a153a6-0403-4e64-0000-468542eb5112
+      - 01a153a6-0403-4e84-0000-468542eb84fe
+      - 01a153a6-0403-4e84-0000-468542eb8502
+      - 01a153a6-0403-4e84-0000-468542eb8506
+      - 01a153a6-0403-4e84-0000-468542eb850a
+      - 01a153a6-0403-4e84-0000-468542eb850e
+      - 01a153a6-0403-4e84-0000-468542eb8512
+      - 01a153a6-0403-4e8c-0000-468542eb692e
+      - 01a153a6-0403-4e8c-0000-468542eb6932
+      - 01a153a6-0403-4e8c-0000-468542eb6936
+      - 01a153a6-0403-4e8c-0000-468542eb693a
+      - 01a153a6-0403-4e8c-0000-468542eb693e
+  - name: Schema ID
+    description: Internal/system-generated identifier for the schema that was in use.
+    column_id: QUERY_HISTORY::SCHEMA_ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Flag TS Index Query (Count)
+    description: Indicator if the query is generated by ThoughtSpot for indexing purposes
+    formula_id: formula_Flag TS Index Query (Count)
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag Spilled to Local Storage
+    description: Flag indicating if query results in memory spilled to local storage
+    formula_id: formula_Flag Spilled to Local Storage
+    properties:
+      column_type: ATTRIBUTE
+  - name: Time to Compile (secs)
+    description: Compilation time (in seconds)
+    formula_id: formula_Time to Compile (secs)
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Quarter
+    description: Start Time quarter
+    formula_id: formula_Quarter
+    properties:
+      column_type: ATTRIBUTE
+  - name: Static Unit of Credit
+    description: static variable to the warehouse credit consumption unit
+    formula_id: formula_Static Unit of Credit
+    properties:
+      column_type: ATTRIBUTE
+  - name: Start Time
+    description: Statement start time (in the UTC time zone)
+    column_id: QUERY_HISTORY::START_TIME
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Query Est. Costs
+    description: Estimate costs for the query
+    formula_id: formula_Query Est. Costs
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Time to Execute (secs)
+    description: Execution time (in seconds)
+    formula_id: formula_Time to Execute (secs)
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Ratio TS Queries
+    formula_id: formula_Ratio TS Queries
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Ratio Cloud Queries
+    formula_id: formula_Ratio Cloud Queries
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Warehouse Name
+    description: Warehouse that the query executed on, if any.
+    column_id: QUERY_HISTORY::WAREHOUSE_NAME
+    properties:
+      column_type: ATTRIBUTE
+  - name: Ratio Queued Queries
+    formula_id: formula_Ratio Queued Queries
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: User Name
+    description: User who issued the query.
+    column_id: QUERY_HISTORY::USER_NAME
+    properties:
+      column_type: ATTRIBUTE
+  - name: Query Tag
+    description: Query tag set for this statement through the QUERY_TAG session parameter.
+    column_id: QUERY_HISTORY::QUERY_TAG
+    properties:
+      column_type: ATTRIBUTE
+  - name: Query Type
+    description: DML, query, etc. If the query is currently running, or the query failed, then the query type may be UNKNOWN.
+    column_id: QUERY_HISTORY::QUERY_TYPE
+    properties:
+      column_type: ATTRIBUTE
+  - name: Role Name
+    description: Role that was active in the session at the time of the query.
+    column_id: QUERY_HISTORY::ROLE_NAME
+    properties:
+      column_type: ATTRIBUTE
+  - name: Time Queued Provisioning (secs)
+    description: Time (in seconds) spent in the warehouse queue, waiting for the warehouse compute resources to provision, due to warehouse creation, resume, or resize.
+    formula_id: formula_Time Queued Provisioning (secs)
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Query Est. Credits
+    description: Estimate credits consumed for the query.
+    formula_id: formula_Query Est. Credits
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Error Code
+    description: Error code, if the query returned an error
+    column_id: QUERY_HISTORY::ERROR_CODE
+    properties:
+      column_type: ATTRIBUTE
+  - name: Month
+    description: 'Start Time month name '
+    formula_id: formula_Month
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag Cloud Services
+    formula_id: formula_Flag Cloud Services
+    properties:
+      column_type: ATTRIBUTE
+  - name: Cloud Service Type
+    description: Flag indicating that the query was processed by cloud services layer
+    formula_id: formula_Cloud Service Type
+    properties:
+      column_type: ATTRIBUTE
+  - name: Hour of Day
+    description: Statement start hour of day
+    formula_id: formula_Hour of Day
+    properties:
+      column_type: ATTRIBUTE
+  - name: Database ID
+    description: Internal/system-generated identifier for the database that was in use.
+    column_id: QUERY_HISTORY::DATABASE_ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Queued Query Status
+    description: Flag indicating that the query was queued
+    formula_id: formula_Queued Query Status
+    properties:
+      column_type: ATTRIBUTE
+  - name: Time Queued Overload (secs)
+    description: Time (in seconds) spent in the warehouse queue, due to the warehouse being overloaded by the current query workload.
+    formula_id: formula_Time Queued Overload (secs)
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Schema Name
+    description: Schema that was in use at the time of the query.
+    column_id: QUERY_HISTORY::SCHEMA_NAME
+    properties:
+      column_type: ATTRIBUTE
+  - name: Query Text
+    description: query text string
+    column_id: QUERY_HISTORY::QUERY_TEXT
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag TS Index Query
+    formula_id: formula_Flag TS Index Query
+    properties:
+      column_type: ATTRIBUTE
+  - name: Time Elapsed (secs)
+    description: Elapsed time (in seconds).
+    formula_id: formula_Time Elapsed (secs)
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Execution Status
+    description: 'Execution status for the query: success, fail, incident.'
+    column_id: QUERY_HISTORY::EXECUTION_STATUS
+    properties:
+      column_type: ATTRIBUTE
+  - name: Query Count
+    description: Count of queries
+    formula_id: formula_Query Count
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Warehouse Type
+    description: Type of the warehouse when this statement executed.
+    column_id: QUERY_HISTORY::WAREHOUSE_TYPE
+    properties:
+      column_type: ATTRIBUTE
+  - name: Avg Scanned from Cache
+    description: The percentage of data scanned from the local disk cache. The value ranges from 0.0 to 1.0. Multiply by 100 to get a true percentage.
+    formula_id: formula_Avg Scanned from Cache
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+  - name: Warehouse ID
+    description: Internal/system-generated identifier for the warehouse that was used.
+    column_id: QUERY_HISTORY::WAREHOUSE_ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Start Date
+    description: Statement start date (in the UTC time zone)
+    formula_id: formula_Start Date
+    properties:
+      column_type: ATTRIBUTE
+      format_pattern: dd/MM/yyyy
+  - name: Rows Produced
+    description: Number of rows produced by this statement.
+    column_id: QUERY_HISTORY::ROWS_PRODUCED
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Database Name
+    description: Database that was in use at the time of the query.
+    column_id: QUERY_HISTORY::DATABASE_NAME
+    properties:
+      column_type: ATTRIBUTE
+  - name: Warehouse Size
+    description: Size of the warehouse when this statement executed.
+    column_id: QUERY_HISTORY::WAREHOUSE_SIZE
+    properties:
+      column_type: ATTRIBUTE
+  - name: Flag TS Index Query (Values)
+    description: Indicator if the query is generated by ThoughtSpot for indexing purposes
+    formula_id: formula_Flag TS Index Query (Values)
+    properties:
+      column_type: ATTRIBUTE
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true

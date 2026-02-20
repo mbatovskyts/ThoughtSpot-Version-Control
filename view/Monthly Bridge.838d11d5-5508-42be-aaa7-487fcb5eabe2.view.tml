@@ -1,0 +1,20 @@
+guid: 838d11d5-5508-42be-aaa7-487fcb5eabe2
+view:
+  name: Monthly Bridge
+  tables:
+  - id: FACT_RETAPP_SALES
+    name: FACT_RETAPP_SALES
+    fqn: 1277592f-16a9-4f7d-8ffc-88970f6bd18c
+  formulas:
+  - id: formula_Shared Calendar
+    name: Shared Calendar
+    expr: "start_of_month ( [Transaction Date] )"
+    was_auto_generated: false
+  search_query: "[formula_Shared Calendar] [formula_Shared Calendar].daily"
+  view_columns:
+  - name: Shared Monthly
+    search_output_column: Day(Shared Calendar)
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: MMM yyyy

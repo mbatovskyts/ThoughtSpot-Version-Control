@@ -575,7 +575,7 @@ liveboard:
         width: 4
       - visualization_id: Viz_4
         x: 0
-        "y": 2
+        "y": 0
         height: 5
         width: 3
       - visualization_id: Viz_6
@@ -595,7 +595,7 @@ liveboard:
         width: 5
       - visualization_id: Viz_14
         x: 0
-        "y": 0
+        "y": 5
         height: 2
         width: 3
       id: 7811f14b-dc34-4d80-955e-308237df4327

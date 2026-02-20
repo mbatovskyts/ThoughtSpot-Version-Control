@@ -522,6 +522,7 @@ liveboard:
         ordered_column_ids:
         - Github Testing
         client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Github Testing\",\"columnProperty\": {}}]}"
       chart:
         type: KPI
         chart_columns:
@@ -530,7 +531,7 @@ liveboard:
         - "y":
           - Github Testing
         client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Github Testing\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"34e33db5-ef0e-400f-9531-e258ec270f97\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Github Testing\"],\"isOpposite\": false}},{\"id\": \"99cee5e8-4b39-4490-85c4-c8ae21908740\",\"properties\": {\"axisType\": \"X\"}}]}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Github Testing\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"dde5ec08-56be-4722-bb0e-314cde3be1c2\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"0056b0c6-cbf1-4dbe-b4b4-15f3474d33bb\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"34e33db5-ef0e-400f-9531-e258ec270f97\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Github Testing\"],\"isOpposite\": false}},{\"id\": \"99cee5e8-4b39-4490-85c4-c8ae21908740\",\"properties\": {\"axisType\": \"X\"}}]}"
       display_mode: CHART_MODE
     viz_guid: a82a87e9-c597-4dd3-8d76-9bc879f26041
   groups:
@@ -575,7 +576,7 @@ liveboard:
         width: 4
       - visualization_id: Viz_4
         x: 0
-        "y": 2
+        "y": 0
         height: 5
         width: 3
       - visualization_id: Viz_6
@@ -595,7 +596,7 @@ liveboard:
         width: 5
       - visualization_id: Viz_14
         x: 0
-        "y": 0
+        "y": 5
         height: 2
         width: 3
       id: 7811f14b-dc34-4d80-955e-308237df4327

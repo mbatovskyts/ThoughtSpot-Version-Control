@@ -1,0 +1,1116 @@
+guid: 127d727f-f43b-4f36-a72b-fcd869cbe05d
+liveboard:
+  name: Mike's Demo
+  visualizations:
+  - id: Viz_1
+    answer:
+      name: Sales
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Transaction Date].monthly [Transactions]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Transactions
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Transactions
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Transactions
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: Transactions
+        axis_configs:
+        - x:
+          - Month(Transaction Date)
+          "y":
+          - Transactions
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Transactions\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"cc563ff8-2472-47aa-9b1d-2201990ca172\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Transactions\"],\"isOpposite\": false}},{\"id\": \"95f926ad-c542-496b-ac5f-e7dfe965eeb4\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"]}}],\"seriesColors\": [{\"serieName\": \"highcharts-regression\",\"color\": \"#25fb8a\"},{\"serieName\": \"74b787df-a28a-4826-9e18-5eb230747508\",\"color\": \"#A83Dff\"},{\"serieName\": \"Transactions\",\"color\": \"#A83Dff\"}],\"systemSeriesColors\": [{\"serieName\": \"highcharts-regression\",\"color\": \"#25fb8a\"},{\"serieName\": \"74b787df-a28a-4826-9e18-5eb230747508\",\"color\": \"#A83Dff\"},{\"serieName\": \"Transactions\",\"color\": \"#25fb8a\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 804f202b-9211-4612-80ac-cf3cc7aeb191
+  - id: Viz_2
+    answer:
+      name: Sales by Monthly Transaction Date
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Sales] [Global Date Filter].monthly"
+      answer_columns:
+      - name: Month(Global Date Filter)
+        custom_name: Shipping Date Monthly
+        dynamic_title: "[${PARAMETER:Date Column Picker}] Monthly"
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Global Date Filter)
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Global Date Filter)
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Global Date Filter)
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Global Date Filter)
+          "y":
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showAnalyseChangeCta\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Total Sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Month(Global Date Filter)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"359671ff-70c8-46ba-b3dc-4efbb8d9bb34\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"9a6228b4-c72b-4da8-9914-fc531dc4751d\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Global Date Filter)\"]}}],\"seriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}],\"systemSeriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#25fb8a\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 171651e0-c747-4b4d-9224-d2027c24edf2
+  - id: Viz_3
+    answer:
+      name: Total Sales by Product Name
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "top 10 [Product Name] [Sales] [Product Category]"
+      answer_columns:
+      - name: Product Category
+      - name: Product Name
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Product Category
+          show_headline: false
+        - column_id: Product Name
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Product Name
+        - Product Category
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: STACKED_BAR
+        chart_columns:
+        - column_id: Product Category
+        - column_id: Product Name
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Product Name
+          "y":
+          - Total Sales
+          color:
+          - Product Category
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"legendPosition\": \"TOP_LEGEND\"},\"columnProperties\": [{\"columnId\": \"Product Name\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}},{\"columnId\": \"Product Category\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"2dba0d4d-ae44-4526-8305-1eaf2314ba51\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"e7c9c24c-4f18-4c8d-8e3e-2d915e6f4a41\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Product Name\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"},{\"serieName\": \"bags\",\"color\": \"#Fce800\"},{\"serieName\": \"dresses\",\"color\": \"#25fb8a\"},{\"serieName\": \"jackets\",\"color\": \"#A83Dff\"},{\"serieName\": \"vests\",\"color\": \"#4E55fd\"},{\"serieName\": \"sweatshirts\",\"color\": \"#fe3bfc\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: b2a5982d-da4e-498c-a4b1-2493b3d406e1
+  - id: Viz_4
+    viz_guid: 49380bd5-83e9-435c-91b7-134ae57d48cc
+    note_tile:
+      html_parsed_string: "<h2 class=\"theme-module__editor-h2\" dir=\"ltr\" style=\"text-align: center;\"><span style=\"white-space: pre-wrap;\">Welcome to Mike Batovsky's Demo Liveboard!</span></h2><p class=\"theme-module__editor-paragraph\" dir=\"ltr\" style=\"text-align: center;\"><a href=\"https://www.youtube.com/watch?v=p5KCA8LqOrI\" target=\"_blank\" rel=\"noreferrer\" class=\"theme-module__editor-link\"><span style=\"white-space: pre-wrap;\">Click here for more info</span></a></p><p class=\"theme-module__editor-paragraph\" dir=\"ltr\" style=\"text-align: center;\"><img id=\"68866ea4-27fd-4be6-9bf7-42b32665f940\" alt=\"UPLOAD\" style=\"height: inherit; width: 76%; max-width: 100%;\"></p><div class=\"pinboard-note-tile-module__noteTileBg editor-module__bgNode\" style=\"background-color: rgb(255, 255, 255);\"></div>"
+  - id: Viz_5
+    answer:
+      name: Total Sales by Region
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Sales] [Region]"
+      answer_columns:
+      - name: Region
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Region
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Region
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: BAR
+        chart_columns:
+        - column_id: Region
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Region
+          "y":
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":false,\\\"customCompare\\\":null}\",\"pivotSummariesState\": {}},\"showStackedLabels\": true,\"allLabels\": true,\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Total Sales\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Region\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"c9599351-7f1f-4e9a-b4c8-842037b8a70f\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"0d20424d-5756-4741-9ff1-de0d6c1b57f4\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Region\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"seriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"},{\"serieName\": \"bags\",\"color\": \"#Fce800\"},{\"serieName\": \"dresses\",\"color\": \"#25fb8a\"},{\"serieName\": \"jackets\",\"color\": \"#A83Dff\"},{\"serieName\": \"vests\",\"color\": \"#4E55fd\"}]}"
+      display_mode: CHART_MODE
+      dynamic_name: Total Sales by Region
+    viz_guid: 9d62565a-55f0-4eca-848d-b42f7d41646c
+  - id: Viz_6
+    answer:
+      name: Unfiltered Monthly Sales By Region
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Transaction Date].monthly [Region] [Quantity]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Region
+      - name: Total Quantity
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Region
+          show_headline: false
+        - column_id: Total Quantity
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Region
+        - Total Quantity
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: Region
+        - column_id: Total Quantity
+        axis_configs:
+        - x:
+          - Month(Transaction Date)
+          "y":
+          - Total Quantity
+          color:
+          - Region
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total Quantity\",\"columnProperty\": {}},{\"columnId\": \"Region\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"a02f5a0f-3d16-49d8-9122-208e3d65eb8d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Quantity\"],\"isOpposite\": false}},{\"id\": \"acf87194-d1e3-49c1-980a-ada0e23c620f\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"east\",\"color\": \"#4E55fd\"},{\"serieName\": \"south\",\"color\": \"#A83Dff\"},{\"serieName\": \"west\",\"color\": \"#25fb8a\"},{\"serieName\": \"midwest\",\"color\": \"#Fce800\"},{\"serieName\": \"southwest\",\"color\": \"#fe3bfc\"}]}"
+      display_mode: CHART_MODE
+      dynamic_name: Unfiltered Monthly Sales By Region
+    viz_guid: 527d0968-38f3-444b-86b8-57c30fdac662
+  - id: Viz_7
+    answer:
+      name: Total sales by Monthly date
+      tables:
+      - id: (Sample) Retail - Apparel
+        name: (Sample) Retail - Apparel
+        fqn: cd252e5c-b552-49a8-821d-3eadaa049cca
+      search_query: "[sales] [date].monthly"
+      answer_columns:
+      - name: Month(date)
+      - name: Total sales
+      table:
+        table_columns:
+        - column_id: Month(date)
+          show_headline: false
+        - column_id: Total sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(date)
+        - Total sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Month(date)\",\"columnProperty\": {}},{\"columnId\": \"Total sales\",\"columnProperty\": {}}]}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(date)
+        - column_id: Total sales
+        axis_configs:
+        - x:
+          - Month(date)
+          "y":
+          - Total sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"markersEnabled\": true,\"dataFieldArea\": \"column\"},\"showStackedLabels\": true,\"allLabels\": true},\"columnProperties\": [{\"columnId\": \"Month(date)\",\"columnProperty\": {}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"dataLabels\": true}}],\"axisProperties\": [{\"id\": \"3e4d8505-958c-44ae-90b9-d68512143da6\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"f54263c1-85de-4384-afcf-b14969c7bb19\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(date)\"]}}],\"systemSeriesColors\": [{\"serieName\": \"Total sales\",\"color\": \"#25fb8a\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 62bcbb2d-ece1-405d-85d8-b6528253a8b2
+  - id: Viz_8
+    answer:
+      name: Period-over-Period Sales Variance Analysis
+      tables:
+      - id: (Sample) Retail - Apparel
+        name: (Sample) Retail - Apparel
+        fqn: cd252e5c-b552-49a8-821d-3eadaa049cca
+      formulas:
+      - id: formula_Sales Variance
+        name: Sales Variance
+        expr: "sum ( [sales] ) - [formula_Compare Range Sales Value]"
+        was_auto_generated: false
+      - id: formula_Variance Percentage
+        name: Variance Percentage
+        expr: "( sum ( [sales] ) - [formula_Compare Range Sales Value] ) / [formula_Compare Range Sales Value]"
+        was_auto_generated: false
+      - id: formula_Compare Range Sales Value
+        name: Compare Range Sales Value
+        expr: "group_aggregate ( sum ( [sales] ) / unique count ( start_of_month ( [date] ) ) , query_groups ( ) - { [date] } , query_filters ( ) - { [date] } + { [date] >= [Start Date Parameter] and [date] <= [End Date Parameter] } )"
+        was_auto_generated: false
+      search_query: "[sales] [formula_Compare Range Sales Value] [formula_Sales Variance] [formula_Variance Percentage] [region] [date].'year to date' [date].monthly [date].'last 12 months' [region].east sort by [date] descending"
+      answer_columns:
+      - name: Compare Range Sales Value
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Month(date)
+        sort_info:
+          category: DEFAULT
+      - name: Sales Variance
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Total sales
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Variance Percentage
+        format:
+          category: PERCENTAGE
+          percentageFormatConfig:
+            decimals: 2.0
+          isCategoryEditable: true
+      - name: region
+      table:
+        table_columns:
+        - column_id: Compare Range Sales Value
+          show_headline: false
+        - column_id: Month(date)
+          show_headline: false
+        - column_id: Sales Variance
+          show_headline: false
+        - column_id: Total sales
+          show_headline: false
+        - column_id: Variance Percentage
+          show_headline: false
+        - column_id: region
+          show_headline: false
+        ordered_column_ids:
+        - region
+        - Month(date)
+        - Total sales
+        - Compare Range Sales Value
+        - Sales Variance
+        - Variance Percentage
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"LESS_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {\"color\": \"#F9B3B9\"},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Sales Variance\",\"isHighlightRow\": true}]}}}]}"
+      chart:
+        type: PIVOT_TABLE
+        chart_columns:
+        - column_id: Compare Range Sales Value
+        - column_id: Month(date)
+        - column_id: Sales Variance
+        - column_id: Total sales
+        - column_id: Variance Percentage
+        - column_id: region
+        axis_configs:
+        - x:
+          - region
+          "y":
+          - Total sales
+          - Compare Range Sales Value
+          - Sales Variance
+          - Variance Percentage
+          color:
+          - Month(date)
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\"}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
+      display_mode: CHART_MODE
+      parameters:
+      - id: b15f9d46-0035-4d1d-928a-e813caea0ed0
+        name: End Date Parameter
+        data_type: DATE
+        default_value: 04/30/2025
+        list_config:
+          list_choice:
+          - value: 04/30/2025
+            display_name: Apr 2025
+          - value: 03/31/2025
+            display_name: Mar 2025
+          - value: 02/28/2025
+            display_name: Feb 2025
+          - value: 01/31/2025
+            display_name: Jan 2025
+          - value: 12/31/2024
+            display_name: Dec 2024
+          - value: 11/30/2024
+            display_name: Nov 2024
+          - value: 10/31/2024
+            display_name: Oct 2024
+          - value: 09/30/2024
+            display_name: Sept 2024
+        description: ""
+      - id: 0b1bf023-41cf-4d74-8cb4-84c2ba8754a2
+        name: Start Date Parameter
+        data_type: DATE
+        default_value: 04/01/2025
+        list_config:
+          list_choice:
+          - value: 04/01/2025
+            display_name: Apr 2025
+          - value: 03/01/2025
+            display_name: Mar 2025
+          - value: 02/01/2025
+            display_name: Feb 2025
+          - value: 01/01/2025
+            display_name: Jan 2025
+          - value: 12/01/2024
+            display_name: Dec 2024
+          - value: 11/01/2024
+            display_name: Nov 2024
+          - value: 10/01/2024
+            display_name: Oct 2024
+          - value: 09/01/2024
+            display_name: Sept 2024
+        description: ""
+    viz_guid: 77711a13-b937-4b4b-a533-492dc4601a2a
+  - id: Viz_9
+    viz_guid: 474624b9-20fa-4aaf-9752-5b9dbd801149
+    note_tile:
+      html_parsed_string: |-
+        <h2 class="theme-module__editor-h2" dir="ltr"><span style="white-space: pre-wrap;">Click Play for more Info</span></h2><h2 class="theme-module__editor-h2"><br></h2><span style="position: relative;
+            width: 100%;
+            padding-bottom: 56%;
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 8px;"><iframe data-src-link="https://www.youtube.com/embed/1pd8qmeN7A4?si=s4GG3vTr00896k_m" src="https://www.youtube.com/embed/1pd8qmeN7A4?si=s4GG3vTr00896k_m" frameborder="0" title="Embedded Page" allow="fullscreen" allowfullscreen="allowfullscreen" style="position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+             margin-bottom: 8px;"></iframe></span><h2 class="theme-module__editor-h2"><br></h2><p class="theme-module__editor-paragraph"><br></p><div class="pinboard-note-tile-module__noteTileBg editor-module__bgNode" style="background-color: rgb(255, 255, 255);"></div>
+  - id: Viz_10
+    answer:
+      name: Sales Performance by Region & Category
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Transaction Date].monthly [Sales] [Product Category] [Region]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Product Category
+      - name: Region
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Product Category
+          show_headline: false
+        - column_id: Region
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Product Category
+        - Region
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: ADVANCED_PIVOT_TABLE
+        chart_columns:
+        - column_id: Measure names
+          type: MEASURE_NAMES
+        - column_id: Month(Transaction Date)
+        - column_id: Product Category
+        - column_id: Region
+        - column_id: Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}},{\"columnId\": \"Region\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"97527baa-cee2-419d-9ca8-3cc124c3f7a0\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"c3b893b8-e2ac-458f-af43-411b2ed7bd3c\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"]}}],\"seriesColors\": [{\"serieName\": \"76f5c9b3-3c90-4761-8c2c-14841f289bea\",\"color\": \"#4E55fd\"}],\"systemSeriesColors\": [{\"serieName\": \"76f5c9b3-3c90-4761-8c2c-14841f289bea\",\"color\": \"#4E55fd\"},{\"serieName\": \"east\",\"color\": \"#4E55fd\"},{\"serieName\": \"midwest\",\"color\": \"#A83Dff\"},{\"serieName\": \"south\",\"color\": \"#25fb8a\"},{\"serieName\": \"southwest\",\"color\": \"#Fce800\"},{\"serieName\": \"west\",\"color\": \"#fe3bfc\"}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: rows
+            columns:
+            - Region
+            - Product Category
+          - key: values
+            columns:
+            - Total Sales
+          - key: columns
+            columns:
+            - Month(Transaction Date)
+            - Measure names
+          - key: split-by-color
+        custom_visual_props: "{}"
+      display_mode: CHART_MODE
+      parameter_values:
+      - key: Metric Selector
+        value: Sales
+    viz_guid: 8466888e-8a12-4ecc-9204-c3dcbf615ebe
+  - id: Viz_11
+    answer:
+      name: Transactions by Monthly Transaction Date
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      formulas:
+      - id: formula_Testing
+        name: Testing
+        expr: "count ( [Transaction Id] ) + .2222"
+        was_auto_generated: false
+      search_query: "[Transaction Date].monthly [Transactions] [formula_Testing]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Testing
+        format:
+          category: NUMBER
+          numberFormatConfig:
+            unit: NONE
+            decimals: 3.0
+            negativeValueFormat: PREFIX_DASH
+            toSeparateThousands: true
+            removeTrailingZeroes: false
+          isCategoryEditable: true
+      - name: Transactions
+        format:
+          category: NUMBER
+          numberFormatConfig:
+            unit: NONE
+            decimals: 2.0
+            negativeValueFormat: PREFIX_DASH
+            toSeparateThousands: true
+            removeTrailingZeroes: false
+          isCategoryEditable: true
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Testing
+          show_headline: false
+        - column_id: Transactions
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Transactions
+        - Testing
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: Testing
+        - column_id: Transactions
+        axis_configs:
+        - x:
+          - Month(Transaction Date)
+          "y":
+          - Testing
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Transactions\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Testing\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"5fc0de9e-37f0-41ed-91dd-ff0c3d4be7a4\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Testing\"],\"isOpposite\": false}},{\"id\": \"5ee4271d-ad2b-451c-8767-aa91d55d076d\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"]}}],\"seriesColors\": [{\"serieName\": \"76f5c9b3-3c90-4761-8c2c-14841f289bea\",\"color\": \"#4E55fd\"}],\"systemSeriesColors\": [{\"serieName\": \"76f5c9b3-3c90-4761-8c2c-14841f289bea\",\"color\": \"#4E55fd\"},{\"serieName\": \"Transactions\",\"color\": \"#00e4ff\"},{\"serieName\": \"Testing\",\"color\": \"#fe3bfc\"}]}"
+      display_mode: CHART_MODE
+      parameter_values:
+      - key: Metric Selector
+        value: Transactions
+    viz_guid: 125378fa-1f53-4baa-8301-bea2316de643
+  - id: Viz_12
+    answer:
+      name: Sales by Monthly Transaction Date
+      description: Testing Download
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Sales] [Transaction Date].monthly"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Transaction Date)
+          "y":
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"6489a09a-c139-4b5d-86dc-3fa624aadde2\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"],\"name\": \"Transactions\"}},{\"id\": \"976b78a3-9b29-4fbe-8c25-ed170fcc76ca\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"name\": \" Sales\",\"isOpposite\": false}}],\"seriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}]}"
+      display_mode: CHART_MODE
+      dynamic_description: Testing Download
+    viz_guid: 108cc943-4a6a-4a18-b123-c3b25616f31e
+  - id: Viz_13
+    answer:
+      name: Region
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Region]"
+      answer_columns:
+      - name: Region
+      table:
+        table_columns:
+        - column_id: Region
+          show_headline: false
+        ordered_column_ids:
+        - Region
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Region
+        axis_configs:
+        - "y":
+          - Region
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Region\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"17da0398-725e-4f8e-99f9-beb151abcac6\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Region\"],\"isOpposite\": false}},{\"id\": \"d75a773f-c8c5-43b6-b44e-b7bf0bc5328b\",\"properties\": {\"axisType\": \"X\"}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"4d5d212d-8d35-4f64-90c9-bc22431f2bc7\",\"color\": \"#FF8142\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"}]}"
+      display_mode: TABLE_MODE
+      parameter_values:
+      - key: Date Column Picker
+        value: Shipping Date
+      dynamic_name: Region
+    viz_guid: a04dc451-f172-4588-b48c-71c6780201be
+  - id: Viz_14
+    answer:
+      name: Filtered Monthly Sales by Region
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Transaction Date].monthly [Region] [Quantity]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: Region
+      - name: Total Quantity
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: Region
+          show_headline: false
+        - column_id: Total Quantity
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - Region
+        - Total Quantity
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: Region
+        - column_id: Total Quantity
+        axis_configs:
+        - x:
+          - Month(Transaction Date)
+          "y":
+          - Total Quantity
+          color:
+          - Region
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total Quantity\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"bc2f3b83-80dd-41a9-95b0-413c5f8ae730\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Quantity\"],\"isOpposite\": false}},{\"id\": \"cfacde01-bc8d-4970-b29f-f13bd94b4330\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"east\",\"color\": \"#4E55fd\"},{\"serieName\": \"south\",\"color\": \"#A83Dff\"},{\"serieName\": \"west\",\"color\": \"#25fb8a\"},{\"serieName\": \"midwest\",\"color\": \"#Fce800\"},{\"serieName\": \"southwest\",\"color\": \"#fe3bfc\"}]}"
+      display_mode: CHART_MODE
+      dynamic_name: Filtered Monthly Sales by Region
+    viz_guid: e966a9b8-64c6-4864-be0b-d31afbf713dd
+  - id: Viz_15
+    answer:
+      name: Store Performance with Navigation Links
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      formulas:
+      - id: formula_Liveboard Hyper Link With Store ID Runtime FIlter
+        name: Liveboard Hyper Link With Store ID Runtime FIlter
+        expr: "concat ( \"{caption}\" , [Store Name] , \"{/caption}\" , \"https://ps-internal.thoughtspot.cloud/#/pinboard/127d727f-f43b-4f36-a72b-fcd869cbe05d/tab/1f891640-354f-4486-b4dc-0aea3bbc5e04/?col1=store id&op1=eq&val1=\" , to_string ( [Store Id] ) )"
+        was_auto_generated: false
+      search_query: "[formula_Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending [Transaction Date].yearly"
+      answer_columns:
+      - name: Liveboard Hyper Link With Store ID Runtime FIlter
+      - name: Total Quantity
+      - name: Total Sales
+        sort_info:
+          category: DEFAULT
+      - name: Transactions
+      - name: Year(Transaction Date)
+      table:
+        table_columns:
+        - column_id: Liveboard Hyper Link With Store ID Runtime FIlter
+          show_headline: false
+        - column_id: Total Quantity
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        - column_id: Transactions
+          show_headline: false
+        - column_id: Year(Transaction Date)
+          show_headline: false
+        ordered_column_ids:
+        - Liveboard Hyper Link With Store ID Runtime FIlter
+        - Year(Transaction Date)
+        - Total Sales
+        - Transactions
+        - Total Quantity
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"orderedColumnIds\": [\"Year(Transaction Date)\",\"Transactions\",\"Total Sales\",\"Total Quantity\",\"Liveboard Hyper Link With Store ID Runtime FIlter\"],\"columnProperties\": [{\"columnId\": \"Liveboard Hyper Link With Store ID Runtime FIlter\",\"columnProperty\": {}}]}"
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Liveboard Hyper Link With Store ID Runtime FIlter
+        - column_id: Total Quantity
+        - column_id: Total Sales
+        - column_id: Transactions
+        - column_id: Year(Transaction Date)
+        axis_configs:
+        - "y":
+          - Liveboard Hyper Link With Store ID Runtime FIlter
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Liveboard Hyper Link With Store ID Runtime FIlter\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"9ec4505c-c28b-4b02-8686-8f394c459cc5\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Liveboard Hyper Link With Store ID Runtime FIlter\"],\"isOpposite\": false}},{\"id\": \"215ceb61-9702-4032-abeb-0321bbbae2d7\",\"properties\": {\"axisType\": \"X\"}}]}"
+      display_mode: TABLE_MODE
+    viz_guid: 3d5b4b91-6ee2-4e99-842b-5914a43d2caa
+  - id: Viz_16
+    answer:
+      name: Monthly Sales KPI
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Sales] [Shared Month].monthly"
+      answer_columns:
+      - name: Month(Shared Month)
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Shared Month)
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Shared Month)
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Month(Shared Month)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"b07f40a6-865f-4ea4-904d-9e29350bb3a4\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"8a9283c6-a220-423d-95b7-7a750ba43ad1\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"053703ea-d66a-421c-acf3-4c0fc224ed63\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"a56dc220-1894-411a-b248-3780428401ee\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Shared Month)\"]}}],\"systemSeriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: a4bbcd74-715e-48f1-8cce-cdba2c0303bc
+  - id: Viz_17
+    answer:
+      name: Period Comparison Sales Report
+      tables:
+      - id: (Sample) Retail - Apparel
+        name: (Sample) Retail - Apparel
+        fqn: cd252e5c-b552-49a8-821d-3eadaa049cca
+      formulas:
+      - id: formula_Sales Variance
+        name: Sales Variance
+        expr: "sum ( [sales] ) - [formula_Compare Range Sales Value]"
+        was_auto_generated: false
+      - id: formula_Variance Percentage
+        name: Variance Percentage
+        expr: "( sum ( [sales] ) - [formula_Compare Range Sales Value] ) / [formula_Compare Range Sales Value]"
+        was_auto_generated: false
+      - id: formula_Compare Range Sales Value
+        name: Compare Range Sales Value
+        expr: "group_aggregate ( sum ( [sales] ) / unique count ( start_of_month ( [date] ) ) , query_groups ( ) - { [date] } , query_filters ( ) - { [date] } + { [date] >= [Start Date Parameter] and [date] <= [End Date Parameter] } )"
+        was_auto_generated: false
+      search_query: "[sales] [formula_Compare Range Sales Value] [formula_Sales Variance] [formula_Variance Percentage] [region] [date].'year to date' [date].monthly [date].'last 12 months' sort by [date] descending"
+      answer_columns:
+      - name: Compare Range Sales Value
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Month(date)
+        sort_info:
+          category: DEFAULT
+      - name: Sales Variance
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Total sales
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+          isCategoryEditable: true
+      - name: Variance Percentage
+        format:
+          category: PERCENTAGE
+          percentageFormatConfig:
+            decimals: 2.0
+          isCategoryEditable: true
+      - name: region
+      table:
+        table_columns:
+        - column_id: Compare Range Sales Value
+          show_headline: false
+        - column_id: Month(date)
+          show_headline: false
+        - column_id: Sales Variance
+          show_headline: false
+        - column_id: Total sales
+          show_headline: false
+        - column_id: Variance Percentage
+          show_headline: false
+        - column_id: region
+          show_headline: false
+        ordered_column_ids:
+        - region
+        - Month(date)
+        - Total sales
+        - Compare Range Sales Value
+        - Sales Variance
+        - Variance Percentage
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"LESS_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {\"color\": \"#F9B3B9\"},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Sales Variance\",\"isHighlightRow\": true}]}}}]}"
+      chart:
+        type: PIVOT_TABLE
+        chart_columns:
+        - column_id: Compare Range Sales Value
+        - column_id: Month(date)
+        - column_id: Sales Variance
+        - column_id: Total sales
+        - column_id: Variance Percentage
+        - column_id: region
+        axis_configs:
+        - x:
+          - region
+          "y":
+          - Total sales
+          - Compare Range Sales Value
+          - Sales Variance
+          - Variance Percentage
+          color:
+          - Month(date)
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\",\"isHighlightRow\": false}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
+      display_mode: TABLE_MODE
+      parameters:
+      - id: b6011474-297b-4bdb-89dc-7386ab436465
+        name: End Date Parameter
+        data_type: DATE
+        default_value: 04/30/2025
+        list_config:
+          list_choice:
+          - value: 04/30/2025
+            display_name: Apr 2025
+          - value: 03/31/2025
+            display_name: Mar 2025
+          - value: 02/28/2025
+            display_name: Feb 2025
+          - value: 01/31/2025
+            display_name: Jan 2025
+          - value: 12/31/2024
+            display_name: Dec 2024
+          - value: 11/30/2024
+            display_name: Nov 2024
+          - value: 10/31/2024
+            display_name: Oct 2024
+          - value: 09/30/2024
+            display_name: Sept 2024
+        description: ""
+      - id: 8a4d374e-e81b-4c0d-85cd-e41a58d993d0
+        name: Start Date Parameter
+        data_type: DATE
+        default_value: 04/01/2025
+        list_config:
+          list_choice:
+          - value: 04/01/2025
+            display_name: Apr 2025
+          - value: 03/01/2025
+            display_name: Mar 2025
+          - value: 02/01/2025
+            display_name: Feb 2025
+          - value: 01/01/2025
+            display_name: Jan 2025
+          - value: 12/01/2024
+            display_name: Dec 2024
+          - value: 11/01/2024
+            display_name: Nov 2024
+          - value: 10/01/2024
+            display_name: Oct 2024
+          - value: 09/01/2024
+            display_name: Sept 2024
+        description: ""
+      dynamic_name: Period Comparison Sales Report
+    viz_guid: 6548ef98-05f5-4cbf-a3c0-6a60eef71d38
+  - id: Viz_18
+    answer:
+      name: Query Activity Summary
+      tables:
+      - id: Query History
+        name: Query History
+        fqn: 17beffa8-3b6f-4038-a6ad-7911dcbd09fb
+      search_query: "[Query Count] [Query ID]"
+      answer_columns:
+      - name: Query Count
+      - name: Query ID
+      table:
+        table_columns:
+        - column_id: Query Count
+          show_headline: false
+        - column_id: Query ID
+          show_headline: false
+        ordered_column_ids:
+        - Query ID
+        - Query Count
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: COLUMN
+        chart_columns:
+        - column_id: Query Count
+        - column_id: Query ID
+        axis_configs:
+        - x:
+          - Query ID
+          "y":
+          - Query Count
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_OFF\",\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Query ID\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Query Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"7a44438d-437f-4195-ac17-8ea65cb7dbb0\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"1203227d-4529-48c5-bb2f-35b622d50297\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"1c3f52b5-c399-4d53-9b6c-9ff29925661e\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Query Count\"],\"isOpposite\": false}},{\"id\": \"14518dd0-2a5a-4857-a0a0-5c1b64d35f95\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Query ID\"]}}],\"systemSeriesColors\": [{\"serieName\": \"Query Count\",\"color\": \"#25fb8a\"}]}"
+      display_mode: TABLE_MODE
+    viz_guid: f4c9a956-667f-4f98-8ae1-d68d48ec2008
+  filters:
+  - column:
+    - Retail Apparel with AGO With Instructions::Region
+    - (Sample) Retail - Apparel::region
+    excluded_visualizations:
+    - Viz_5
+    - Viz_6
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
+    - Retail Apparel with AGO With Instructions::Product Category
+    - (Sample) Retail - Apparel::item type
+    excluded_visualizations:
+    - Viz_13
+    - Viz_12
+    - Viz_14
+    - Viz_5
+    - Viz_6
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  layout:
+    tabs:
+    - name: Overview
+      description: ""
+      tiles:
+      - visualization_id: Viz_2
+        x: 3
+        "y": 5
+        height: 4
+        width: 5
+      - visualization_id: Viz_1
+        x: 0
+        "y": 14
+        height: 4
+        width: 12
+      - visualization_id: Viz_3
+        x: 8
+        "y": 0
+        height: 9
+        width: 4
+      - visualization_id: Viz_4
+        x: 0
+        "y": 4
+        height: 5
+        width: 3
+      - visualization_id: Viz_7
+        x: 0
+        "y": 9
+        height: 5
+        width: 12
+      - visualization_id: Viz_9
+        x: 3
+        "y": 0
+        height: 5
+        width: 5
+      - visualization_id: Viz_10
+        x: 0
+        "y": 18
+        height: 8
+        width: 12
+      - visualization_id: Viz_11
+        x: 0
+        "y": 0
+        height: 4
+        width: 3
+      id: ffb90f14-3e26-4f48-8bd5-7909f6b7ed92
+    - name: Detail
+      description: ""
+      tiles:
+      - visualization_id: Viz_5
+        x: 0
+        "y": 3
+        height: 7
+        width: 6
+      - visualization_id: Viz_6
+        x: 6
+        "y": 5
+        height: 5
+        width: 6
+      - visualization_id: Viz_12
+        x: 3
+        "y": 0
+        height: 3
+        width: 3
+      - visualization_id: Viz_13
+        x: 0
+        "y": 0
+        height: 3
+        width: 3
+      - visualization_id: Viz_14
+        x: 6
+        "y": 0
+        height: 5
+        width: 6
+      id: 1f891640-354f-4486-b4dc-0aea3bbc5e04
+    - name: Demo
+      description: ""
+      tiles:
+      - visualization_id: Viz_8
+        x: 0
+        "y": 8
+        height: 8
+        width: 12
+      - visualization_id: Viz_15
+        x: 0
+        "y": 16
+        height: 8
+        width: 12
+      - visualization_id: Viz_16
+        x: 0
+        "y": 24
+        height: 4
+        width: 3
+      - visualization_id: Viz_17
+        x: 0
+        "y": 28
+        height: 8
+        width: 12
+      - visualization_id: Viz_18
+        x: 0
+        "y": 36
+        height: 8
+        width: 12
+      id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2
+  parameter_overrides:
+  - key: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+    value:
+      name: Retail Apparel with AGO With Instructions::Date Column Picker
+  ordered_chips:
+  - name: Retail Apparel with AGO With Instructions::Region
+    type: FILTER
+  - name: Retail Apparel with AGO With Instructions::Product Category
+    type: FILTER
+  - name: Retail Apparel with AGO With Instructions::Date Column Picker
+    type: PARAMETER
+  views:
+  - view_guid: 9d7c1db1-89ad-4983-921b-caf3232fe7f7
+    name: Midwest View
+    view_filters:
+    - column:
+      - Retail Apparel with AGO With Instructions::Region
+      oper: in
+      values:
+      - Midwest
+    - column:
+      - Retail Apparel with AGO With Instructions::Product Category
+      oper: =
+    is_public: false
+    view_parameters:
+    - name: Retail Apparel with AGO With Instructions::Date Column Picker
+      id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+  - view_guid: 47099262-52ee-4faa-9567-b57e2c68b1e6
+    name: test 2
+    view_filters:
+    - column:
+      - Retail Apparel with AGO With Instructions::Region
+      oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Product Category
+      oper: =
+    is_public: false
+    view_parameters:
+    - name: Retail Apparel with AGO With Instructions::Date Column Picker
+      id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+  style:
+    style_properties:
+    - name: lb_border_type
+      value: CURVED
+    - name: lb_brand_color
+      value: LBC_D
+    - name: hide_group_title
+      value: "false"
+    - name: hide_group_description
+      value: "true"
+    - name: hide_group_tile_description
+      value: "false"
+    - name: hide_tile_description
+      value: "false"
+    - name: kpi_hero_font_size
+      value: M

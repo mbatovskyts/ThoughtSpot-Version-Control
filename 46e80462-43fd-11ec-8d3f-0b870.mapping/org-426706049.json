@@ -73,8 +73,18 @@
     "77711a13-b937-4b4b-a533-492dc4601a2a" : "957214b6-dfc7-4911-add7-e7d934d1110c"
   }
 }, {
+  "originalGuid" : "2128419e-7222-456d-95b5-96c1b2654c6a",
+  "mappedGuid" : "2128419e-7222-456d-95b5-96c1b2654c6a",
+  "counter" : 0,
+  "additionalMapping" : { }
+}, {
   "originalGuid" : "34342a9a-871b-4524-82d9-e4a3fd1b27b2",
   "mappedGuid" : "c1540530-3185-4fb2-9213-626173a6c653",
+  "counter" : 0,
+  "additionalMapping" : { }
+}, {
+  "originalGuid" : "39c397a0-9acd-4259-90ab-6d4d7ea43803",
+  "mappedGuid" : "39c397a0-9acd-4259-90ab-6d4d7ea43803",
   "counter" : 0,
   "additionalMapping" : { }
 }, {

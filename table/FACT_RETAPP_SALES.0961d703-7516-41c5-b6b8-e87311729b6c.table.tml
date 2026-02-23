@@ -1,0 +1,81 @@
+guid: 0961d703-7516-41c5-b6b8-e87311729b6c
+table:
+  name: FACT_RETAPP_SALES
+  db: RETAILAPPAREL
+  schema: PUBLIC
+  db_table: FACT_RETAPP_SALES_NEW
+  connection:
+    name: TS Demo Snowflake
+    fqn: 97b89867-c6d3-49e8-873f-973de2fb8d6e
+  columns:
+  - name: Store ID
+    db_column_name: STOREID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Transaction ID
+    db_column_name: SALESID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: SKU
+    db_column_name: PRODUCTID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Quantity
+    db_column_name: QUANTITYPURCHASED
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Item Price
+    db_column_name: ITEMPRICE
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_additive: true
+    db_column_properties:
+      data_type: DOUBLE
+  - name: Sales
+    db_column_name: SALES
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      currency_type:
+        iso_code: USD
+    db_column_properties:
+      data_type: DOUBLE
+  - name: Transaction Date
+    db_column_name: RECORDDATE
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: "MMM dd, yyyy"
+    db_column_properties:
+      data_type: DATE
+  joins_with:
+  - name: C_DIM_RETAPP_PRODUCTS
+    destination:
+      name: DIM_RETAPP_PRODUCTS
+      fqn: 287df18d-a6db-4b8e-bdbf-169b664daeaa
+    "on": "[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]"
+    type: OUTER
+  - name: C_DIM_RETAPP_STORES
+    destination:
+      name: DIM_RETAPP_STORES
+      fqn: 9cf5b3be-57d0-45c5-80fa-b25237ddd2a3
+    "on": "[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]"
+    type: OUTER
+  properties:
+    spotter_config:
+      is_spotter_enabled: true

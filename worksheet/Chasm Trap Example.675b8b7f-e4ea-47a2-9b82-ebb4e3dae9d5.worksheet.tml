@@ -1,0 +1,275 @@
+guid: 675b8b7f-e4ea-47a2-9b82-ebb4e3dae9d5
+model:
+  name: Chasm Trap Example
+  description: Daily Sales and Monthly Forecast
+  model_tables:
+  - name: FACT_RETAPP_SALES
+    fqn: 0961d703-7516-41c5-b6b8-e87311729b6c
+    joins:
+    - with: DIM_RETAPP_PRODUCTS
+      'on': '[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+    - with: DIM_RETAPP_STORES
+      'on': '[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+    - with: Dim Date
+      'on': '[FACT_RETAPP_SALES::Transaction Date] = [Dim Date::Shared Date]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: DIM_RETAPP_STORES
+    fqn: 9cf5b3be-57d0-45c5-80fa-b25237ddd2a3
+  - name: DIM_RETAPP_PRODUCTS
+    fqn: 287df18d-a6db-4b8e-bdbf-169b664daeaa
+    joins:
+    - with: Product Category Bridge
+      'on': '[DIM_RETAPP_PRODUCTS::Product Category] = [Product Category Bridge::Product Catigory]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: Dim Date
+    fqn: 41422d38-9b8e-4773-8a8c-9d8726e54f56
+    joins:
+    - with: Monthly Bridge
+      'on': '[Dim Date::Shared Monthly] = [Monthly Bridge::Shared Monthly]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: Forecast
+    fqn: d39fcd79-ca73-4ef1-8105-46072dfaf9f9
+    joins:
+    - with: Monthly Bridge
+      'on': '[Forecast::Forecast Month Year] = [Monthly Bridge::Shared Monthly]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+    - with: Product Category Bridge
+      'on': '[Forecast::Product Category] = [Product Category Bridge::Product Catigory]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: Monthly Bridge
+    fqn: c9e14a80-4c51-4035-91b8-0f2873568b8a
+  - name: Product Category Bridge
+    fqn: 7ea24b5e-9462-47d8-8ccb-e43667688abf
+  formulas:
+  - id: formula_Avg Sale Price Per Item
+    name: Avg Sale Price Per Item
+    expr: sum ( [FACT_RETAPP_SALES::Sales] ) / sum ( [FACT_RETAPP_SALES::Quantity] )
+  - id: formula_Forecast Variance
+    name: Forecast Variance
+    expr: sum ( [FACT_RETAPP_SALES::Sales] ) - sum ( [Forecast::Forecast] )
+  columns:
+  - name: Shared Month
+    column_id: Monthly Bridge::Shared Monthly
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      index_priority: 5.0
+      synonyms:
+      - Monthly Shared
+      - Monthly Distribution
+      format_pattern: MMM yyyy
+      synonym_type: AUTO_GENERATED
+      ai_context: Monthly time dimension that connects daily sales transactions to corresponding forecast periods, facilitating accurate month-level performance comparisons.
+  - name: Forecast Product Category
+    column_id: Forecast::Product Category
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Prediction Item Type
+      - Estimate Goods Classification
+      synonym_type: AUTO_GENERATED
+      ai_context: Product category classification used in monthly sales forecasting, matching actual product categories to enable forecast accuracy comparison and variance analysis.
+  - name: Product Category
+    column_id: Product Category Bridge::Product Catigory
+    properties:
+      column_type: ATTRIBUTE
+      index_priority: 10.0
+      synonyms:
+      - Category Product
+      - Product Type
+      - Product Level 1
+      synonym_type: USER_DEFINED
+      ai_context: Classification grouping for products including apparel categories like bags, socks, shirts, jackets, and headwear, enabling category-level sales analysis.
+  - name: Product Category (Product Table)
+    column_id: DIM_RETAPP_PRODUCTS::Product Category
+    properties:
+      column_type: ATTRIBUTE
+      synonym_type: AUTO_GENERATED
+      ai_context: Product classification sourced from master product table, containing standardized category groupings for consistent product hierarchy and cross-reference analysis.
+  - name: Avg Sale Price Per Item
+    description: sum ( Sales ) / sum ( Quantity )
+    formula_id: formula_Avg Sale Price Per Item
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Average Sale Price
+      - Price Per Item
+      currency_type:
+        iso_code: USD
+      synonym_type: AUTO_GENERATED
+      ai_context: Calculated average selling price derived from total sales revenue divided by total quantity sold, providing pricing effectiveness insights across transactions.
+  - name: Forecast Variance
+    formula_id: formula_Forecast Variance
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Variance
+      - Forecast Difference
+      currency_type:
+        iso_code: USD
+      synonym_type: AUTO_GENERATED
+      ai_context: Calculated difference between predicted forecast amounts and actual sales results, quantifying forecasting accuracy and prediction performance gaps.
+  - name: Product Name
+    description: This column is not indexed
+    column_id: DIM_RETAPP_PRODUCTS::Product Name
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Product
+      synonym_type: AUTO_GENERATED
+      ai_context: Descriptive text label identifying the specific product being sold, providing human-readable product identification for sales analysis and reporting.
+  - name: SKU
+    column_id: DIM_RETAPP_PRODUCTS::SKU
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Stock Keeping Unit
+      - Stock Keeping Identification
+      synonym_type: AUTO_GENERATED
+      ai_context: Stock Keeping Unit identifier - unique numerical code assigned to each distinct product for inventory management and product identification purposes.
+  - name: Store Name
+    column_id: DIM_RETAPP_STORES::Store Name
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Store long name
+      synonym_type: USER_DEFINED
+      ai_context: Descriptive store identifier combining location details with zip codes, providing geographic context for regional sales performance analysis.
+  - name: Region
+    column_id: DIM_RETAPP_STORES::Region
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Area
+      synonym_type: AUTO_GENERATED
+      ai_context: Geographic territory grouping that aggregates multiple stores into larger market areas for regional sales performance analysis and territory management.
+  - name: Store Zip Code
+    column_id: DIM_RETAPP_STORES::Store Zip Code
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Zip Code of Store
+      synonym_type: AUTO_GENERATED
+      ai_context: Five-digit postal code identifying the specific geographic location of each store, enabling precise demographic and location-based sales analysis.
+  - name: Store State
+    column_id: DIM_RETAPP_STORES::Store State
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - State
+      - Store Location
+      synonym_type: AUTO_GENERATED
+      ai_context: U.S. state location where each retail store operates, enabling state-level geographic sales analysis and regional performance comparison.
+  - name: Store ID
+    column_id: DIM_RETAPP_STORES::Store ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Unique numerical identifier for each retail store location, enabling precise store-level performance tracking and geographic sales analysis.
+  - name: Sales
+    column_id: FACT_RETAPP_SALES::Sales
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Revenue
+      - Income
+      currency_type:
+        iso_code: USD
+      synonym_type: AUTO_GENERATED
+      ai_context: Total monetary revenue generated from each transaction, representing the core financial value captured from customer purchases for performance measurement.
+  - name: Item Price
+    column_id: FACT_RETAPP_SALES::Item Price
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Price of Item
+      - Item Cost
+      is_additive: true
+      synonym_type: AUTO_GENERATED
+      ai_context: Unit price charged for individual products at the time of sale, reflecting the specific pricing strategy and market positioning for each item.
+  - name: Transaction Date
+    column_id: FACT_RETAPP_SALES::Transaction Date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Date of Transaction
+      - Transaction Occurrence Date
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+      ai_context: Calendar date when each individual sales transaction was completed, providing temporal context for daily sales performance analysis and trend identification.
+  - name: Quantity
+    column_id: FACT_RETAPP_SALES::Quantity
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Amount
+      - Number
+      synonym_type: AUTO_GENERATED
+      ai_context: Number of individual items sold within each transaction, indicating purchase volume and enabling unit-based sales analysis across products and stores.
+  - name: Transaction ID
+    column_id: FACT_RETAPP_SALES::Transaction ID
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonym_type: USER_DEFINED
+      ai_context: Unique numerical identifier assigned to each individual sales transaction, enabling precise tracking and referencing of specific customer purchases within the system.
+  - name: Forecast Amount
+    column_id: Forecast::Forecast
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Prediction
+      currency_type:
+        iso_code: USD
+      synonym_type: AUTO_GENERATED
+      ai_context: Predicted monthly sales revenue target established for each product category, serving as the benchmark for measuring actual sales performance accuracy.
+  - name: Shared Date
+    column_id: Dim Date::Shared Date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Date Shared
+      - Date Distribution
+      format_pattern: MMM dd, yyyy
+      synonym_type: AUTO_GENERATED
+      ai_context: Common date dimension linking daily transaction data with monthly forecast periods, enabling proper temporal alignment for variance analysis calculations.
+  - name: Forecast Month Year
+    column_id: Forecast::Forecast Month Year
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Prediction Period
+      - Estimate Month Year
+      format_pattern: MMM yyyy
+      synonym_type: AUTO_GENERATED
+      ai_context: Monthly time period for which sales forecasts were generated, establishing the temporal scope for comparing predicted versus actual performance results.
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true

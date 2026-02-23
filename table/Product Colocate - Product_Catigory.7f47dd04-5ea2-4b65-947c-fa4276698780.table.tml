@@ -1,0 +1,26 @@
+guid: 7f47dd04-5ea2-4b65-947c-fa4276698780
+table:
+  name: Product Colocate - Product_Catigory
+  db: CSVUPLOADS
+  schema: PUBLIC
+  db_table: product colocate - product_catigory_6365fe6c-037a-4bd4-9858-3ab764eef5be
+  connection:
+    name: TS Demo Snowflake
+    fqn: 97b89867-c6d3-49e8-873f-973de2fb8d6e
+  columns:
+  - name: Product Category
+    db_column_name: Product Category
+    properties:
+      column_type: ATTRIBUTE
+      value_casing: ALL_LOWERCASE
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Colocated Category
+    db_column_name: Colocated Category
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  properties:
+    spotter_config:
+      is_spotter_enabled: false

@@ -1,0 +1,46 @@
+guid: d39fcd79-ca73-4ef1-8105-46072dfaf9f9
+view:
+  name: Forecast
+  tables:
+  - id: DIM_RETAPP_PRODUCTS
+    name: DIM_RETAPP_PRODUCTS
+    fqn: 287df18d-a6db-4b8e-bdbf-169b664daeaa
+  - id: FACT_RETAPP_SALES
+    name: FACT_RETAPP_SALES
+    fqn: 0961d703-7516-41c5-b6b8-e87311729b6c
+  joins:
+  - id: C_DIM_RETAPP_PRODUCTS
+    name: C_DIM_RETAPP_PRODUCTS
+    source: FACT_RETAPP_SALES
+    destination: DIM_RETAPP_PRODUCTS
+  table_paths:
+  - id: DIM_RETAPP_PRODUCTS_1
+    table: DIM_RETAPP_PRODUCTS
+    join_path:
+    - join:
+      - C_DIM_RETAPP_PRODUCTS
+  - id: FACT_RETAPP_SALES_1
+    table: FACT_RETAPP_SALES
+  formulas:
+  - id: formula_Forecast
+    name: Forecast
+    expr: "sum ( [FACT_RETAPP_SALES_1::Sales] ) * 1.09"
+    was_auto_generated: false
+  search_query: "[FACT_RETAPP_SALES_1::Transaction Date] [FACT_RETAPP_SALES_1::Transaction Date].monthly [DIM_RETAPP_PRODUCTS_1::Product Category] [formula_Forecast] sort by [FACT_RETAPP_SALES_1::Transaction Date]"
+  view_columns:
+  - name: Forecast Month Year
+    search_output_column: Month(Transaction Date)
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: MMM yyyy
+  - name: Product Category
+    search_output_column: Product Category
+    properties:
+      column_type: ATTRIBUTE
+  - name: Forecast
+    search_output_column: Forecast
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX

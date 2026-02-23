@@ -1,0 +1,82 @@
+guid: c1540530-3185-4fb2-9213-626173a6c653
+view:
+  name: Retail Apparel AGO Dim
+  tables:
+  - id: FACT_RETAPP_SALES
+    name: FACT_RETAPP_SALES
+    fqn: 0961d703-7516-41c5-b6b8-e87311729b6c
+  formulas:
+  - id: formula_Month To Date Filter
+    name: Month To Date Filter
+    expr: "if ( day ( [Transaction Date] ) <= day ( group_max ( [Transaction Date] ) ) ) then 'MTD' else null"
+    was_auto_generated: false
+  - id: formula_Months Ago
+    name: Months Ago
+    expr: "average ( diff_months ( today ( ) , [Transaction Date] ) ) + [formula_Month Off Set]"
+    was_auto_generated: false
+  - id: formula_Weeks Ago
+    name: Weeks Ago
+    expr: "average ( diff_weeks ( today ( ) , [Transaction Date] ) ) + [formula_Week Off Set]"
+    was_auto_generated: false
+  - id: formula_Week Off Set
+    name: Week Off Set
+    expr: "diff_weeks ( group_max ( [Transaction Date] ) , today ( ) )"
+    was_auto_generated: false
+  - id: formula_Year To Date Filter
+    name: Year To Date Filter
+    expr: "if ( day_number_of_year ( [Transaction Date] ) <= day_number_of_year ( group_max ( [Transaction Date] ) ) ) then 'YTD' else null"
+    was_auto_generated: false
+  - id: formula_Years Ago
+    name: Years Ago
+    expr: "average ( diff_years ( today ( ) , [Transaction Date] ) ) - [formula_Year Off Set]"
+    was_auto_generated: false
+  - id: formula_Month Off Set
+    name: Month Off Set
+    expr: "diff_months ( group_max ( [Transaction Date] ) , today ( ) )"
+    was_auto_generated: false
+  - id: formula_Year Off Set
+    name: Year Off Set
+    expr: "group_aggregate ( year ( today ( ) ) - max ( year ( [Transaction Date] ) ) , { } , { } )"
+    was_auto_generated: false
+  search_query: "[Transaction Date] [Transaction Date].daily [formula_Years Ago] [formula_Months Ago] [formula_Weeks Ago] [formula_Month To Date Filter] [formula_Year To Date Filter] sort by [Transaction Date] [Transaction Date].daily [formula_Week Off Set]"
+  view_columns:
+  - name: Day(Transaction Date)
+    search_output_column: Day(Transaction Date)
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: MM/dd/yyyy
+  - name: Month To Date Filter
+    search_output_column: Month To Date Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Year To Date Filter
+    search_output_column: Year To Date Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Years Ago
+    search_output_column: Years Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Months Ago
+    search_output_column: Months Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Weeks Ago
+    search_output_column: Weeks Ago
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Week Off Set
+    search_output_column: Week Off Set
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX

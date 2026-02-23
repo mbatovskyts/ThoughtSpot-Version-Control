@@ -1,0 +1,13 @@
+guid: 7ea24b5e-9462-47d8-8ccb-e43667688abf
+view:
+  name: Product Category Bridge
+  tables:
+  - id: DIM_RETAPP_PRODUCTS
+    name: DIM_RETAPP_PRODUCTS
+    fqn: 287df18d-a6db-4b8e-bdbf-169b664daeaa
+  search_query: "[Product Category] sort by [Product Category] descending"
+  view_columns:
+  - name: Product Catigory
+    search_output_column: Product Category
+    properties:
+      column_type: ATTRIBUTE

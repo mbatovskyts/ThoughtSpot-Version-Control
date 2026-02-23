@@ -38,9 +38,6 @@ model:
   - id: formula_Data Set Filter
     name: Data Set Filter
     expr: if ( ( [Data Set Selection] = "Set A" and [DIM_RETAPP_PRODUCTS::Product Category] = 'Pants' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else if ( ( [Data Set Selection] = "Set B" and [Product Colocate - Product_Catigory::Product Category] = 'Shirts' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else false
-  - id: formula_Github Testing
-    name: Github Testing
-    expr: if ( [FACT_RETAPP_SALES::Sales] > 0 ) then 'Mike is Awesome' else "Not So Much"
   - id: formula_Global Date Filter
     name: Global Date Filter
     expr: if ( [Date Column Picker] = "Shipping Date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "Transaction Date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
@@ -316,11 +313,6 @@ model:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
       ai_context: Boolean filter control for segmenting data subsets enabling targeted analysis of specific business data categories.
-  - name: Github Testing
-    formula_id: formula_Github Testing
-    properties:
-      column_type: ATTRIBUTE
-      index_type: DONT_INDEX
   properties:
     is_bypass_rls: false
     join_progressive: true

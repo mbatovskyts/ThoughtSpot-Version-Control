@@ -65,7 +65,7 @@ model:
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
-      ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods.
+      ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods. This column should only be used as attributes. All filters should come from one of the Ago Columns
   - name: Region Share
     formula_id: formula_Region Share
     properties:
@@ -109,7 +109,7 @@ model:
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
-      ai_context: Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.
+      ai_context: Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.This column should only be used as attributes. All filters should come from one of the Ago Columns.
   - name: Metric
     formula_id: formula_Metric
     properties:
@@ -146,7 +146,7 @@ model:
       column_type: MEASURE
       aggregation: SUM
       index_type: DONT_INDEX
-      ai_context: Historical comparison metric displaying performance data from previous months for seasonal analysis and monthly trending.
+      ai_context: This column is used only as a filtering column to align time phases to is correct values. For example the last 6 months should be Months Ago<=6. This month should be Months Ago=1
   - name: Year To Date Filter
     column_id: Retail Apparel AGO Dim::Year To Date Filter
     properties:
@@ -291,7 +291,7 @@ model:
       index_type: DONT_INDEX
       synonym_type: USER_DEFINED
       default_date_bucket: WEEKLY
-      ai_context: Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.
+      ai_context: Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.This column should only be used as attributes. All filters should come from one of the Ago Columns.
   - name: Quantity
     column_id: FACT_RETAPP_SALES::Quantity
     properties:

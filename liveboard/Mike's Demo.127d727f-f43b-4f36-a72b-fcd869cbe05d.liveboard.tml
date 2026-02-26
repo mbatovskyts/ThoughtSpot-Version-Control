@@ -939,7 +939,7 @@ liveboard:
         height: 9
         width: 4
       - visualization_id: Viz_4
-        x: 5
+        x: 0
         "y": 0
         height: 5
         width: 3
@@ -949,7 +949,7 @@ liveboard:
         height: 5
         width: 12
       - visualization_id: Viz_9
-        x: 0
+        x: 3
         "y": 0
         height: 5
         width: 5

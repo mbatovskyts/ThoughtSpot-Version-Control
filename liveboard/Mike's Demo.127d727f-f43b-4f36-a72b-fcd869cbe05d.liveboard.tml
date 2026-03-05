@@ -345,7 +345,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\"}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
       display_mode: CHART_MODE
       parameters:
-      - id: 3c44209d-1abb-416f-97e8-ca3b1174a72e
+      - id: aa4e82d8-c7b0-4329-88c7-2e30b320b7e1
         name: End Date Parameter
         data_type: DATE
         default_value: 04/30/2025
@@ -368,7 +368,7 @@ liveboard:
           - value: 09/30/2024
             display_name: Sept 2024
         description: ""
-      - id: 4ae4a7c4-d6a9-4231-867b-9d2d8b832790
+      - id: 17adef43-6005-48f3-a3c3-0f17d0d8aff3
         name: Start Date Parameter
         data_type: DATE
         default_value: 04/01/2025
@@ -848,7 +848,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\",\"isHighlightRow\": false}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
       display_mode: TABLE_MODE
       parameters:
-      - id: d84a448e-8f43-4ef5-bc62-ff7357c4e996
+      - id: f14d5ab8-6aeb-4f98-a4c9-8c7036566b89
         name: End Date Parameter
         data_type: DATE
         default_value: 04/30/2025
@@ -871,7 +871,7 @@ liveboard:
           - value: 09/30/2024
             display_name: Sept 2024
         description: ""
-      - id: 6545f404-009f-458d-b357-e2d001dd2ed4
+      - id: f30dcbbf-54b8-4fee-96b7-3064f7550f8e
         name: Start Date Parameter
         data_type: DATE
         default_value: 04/01/2025
@@ -939,7 +939,7 @@ liveboard:
         height: 9
         width: 4
       - visualization_id: Viz_4
-        x: 5
+        x: 0
         "y": 0
         height: 5
         width: 3
@@ -949,7 +949,7 @@ liveboard:
         height: 5
         width: 12
       - visualization_id: Viz_9
-        x: 0
+        x: 3
         "y": 0
         height: 5
         width: 5

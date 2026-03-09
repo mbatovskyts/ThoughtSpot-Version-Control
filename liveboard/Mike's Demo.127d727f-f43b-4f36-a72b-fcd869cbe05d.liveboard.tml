@@ -896,6 +896,59 @@ liveboard:
         description: ""
       dynamic_name: Period Comparison Sales Report
     viz_guid: 6548ef98-05f5-4cbf-a3c0-6a60eef71d38
+  - id: Viz_18
+    answer:
+      name: "Region, sales share"
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      formulas:
+      - id: formula_sales share
+        name: sales share
+        expr: "[formula_Sales by Region] / [formula_Sales (all)] * 100"
+        was_auto_generated: false
+      - id: formula_Sales (all)
+        name: Sales (all)
+        expr: "group_aggregate ( sum ( [Sales] ) , { } , query_filters ( ) )"
+        was_auto_generated: false
+      - id: formula_Sales by Region
+        name: Sales by Region
+        expr: "group_aggregate ( sum ( [Sales] ) , query_groups ( ) , query_filters ( ) )"
+        was_auto_generated: false
+      search_query: "[formula_sales share] [Region] [Transaction Date] = 'january 2022'"
+      answer_columns:
+      - name: Region
+      - name: sales share
+      table:
+        table_columns:
+        - column_id: Region
+          show_headline: false
+        - column_id: sales share
+          show_headline: false
+        ordered_column_ids:
+        - Region
+        - sales share
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: MUZE_STUDIO
+        chart_columns:
+        - column_id: Region
+        - column_id: sales share
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Region\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"sales share\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"05d0d354-c226-4d4c-8b79-3bba0d8bba88\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"sales share\"],\"isOpposite\": false}},{\"id\": \"23a342fe-982f-4944-acc3-db0519207a24\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Region\"]}}],\"systemSeriesColors\": [{\"serieName\": \"east\",\"color\": \"#Fce800\"},{\"serieName\": \"midwest\",\"color\": \"#25fb8a\"},{\"serieName\": \"south\",\"color\": \"#A83Dff\"},{\"serieName\": \"southwest\",\"color\": \"#7177fd\"},{\"serieName\": \"west\",\"color\": \"#4E55fd\"}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Region
+            - sales share
+            mode: COLUMN_DRIVEN
+        custom_visual_props: "{}"
+      display_mode: CHART_MODE
+    viz_guid: b026006c-8606-42a1-ba68-299ac4b454f3
   filters:
   - column:
     - Retail Apparel with AGO With Instructions::Region
@@ -1021,6 +1074,7 @@ liveboard:
         "y": 28
         height: 8
         width: 12
+      - visualization_id: Viz_18
       id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2
   parameter_overrides:
   - key: 5df3f23f-7cdf-43a0-96a6-20c45704efac

@@ -918,6 +918,11 @@ liveboard:
     is_mandatory: false
     is_single_value: false
     display_name: ""
+  - column:
+    - Retail Apparel with AGO With Instructions::Global Date Filter
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
   layout:
     tabs:
     - name: Overview
@@ -1028,6 +1033,8 @@ liveboard:
     type: FILTER
   - name: Retail Apparel with AGO With Instructions::Date Column Picker
     type: PARAMETER
+  - name: Retail Apparel with AGO With Instructions::Global Date Filter
+    type: FILTER
   views:
   - view_guid: 9d7c1db1-89ad-4983-921b-caf3232fe7f7
     name: Midwest View
@@ -1040,6 +1047,11 @@ liveboard:
     - column:
       - Retail Apparel with AGO With Instructions::Product Category
       oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO With Instructions::Date Column Picker
@@ -1053,6 +1065,11 @@ liveboard:
     - column:
       - Retail Apparel with AGO With Instructions::Product Category
       oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO With Instructions::Date Column Picker

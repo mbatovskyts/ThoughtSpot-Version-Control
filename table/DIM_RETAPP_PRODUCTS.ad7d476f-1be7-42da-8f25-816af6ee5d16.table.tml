@@ -32,18 +32,6 @@ table:
       column_type: ATTRIBUTE
     db_column_properties:
       data_type: VARCHAR
-  rls_rules:
-    tables:
-    - name: DIM_RETAPP_PRODUCTS
-      fqn: ad7d476f-1be7-42da-8f25-816af6ee5d16
-    table_paths:
-    - id: DIM_RETAPP_PRODUCTS_1
-      table: DIM_RETAPP_PRODUCTS
-      column:
-      - Product Category
-    rules:
-    - name: RLS Rule Product Category
-      expr: "ts_groups = [DIM_RETAPP_PRODUCTS_1::Product Category] "
   properties:
     spotter_config:
       is_spotter_enabled: true

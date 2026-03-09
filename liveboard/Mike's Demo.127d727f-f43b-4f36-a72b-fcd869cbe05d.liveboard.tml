@@ -946,7 +946,7 @@ liveboard:
             - Region
             - sales share
             mode: COLUMN_DRIVEN
-        custom_visual_props: "{}"
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiUmVnaW9uIgogKiAic2FsZXMgc2hhcmUiCiAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogLS0tIEVORCAtLS0gCiAqLwoKY29uc3QgeyBtdXplLCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5IH0gPSB2aXo7CmNvbnN0IGRhdGEgPSBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5KCk7Cgpjb25zdCBDb2x1bW5GaWVsZCA9ICJSZWdpb24iOwpjb25zdCBSb3dGaWVsZCA9ICJzYWxlcyBzaGFyZSI7CgptdXplCiAgLmNhbnZhcygpCiAgLmNvbHVtbnMoW0NvbHVtbkZpZWxkXSkKICAucm93cyhbUm93RmllbGRdKQogIC5sYXllcnMoWwogICAgewogICAgICBtYXJrOiAiYmFyIiwKICAgICAgZW5jb2Rpbmc6IHsKICAgICAgICBsYWJlbDogZCA9PiAoZFtSb3dGaWVsZF0gKiAxMDApLnRvRml4ZWQoMikgKyAnJScKICAgICAgfSwKICAgICAgbGFiZWxQb3NpdGlvbjogIm91dHNpZGUiIC8vIG9yICJpbnNpZGUiLCAiYXBleCIsIGV0Yy4KICAgIH0sCiAgXSkKICAuZGF0YShkYXRhKQogIC5tb3VudCgiI2NoYXJ0Iik7Cg\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"aHRtbCwgYm9keSB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgd2lkdGg6IDEwMHZ3OwogIGhlaWdodDogMTAwdmg7CiAgb3ZlcmZsb3c6IGhpZGRlbjsKfQoKI2NoYXJ0IHsKICB3aWR0aDogMTAwJTsKICBoZWlnaHQ6IDEwMCU7Cn0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
       display_mode: CHART_MODE
     viz_guid: b026006c-8606-42a1-ba68-299ac4b454f3
   filters:

@@ -997,8 +997,17 @@ liveboard:
     is_single_value: false
     display_name: ""
   - column:
+    - Retail Apparel with AGO With Instructions::Transaction Date
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
     - Retail Apparel with AGO With Instructions::Region
     - (Sample) Retail - Apparel::region
+    oper: in
+    values:
+    - East
+    - Midwest
     excluded_visualizations:
     - Viz_5
     - Viz_6
@@ -1121,6 +1130,10 @@ liveboard:
         height: 8
         width: 6
       - visualization_id: Viz_19
+        x: 6
+        "y": 36
+        height: 8
+        width: 6
       id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2
   parameter_overrides:
   - key: 5df3f23f-7cdf-43a0-96a6-20c45704efac
@@ -1128,6 +1141,8 @@ liveboard:
       name: Retail Apparel with AGO With Instructions::Date Column Picker
   ordered_chips:
   - name: Retail Apparel with AGO With Instructions::Global Date Filter
+    type: FILTER
+  - name: Retail Apparel with AGO With Instructions::Transaction Date
     type: FILTER
   - name: Retail Apparel with AGO With Instructions::Region
     type: FILTER
@@ -1141,6 +1156,11 @@ liveboard:
     view_filters:
     - column:
       - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Transaction Date
       date_filter:
         type: EXACT_DATE
         oper: =
@@ -1161,6 +1181,11 @@ liveboard:
     view_filters:
     - column:
       - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Transaction Date
       date_filter:
         type: EXACT_DATE
         oper: =

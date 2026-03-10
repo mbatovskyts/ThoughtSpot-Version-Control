@@ -951,6 +951,11 @@ liveboard:
     viz_guid: b026006c-8606-42a1-ba68-299ac4b454f3
   filters:
   - column:
+    - Retail Apparel with AGO With Instructions::Global Date Filter
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
     - Retail Apparel with AGO With Instructions::Region
     - (Sample) Retail - Apparel::region
     excluded_visualizations:
@@ -968,11 +973,6 @@ liveboard:
     - Viz_14
     - Viz_5
     - Viz_6
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
-  - column:
-    - Retail Apparel with AGO With Instructions::Global Date Filter
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -1075,24 +1075,33 @@ liveboard:
         height: 8
         width: 12
       - visualization_id: Viz_18
+        x: 0
+        "y": 36
+        height: 8
+        width: 6
       id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2
   parameter_overrides:
   - key: 5df3f23f-7cdf-43a0-96a6-20c45704efac
     value:
       name: Retail Apparel with AGO With Instructions::Date Column Picker
   ordered_chips:
+  - name: Retail Apparel with AGO With Instructions::Global Date Filter
+    type: FILTER
   - name: Retail Apparel with AGO With Instructions::Region
     type: FILTER
   - name: Retail Apparel with AGO With Instructions::Product Category
     type: FILTER
   - name: Retail Apparel with AGO With Instructions::Date Column Picker
     type: PARAMETER
-  - name: Retail Apparel with AGO With Instructions::Global Date Filter
-    type: FILTER
   views:
   - view_guid: 9d7c1db1-89ad-4983-921b-caf3232fe7f7
     name: Midwest View
     view_filters:
+    - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
     - column:
       - Retail Apparel with AGO With Instructions::Region
       oper: in
@@ -1101,11 +1110,6 @@ liveboard:
     - column:
       - Retail Apparel with AGO With Instructions::Product Category
       oper: =
-    - column:
-      - Retail Apparel with AGO With Instructions::Global Date Filter
-      date_filter:
-        type: EXACT_DATE
-        oper: =
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO With Instructions::Date Column Picker
@@ -1114,16 +1118,16 @@ liveboard:
     name: test 2
     view_filters:
     - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
+    - column:
       - Retail Apparel with AGO With Instructions::Region
       oper: =
     - column:
       - Retail Apparel with AGO With Instructions::Product Category
       oper: =
-    - column:
-      - Retail Apparel with AGO With Instructions::Global Date Filter
-      date_filter:
-        type: EXACT_DATE
-        oper: =
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO With Instructions::Date Column Picker

@@ -1,0 +1,72 @@
+guid: 34986654-4993-44f0-ae62-81aa177eedae
+model:
+  name: BIBEK_FILTER_TEST
+  model_tables:
+  - name: BIBEK_FILTER_SAMPLE
+    fqn: 7160641e-4c88-4db1-bc18-b92cf924805a
+  formulas:
+  - id: formula_Combination of Destination & Source
+    name: Combination of Destination & Source
+    expr: concat ( [BIBEK_FILTER_SAMPLE::DESTINATION] , ',' , [BIBEK_FILTER_SAMPLE::SOURCE] )
+  - id: formula_Formula_for_source
+    name: Formula_for_source
+    expr: if ( [BIBEK_FILTER_SAMPLE::SOURCE] = [source_parm] ) then [BIBEK_FILTER_SAMPLE::SOURCE] else null
+  columns:
+  - name: Destination
+    column_id: BIBEK_FILTER_SAMPLE::DESTINATION
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Formula_for_source
+    formula_id: formula_Formula_for_source
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Concatenation of Destination & Source
+    formula_id: formula_Combination of Destination & Source
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Site Id
+    column_id: BIBEK_FILTER_SAMPLE::SITE_ID
+    properties:
+      column_type: ATTRIBUTE
+  - name: Source
+    column_id: BIBEK_FILTER_SAMPLE::SOURCE
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: false
+  parameters:
+  - id: 04426130-6dce-4614-9023-660c111c2ba3
+    name: destination_parm
+    data_type: CHAR
+    default_value: US Site
+    list_config:
+      list_choice:
+      - value: US Site
+      - value: Test Site 3
+      - value: Mayo Clinic
+      - value: US
+    description: ''
+  - id: 4249f552-81d7-4d03-a546-769416f8ba7d
+    name: site_parm
+    data_type: INT64
+    default_value: '1101'
+    description: ''
+  - id: e5836dfc-96af-4ee8-adb8-126ffabc67c4
+    name: source_parm
+    data_type: CHAR
+    default_value: '''Main US D|Supply Depot USA02'''
+    list_config:
+      list_choice:
+      - value: Supply Depot USA02
+      - value: US Depot
+      - value: Main US D
+      - value: '''Main US D|Supply Depot USA02'''
+        display_name: '''Main US D|Supply Depot USA02'''
+    description: ''

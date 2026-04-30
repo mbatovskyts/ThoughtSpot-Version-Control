@@ -1,0 +1,33 @@
+guid: 7160641e-4c88-4db1-bc18-b92cf924805a
+table:
+  name: BIBEK_FILTER_SAMPLE
+  db: TEST
+  schema: PS
+  db_table: BIBEK_FILTER_SAMPLE
+  connection:
+    name: WMoy_SF_Test_1
+    fqn: fde9cd71-f4b4-4719-a147-4c721f4ae894
+  columns:
+  - name: SITE_ID
+    db_column_name: SITE_ID
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: PREFIX_AND_SUBSTRING
+    db_column_properties:
+      data_type: INT64
+  - name: DESTINATION
+    db_column_name: DESTINATION
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  - name: SOURCE
+    db_column_name: SOURCE
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  properties:
+    spotter_config:
+      is_spotter_enabled: false

@@ -1,0 +1,103 @@
+guid: 3823777b-5809-4f37-afd9-1abd7756ad8e
+liveboard:
+  name: Bibek_Params
+  visualizations:
+  - id: Viz_1
+    answer:
+      name: "Copy of Example 1: Formula"
+      description: "Good For: one off answers, data experts. Relies on editing a formula with in clause to change selections. Must filter on formula column."
+      tables:
+      - id: BIBEK_FILTER_TEST
+        name: BIBEK_FILTER_TEST
+        fqn: 34986654-4993-44f0-ae62-81aa177eedae
+      formulas:
+      - id: formula_Formula to filter on
+        name: Formula to filter on
+        expr: "if ( [Site Id] in { 2202 } and ( [Destination] in { 'Mayo Clinic' } or sql_bool_op ( \"{0} IN (SELECT value FROM TABLE(FLATTEN(SPLIT({1}, '|'))))\" , [Source] , [source_parm] ) ) ) then true else false"
+        was_auto_generated: false
+      search_query: "[Site Id] [Destination] [Source] [Concatenation of Destination & Source] [formula_Formula to filter on]"
+      answer_columns:
+      - name: Concatenation of Destination & Source
+      - name: Destination
+      - name: Formula to filter on
+      - name: Site Id
+      - name: Source
+      table:
+        table_columns:
+        - column_id: Concatenation of Destination & Source
+          show_headline: false
+        - column_id: Destination
+          show_headline: false
+        - column_id: Formula to filter on
+          show_headline: false
+        - column_id: Site Id
+          show_headline: false
+        - column_id: Source
+          show_headline: false
+        ordered_column_ids:
+        - Site Id
+        - Destination
+        - Source
+        - Concatenation of Destination & Source
+        - Formula to filter on
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"widthState\": [{\"columnId\": \"Concatenation of Destination & Source\",\"width\": 295.0888977050781},{\"columnId\": \"Site Id\",\"width\": 198.0},{\"columnId\": \"Destination\",\"width\": 353.55743408203125},{\"columnId\": \"Source\",\"width\": 231.40084838867188}],\"wrapTableHeader\": true}"
+      chart:
+        type: SCATTER
+        chart_columns:
+        - column_id: Concatenation of Destination & Source
+        - column_id: Destination
+        - column_id: Formula to filter on
+        - column_id: Site Id
+        - column_id: Source
+        axis_configs:
+        - x:
+          - Concatenation of Destination & Source
+          "y":
+          - Formula to filter on
+          color:
+          - Source
+          - Site Id
+          - Destination
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Site Id\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Destination\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Source\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Concatenation of Destination & Source\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Formula to filter on\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"359a2d1a-0cfe-4af2-9b84-7d8e3e1adbca\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Formula to filter on\"],\"isOpposite\": false}},{\"id\": \"86a6f042-be68-4bc5-b61e-adb1c48f0568\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Concatenation of Destination & Source\"]}}]}"
+      display_mode: TABLE_MODE
+      parameter_values:
+      - key: destination_parm
+        value: Test Site 3
+      - key: source_parm
+        value: US Depot
+      dynamic_name: "Copy of Example 1: Formula"
+      dynamic_description: "Good For: one off answers, data experts. Relies on editing a formula with in clause to change selections. Must filter on formula column."
+    viz_guid: b7dce99b-4b3f-4c8d-9d66-b7271ee24e84
+  layout:
+    tiles:
+    - visualization_id: Viz_1
+      x: 0
+      "y": 0
+      height: 8
+      width: 12
+  parameter_overrides:
+  - key: e5836dfc-96af-4ee8-adb8-126ffabc67c4
+    value:
+      name: BIBEK_FILTER_TEST::source_parm
+      override_value: US Depot
+  ordered_chips:
+  - name: BIBEK_FILTER_TEST::source_parm
+    type: PARAMETER
+  style:
+    style_properties:
+    - name: lb_border_type
+      value: CURVED
+    - name: lb_brand_color
+      value: LBC_A
+    - name: hide_group_title
+      value: "false"
+    - name: hide_group_description
+      value: "true"
+    - name: hide_group_tile_description
+      value: "false"
+    - name: hide_tile_description
+      value: "false"
+    - name: kpi_hero_font_size
+      value: M

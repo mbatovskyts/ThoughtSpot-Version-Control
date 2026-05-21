@@ -1,0 +1,454 @@
+guid: 8a82bfb1-31de-4eac-965c-aee25cd89273
+model:
+  name: Retail_Banking_Model
+  model_tables:
+  - name: bank_customers.csv
+    fqn: a84343c9-ac37-48ee-92a6-d8d7fa24bbb1
+  - name: bank_cust_contact_details.csv
+    fqn: cc62fa04-259e-4359-8f7b-42cf7e0db685
+    joins:
+    - with: bank_customers.csv
+      referencing_join: bank_customers.csv_to_bank_cust_contact_details.csv
+  - name: bank_cust_credit_cards.csv
+    fqn: 0cae12c5-2233-4d3c-a0ac-5cd72ccedd99
+    joins:
+    - with: bank_customers.csv
+      referencing_join: bank_customers.csv_to_bank_cust_credit_cards.csv
+  - name: bank_cust_loans.csv
+    fqn: 5d36a29e-625a-4020-9ead-bc9de6f7326a
+    joins:
+    - with: bank_customers.csv
+      referencing_join: bank_customers.csv_to_bank_cust_loans.csv
+  - name: bank_cust_transactions.csv
+    fqn: 6e893934-ae30-41ad-a5a0-75fbca32f2b5
+    joins:
+    - with: bank_customers.csv
+      referencing_join: bank_cust_transactions.csv_to_bank_customers.csv
+  columns:
+  - name: Account Type
+    column_id: bank_customers.csv::account_type
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Account Category
+      - Account Classification
+      synonym_type: AUTO_GENERATED
+  - name: Age
+    column_id: bank_customers.csv::age
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Years
+      synonym_type: AUTO_GENERATED
+  - name: Annual Income
+    column_id: bank_customers.csv::annual_income
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Yearly Earnings
+      - Annual Revenue
+      synonym_type: AUTO_GENERATED
+  - name: Cust Id
+    column_id: bank_customers.csv::cust_id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Customer Identifier
+      - Customer Code
+      is_hidden: true
+      synonym_type: AUTO_GENERATED
+  - name: Customer Since
+    column_id: bank_customers.csv::customer_since
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Client Since
+      - Member Since
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: Employment Status
+    column_id: bank_customers.csv::employment_status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Job Status
+      - Work Status
+      synonym_type: AUTO_GENERATED
+  - name: First Name
+    column_id: bank_customers.csv::first_name
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Given Name
+      - Forename
+      synonym_type: AUTO_GENERATED
+  - name: Gender
+    column_id: bank_customers.csv::gender
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Sex
+      synonym_type: AUTO_GENERATED
+  - name: Last Name
+    column_id: bank_customers.csv::last_name
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Surname
+      - Family Name
+      synonym_type: AUTO_GENERATED
+  - name: Marital Status
+    column_id: bank_customers.csv::marital_status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Marriage Condition
+      - Relationship Status
+      synonym_type: AUTO_GENERATED
+  - name: Residence Status
+    column_id: bank_customers.csv::residence_status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Living Status
+      - Housing Status
+      synonym_type: AUTO_GENERATED
+  - name: Risk Score
+    column_id: bank_customers.csv::risk_score
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Risk Rating
+      - Risk Assessment
+      synonym_type: AUTO_GENERATED
+  - name: Ssn
+    column_id: bank_customers.csv::ssn
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Social Security Number
+      synonym_type: AUTO_GENERATED
+  - name: Addr Id
+    column_id: bank_cust_contact_details.csv::addr_id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Address Identifier
+      - Address Code
+      is_hidden: true
+      synonym_type: AUTO_GENERATED
+  - name: Address Type
+    column_id: bank_cust_contact_details.csv::address_type
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Address Category
+      - Address Classification
+      synonym_type: AUTO_GENERATED
+  - name: City
+    column_id: bank_cust_contact_details.csv::city
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Municipality
+      - Urban Area
+      synonym_type: AUTO_GENERATED
+  - name: Country
+    column_id: bank_cust_contact_details.csv::country
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Nation
+      - Sovereign State
+      synonym_type: AUTO_GENERATED
+  - name: Email
+    column_id: bank_cust_contact_details.csv::email
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Electronic Mail
+      synonym_type: AUTO_GENERATED
+  - name: Latitude
+    column_id: bank_cust_contact_details.csv::latitude
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Latitudinal Coordinate
+      - Lat
+      synonym_type: AUTO_GENERATED
+  - name: Longitude
+    column_id: bank_cust_contact_details.csv::longitude
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Longitudinal Coordinate
+      - East-West Position
+      synonym_type: AUTO_GENERATED
+  - name: Phone
+    column_id: bank_cust_contact_details.csv::phone
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Contact Number
+      synonym_type: AUTO_GENERATED
+  - name: State
+    column_id: bank_cust_contact_details.csv::state
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Province
+      - Region
+      synonym_type: AUTO_GENERATED
+  - name: Time Zone
+    column_id: bank_cust_contact_details.csv::time_zone
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Time Region
+      - Time Area
+      synonym_type: AUTO_GENERATED
+  - name: Card Id
+    column_id: bank_cust_credit_cards.csv::card_id
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Card Reference
+      is_hidden: true
+      synonym_type: AUTO_GENERATED
+  - name: Card Limit
+    column_id: bank_cust_credit_cards.csv::card_limit
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Card Maximum
+      - Card Ceiling
+      synonym_type: AUTO_GENERATED
+  - name: Card Number
+    column_id: bank_cust_credit_cards.csv::card_number
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Card Code
+      - Card Digit
+      synonym_type: AUTO_GENERATED
+  - name: Card Type
+    column_id: bank_cust_credit_cards.csv::card_type
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Card Category
+      - Card Classification
+      synonym_type: AUTO_GENERATED
+  - name: Credit Utilisation
+    column_id: bank_cust_credit_cards.csv::credit_utilisation
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Credit Usage
+      - Credit Consumption
+      synonym_type: AUTO_GENERATED
+  - name: Expiry Date
+    column_id: bank_cust_credit_cards.csv::expiry_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Expiration Date
+      - End Date
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: credit_Issue Date
+    column_id: bank_cust_credit_cards.csv::issue_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Credit Start Date
+      - Credit Origination Date
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: credit_Status
+    column_id: bank_cust_credit_cards.csv::status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Credit Condition
+      - Credit State
+      synonym_type: AUTO_GENERATED
+  - name: Due Date
+    column_id: bank_cust_loans.csv::due_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Deadline
+      - Due Day
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: Loan_Interest Rate
+    column_id: bank_cust_loans.csv::interest_rate
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Loan Rate
+      - Interest Percentage
+      synonym_type: AUTO_GENERATED
+  - name: Loan_Issue Date
+    column_id: bank_cust_loans.csv::issue_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Loan Start Date
+      - Loan Origination Date
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: Loan Amount
+    column_id: bank_cust_loans.csv::loan_amount
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Loan Sum
+      - Loan Value
+      synonym_type: AUTO_GENERATED
+  - name: Loan Id
+    column_id: bank_cust_loans.csv::loan_id
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Loan Number
+      - Loan Reference
+      is_hidden: true
+      synonym_type: AUTO_GENERATED
+  - name: Loan Tenure
+    column_id: bank_cust_loans.csv::loan_tenure
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Loan Duration
+      - Loan Term
+      synonym_type: AUTO_GENERATED
+  - name: Loan Type
+    column_id: bank_cust_loans.csv::loan_type
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Loan Category
+      - Loan Classification
+      synonym_type: AUTO_GENERATED
+  - name: Loan_Pending Amount
+    column_id: bank_cust_loans.csv::pending_amount
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Loan Outstanding Amount
+      - Loan Due Amount
+      synonym_type: AUTO_GENERATED
+  - name: Loan_Pending Tenure
+    column_id: bank_cust_loans.csv::pending_tenure
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Remaining Loan Tenure
+      - Outstanding Loan Duration
+      synonym_type: AUTO_GENERATED
+  - name: Loan_Status
+    column_id: bank_cust_loans.csv::status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Loan Condition
+      - Loan State
+      synonym_type: AUTO_GENERATED
+  - name: Transaction_Amount
+    column_id: bank_cust_transactions.csv::amount
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Transaction Value
+      - Transaction Sum
+      synonym_type: AUTO_GENERATED
+  - name: Transaction_Channel
+    column_id: bank_cust_transactions.csv::channel
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Transaction Medium
+      - Transaction Pathway
+      synonym_type: AUTO_GENERATED
+  - name: Transaction_Description
+    column_id: bank_cust_transactions.csv::description
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Transaction Details
+      - Transaction Summary
+      synonym_type: AUTO_GENERATED
+  - name: Transaction_Status
+    column_id: bank_cust_transactions.csv::status
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Transaction Condition
+      - Transaction State
+      synonym_type: AUTO_GENERATED
+  - name: Tran Type
+    column_id: bank_cust_transactions.csv::tran_type
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Transaction Type
+      - Tran Category
+      synonym_type: AUTO_GENERATED
+  - name: Tran Date
+    column_id: bank_cust_transactions.csv::trand_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Transaction Date
+      - Tran Timestamp
+      format_pattern: yyyy-MM-dd
+      synonym_type: AUTO_GENERATED
+  - name: Transaction Id
+    column_id: bank_cust_transactions.csv::transaction_id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Transaction Code
+      - Transaction Number
+      is_hidden: true
+      synonym_type: AUTO_GENERATED
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true

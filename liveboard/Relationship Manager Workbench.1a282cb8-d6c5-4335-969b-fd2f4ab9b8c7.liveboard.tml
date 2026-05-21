@@ -1,0 +1,1288 @@
+guid: 1a282cb8-d6c5-4335-969b-fd2f4ab9b8c7
+liveboard:
+  name: Relationship Manager Workbench
+  description: "This Liveboard guides Relationship Managers through their daily workflow - from morning portfolio reviews and customer segmentation, through midday credit analysis, to afternoon loan portfolio management."
+  visualizations:
+  - id: Viz_1
+    answer:
+      name: Transaction Amount by State
+      description: Geo bubble chart of state transactions.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Transaction_Amount] [State]"
+      answer_columns:
+      - name: State
+      - name: Total Transaction_Amount
+      table:
+        table_columns:
+        - column_id: State
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Transaction_Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - State
+        - Total Transaction_Amount
+        client_state: ""
+      chart:
+        type: GEO_BUBBLE
+        chart_columns:
+        - column_id: State
+        - column_id: Total Transaction_Amount
+        axis_configs:
+        - x:
+          - State
+          "y":
+          - Total Transaction_Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 4cd90b13-4376-438b-a166-2d0a6fe4531b
+  - id: Viz_2
+    answer:
+      name: Monthly Customer Count Since Trend
+      description: Customer count over time by month.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "count [Customer Since] [Customer Since].monthly"
+      answer_columns:
+      - name: Month(Customer Since)
+      - name: Number of Customer Since
+      table:
+        table_columns:
+        - column_id: Month(Customer Since)
+          headline_aggregation: MIN-MAX
+        - column_id: Number of Customer Since
+          headline_aggregation: AVERAGE
+        ordered_column_ids:
+        - Month(Customer Since)
+        - Number of Customer Since
+        client_state: ""
+      chart:
+        type: AREA
+        chart_columns:
+        - column_id: Month(Customer Since)
+        - column_id: Number of Customer Since
+        axis_configs:
+        - x:
+          - Month(Customer Since)
+          "y":
+          - Number of Customer Since
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 27833666-fc16-4acf-b384-e42d1396fabc
+  - id: Viz_3
+    answer:
+      name: Loan Amount by Type Status
+      description: Waterfall chart showing loan distribution breakdown.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Loan Amount] [Loan_Status] [Loan Type]"
+      answer_columns:
+      - name: Loan Type
+      - name: Loan_Status
+      - name: Total Loan Amount
+      table:
+        table_columns:
+        - column_id: Loan Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Loan_Status
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Loan Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Loan_Status
+        - Loan Type
+        - Total Loan Amount
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Loan_Status\",\"columnProperty\": {}},{\"columnId\": \"Loan Type\",\"columnProperty\": {}},{\"columnId\": \"Total Loan Amount\",\"columnProperty\": {}}]}"
+      chart:
+        type: WATERFALL
+        chart_columns:
+        - column_id: Loan Type
+        - column_id: Loan_Status
+        - column_id: Total Loan Amount
+        axis_configs:
+        - x:
+          - Loan_Status
+          "y":
+          - Total Loan Amount
+          color:
+          - Loan Type
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":{\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"backgroundOpacity\\\":0,\\\"borderWidth\\\":0}},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"dataFieldArea\": \"column\",\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Loan_Status\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null},\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Loan Type\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Loan Amount\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"23eee34a-33f8-4cc9-8a1e-8f81b09537ec\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Loan Amount\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"9cf484e0-104d-4573-a67a-8df842aa61d4\\\",\\\"key\\\":\\\"nameTextStyle\\\"},\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"9cf484e0-104d-4573-a67a-8df842aa61d4\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"9cf484e0-104d-4573-a67a-8df842aa61d4\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Loan_Status\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"systemSeriesColors\": [{\"serieName\": \"auto\",\"color\": \"#2E75F0\"},{\"serieName\": \"business\",\"color\": \"#48D1E0\"},{\"serieName\": \"home\",\"color\": \"#FCC838\"},{\"serieName\": \"personal\",\"color\": \"#06BF7F\"}]}"
+        viz_style: "{}"
+      display_mode: CHART_MODE
+    viz_guid: e59aea9c-78c7-4444-b19e-836754786197
+  - id: Viz_4
+    answer:
+      name: Monthly Pending Loans by Type
+      description: "Loan pending amounts by month, type."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Loan_Pending Amount] [Loan_Issue Date].monthly [Loan Type]"
+      answer_columns:
+      - name: Loan Type
+      - name: Month(Loan_Issue Date)
+      - name: Total Loan_Pending Amount
+      table:
+        table_columns:
+        - column_id: Loan Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Month(Loan_Issue Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Loan_Pending Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Loan_Issue Date)
+        - Loan Type
+        - Total Loan_Pending Amount
+        client_state: ""
+      chart:
+        type: AREA
+        chart_columns:
+        - column_id: Loan Type
+        - column_id: Month(Loan_Issue Date)
+        - column_id: Total Loan_Pending Amount
+        axis_configs:
+        - x:
+          - Month(Loan_Issue Date)
+          "y":
+          - Total Loan_Pending Amount
+          color:
+          - Loan Type
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 449d9e26-9401-49ef-87ce-56f9ba2906ae
+  - id: Viz_5
+    answer:
+      name: Loan Metrics by Type
+      description: "Interest, amount, tenure comparison by type."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Loan_Interest Rate] [Loan Amount] [Loan_Pending Tenure] [Loan Type]"
+      answer_columns:
+      - name: Loan Type
+      - name: Total Loan Amount
+      - name: Total Loan_Interest Rate
+      - name: Total Loan_Pending Tenure
+      table:
+        table_columns:
+        - column_id: Loan Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Loan Amount
+          headline_aggregation: SUM
+        - column_id: Total Loan_Interest Rate
+          headline_aggregation: SUM
+        - column_id: Total Loan_Pending Tenure
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Loan Type
+        - Total Loan_Interest Rate
+        - Total Loan Amount
+        - Total Loan_Pending Tenure
+        client_state: ""
+      chart:
+        type: BUBBLE
+        chart_columns:
+        - column_id: Loan Type
+        - column_id: Total Loan Amount
+        - column_id: Total Loan_Interest Rate
+        - column_id: Total Loan_Pending Tenure
+        axis_configs:
+        - x:
+          - Total Loan_Interest Rate
+          "y":
+          - Total Loan Amount
+          color:
+          - Loan Type
+          size: Total Loan_Pending Tenure
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 9be65d2d-3d89-46e5-bd35-67f292d57836
+  - id: Viz_6
+    answer:
+      name: Account to Card Transaction Flow
+      description: "Sankey flow showing transactions across account types, card types, and statuses."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Transaction_Amount] [Transaction_Status] [Account Type] [Card Type]"
+      answer_columns:
+      - name: Account Type
+      - name: Card Type
+      - name: Total Transaction_Amount
+      - name: Transaction_Status
+      table:
+        table_columns:
+        - column_id: Account Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Card Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Transaction_Amount
+          headline_aggregation: SUM
+        - column_id: Transaction_Status
+          headline_aggregation: COUNT_DISTINCT
+        ordered_column_ids:
+        - Transaction_Status
+        - Account Type
+        - Card Type
+        - Total Transaction_Amount
+        client_state: ""
+      chart:
+        type: SANKEY
+        chart_columns:
+        - column_id: Account Type
+        - column_id: Card Type
+        - column_id: Total Transaction_Amount
+        - column_id: Transaction_Status
+        axis_configs:
+        - x:
+          - Transaction_Status
+          - Card Type
+          - Account Type
+          "y":
+          - Total Transaction_Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 9b46998e-c82d-4459-b04b-854c6e9f966b
+  - id: Viz_7
+    answer:
+      name: Risk Score vs Annual Income
+      description: Risk and income analysis by employment status.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Employment Status] by [Annual Income] by [Risk Score]"
+      answer_columns:
+      - name: Annual Income
+      - name: Employment Status
+      - name: Risk Score
+      table:
+        table_columns:
+        - column_id: Annual Income
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Employment Status
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Risk Score
+          headline_aggregation: COUNT_DISTINCT
+        ordered_column_ids:
+        - Employment Status
+        - Annual Income
+        - Risk Score
+        client_state: ""
+      chart:
+        type: SCATTER
+        chart_columns:
+        - column_id: Annual Income
+        - column_id: Employment Status
+        - column_id: Risk Score
+        axis_configs:
+        - x:
+          - Annual Income
+          "y":
+          - Risk Score
+          color:
+          - Employment Status
+        client_state: ""
+      display_mode: TABLE_MODE
+    viz_guid: 23b81bf6-ab74-47a7-9675-9c92ecd8ae3e
+  - id: Viz_8
+    viz_guid: 3af2b13f-82eb-4d06-afa8-dc01e196b40b
+    note_tile:
+      html_parsed_string: |-
+        <h2>Portfolio Insights & Highlights</h2>
+        <br>
+        <body>This Liveboard provides a comprehensive daily workflow for Relationship Managers. Key highlights include:</body>
+        <ul>
+        <li><strong>Customer Portfolio</strong> - Monitor total customer base and geographic distribution across states to identify high-value segments.</li>
+        <li><strong>Transaction Health</strong> - Track transaction volumes and patterns to spot anomalies and engagement opportunities.</li>
+        <li><strong>Loan Portfolio</strong> - Review total loan exposure, pending amounts, and repayment progress by loan type.</li>
+        <li><strong>Risk Management</strong> - Average risk scores help prioritize customers needing attention.</li>
+        <li><strong>Credit Utilisation</strong> - Monitor credit usage patterns across card types to identify upsell opportunities or credit limit adjustments.</li>
+        </ul>
+  - id: Viz_9
+    answer:
+      name: Monthly New Customer Count Trend
+      description: Unique customers tracked by join date.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "unique count [Cust Id] [Customer Since].monthly"
+      answer_columns:
+      - name: Month(Customer Since)
+      - name: Unique Number of Cust Id
+      table:
+        table_columns:
+        - column_id: Month(Customer Since)
+          headline_aggregation: MIN-MAX
+        - column_id: Unique Number of Cust Id
+          headline_aggregation: AVERAGE
+        ordered_column_ids:
+        - Month(Customer Since)
+        - Unique Number of Cust Id
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Customer Since)
+        - column_id: Unique Number of Cust Id
+        axis_configs:
+        - x:
+          - Month(Customer Since)
+          "y":
+          - Unique Number of Cust Id
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: b1a0b306-535a-4abd-a9fb-885194601cc6
+  - id: Viz_10
+    answer:
+      name: Monthly Transaction Amount Trend
+      description: Sum of transactions over time monthly.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "sum [Transaction_Amount] [Tran Date].monthly"
+      answer_columns:
+      - name: Month(Tran Date)
+      - name: Total Transaction_Amount
+      table:
+        table_columns:
+        - column_id: Month(Tran Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Transaction_Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Tran Date)
+        - Total Transaction_Amount
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Tran Date)
+        - column_id: Total Transaction_Amount
+        axis_configs:
+        - x:
+          - Month(Tran Date)
+          "y":
+          - Total Transaction_Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 0ad7df39-3bf1-4807-bd8a-a0fce111d2f1
+  - id: Viz_11
+    answer:
+      name: Monthly Loan Amount Trend
+      description: Total loan amounts by issue month.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "sum [Loan Amount] [Loan_Issue Date].monthly"
+      answer_columns:
+      - name: Month(Loan_Issue Date)
+      - name: Total Loan Amount
+      table:
+        table_columns:
+        - column_id: Month(Loan_Issue Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Loan Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Loan_Issue Date)
+        - Total Loan Amount
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Loan_Issue Date)
+        - column_id: Total Loan Amount
+        axis_configs:
+        - x:
+          - Month(Loan_Issue Date)
+          "y":
+          - Total Loan Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 36561926-81a1-4155-918b-7f190c10d113
+  - id: Viz_12
+    answer:
+      name: Monthly Average Risk Score Trend
+      description: Customer risk score trends over time.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "average [Risk Score] [Customer Since].monthly"
+      answer_columns:
+      - name: Average Risk Score
+      - name: Month(Customer Since)
+      table:
+        table_columns:
+        - column_id: Average Risk Score
+          headline_aggregation: TABLE_AGGR
+        - column_id: Month(Customer Since)
+          headline_aggregation: MIN-MAX
+        ordered_column_ids:
+        - Month(Customer Since)
+        - Average Risk Score
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Average Risk Score
+        - column_id: Month(Customer Since)
+        axis_configs:
+        - x:
+          - Month(Customer Since)
+          "y":
+          - Average Risk Score
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: b008a09f-947e-410f-928d-f5aff5050e7d
+  - id: Viz_13
+    answer:
+      name: Monthly Credit Utilisation Trend
+      description: Credit utilisation sum by issue date.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "sum [Credit Utilisation] [credit_Issue Date].monthly"
+      answer_columns:
+      - name: Month(credit_Issue Date)
+      - name: Total Credit Utilisation
+      table:
+        table_columns:
+        - column_id: Month(credit_Issue Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Credit Utilisation
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(credit_Issue Date)
+        - Total Credit Utilisation
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(credit_Issue Date)
+        - column_id: Total Credit Utilisation
+        axis_configs:
+        - x:
+          - Month(credit_Issue Date)
+          "y":
+          - Total Credit Utilisation
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 6120ad7a-bb3a-4856-8e22-760dfa96f84e
+  - id: Viz_14
+    answer:
+      name: Monthly Customer Acquisition Trend
+      description: Average unique customers tracked over time.
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      formulas:
+      - id: formula_average unique count cust id
+        name: average unique count cust id
+        expr: "average ( group_aggregate ( unique count ( [Cust Id] ) , query_groups ( ) , query_filters ( ) ) )"
+        was_auto_generated: false
+      search_query: "[formula_average unique count cust id] [Customer Since].monthly"
+      answer_columns:
+      - name: Month(Customer Since)
+      - name: average unique count cust id
+      table:
+        table_columns:
+        - column_id: Month(Customer Since)
+          headline_aggregation: MIN-MAX
+        - column_id: average unique count cust id
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Customer Since)
+        - average unique count cust id
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Customer Since)
+        - column_id: average unique count cust id
+        axis_configs:
+        - x:
+          - Month(Customer Since)
+          "y":
+          - average unique count cust id
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 34d0acc4-82cb-48e4-adc4-c4ed25a2a8e8
+  - id: Viz_15
+    answer:
+      name: Retail Portfolio Health Check
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Transaction_Status] average [Risk Score] [Loan_Status] [Loan Type] [Credit Utilisation]"
+      answer_columns:
+      - name: Average Risk Score
+      - name: Loan Type
+      - name: Loan_Status
+      - name: Total Credit Utilisation
+      - name: Transaction_Status
+      table:
+        table_columns:
+        - column_id: Average Risk Score
+          headline_aggregation: TABLE_AGGR
+        - column_id: Loan Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Loan_Status
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Credit Utilisation
+          headline_aggregation: SUM
+        - column_id: Transaction_Status
+          headline_aggregation: COUNT_DISTINCT
+        ordered_column_ids:
+        - Transaction_Status
+        - Loan_Status
+        - Loan Type
+        - Average Risk Score
+        - Total Credit Utilisation
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Average Risk Score
+        - column_id: Loan Type
+        - column_id: Loan_Status
+        - column_id: Total Credit Utilisation
+        - column_id: Transaction_Status
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Transaction_Status\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Loan_Status\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Loan Type\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Average Risk Score\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Credit Utilisation\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"607ed75a-ee17-447c-9db2-e3a5d3445296\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Average Risk Score\"],\"isOpposite\": false}},{\"id\": \"2f784dac-8d13-4295-b010-eb9df6c17e6b\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Credit Utilisation\"],\"isOpposite\": true}},{\"id\": \"d5074b88-536d-4657-83e5-5483483a005b\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Transaction_Status\",\"Loan_Status\",\"Loan Type\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Transaction_Status
+            - Loan_Status
+            - Loan Type
+            - Average Risk Score
+            - Total Credit Utilisation
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIlRyYW5zYWN0aW9uX1N0YXR1cyIKICAgKiAiTG9hbl9TdGF0dXMiCiAgICogIkxvYW4gVHlwZSIKICAgKiAiQXZlcmFnZSBSaXNrIFNjb3JlIgogICAqICJUb3RhbCBDcmVkaXQgVXRpbGlzYXRpb24iCiAgICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogLS0tIEVORCAtLS0KICAgKi8KCiAgY29uc3QgQ09ORklHID0gewogICAgU1RBVFVTX0NPTDogICJUcmFuc2FjdGlvbl9TdGF0dXMiLAogICAgUklTS19DT0w6ICAgICJBdmVyYWdlIFJpc2sgU2NvcmUiLAogICAgTE9BTl9TVEFUVVM6ICJMb2FuX1N0YXR1cyIsCiAgICBMT0FOX1RZUEU6ICAgIkxvYW4gVHlwZSIsCiAgICBVVElMX0NPTDogICAgIlRvdGFsIENyZWRpdCBVdGlsaXNhdGlvbiIKICB9OwoKICBjb25zdCBDT0xPUlMgPSB7CiAgICByZWQ6ICAgIHsgZmlsbDogJyNlZjQ3NmYnLCB0cmFjazogJyNmZGU4ZWQnIH0sCiAgICBhbWJlcjogIHsgZmlsbDogJyNmNTllMGInLCB0cmFjazogJyNmZWY5ZTcnIH0sCiAgICBvcmFuZ2U6IHsgZmlsbDogJyNmZjlmMWMnLCB0cmFjazogJyNmZmY0ZTAnIH0KICB9OwoKICBjb25zdCB7IGdldERhdGFGcm9tU2VhcmNoUXVlcnkgfSA9IHZpejsKCiAgZnVuY3Rpb24gZm10KHYsIGlzUGVyY2VudCwgZGVjaW1hbHMgPSAxKSB7CiAgICBpZiAoaXNQZXJjZW50KSByZXR1cm4gdi50b0ZpeGVkKGRlY2ltYWxzKSArICclJzsKICAgIGlmICh2ID49IDFlOSkgIHJldHVybiAodiAvIDFlOSkudG9GaXhlZCgxKSArICdCJzsKICAgIGlmICh2ID49IDFlNikgIHJldHVybiAodiAvIDFlNikudG9GaXhlZCgxKSArICdNJzsKICAgIGlmICh2ID49IDFlMykgIHJldHVybiAodiAvIDFlMykudG9GaXhlZCgxKSArICdLJzsKICAgIHJldHVybiB2LnRvRml4ZWQoZGVjaW1hbHMpOwogIH0KCiAgZnVuY3Rpb24gYW5pbWF0ZVZhbHVlKGVsLCB0YXJnZXQsIGR1cmF0aW9uLCByZW5kZXJGbikgewogICAgY29uc3Qgc3RhcnQgPSBwZXJmb3JtYW5jZS5ub3coKTsKICAgIGNvbnN0IHRpY2sgID0gKG5vdykgPT4gewogICAgICBjb25zdCB0ICAgICA9IE1hdGgubWluKChub3cgLSBzdGFydCkgLyBkdXJhdGlvbiwgMSk7CiAgICAgIGNvbnN0IGVhc2VkID0gMSAtIE1hdGgucG93KDEgLSB0LCAzKTsKICAgICAgZWwudGV4dENvbnRlbnQgPSByZW5kZXJGbih0YXJnZXQgKiBlYXNlZCk7CiAgICAgIGlmICh0IDwgMSkgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKHRpY2spOwogICAgfTsKICAgIHJlcXVlc3RBbmltYXRpb25GcmFtZSh0aWNrKTsKICB9CgogIGZ1bmN0aW9uIG1ha2VEb251dChpZCwgdmFsdWUsIG1heCwgY29sb3JLZXkpIHsKICAgIGNvbnN0IGMgICA9IENPTE9SU1tjb2xvcktleV07CiAgICBjb25zdCBjdHggPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChpZCk7CiAgICBuZXcgQ2hhcnQoY3R4LCB7CiAgICAgIHR5cGU6ICdkb3VnaG51dCcsCiAgICAgIGRhdGE6IHsKICAgICAgICBkYXRhc2V0czogW3sKICAgICAgICAgIGRhdGE6ICAgICAgICAgICAgW3ZhbHVlLCBNYXRoLm1heCgwLCBtYXggLSB2YWx1ZSldLAogICAgICAgICAgYmFja2dyb3VuZENvbG9yOiBbYy5maWxsLCBjLnRyYWNrXSwKICAgICAgICAgIGJvcmRlcldpZHRoOiAgICAgMCwKICAgICAgICAgIGJvcmRlclJhZGl1czogICAgMwogICAgICAgIH1dCiAgICAgIH0sCiAgICAgIG9wdGlvbnM6IHsKICAgICAgICByZXNwb25zaXZlOiAgZmFsc2UsCiAgICAgICAgY3V0b3V0OiAgICAgICc3NSUnLAogICAgICAgIGFuaW1hdGlvbjogICB7IGR1cmF0aW9uOiAxMjAwLCBlYXNpbmc6ICdlYXNlT3V0Q3ViaWMnIH0sCiAgICAgICAgcGx1Z2luczogICAgIHsgbGVnZW5kOiB7IGRpc3BsYXk6IGZhbHNlIH0sIHRvb2x0aXA6IHsgZW5hYmxlZDogZmFsc2UgfSB9LAogICAgICAgIGV2ZW50czogICAgICBbXQogICAgICB9CiAgICB9KTsKICB9CgogIChhc3luYyBmdW5jdGlvbiAoKSB7CiAgICBjb25zdCByYXcgICAgPSBhd2FpdCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5KCk7CiAgICBjb25zdCByZXN1bHQgPSByYXcuZ2V0RGF0YSgpOwogICAgY29uc3QgZGF0YSAgID0gcmVzdWx0LmRhdGE7CiAgICBjb25zdCBzY2hlbWEgPSByZXN1bHQuc2NoZW1hOwoKICAgIGNvbnN0IHN0YXR1c0lkeCA9IHNjaGVtYS5maW5kSW5kZXgoZiA9PiBmLm5hbWUgPT09IENPTkZJRy5TVEFUVVNfQ09MKTsKICAgIGNvbnN0IHJpc2tJZHggICA9IHNjaGVtYS5maW5kSW5kZXgoZiA9PiBmLm5hbWUgPT09IENPTkZJRy5SSVNLX0NPTCk7CiAgICBjb25zdCBsb2FuU3RJZHggPSBzY2hlbWEuZmluZEluZGV4KGYgPT4gZi5uYW1lID09PSBDT05GSUcuTE9BTl9TVEFUVVMpOwogICAgY29uc3QgbG9hblR5SWR4ID0gc2NoZW1hLmZpbmRJbmRleChmID0+IGYubmFtZSA9PT0gQ09ORklHLkxPQU5fVFlQRSk7CiAgICBjb25zdCB1dGlsSWR4ICAgPSBzY2hlbWEuZmluZEluZGV4KGYgPT4gZi5uYW1lID09PSBDT05GSUcuVVRJTF9DT0wpOwoKICAgIC8vIDEuIFRyYW5zYWN0aW9uIGZhaWx1cmUgcmF0ZQogICAgbGV0IGZhaWxlZCA9IDAsIHRvdGFsVHhuID0gMDsKICAgIGRhdGEuZm9yRWFjaChyb3cgPT4gewogICAgICBjb25zdCBzID0gcm93W3N0YXR1c0lkeF07CiAgICAgIGlmICghcykgcmV0dXJuOwogICAgICB0b3RhbFR4bisrOwogICAgICBpZiAocyA9PT0gJ0ZhaWxlZCcpIGZhaWxlZCsrOwogICAgfSk7CiAgICBjb25zdCBmYWlsUmF0ZSA9IHRvdGFsVHhuID4gMCA/IChmYWlsZWQgLyB0b3RhbFR4bikgKiAxMDAgOiAwOwoKICAgIC8vIDIuIEF2ZyByaXNrIHNjb3JlIOKAlCBmaWx0ZXIgdG8gdmFsaWQgMzAwLTg1MCByYW5nZQogICAgY29uc3Qgcmlza1ZhbHMgPSBkYXRhCiAgICAgIC5tYXAociA9PiBOdW1iZXIocltyaXNrSWR4XSkpCiAgICAgIC5maWx0ZXIodiA9PiAhaXNOYU4odikgJiYgdiA+PSAzMDAgJiYgdiA8PSA4NTApOwogICAgY29uc3QgYXZnUmlzayA9IHJpc2tWYWxzLmxlbmd0aAogICAgICA/IHJpc2tWYWxzLnJlZHVjZSgoYSwgYikgPT4gYSArIGIsIDApIC8gcmlza1ZhbHMubGVuZ3RoCiAgICAgIDogMDsKCiAgICAvLyAzLiBCdXNpbmVzcyBsb2FuIGRlZmF1bHQgcmF0ZQogICAgbGV0IGJpelRvdGFsID0gMCwgYml6RGVmYXVsdCA9IDA7CiAgICBkYXRhLmZvckVhY2gocm93ID0+IHsKICAgICAgaWYgKHJvd1tsb2FuVHlJZHhdICE9PSAnQnVzaW5lc3MnKSByZXR1cm47CiAgICAgIGJpelRvdGFsKys7CiAgICAgIGlmIChyb3dbbG9hblN0SWR4XSA9PT0gJ0RlZmF1bHRlZCcpIGJpekRlZmF1bHQrKzsKICAgIH0pOwogICAgY29uc3QgZGVmYXVsdFJhdGUgPSBiaXpUb3RhbCA+IDAgPyAoYml6RGVmYXVsdCAvIGJpelRvdGFsKSAqIDEwMCA6IDA7CgogICAgLy8gNC4gQXZnIGNyZWRpdCB1dGlsaXNhdGlvbiDigJQgYXV0by1kZXRlY3QgMC0xIHZzIDAtMTAwIHNjYWxlCiAgICBjb25zdCB1dGlsVmFscyA9IGRhdGEKICAgICAgLm1hcChyID0+IE51bWJlcihyW3V0aWxJZHhdKSkKICAgICAgLmZpbHRlcih2ID0+ICFpc05hTih2KSk7CiAgICBjb25zdCByYXdBdmdVdGlsID0gdXRpbFZhbHMubGVuZ3RoCiAgICAgID8gdXRpbFZhbHMucmVkdWNlKChhLCBiKSA9PiBhICsgYiwgMCkgLyB1dGlsVmFscy5sZW5ndGgKICAgICAgOiAwOwogICAgY29uc3QgYXZnVXRpbCA9IHJhd0F2Z1V0aWwgPD0gMSA/IHJhd0F2Z1V0aWwgKiAxMDAgOiByYXdBdmdVdGlsOwoKICAgIC8vIEFuaW1hdGUgbnVtYmVycwogICAgYW5pbWF0ZVZhbHVlKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd2YWwtZmFpbCcpLCAgICBmYWlsUmF0ZSwgICAgMTIwMCwgdiA9PiBmbXQodiwgdHJ1ZSwgIDEpKTsKICAgIGFuaW1hdGVWYWx1ZShkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndmFsLXJpc2snKSwgICAgYXZnUmlzaywgICAgIDEyMDAsIHYgPT4gZm10KHYsIGZhbHNlLCAwKSk7CiAgICBhbmltYXRlVmFsdWUoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3ZhbC1kZWZhdWx0JyksIGRlZmF1bHRSYXRlLCAxMjAwLCB2ID0+IGZtdCh2LCB0cnVlLCAgMSkpOwogICAgYW5pbWF0ZVZhbHVlKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd2YWwtdXRpbCcpLCAgICBhdmdVdGlsLCAgICAgMTIwMCwgdiA9PiBmbXQodiwgdHJ1ZSwgIDEpKTsKCiAgICAvLyBEb251dHMgYWZ0ZXIgc2hvcnQgZGVsYXkgdG8gZW5zdXJlIGNhbnZhcyBpcyBpbiBET00KICAgIHNldFRpbWVvdXQoKCkgPT4gewogICAgICBtYWtlRG9udXQoJ2RvbnV0LWZhaWwnLCAgICBmYWlsUmF0ZSwgICAgMTAwLCAncmVkJyk7CiAgICAgIG1ha2VEb251dCgnZG9udXQtcmlzaycsICAgIGF2Z1Jpc2ssICAgICA4NTAsICdhbWJlcicpOwogICAgICBtYWtlRG9udXQoJ2RvbnV0LWRlZmF1bHQnLCBkZWZhdWx0UmF0ZSwgMTAwLCAnb3JhbmdlJyk7CiAgICAgIG1ha2VEb251dCgnZG9udXQtdXRpbCcsICAgIGF2Z1V0aWwsICAgICAxMDAsICdhbWJlcicpOwogICAgfSwgNTApOwoKICB9KSgpLmNhdGNoKGVyciA9PiBjb25zb2xlLmVycm9yKCdLUEkgZXJyb3I6JywgZXJyKSk7CgogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7\\\",\\\"cssCodeBase64\\\":\\\"ICogeyBib3gtc2l6aW5nOiBib3JkZXItYm94OyBtYXJnaW46IDA7IHBhZGRpbmc6IDA7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgYm9keSB7ICAgICAgICAgIAogICAgYmFja2dyb3VuZDogI2YxZjVmOTsKICAgIGZvbnQtZmFtaWx5OiAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmOwogICAgY29sb3I6ICMxZTI5M2I7CiAgICB3aWR0aDogMTAwdnc7CiAgICBoZWlnaHQ6IDEwMHZoOwogICAgb3ZlcmZsb3c6IGhpZGRlbjsKICB9CgogIC5kYXNoYm9hcmQgewogICAgd2lkdGg6IDEwMCU7CiAgICBoZWlnaHQ6IDEwMCU7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIHBhZGRpbmc6IDEuMjVyZW0gMS41cmVtOwogICAgZ2FwOiAxcmVtOwogIH0KCiAgLmRhc2gtdGl0bGUgewogICAgZm9udC1zaXplOiAxcmVtOwogICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgbGV0dGVyLXNwYWNpbmc6IDAuMDRlbTsKICAgIGZsZXgtc2hyaW5rOiAwOwogIH0KCiAgLmtwaS1ncmlkIHsKICAgIGZsZXg6IDE7CiAgICBkaXNwbGF5OiBncmlkOwogICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAxZnIgMWZyOwogICAgZ3JpZC10ZW1wbGF0ZS1yb3dzOiAxZnIgMWZyOwogICAgZ2FwOiAxcmVtOwogICAgbWluLWhlaWdodDogMDsKICB9CgogIC5rcGktY2FyZCB7CiAgICBiYWNrZ3JvdW5kOiAjZmZmZmZmOwogICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIGJvcmRlcjogMXB4IHNvbGlkICNlMmU4ZjA7CiAgICBib3gtc2hhZG93OiAwIDFweCA0cHggcmdiYSgwLDAsMCwwLjA2KTsKICAgIHBhZGRpbmc6IDEuMXJlbSAxLjI1cmVtOwogICAgZGlzcGxheTogZmxleDsKICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47CiAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogIH0KCiAgLmtwaS1jYXJkOjpiZWZvcmUgewogICAgY29udGVudDogJyc7CiAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICB0b3A6IDA7IGxlZnQ6IDA7CiAgICB3aWR0aDogMTAwJTsgaGVpZ2h0OiAzcHg7CiAgfQoKICAua3BpLWNhcmQucmVkOjpiZWZvcmUgICAgeyBiYWNrZ3JvdW5kOiAjZWY0NzZmOyB9CiAgLmtwaS1jYXJkLmFtYmVyOjpiZWZvcmUgIHsgYmFja2dyb3VuZDogI2Y1OWUwYjsgfQogIC5rcGktY2FyZC5vcmFuZ2U6OmJlZm9yZSB7IGJhY2tncm91bmQ6ICNmZjlmMWM7IH0KCiAgLmtwaS10b3AgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47CiAgfQoKICAua3BpLWxhYmVsIHsKICAgIGZvbnQtc2l6ZTogMC43MnJlbTsKICAgIGNvbG9yOiAjNjQ3NDhiOwogICAgZm9udC13ZWlnaHQ6IDYwMDsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgICBsZXR0ZXItc3BhY2luZzogMC4wNmVtOwogIH0KCiAgLmtwaS1iYWRnZSB7CiAgICBmb250LXNpemU6IDAuNnJlbTsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBwYWRkaW5nOiAycHggOHB4OwogICAgYm9yZGVyLXJhZGl1czogMjBweDsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgICBsZXR0ZXItc3BhY2luZzogMC4wNmVtOwogICAgZmxleC1zaHJpbms6IDA7CiAgfQoKICAua3BpLWJhZGdlLnJlZCAgICB7IGJhY2tncm91bmQ6IHJnYmEoMjM5LDcxLDExMSwwLjA4KTsgIGNvbG9yOiAjZWY0NzZmOyBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDIzOSw3MSwxMTEsMC4yKTsgfQogIC5rcGktYmFkZ2UuYW1iZXIgIHsgYmFja2dyb3VuZDogcmdiYSgyNDUsMTU4LDExLDAuMDgpOyAgY29sb3I6ICNkOTc3MDY7IGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjQ1LDE1OCwxMSwwLjIpOyB9CiAgLmtwaS1iYWRnZS5vcmFuZ2UgeyBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwxNTksMjgsMC4wOCk7ICBjb2xvcjogI2VhOGMwMDsgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyNTUsMTU5LDI4LDAuMik7IH0KCiAgLmtwaS1jZW50ZXIgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47CiAgICBnYXA6IDAuNXJlbTsKICB9CgogIC5rcGktbnVtYmVyIHsKICAgIGZvbnQtc2l6ZTogMi40cmVtOwogICAgZm9udC13ZWlnaHQ6IDgwMDsKICAgIGxldHRlci1zcGFjaW5nOiAtMC4wM2VtOwogICAgbGluZS1oZWlnaHQ6IDE7CiAgfQoKICAua3BpLWNhcmQucmVkICAgIC5rcGktbnVtYmVyIHsgY29sb3I6ICNlZjQ3NmY7IH0KICAua3BpLWNhcmQuYW1iZXIgIC5rcGktbnVtYmVyIHsgY29sb3I6ICNkOTc3MDY7IH0KICAua3BpLWNhcmQub3JhbmdlIC5rcGktbnVtYmVyIHsgY29sb3I6ICNlYThjMDA7IH0KCiAgLmRvbnV0LXdyYXAgewogICAgd2lkdGg6IDU4cHg7CiAgICBoZWlnaHQ6IDU4cHg7CiAgICBmbGV4LXNocmluazogMDsKICB9CgogIC5kb251dC13cmFwIGNhbnZhcyB7CiAgICB3aWR0aDogNThweCAhaW1wb3J0YW50OwogICAgaGVpZ2h0OiA1OHB4ICFpbXBvcnRhbnQ7CiAgfQoKICAua3BpLXN1YiB7CiAgICBmb250LXNpemU6IDAuNzNyZW07CiAgICBjb2xvcjogIzk0YTNiODsKICAgIGxpbmUtaGVpZ2h0OiAxLjQ7CiAgfQ\\u003d\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PCFET0NUWVBFIGh0bWw+CiAgPGh0bWwgbGFuZz0iZW4iPgogIDxoZWFkPgogICAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogICAgPHRpdGxlPlBvcnRmb2xpbyBQdWxzZTwvdGl0bGU+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9jaGFydC5qc0A0Ij48L3NjcmlwdD4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0ic3R5bGVzLmNzcyI+CiAgPC9oZWFkPgogIDxib2R5PgogICAgPGRpdiBjbGFzcz0iZGFzaGJvYXJkIj4KICAgICAgPCEtLSA8ZGl2IGNsYXNzPSJkYXNoLXRpdGxlIj5SZXRhaWwgUG9ydGZvbGlvIEhlYWx0aCBDaGVjazwvZGl2PiAtLT4KICAgICAgPGRpdiBjbGFzcz0ia3BpLWdyaWQiPgoKICAgICAgICA8ZGl2IGNsYXNzPSJrcGktY2FyZCByZWQiPgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLXRvcCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJrcGktbGFiZWwiPlRyYW5zYWN0aW9uIEZhaWx1cmUgUmF0ZTwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gY2xhc3M9ImtwaS1iYWRnZSByZWQiPkNSSVRJQ0FMPC9zcGFuPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8ZGl2IGNsYXNzPSJrcGktY2VudGVyIj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLW51bWJlciIgaWQ9InZhbC1mYWlsIj4tLTwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJkb251dC13cmFwIj48Y2FudmFzIGlkPSJkb251dC1mYWlsIj48L2NhbnZhcz48L2Rpdj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+MSBpbiA0IHRyYW5zYWN0aW9ucyBmYWlsIGFjcm9zcyBhbGwgY2hhbm5lbHM8L2Rpdj4KICAgICAgICA8L2Rpdj4KCiAgICAgICAgPGRpdiBjbGFzcz0ia3BpLWNhcmQgYW1iZXIiPgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLXRvcCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJrcGktbGFiZWwiPkF2ZXJhZ2UgUmlzayBTY29yZTwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gY2xhc3M9ImtwaS1iYWRnZSBhbWJlciI+TU9OSVRPUjwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLWNlbnRlciI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1udW1iZXIiIGlkPSJ2YWwtcmlzayI+LS08L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iZG9udXQtd3JhcCI+PGNhbnZhcyBpZD0iZG9udXQtcmlzayI+PC9jYW52YXM+PC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1zdWIiPk91dCBvZiA4NTAgbWF4IC0tIG1pZC1yaXNrIHBvcnRmb2xpbzwvZGl2PgogICAgICAgIDwvZGl2PgoKICAgICAgICA8ZGl2IGNsYXNzPSJrcGktY2FyZCBvcmFuZ2UiPgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLXRvcCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJrcGktbGFiZWwiPkJ1c2luZXNzIExvYW4gRGVmYXVsdCBSYXRlPC9zcGFuPgogICAgICAgICAgICA8c3BhbiBjbGFzcz0ia3BpLWJhZGdlIG9yYW5nZSI+SElHSDwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLWNlbnRlciI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1udW1iZXIiIGlkPSJ2YWwtZGVmYXVsdCI+LS08L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iZG9udXQtd3JhcCI+PGNhbnZhcyBpZD0iZG9udXQtZGVmYXVsdCI+PC9jYW52YXM+PC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1zdWIiPkhpZ2hlc3QgZGVmYXVsdCByYXRlIGFjcm9zcyBhbGwgbG9hbiB0eXBlczwvZGl2PgogICAgICAgIDwvZGl2PgoKICAgICAgICA8ZGl2IGNsYXNzPSJrcGktY2FyZCBhbWJlciI+CiAgICAgICAgICA8ZGl2IGNsYXNzPSJrcGktdG9wIj4KICAgICAgICAgICAgPHNwYW4gY2xhc3M9ImtwaS1sYWJlbCI+QXZnIENyZWRpdCBVdGlsaXNhdGlvbjwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gY2xhc3M9ImtwaS1iYWRnZSBhbWJlciI+TU9OSVRPUjwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0ia3BpLWNlbnRlciI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1udW1iZXIiIGlkPSJ2YWwtdXRpbCI+LS08L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iZG9udXQtd3JhcCI+PGNhbnZhcyBpZD0iZG9udXQtdXRpbCI+PC9jYW52YXM+PC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3M9ImtwaS1zdWIiPk5lYXJseSAyLzMgb2YgYWxsIGNyZWRpdCBsaW1pdHMgaW4gYWN0aXZlIHVzZTwvZGl2PgogICAgICAgIDwvZGl2PgoKICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxzY3JpcHQgc3JjPSJzY3JpcHQuanMiPjwvc2NyaXB0PgogIDwvYm9keT4KICA8L2h0bWw+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: Retail Portfolio Health Check
+    viz_guid: bb4159f2-8e5b-456f-9987-baf595c9e5bf
+  - id: Viz_16
+    answer:
+      name: Risk Score Distribution by Account Type
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Risk Score] [Account Type] [Cust Id]"
+      answer_columns:
+      - name: Account Type
+      - name: Cust Id
+      - name: Total Risk Score
+      table:
+        table_columns:
+        - column_id: Account Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Cust Id
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Risk Score
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Account Type
+        - Cust Id
+        - Total Risk Score
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Account Type
+        - column_id: Cust Id
+        - column_id: Total Risk Score
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Risk Score\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Account Type\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"0c8362fa-1e9e-4450-a34d-ad586e64a69c\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Risk Score\"],\"isOpposite\": false}},{\"id\": \"02475be5-b135-4388-9257-d6d33eb6e0f9\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Account Type\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Account Type
+            - Total Risk Score
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIkFjY291bnQgVHlwZSIKICAgKiAiQ3VzdCBJZCIKICAgKiAiVG90YWwgUmlzayBTY29yZSIKICAgKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAtLS0gRU5EIC0tLQogICAqLwoKICAoZnVuY3Rpb24oKSB7CgogICAgdmFyIENPTE9SUyA9IHsKICAgICAgJ0NoZWNraW5nJzogICAnIzQ4OTVlZicsCiAgICAgICdTYXZpbmdzJzogICAgJyM0Y2M5ZjAnLAogICAgICAnSW52ZXN0bWVudCc6ICcjYTg1NWY3JywKICAgICAgJ0J1c2luZXNzJzogICAnI2Y3MjU4NScKICAgIH07CiAgICB2YXIgT1JERVIgPSBbJ0NoZWNraW5nJywgJ1NhdmluZ3MnLCAnSW52ZXN0bWVudCcsICdCdXNpbmVzcyddOwoKICAgIGZ1bmN0aW9uIHdhaXRGb3JEMyhjYikgewogICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjYigpOyByZXR1cm47IH0KICAgICAgdmFyIHQgPSBzZXRJbnRlcnZhbChmdW5jdGlvbigpIHsKICAgICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjbGVhckludGVydmFsKHQpOyBjYigpOyB9CiAgICAgIH0sIDEwMCk7CiAgICB9CgogICAgd2FpdEZvckQzKGZ1bmN0aW9uKCkgewogICAgICB0cnkgewogICAgICAgIHZhciByYXcgPSB2aXouZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgnVG90YWwgUmlzayBTY29yZSBBY2NvdW50IFR5cGUgQ3VzdCBJZCcpOwogICAgICAgIGlmIChyYXcgJiYgdHlwZW9mIHJhdy50aGVuID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICByYXcudGhlbihmdW5jdGlvbihyZXMpIHsgcHJvY2Vzc0RhdGEocmVzKTsgfSkuY2F0Y2goZnVuY3Rpb24oZSl7IGNvbnNvbGUuZXJyb3IoZSk7IH0pOwogICAgICAgIH0gZWxzZSBpZiAocmF3ICYmIHR5cGVvZiByYXcuZ2V0RGF0YSA9PT0gJ2Z1bmN0aW9uJykgewogICAgICAgICAgcHJvY2Vzc0RhdGEocmF3KTsKICAgICAgICB9CiAgICAgIH0gY2F0Y2goZSkgewogICAgICAgIGNvbnNvbGUuZXJyb3IoZSk7CiAgICAgIH0KICAgIH0pOwoKICAgIGZ1bmN0aW9uIHByb2Nlc3NEYXRhKHJhdykgewogICAgICB2YXIgcmVzdWx0ID0gcmF3LmdldERhdGEoKTsKICAgICAgdmFyIGRhdGEgICA9IHJlc3VsdC5kYXRhOwogICAgICB2YXIgc2NoZW1hID0gcmVzdWx0LnNjaGVtYTsKCiAgICAgIHZhciB0eXBlSWR4ID0gLTEsIHJpc2tJZHggPSAtMTsKICAgICAgZm9yICh2YXIgaSA9IDA7IGkgPCBzY2hlbWEubGVuZ3RoOyBpKyspIHsKICAgICAgICB2YXIgbiA9IHNjaGVtYVtpXS5uYW1lOwogICAgICAgIGlmIChuID09PSAnQWNjb3VudCBUeXBlJykgICAgIHR5cGVJZHggPSBpOwogICAgICAgIGlmIChuID09PSAnVG90YWwgUmlzayBTY29yZScpIHJpc2tJZHggPSBpOwogICAgICB9CiAgICAgIGlmICh0eXBlSWR4IDwgMCB8fCByaXNrSWR4IDwgMCkgeyBjb25zb2xlLmVycm9yKCdjb2x1bW5zIG5vdCBmb3VuZCcpOyByZXR1cm47IH0KCiAgICAgIHZhciBncm91cGVkID0ge307CiAgICAgIE9SREVSLmZvckVhY2goZnVuY3Rpb24oayl7IGdyb3VwZWRba10gPSBbXTsgfSk7CiAgICAgIGZvciAodmFyIHIgPSAwOyByIDwgZGF0YS5sZW5ndGg7IHIrKykgewogICAgICAgIHZhciBzY29yZSA9ICtkYXRhW3JdW3Jpc2tJZHhdOwogICAgICAgIHZhciB0eXBlICA9ICBkYXRhW3JdW3R5cGVJZHhdOwogICAgICAgIGlmIChzY29yZSA+IDAgJiYgZ3JvdXBlZFt0eXBlXSkgewogICAgICAgICAgZ3JvdXBlZFt0eXBlXS5wdXNoKHNjb3JlKTsKICAgICAgICB9CiAgICAgIH0KCiAgICAgIGRyYXdDaGFydChncm91cGVkKTsKICAgIH0KCiAgICBmdW5jdGlvbiBlcGFuZWNobmlrb3YoYncpIHsKICAgICAgcmV0dXJuIGZ1bmN0aW9uKHYpIHsKICAgICAgICB2YXIgeCA9IHYgLyBidzsKICAgICAgICByZXR1cm4gTWF0aC5hYnMoeCkgPD0gMSA/IDAuNzUgKiAoMSAtIHggKiB4KSAvIGJ3IDogMDsKICAgICAgfTsKICAgIH0KCiAgICBmdW5jdGlvbiBrZGUoa2VybmVsLCB0aHJlc2hvbGRzLCB2YWx1ZXMpIHsKICAgICAgcmV0dXJuIHRocmVzaG9sZHMubWFwKGZ1bmN0aW9uKHgpIHsKICAgICAgICB2YXIgc3VtID0gMDsKICAgICAgICBmb3IgKHZhciBpID0gMDsgaSA8IHZhbHVlcy5sZW5ndGg7IGkrKykgc3VtICs9IGtlcm5lbCh4IC0gdmFsdWVzW2ldKTsKICAgICAgICByZXR1cm4gW3gsIHN1bSAvIHZhbHVlcy5sZW5ndGhdOwogICAgICB9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBkcmF3Q2hhcnQoZ3JvdXBlZCkgewogICAgICB2YXIgY29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NoYXJ0LWFyZWEnKTsKICAgICAgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGZ1bmN0aW9uKCkgewogICAgICAgIHZhciBXID0gY29udGFpbmVyLmNsaWVudFdpZHRoICB8fCA3MDA7CiAgICAgICAgdmFyIEggPSBjb250YWluZXIuY2xpZW50SGVpZ2h0IHx8IDM4MDsKCiAgICAgICAgdmFyIHN2ZyA9IGQzLnNlbGVjdCgnI3Zpei1zdmcnKS5hdHRyKCd3aWR0aCcsIFcpLmF0dHIoJ2hlaWdodCcsIEgpOwogICAgICAgIHZhciBtYXJnaW4gPSB7IHRvcDogMjAsIHJpZ2h0OiAzMCwgYm90dG9tOiA0MCwgbGVmdDogNzAgfTsKICAgICAgICB2YXIgdyA9IFcgLSBtYXJnaW4ubGVmdCAtIG1hcmdpbi5yaWdodDsKICAgICAgICB2YXIgaCA9IEggLSBtYXJnaW4udG9wICAtIG1hcmdpbi5ib3R0b207CiAgICAgICAgdmFyIGcgPSBzdmcuYXBwZW5kKCdnJykuYXR0cigndHJhbnNmb3JtJywgJ3RyYW5zbGF0ZSgnICsgbWFyZ2luLmxlZnQgKyAnLCcgKyBtYXJnaW4udG9wICsgJyknKTsKCiAgICAgICAgdmFyIGtlcm5lbCA9IGVwYW5lY2huaWtvdigxOCk7CiAgICAgICAgdmFyIHRocmVzaG9sZHMgPSBkMy5yYW5nZSgzMDAsIDg1MSwgMik7CgogICAgICAgIHZhciBhbGxEZW5zaXRpZXMgPSBbXTsKICAgICAgICBPUkRFUi5mb3JFYWNoKGZ1bmN0aW9uKGFjY3QpIHsKICAgICAgICAgIGFsbERlbnNpdGllcy5wdXNoKHsga2V5OiBhY2N0LCBkZW5zaXR5OiBrZGUoa2VybmVsLCB0aHJlc2hvbGRzLCBncm91cGVkW2FjY3RdKSB9KTsKICAgICAgICB9KTsKCiAgICAgICAgdmFyIG1heERlbnMgPSBkMy5tYXgoYWxsRGVuc2l0aWVzLCBmdW5jdGlvbihkKSB7CiAgICAgICAgICByZXR1cm4gZDMubWF4KGQuZGVuc2l0eSwgZnVuY3Rpb24ocCl7IHJldHVybiBwWzFdOyB9KTsKICAgICAgICB9KTsKCiAgICAgICAgdmFyIHhTY2FsZSA9IGQzLnNjYWxlTGluZWFyKCkuZG9tYWluKFszMDAsIDg1MF0pLnJhbmdlKFswLCB3XSk7CiAgICAgICAgdmFyIHJvd0ggPSBoIC8gT1JERVIubGVuZ3RoOwogICAgICAgIHZhciB5U2NhbGUgPSBkMy5zY2FsZUxpbmVhcigpLmRvbWFpbihbMCwgbWF4RGVuc10pLnJhbmdlKFtyb3dIICogMC44OCwgMF0pOwoKICAgICAgICBnLmFwcGVuZCgnZycpCiAgICAgICAgICAuYXR0cigndHJhbnNmb3JtJywgJ3RyYW5zbGF0ZSgwLCcgKyBoICsgJyknKQogICAgICAgICAgLmNhbGwoZDMuYXhpc0JvdHRvbSh4U2NhbGUpLnRpY2tzKDYpLnRpY2tTaXplKC1oKSkKICAgICAgICAgIC5jYWxsKGZ1bmN0aW9uKGF4KSB7CiAgICAgICAgICAgIGF4LnNlbGVjdCgnLmRvbWFpbicpLnJlbW92ZSgpOwogICAgICAgICAgICBheC5zZWxlY3RBbGwoJ2xpbmUnKS5hdHRyKCdzdHJva2UnLCAnI2UyZThmMCcpOwogICAgICAgICAgICBheC5zZWxlY3RBbGwoJ3RleHQnKS5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTFweCcpOwogICAgICAgICAgfSk7CgogICAgICAgIGcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgIC5hdHRyKCd4JywgdyAvIDIpLmF0dHIoJ3knLCBoICsgMzQpCiAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnbWlkZGxlJykKICAgICAgICAgIC5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTJweCcpCiAgICAgICAgICAudGV4dCgnUmlzayBTY29yZScpOwoKICAgICAgICBhbGxEZW5zaXRpZXMuZm9yRWFjaChmdW5jdGlvbihkLCBpKSB7CiAgICAgICAgICB2YXIgcm93ID0gZy5hcHBlbmQoJ2cnKS5hdHRyKCd0cmFuc2Zvcm0nLCAndHJhbnNsYXRlKDAsJyArIChpICogcm93SCkgKyAnKScpOwogICAgICAgICAgdmFyIGNvbG9yID0gQ09MT1JTW2Qua2V5XTsKCiAgICAgICAgICB2YXIgYXJlYUZuID0gZDMuYXJlYSgpCiAgICAgICAgICAgIC54KGZ1bmN0aW9uKHApeyByZXR1cm4geFNjYWxlKHBbMF0pOyB9KQogICAgICAgICAgICAueTAocm93SCkKICAgICAgICAgICAgLnkxKGZ1bmN0aW9uKHApeyByZXR1cm4geVNjYWxlKHBbMV0pICsgcm93SCAqIDAuMDU7IH0pCiAgICAgICAgICAgIC5jdXJ2ZShkMy5jdXJ2ZUJhc2lzKTsKCiAgICAgICAgICB2YXIgcGF0aEZuID0gZDMubGluZSgpCiAgICAgICAgICAgIC54KGZ1bmN0aW9uKHApeyByZXR1cm4geFNjYWxlKHBbMF0pOyB9KQogICAgICAgICAgICAueShmdW5jdGlvbihwKXsgcmV0dXJuIHlTY2FsZShwWzFdKSArIHJvd0ggKiAwLjA1OyB9KQogICAgICAgICAgICAuY3VydmUoZDMuY3VydmVCYXNpcyk7CgogICAgICAgICAgcm93LmFwcGVuZCgncGF0aCcpLmRhdHVtKGQuZGVuc2l0eSkKICAgICAgICAgICAgLmF0dHIoJ2ZpbGwnLCBjb2xvcikKICAgICAgICAgICAgLmF0dHIoJ2ZpbGwtb3BhY2l0eScsIDAuMTIpCiAgICAgICAgICAgIC5hdHRyKCdkJywgYXJlYUZuKTsKCiAgICAgICAgICB2YXIgc3Ryb2tlUGF0aCA9IHJvdy5hcHBlbmQoJ3BhdGgnKS5kYXR1bShkLmRlbnNpdHkpCiAgICAgICAgICAgIC5hdHRyKCdmaWxsJywgJ25vbmUnKQogICAgICAgICAgICAuYXR0cignc3Ryb2tlJywgY29sb3IpCiAgICAgICAgICAgIC5hdHRyKCdzdHJva2Utd2lkdGgnLCAyLjIpCiAgICAgICAgICAgIC5hdHRyKCdkJywgcGF0aEZuKTsKCiAgICAgICAgICB2YXIgdG90YWxMZW4gPSBzdHJva2VQYXRoLm5vZGUoKS5nZXRUb3RhbExlbmd0aCgpOwogICAgICAgICAgc3Ryb2tlUGF0aAogICAgICAgICAgICAuYXR0cignc3Ryb2tlLWRhc2hhcnJheScsIHRvdGFsTGVuICsgJyAnICsgdG90YWxMZW4pCiAgICAgICAgICAgIC5hdHRyKCdzdHJva2UtZGFzaG9mZnNldCcsIHRvdGFsTGVuKQogICAgICAgICAgICAudHJhbnNpdGlvbigpCiAgICAgICAgICAgIC5kdXJhdGlvbigxMjAwKQogICAgICAgICAgICAuZGVsYXkoaSAqIDIwMCkKICAgICAgICAgICAgLmVhc2UoZDMuZWFzZUN1YmljT3V0KQogICAgICAgICAgICAuYXR0cignc3Ryb2tlLWRhc2hvZmZzZXQnLCAwKTsKCiAgICAgICAgICByb3cuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgICAgLmF0dHIoJ3gnLCAtMTApLmF0dHIoJ3knLCByb3dIICogMC40MikKICAgICAgICAgICAgLmF0dHIoJ3RleHQtYW5jaG9yJywgJ2VuZCcpCiAgICAgICAgICAgIC5hdHRyKCdkb21pbmFudC1iYXNlbGluZScsICdtaWRkbGUnKQogICAgICAgICAgICAuYXR0cignZmlsbCcsIGNvbG9yKQogICAgICAgICAgICAuYXR0cignZm9udC1zaXplJywgJzEycHgnKQogICAgICAgICAgICAuYXR0cignZm9udC13ZWlnaHQnLCAnNjAwJykKICAgICAgICAgICAgLnRleHQoZC5rZXkpOwoKICAgICAgICAgIHJvdy5hcHBlbmQoJ2xpbmUnKQogICAgICAgICAgICAuYXR0cigneDEnLCAwKS5hdHRyKCd4MicsIHcpCiAgICAgICAgICAgIC5hdHRyKCd5MScsIHJvd0gpLmF0dHIoJ3kyJywgcm93SCkKICAgICAgICAgICAgLmF0dHIoJ3N0cm9rZScsICcjZTJlOGYwJykKICAgICAgICAgICAgLmF0dHIoJ3N0cm9rZS13aWR0aCcsIDAuNSk7CiAgICAgICAgfSk7CgogICAgICAgIHZhciBsZWdlbmQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbGVnZW5kJyk7CiAgICAgICAgT1JERVIuZm9yRWFjaChmdW5jdGlvbihrKSB7CiAgICAgICAgICB2YXIgaXRlbSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgICAgaXRlbS5jbGFzc05hbWUgPSAnbGVnZW5kLWl0ZW0nOwogICAgICAgICAgaXRlbS5pbm5lckhUTUwgPSAnPGRpdiBjbGFzcz0ibGVnZW5kLWRvdCIgc3R5bGU9ImJhY2tncm91bmQ6JyArIENPTE9SU1trXSArICciPjwvZGl2PicgKyBrOwogICAgICAgICAgbGVnZW5kLmFwcGVuZENoaWxkKGl0ZW0pOwogICAgICAgIH0pOwogICAgICB9KTsKICAgIH0KCiAgfSkoKTsKICAvLyBUaG91Z2h0U3BvdDogVW5jb21tZW50IHRoZSBsaW5lIGJlbG93IHRvIHNpZ25hbCByZW5kZXIgY29tcGxldGlvbgogdml6LmV2ZW50cy5lbWl0UmVuZGVyQ29tcGxldGVkRXZlbnQoKTs\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICBib2R5IHsgICAgICAgICAgCiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogIH0KCiAgI2NvbnRhaW5lciB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBwYWRkaW5nOiAyMHB4IDI4cHggMTZweDsKICB9CgogICNoZWFkZXIgewogICAgbWFyZ2luLWJvdHRvbTogMTJweDsKICB9CgogICN0aXRsZSB7CiAgICBmb250LXNpemU6IDE3cHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBsZXR0ZXItc3BhY2luZzogLTAuM3B4OwogIH0KCiAgI3N1YnRpdGxlIHsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGNvbG9yOiAjNjQ3NDhiOwogICAgbWFyZ2luLXRvcDogM3B4OwogIH0KCiAgI2NoYXJ0LWFyZWEgewogICAgZmxleDogMTsKICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgIG1pbi1oZWlnaHQ6IDA7CiAgfQoKICAjdml6LXN2ZyB7CiAgICB3aWR0aDogMTAwJTsKICAgIGhlaWdodDogMTAwJTsKICAgIGRpc3BsYXk6IGJsb2NrOwogIH0KCiAgI2xlZ2VuZCB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZ2FwOiAyMHB4OwogICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICBwYWRkaW5nOiA4cHggMCA0cHg7CiAgICBmbGV4LXdyYXA6IHdyYXA7CiAgfQoKICAubGVnZW5kLWl0ZW0gewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBnYXA6IDZweDsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGNvbG9yOiAjNjQ3NDhiOwogIH0KCiAgLmxlZ2VuZC1kb3QgewogICAgd2lkdGg6IDEwcHg7CiAgICBoZWlnaHQ6IDEwcHg7CiAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgfQoKICAjZGVidWctcGFuZWwgewogICAgcG9zaXRpb246IGZpeGVkOwogICAgYm90dG9tOiAwOwogICAgbGVmdDogMDsKICAgIHJpZ2h0OiAwOwogICAgbWF4LWhlaWdodDogMTYwcHg7CiAgICBvdmVyZmxvdy15OiBhdXRvOwogICAgYmFja2dyb3VuZDogcmdiYSgyNTUsMjU1LDI1NSwwLjk1KTsKICAgIGZvbnQtZmFtaWx5OiBtb25vc3BhY2U7CiAgICBmb250LXNpemU6IDExcHg7CiAgICBwYWRkaW5nOiA2cHggMTBweDsKICAgIHotaW5kZXg6IDk5OTk7CiAgICBib3JkZXItdG9wOiAxcHggc29saWQgI2UyZThmMDsKICB9CgogICNkZWJ1Zy1wYW5lbCAub2sgICB7IGNvbG9yOiAjMTZhMzRhOyB9CiAgI2RlYnVnLXBhbmVsIC5lcnIgIHsgY29sb3I6ICNkYzI2MjY7IH0KICAjZGVidWctcGFuZWwgLndhcm4geyBjb2xvcjogI2Q5NzcwNjsgfQogICNkZWJ1Zy1wYW5lbCAuaW5mbyB7IGNvbG9yOiAjMjU2M2ViOyB9Cg\\u003d\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZDNANy9kaXN0L2QzLm1pbi5qcyI+PC9zY3JpcHQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgCiAgPGRpdiBpZD0iY29udGFpbmVyIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDxkaXYgaWQ9ImhlYWRlciI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgPCEtLSA8ZGl2IGlkPSJ0aXRsZSI+UmlzayBTY29yZSBEaXN0cmlidXRpb24gYnkgQWNjb3VudCBUeXBlPC9kaXY+IC0tPgogICAgICA8ZGl2IGlkPSJzdWJ0aXRsZSI+RGVuc2l0eSBjdXJ2ZXMgwrcgMzAw4oCTODUwIHNjb3JlIHJhbmdlPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgaWQ9ImNoYXJ0LWFyZWEiPgogICAgICA8c3ZnIGlkPSJ2aXotc3ZnIj48L3N2Zz4KICAgIDwvZGl2PgogICAgPGRpdiBpZD0ibGVnZW5kIj48L2Rpdj4KICA8L2Rpdj4KICA8IS0tIDxkaXYgaWQ9ImRlYnVnLXBhbmVsIj48L2Rpdj4gLS0+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: Risk Score Distribution by Account Type
+      dynamic_description: "."
+    viz_guid: 1f28b6bf-0031-40aa-80b7-4bfc59b0e794
+  - id: Viz_17
+    answer:
+      name: Loan Portfolio Burden
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Loan Amount] [Loan_Pending Amount] [Loan Type] [Loan_Status]"
+      answer_columns:
+      - name: Loan Type
+      - name: Loan_Status
+      - name: Total Loan Amount
+      - name: Total Loan_Pending Amount
+      table:
+        table_columns:
+        - column_id: Loan Type
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Loan_Status
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Loan Amount
+          headline_aggregation: SUM
+        - column_id: Total Loan_Pending Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Loan Type
+        - Loan_Status
+        - Total Loan Amount
+        - Total Loan_Pending Amount
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Loan Type
+        - column_id: Loan_Status
+        - column_id: Total Loan Amount
+        - column_id: Total Loan_Pending Amount
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Loan Type\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Loan_Status\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Loan Amount\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Loan_Pending Amount\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9841639b-e34b-4420-8fa2-70c9e20465f3\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Loan Amount\"],\"isOpposite\": false}},{\"id\": \"3fe98a91-e803-4b3c-b996-526af3c06602\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Loan_Pending Amount\"],\"isOpposite\": true}},{\"id\": \"93cc5fa4-1067-469e-b933-e4029cccec26\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Loan Type\",\"Loan_Status\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Loan Type
+            - Loan_Status
+            - Total Loan Amount
+            - Total Loan_Pending Amount
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"IC8qKgogICAqIEF2YWlsYWJsZSBDb2x1bW5zOgogICAqICJMb2FuIFR5cGUiCiAgICogIkxvYW5fU3RhdHVzIgogICAqICJUb3RhbCBMb2FuIEFtb3VudCIKICAgKiAiVG90YWwgTG9hbl9QZW5kaW5nIEFtb3VudCIKICAgKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAtLS0gRU5EIC0tLQogICAqLwoKICAoZnVuY3Rpb24oKSB7CgogICAgLy8g4pSA4pSAIENPTkZJRyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHZhciBDT05GSUcgPSB7CiAgICAgIHF1ZXJ5OiAgICAgICAgICdUb3RhbCBMb2FuIEFtb3VudCBUb3RhbCBMb2FuX1BlbmRpbmcgQW1vdW50IExvYW4gVHlwZSBMb2FuX1N0YXR1cycsCiAgICAgIGNvbHVtbnM6IHsKICAgICAgICBsb2FuQW1vdW50OiAgJ1RvdGFsIExvYW4gQW1vdW50JywKICAgICAgICBwZW5kaW5nOiAgICAgJ1RvdGFsIExvYW5fUGVuZGluZyBBbW91bnQnLAogICAgICAgIGxvYW5UeXBlOiAgICAnTG9hbiBUeXBlJywKICAgICAgICBsb2FuU3RhdHVzOiAgJ0xvYW5fU3RhdHVzJwogICAgICB9LAogICAgICBwYWxldHRlOiAgICAgICBbJyM0ODk1ZWYnLCAnI2Y3MjU4NScsICcjNGNjOWYwJywgJyNhODU1ZjcnLCAnI2ZiODUwMCcsICcjM2ZiOTUwJywgJyNmZmQxNjYnXSwKICAgICAgYW5pbUR1cmF0aW9uOiAgNjAwLAogICAgICBhbmltTWF4RGVsYXk6ICA0MDAsCiAgICAgIHBhZGRpbmdPdXRlcjogIDYsCiAgICAgIHBhZGRpbmdUb3A6ICAgIDIyLAogICAgICBwYWRkaW5nSW5uZXI6ICAzLAogICAgICBtaW5DZWxsVzogICAgICA0NSwKICAgICAgbWluQ2VsbEg6ICAgICAgMjgsCiAgICAgIG1pbkNlbGxXRnVsbDogIDU1LAogICAgICBtaW5DZWxsSEZ1bGw6ICA0NAogICAgfTsKICAgIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKICAgIHZhciBUWVBFX0NPTE9SUyA9IHt9OwoKICAgIGZ1bmN0aW9uIGdldFR5cGVDb2xvcih0eXBlKSB7CiAgICAgIGlmICghVFlQRV9DT0xPUlNbdHlwZV0pIHsKICAgICAgICB2YXIgaWR4ID0gT2JqZWN0LmtleXMoVFlQRV9DT0xPUlMpLmxlbmd0aCAlIENPTkZJRy5wYWxldHRlLmxlbmd0aDsKICAgICAgICBUWVBFX0NPTE9SU1t0eXBlXSA9IENPTkZJRy5wYWxldHRlW2lkeF07CiAgICAgIH0KICAgICAgcmV0dXJuIFRZUEVfQ09MT1JTW3R5cGVdOwogICAgfQoKICAgIGZ1bmN0aW9uIGZtdCh2KSB7CiAgICAgIGlmICh2ID49IDEwMDAwMDAwMDApIHJldHVybiAodiAvIDEwMDAwMDAwMDApLnRvRml4ZWQoMSkgKyAnQic7CiAgICAgIGlmICh2ID49IDEwMDAwMDApICAgIHJldHVybiAodiAvIDEwMDAwMDApLnRvRml4ZWQoMSkgKyAnTSc7CiAgICAgIGlmICh2ID49IDEwMDApICAgICAgIHJldHVybiAodiAvIDEwMDApLnRvRml4ZWQoMCkgKyAnSyc7CiAgICAgIHJldHVybiB2LnRvRml4ZWQoMCk7CiAgICB9CgogICAgZnVuY3Rpb24gd2FpdEZvckQzKGNiKSB7CiAgICAgIGlmICh0eXBlb2YgZDMgIT09ICd1bmRlZmluZWQnKSB7IGNiKCk7IHJldHVybjsgfQogICAgICB2YXIgdCA9IHNldEludGVydmFsKGZ1bmN0aW9uKCkgewogICAgICAgIGlmICh0eXBlb2YgZDMgIT09ICd1bmRlZmluZWQnKSB7IGNsZWFySW50ZXJ2YWwodCk7IGNiKCk7IH0KICAgICAgfSwgMTAwKTsKICAgIH0KCiAgICB3YWl0Rm9yRDMoZnVuY3Rpb24oKSB7CiAgICAgIHRyeSB7CiAgICAgICAgdmFyIHJhdyA9IHZpei5nZXREYXRhRnJvbVNlYXJjaFF1ZXJ5KENPTkZJRy5xdWVyeSk7CiAgICAgICAgaWYgKHJhdyAmJiB0eXBlb2YgcmF3LnRoZW4gPT09ICdmdW5jdGlvbicpIHsKICAgICAgICAgIHJhdy50aGVuKGZ1bmN0aW9uKHJlcykgeyBwcm9jZXNzRGF0YShyZXMpOyB9KS5jYXRjaChmdW5jdGlvbihlKXsgY29uc29sZS5lcnJvcihlKTsgfSk7CiAgICAgICAgfSBlbHNlIGlmIChyYXcgJiYgdHlwZW9mIHJhdy5nZXREYXRhID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICBwcm9jZXNzRGF0YShyYXcpOwogICAgICAgIH0KICAgICAgfSBjYXRjaChlKSB7CiAgICAgICAgY29uc29sZS5lcnJvcihlKTsKICAgICAgfQogICAgfSk7CgogICAgZnVuY3Rpb24gcHJvY2Vzc0RhdGEocmF3KSB7CiAgICAgIHZhciByZXN1bHQgPSByYXcuZ2V0RGF0YSgpOwogICAgICB2YXIgZGF0YSAgID0gcmVzdWx0LmRhdGE7CiAgICAgIHZhciBzY2hlbWEgPSByZXN1bHQuc2NoZW1hOwoKICAgICAgdmFyIGxvYW5BbXRJZHggPSAtMSwgcGVuZGluZ0lkeCA9IC0xLCB0eXBlSWR4ID0gLTEsIHN0YXR1c0lkeCA9IC0xOwogICAgICBmb3IgKHZhciBpID0gMDsgaSA8IHNjaGVtYS5sZW5ndGg7IGkrKykgewogICAgICAgIHZhciBuID0gc2NoZW1hW2ldLm5hbWU7CiAgICAgICAgaWYgKG4gPT09IENPTkZJRy5jb2x1bW5zLmxvYW5BbW91bnQpIGxvYW5BbXRJZHggPSBpOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5wZW5kaW5nKSAgICBwZW5kaW5nSWR4ICA9IGk7CiAgICAgICAgaWYgKG4gPT09IENPTkZJRy5jb2x1bW5zLmxvYW5UeXBlKSAgIHR5cGVJZHggICAgID0gaTsKICAgICAgICBpZiAobiA9PT0gQ09ORklHLmNvbHVtbnMubG9hblN0YXR1cykgc3RhdHVzSWR4ICAgPSBpOwogICAgICB9CiAgICAgIGlmIChsb2FuQW10SWR4IDwgMCB8fCB0eXBlSWR4IDwgMCB8fCBzdGF0dXNJZHggPCAwKSB7IGNvbnNvbGUuZXJyb3IoJ2NvbHVtbnMgbm90IGZvdW5kJyk7IHJldHVybjsgfQoKICAgICAgdmFyIG5lc3RlZCA9IHt9OwogICAgICBmb3IgKHZhciByID0gMDsgciA8IGRhdGEubGVuZ3RoOyByKyspIHsKICAgICAgICB2YXIgbHR5cGUgICA9IGRhdGFbcl1bdHlwZUlkeF0gICB8fCAnVW5rbm93bic7CiAgICAgICAgdmFyIGxzdGF0dXMgPSBkYXRhW3JdW3N0YXR1c0lkeF0gfHwgJ1Vua25vd24nOwogICAgICAgIHZhciBsYW10ICAgID0gK2RhdGFbcl1bbG9hbkFtdElkeF0gIHx8IDA7CiAgICAgICAgdmFyIHBhbXQgICAgPSBwZW5kaW5nSWR4ID49IDAgPyAoK2RhdGFbcl1bcGVuZGluZ0lkeF0gfHwgMCkgOiAwOwoKICAgICAgICBpZiAoIW5lc3RlZFtsdHlwZV0pIG5lc3RlZFtsdHlwZV0gPSB7fTsKICAgICAgICBpZiAoIW5lc3RlZFtsdHlwZV1bbHN0YXR1c10pIG5lc3RlZFtsdHlwZV1bbHN0YXR1c10gPSB7IGxvYW46IDAsIHBlbmRpbmc6IDAgfTsKICAgICAgICBuZXN0ZWRbbHR5cGVdW2xzdGF0dXNdLmxvYW4gICAgKz0gbGFtdDsKICAgICAgICBuZXN0ZWRbbHR5cGVdW2xzdGF0dXNdLnBlbmRpbmcgKz0gcGFtdDsKICAgICAgfQoKICAgICAgdmFyIGNoaWxkcmVuID0gW107CiAgICAgIGZvciAodmFyIHR5cGUgaW4gbmVzdGVkKSB7CiAgICAgICAgdmFyIGtpZHMgPSBbXTsKICAgICAgICBmb3IgKHZhciBzdGF0dXMgaW4gbmVzdGVkW3R5cGVdKSB7CiAgICAgICAgICB2YXIgZCA9IG5lc3RlZFt0eXBlXVtzdGF0dXNdOwogICAgICAgICAga2lkcy5wdXNoKHsKICAgICAgICAgICAgbmFtZTogICAgc3RhdHVzLAogICAgICAgICAgICBwYXJlbnQ6ICB0eXBlLAogICAgICAgICAgICBsb2FuOiAgICBkLmxvYW4sCiAgICAgICAgICAgIHBlbmRpbmc6IGQucGVuZGluZywKICAgICAgICAgICAgYnVyZGVuOiAgZC5sb2FuID4gMCA/IGQucGVuZGluZyAvIGQubG9hbiA6IDAsCiAgICAgICAgICAgIHZhbHVlOiAgIGQubG9hbgogICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICAgIGNoaWxkcmVuLnB1c2goeyBuYW1lOiB0eXBlLCBjaGlsZHJlbjoga2lkcyB9KTsKICAgICAgfQoKICAgICAgZHJhd1RyZWVtYXAoeyBuYW1lOiAncm9vdCcsIGNoaWxkcmVuOiBjaGlsZHJlbiB9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBkcmF3VHJlZW1hcChyb290RGF0YSkgewogICAgICB2YXIgY29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NoYXJ0LWFyZWEnKTsKICAgICAgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGZ1bmN0aW9uKCkgewogICAgICAgIHZhciBXID0gY29udGFpbmVyLmNsaWVudFdpZHRoICB8fCA3MDA7CiAgICAgICAgdmFyIEggPSBjb250YWluZXIuY2xpZW50SGVpZ2h0IHx8IDQwMDsKCiAgICAgICAgdmFyIHN2ZyA9IGQzLnNlbGVjdCgnI2NoYXJ0LWFyZWEnKQogICAgICAgICAgLmFwcGVuZCgnc3ZnJykKICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIFcpCiAgICAgICAgICAuYXR0cignaGVpZ2h0JywgSCk7CgogICAgICAgIHZhciByb290ID0gZDMuaGllcmFyY2h5KHJvb3REYXRhKQogICAgICAgICAgLnN1bShmdW5jdGlvbihkKSB7IHJldHVybiBkLnZhbHVlIHx8IDA7IH0pCiAgICAgICAgICAuc29ydChmdW5jdGlvbihhLCBiKSB7IHJldHVybiBiLnZhbHVlIC0gYS52YWx1ZTsgfSk7CgogICAgICAgIGQzLnRyZWVtYXAoKQogICAgICAgICAgLnNpemUoW1csIEhdKQogICAgICAgICAgLnBhZGRpbmdPdXRlcihDT05GSUcucGFkZGluZ091dGVyKQogICAgICAgICAgLnBhZGRpbmdUb3AoQ09ORklHLnBhZGRpbmdUb3ApCiAgICAgICAgICAucGFkZGluZ0lubmVyKENPTkZJRy5wYWRkaW5nSW5uZXIpCiAgICAgICAgICAucm91bmQodHJ1ZSkocm9vdCk7CgogICAgICAgIHZhciBwYXJlbnRzID0gcm9vdC5jaGlsZHJlbiB8fCBbXTsKICAgICAgICBwYXJlbnRzLmZvckVhY2goZnVuY3Rpb24ocCkgewogICAgICAgICAgdmFyIGJhc2VDb2xvciA9IGdldFR5cGVDb2xvcihwLmRhdGEubmFtZSk7CgogICAgICAgICAgc3ZnLmFwcGVuZCgncmVjdCcpCiAgICAgICAgICAgIC5hdHRyKCd4JywgcC54MCkuYXR0cigneScsIHAueTApCiAgICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIHAueDEgLSBwLngwKQogICAgICAgICAgICAuYXR0cignaGVpZ2h0JywgcC55MSAtIHAueTApCiAgICAgICAgICAgIC5hdHRyKCdmaWxsJywgYmFzZUNvbG9yKQogICAgICAgICAgICAuYXR0cignZmlsbC1vcGFjaXR5JywgMC4wOCkKICAgICAgICAgICAgLmF0dHIoJ3J4JywgNikKICAgICAgICAgICAgLmF0dHIoJ3N0cm9rZScsIGJhc2VDb2xvcikKICAgICAgICAgICAgLmF0dHIoJ3N0cm9rZS1vcGFjaXR5JywgMC4zKQogICAgICAgICAgICAuYXR0cignc3Ryb2tlLXdpZHRoJywgMSk7CgogICAgICAgICAgc3ZnLmFwcGVuZCgndGV4dCcpCiAgICAgICAgICAgIC5hdHRyKCdjbGFzcycsICdwYXJlbnQtbGFiZWwnKQogICAgICAgICAgICAuYXR0cigneCcsIHAueDAgKyA4KQogICAgICAgICAgICAuYXR0cigneScsIHAueTAgKyAxNCkKICAgICAgICAgICAgLnRleHQocC5kYXRhLm5hbWUpOwogICAgICAgIH0pOwoKICAgICAgICB2YXIgbGVhdmVzID0gcm9vdC5sZWF2ZXMoKTsKCiAgICAgICAgbGVhdmVzLmZvckVhY2goZnVuY3Rpb24oZCkgewogICAgICAgICAgdmFyIGJhc2VDb2xvciA9IGdldFR5cGVDb2xvcihkLmRhdGEucGFyZW50KTsKICAgICAgICAgIHZhciBidXJkZW4gPSBkLmRhdGEuYnVyZGVuIHx8IDA7CiAgICAgICAgICB2YXIgb3BhY2l0eSA9IDAuMjUgKyBidXJkZW4gKiAwLjc7CgogICAgICAgICAgdmFyIGNlbGxXID0gZC54MSAtIGQueDA7CiAgICAgICAgICB2YXIgY2VsbEggPSBkLnkxIC0gZC55MDsKICAgICAgICAgIGlmIChjZWxsVyA8IDQgfHwgY2VsbEggPCA0KSByZXR1cm47CgogICAgICAgICAgdmFyIGcgPSBzdmcuYXBwZW5kKCdnJykKICAgICAgICAgICAgLmF0dHIoJ2NsYXNzJywgJ25vZGUnKQogICAgICAgICAgICAuYXR0cigndHJhbnNmb3JtJywgJ3RyYW5zbGF0ZSgnICsgZC54MCArICcsJyArIGQueTAgKyAnKScpOwoKICAgICAgICAgIGcuYXBwZW5kKCdyZWN0JykKICAgICAgICAgICAgLmF0dHIoJ3dpZHRoJywgY2VsbFcpCiAgICAgICAgICAgIC5hdHRyKCdoZWlnaHQnLCBjZWxsSCkKICAgICAgICAgICAgLmF0dHIoJ3J4JywgNCkKICAgICAgICAgICAgLmF0dHIoJ2ZpbGwnLCBiYXNlQ29sb3IpCiAgICAgICAgICAgIC5hdHRyKCdmaWxsLW9wYWNpdHknLCAwKQogICAgICAgICAgICAudHJhbnNpdGlvbigpCiAgICAgICAgICAgIC5kdXJhdGlvbihDT05GSUcuYW5pbUR1cmF0aW9uKQogICAgICAgICAgICAuZGVsYXkoTWF0aC5yYW5kb20oKSAqIENPTkZJRy5hbmltTWF4RGVsYXkpCiAgICAgICAgICAgIC5hdHRyKCdmaWxsLW9wYWNpdHknLCBvcGFjaXR5KTsKCiAgICAgICAgICBpZiAoY2VsbFcgPiBDT05GSUcubWluQ2VsbFcgJiYgY2VsbEggPiBDT05GSUcubWluQ2VsbEgpIHsKICAgICAgICAgICAgZy5hcHBlbmQoJ3RleHQnKQogICAgICAgICAgICAgIC5hdHRyKCdjbGFzcycsICdub2RlLWxhYmVsJykKICAgICAgICAgICAgICAuYXR0cigneCcsIDYpLmF0dHIoJ3knLCAxNCkKICAgICAgICAgICAgICAudGV4dChkLmRhdGEubmFtZSk7CiAgICAgICAgICB9CgogICAgICAgICAgaWYgKGNlbGxXID4gQ09ORklHLm1pbkNlbGxXRnVsbCAmJiBjZWxsSCA+IENPTkZJRy5taW5DZWxsSEZ1bGwpIHsKICAgICAgICAgICAgZy5hcHBlbmQoJ3RleHQnKQogICAgICAgICAgICAgIC5hdHRyKCdjbGFzcycsICdub2RlLXN1YicpCiAgICAgICAgICAgICAgLmF0dHIoJ3gnLCA2KS5hdHRyKCd5JywgMjcpCiAgICAgICAgICAgICAgLnRleHQoZm10KGQuZGF0YS5sb2FuKSk7CgogICAgICAgICAgICBnLmFwcGVuZCgndGV4dCcpCiAgICAgICAgICAgICAgLmF0dHIoJ2NsYXNzJywgJ25vZGUtc3ViJykKICAgICAgICAgICAgICAuYXR0cigneCcsIDYpLmF0dHIoJ3knLCAzOSkKICAgICAgICAgICAgICAudGV4dChNYXRoLnJvdW5kKGJ1cmRlbiAqIDEwMCkgKyAnJSBwZW5kaW5nJyk7CiAgICAgICAgICB9CiAgICAgICAgfSk7CgogICAgICAgIHZhciBsZWdlbmQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbGVnZW5kJyk7CgogICAgICAgIHZhciB0aXRsZUVsID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICAgIHRpdGxlRWwuY2xhc3NOYW1lID0gJ2xlZ2VuZC10aXRsZSc7CiAgICAgICAgdGl0bGVFbC50ZXh0Q29udGVudCA9ICdMb2FuIFR5cGU6JzsKICAgICAgICBsZWdlbmQuYXBwZW5kQ2hpbGQodGl0bGVFbCk7CgogICAgICAgIHZhciBzZWVuVHlwZXMgPSB7fTsKICAgICAgICBsZWF2ZXMuZm9yRWFjaChmdW5jdGlvbihkKSB7IHNlZW5UeXBlc1tkLmRhdGEucGFyZW50XSA9IHRydWU7IH0pOwogICAgICAgIGZvciAodmFyIHR5cGUgaW4gc2VlblR5cGVzKSB7CiAgICAgICAgICB2YXIgZG90V3JhcCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgICAgIGRvdFdyYXAuY2xhc3NOYW1lID0gJ3R5cGUtZG90JzsKICAgICAgICAgIGRvdFdyYXAuaW5uZXJIVE1MID0gJzxzcGFuIGNsYXNzPSJ0eXBlLXN3YXRjaCIgc3R5bGU9ImJhY2tncm91bmQ6JyArIGdldFR5cGVDb2xvcih0eXBlKSArICciPjwvc3Bhbj4nICsgdHlwZTsKICAgICAgICAgIGxlZ2VuZC5hcHBlbmRDaGlsZChkb3RXcmFwKTsKICAgICAgICB9CgogICAgICAgIHZhciBzZXBFbCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgICBzZXBFbC5zdHlsZS5jc3NUZXh0ID0gJ2ZsZXg6MSc7CiAgICAgICAgbGVnZW5kLmFwcGVuZENoaWxkKHNlcEVsKTsKCiAgICAgICAgdmFyIGdyYWRXcmFwID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICAgIGdyYWRXcmFwLnN0eWxlLmRpc3BsYXkgPSAnZmxleCc7CiAgICAgICAgZ3JhZFdyYXAuc3R5bGUuYWxpZ25JdGVtcyA9ICdjZW50ZXInOwogICAgICAgIGdyYWRXcmFwLnN0eWxlLmdhcCA9ICc2cHgnOwoKICAgICAgICB2YXIgbG93TGJsID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICAgIGxvd0xibC5jbGFzc05hbWUgPSAnbGVnZW5kLWxhYmVsJzsKICAgICAgICBsb3dMYmwudGV4dENvbnRlbnQgPSAnTG93IGJ1cmRlbic7CiAgICAgICAgZ3JhZFdyYXAuYXBwZW5kQ2hpbGQobG93TGJsKTsKCiAgICAgICAgdmFyIGNhbnZhcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2NhbnZhcycpOwogICAgICAgIGNhbnZhcy53aWR0aCA9IDEwMDsgY2FudmFzLmhlaWdodCA9IDg7CiAgICAgICAgY2FudmFzLmNsYXNzTmFtZSA9ICdsZWdlbmQtZ3JhZGllbnQnOwogICAgICAgIHZhciBjdHggPSBjYW52YXMuZ2V0Q29udGV4dCgnMmQnKTsKICAgICAgICB2YXIgZ3JhZCA9IGN0eC5jcmVhdGVMaW5lYXJHcmFkaWVudCgwLCAwLCAxMDAsIDApOwogICAgICAgIGdyYWQuYWRkQ29sb3JTdG9wKDAsICdyZ2JhKDcyLDE0OSwyMzksMC4yNSknKTsKICAgICAgICBncmFkLmFkZENvbG9yU3RvcCgxLCAncmdiYSg3MiwxNDksMjM5LDAuOTUpJyk7CiAgICAgICAgY3R4LmZpbGxTdHlsZSA9IGdyYWQ7CiAgICAgICAgY3R4LmZpbGxSZWN0KDAsIDAsIDEwMCwgOCk7CiAgICAgICAgZ3JhZFdyYXAuYXBwZW5kQ2hpbGQoY2FudmFzKTsKCiAgICAgICAgdmFyIGhpZ2hMYmwgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7CiAgICAgICAgaGlnaExibC5jbGFzc05hbWUgPSAnbGVnZW5kLWxhYmVsJzsKICAgICAgICBoaWdoTGJsLnRleHRDb250ZW50ID0gJ0hpZ2ggYnVyZGVuJzsKICAgICAgICBncmFkV3JhcC5hcHBlbmRDaGlsZChoaWdoTGJsKTsKCiAgICAgICAgbGVnZW5kLmFwcGVuZENoaWxkKGdyYWRXcmFwKTsKICAgICAgfSk7CiAgICB9CgogIH0pKCk7CgogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7Cg\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"ICogeyBtYXJnaW46IDA7IHBhZGRpbmc6IDA7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IH0KCiAgYm9keSB7CiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogIH0KCiAgI2NvbnRhaW5lciB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBwYWRkaW5nOiAyMHB4IDI0cHggMTRweDsKICB9CgogICNoZWFkZXIgeyBtYXJnaW4tYm90dG9tOiAxNHB4OyB9CgogICN0aXRsZSB7CiAgICBmb250LXNpemU6IDE3cHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBsZXR0ZXItc3BhY2luZzogLTAuM3B4OwogIH0KCiAgI3N1YnRpdGxlIHsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGNvbG9yOiAjNjQ3NDhiOwogICAgbWFyZ2luLXRvcDogM3B4OwogIH0KCiAgI2NoYXJ0LWFyZWEgewogICAgZmxleDogMTsKICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgIG1pbi1oZWlnaHQ6IDA7CiAgfQoKICAjY2hhcnQtYXJlYSBzdmcgewogICAgZGlzcGxheTogYmxvY2s7CiAgICB3aWR0aDogMTAwJTsKICAgIGhlaWdodDogMTAwJTsKICB9CgogIC5ub2RlIHJlY3QgewogICAgc3Ryb2tlOiAjZjFmNWY5OwogICAgc3Ryb2tlLXdpZHRoOiAycHg7CiAgICByeDogNDsKICAgIHRyYW5zaXRpb246IG9wYWNpdHkgMC4yczsKICB9CgogIC5ub2RlIHJlY3Q6aG92ZXIgeyBvcGFjaXR5OiAwLjg1OyB9CgogIC5ub2RlLWxhYmVsIHsKICAgIGZvbnQtc2l6ZTogMTFweDsKICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgICBmaWxsOiAjMWUyOTNiOwogICAgcG9pbnRlci1ldmVudHM6IG5vbmU7CiAgfQoKICAubm9kZS1zdWIgewogICAgZm9udC1zaXplOiAxMHB4OwogICAgZmlsbDogIzY0NzQ4YjsKICAgIHBvaW50ZXItZXZlbnRzOiBub25lOwogIH0KCiAgLnBhcmVudC1sYWJlbCB7CiAgICBmb250LXNpemU6IDEycHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgZmlsbDogIzFlMjkzYjsKICAgIHBvaW50ZXItZXZlbnRzOiBub25lOwogIH0KCiAgI2xlZ2VuZCB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZ2FwOiA2cHg7CiAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAgcGFkZGluZzogMTBweCAwIDJweDsKICAgIGZsZXgtd3JhcDogd3JhcDsKICB9CgogIC5sZWdlbmQtdGl0bGUgewogICAgZm9udC1zaXplOiAxMXB4OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBtYXJnaW4tcmlnaHQ6IDRweDsKICB9CgogIC5sZWdlbmQtZ3JhZGllbnQgewogICAgd2lkdGg6IDEwMHB4OwogICAgaGVpZ2h0OiA4cHg7CiAgICBib3JkZXItcmFkaXVzOiA0cHg7CiAgfQoKICAubGVnZW5kLWxhYmVsIHsKICAgIGZvbnQtc2l6ZTogMTFweDsKICAgIGNvbG9yOiAjNjQ3NDhiOwogIH0KCiAgLnR5cGUtZG90IHsKICAgIGRpc3BsYXk6IGlubGluZS1mbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGdhcDogNXB4OwogICAgZm9udC1zaXplOiAxMXB4OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBtYXJnaW4tcmlnaHQ6IDEwcHg7CiAgfQoKICAudHlwZS1zd2F0Y2ggewogICAgd2lkdGg6IDEwcHg7CiAgICBoZWlnaHQ6IDEwcHg7CiAgICBib3JkZXItcmFkaXVzOiAycHg7CiAgICBmbGV4LXNocmluazogMDsKICB9\\\",\\\"htmlCodeBase64\\\":\\\"PHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZDNANy9kaXN0L2QzLm1pbi5qcyI+PC9zY3JpcHQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogIDxkaXYgaWQ9ImNvbnRhaW5lciI+CiAgICA8ZGl2IGlkPSJoZWFkZXIiPgogICAgICA8IS0tIDxkaXYgaWQ9InRpdGxlIj5Mb2FuIFBvcnRmb2xpbyBCdXJkZW48L2Rpdj4gLS0+CiAgICAgIDxkaXYgaWQ9InN1YnRpdGxlIj5TaXplZCBieSBsb2FuIGFtb3VudCDCtyBDb2xvciBpbnRlbnNpdHkgPSBwZW5kaW5nIGJ1cmRlbjwvZGl2PgogICAgPC9kaXY+CiAgICA8ZGl2IGlkPSJjaGFydC1hcmVhIj48L2Rpdj4KICAgIDxkaXYgaWQ9ImxlZ2VuZCI+PC9kaXY+CiAgPC9kaXY+Cg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: Loan Portfolio Burden
+      dynamic_description: "."
+    viz_guid: 0882539a-3de2-4226-9bdf-a8f777e17e2f
+  - id: Viz_18
+    answer:
+      name: Transaction Flow by Channel & Status
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Transaction_Channel] [Transaction_Status] [Transaction_Amount]"
+      answer_columns:
+      - name: Total Transaction_Amount
+      - name: Transaction_Channel
+      - name: Transaction_Status
+      table:
+        table_columns:
+        - column_id: Total Transaction_Amount
+          headline_aggregation: SUM
+        - column_id: Transaction_Channel
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Transaction_Status
+          headline_aggregation: COUNT_DISTINCT
+        ordered_column_ids:
+        - Transaction_Channel
+        - Transaction_Status
+        - Total Transaction_Amount
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Transaction_Amount
+        - column_id: Transaction_Channel
+        - column_id: Transaction_Status
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Transaction_Channel\",\"columnProperty\": {}},{\"columnId\": \"Transaction_Status\",\"columnProperty\": {}},{\"columnId\": \"Total Transaction_Amount\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"d7737d15-e92a-49e6-aa2a-0320291b6834\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Transaction_Amount\"],\"isOpposite\": false}},{\"id\": \"2ab28e5f-3d2a-470a-b30b-672ea2abe403\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Transaction_Channel\",\"Transaction_Status\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Transaction_Channel
+            - Transaction_Status
+            - Total Transaction_Amount
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIlRyYW5zYWN0aW9uX0NoYW5uZWwiCiAgICogIlRyYW5zYWN0aW9uX1N0YXR1cyIKICAgKiAiVG90YWwgVHJhbnNhY3Rpb25fQW1vdW50IgogICAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqIC0tLSBFTkQgLS0tCiAgICovCgogIChmdW5jdGlvbigpIHsKCiAgICAvLyDilIDilIAgQ09ORklHIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICAgdmFyIENPTkZJRyA9IHsKICAgICAgcXVlcnk6ICdUcmFuc2FjdGlvbl9DaGFubmVsIFRyYW5zYWN0aW9uX1N0YXR1cyBUb3RhbCBUcmFuc2FjdGlvbl9BbW91bnQnLAogICAgICBjb2x1bW5zOiB7CiAgICAgICAgY2hhbm5lbDogJ1RyYW5zYWN0aW9uX0NoYW5uZWwnLAogICAgICAgIHN0YXR1czogICdUcmFuc2FjdGlvbl9TdGF0dXMnLAogICAgICAgIGFtb3VudDogICdUb3RhbCBUcmFuc2FjdGlvbl9BbW91bnQnCiAgICAgIH0sCiAgICAgIHBhbGV0dGU6ICAgICAgWycjNDg5NWVmJywgJyM0Y2M5ZjAnLCAnI2E4NTVmNycsICcjZmI4NTAwJywgJyMzZmI5NTAnXSwKICAgICAgc3RhdHVzQ29sb3JzOiB7CiAgICAgICAgJ0NvbXBsZXRlZCc6ICcjM2ZiOTUwJywKICAgICAgICAnRmFpbGVkJzogICAgJyNmODUxNDknLAogICAgICAgICdQZW5kaW5nJzogICAnI2QyOTkyMicKICAgICAgfSwKICAgICAgbm9kZVBhZGRpbmc6ICAxOCwKICAgICAgbm9kZVdpZHRoOiAgICAyMCwKICAgICAgYW5pbUR1cmF0aW9uOiA5MDAKICAgIH07CiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCiAgICB2YXIgQ0hBTk5FTF9DT0xPUlMgPSB7fTsKCiAgICBmdW5jdGlvbiBnZXRDaGFubmVsQ29sb3IobmFtZSwgaWR4KSB7CiAgICAgIGlmICghQ0hBTk5FTF9DT0xPUlNbbmFtZV0pIHsKICAgICAgICBDSEFOTkVMX0NPTE9SU1tuYW1lXSA9IENPTkZJRy5wYWxldHRlW2lkeCAlIENPTkZJRy5wYWxldHRlLmxlbmd0aF07CiAgICAgIH0KICAgICAgcmV0dXJuIENIQU5ORUxfQ09MT1JTW25hbWVdOwogICAgfQoKICAgIGZ1bmN0aW9uIGZtdCh2KSB7CiAgICAgIGlmICh2ID49IDEwMDAwMDAwMDApIHJldHVybiAodiAvIDEwMDAwMDAwMDApLnRvRml4ZWQoMSkgKyAnQic7CiAgICAgIGlmICh2ID49IDEwMDAwMDApICAgIHJldHVybiAodiAvIDEwMDAwMDApLnRvRml4ZWQoMSkgKyAnTSc7CiAgICAgIGlmICh2ID49IDEwMDApICAgICAgIHJldHVybiAodiAvIDEwMDApLnRvRml4ZWQoMCkgKyAnSyc7CiAgICAgIHJldHVybiB2LnRvRml4ZWQoMCk7CiAgICB9CgogICAgZnVuY3Rpb24gd2FpdEZvckxpYnMoY2IpIHsKICAgICAgaWYgKHR5cGVvZiBkMyAhPT0gJ3VuZGVmaW5lZCcgJiYgdHlwZW9mIGQzLnNhbmtleSAhPT0gJ3VuZGVmaW5lZCcpIHsgY2IoKTsgcmV0dXJuOyB9CiAgICAgIHZhciB0ID0gc2V0SW50ZXJ2YWwoZnVuY3Rpb24oKSB7CiAgICAgICAgaWYgKHR5cGVvZiBkMyAhPT0gJ3VuZGVmaW5lZCcgJiYgdHlwZW9mIGQzLnNhbmtleSAhPT0gJ3VuZGVmaW5lZCcpIHsgY2xlYXJJbnRlcnZhbCh0KTsgY2IoKTsgfQogICAgICB9LCAxMDApOwogICAgfQoKICAgIHdhaXRGb3JMaWJzKGZ1bmN0aW9uKCkgewogICAgICB0cnkgewogICAgICAgIHZhciByYXcgPSB2aXouZ2V0RGF0YUZyb21TZWFyY2hRdWVyeShDT05GSUcucXVlcnkpOwogICAgICAgIGlmIChyYXcgJiYgdHlwZW9mIHJhdy50aGVuID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICByYXcudGhlbihmdW5jdGlvbihyZXMpIHsgcHJvY2Vzc0RhdGEocmVzKTsgfSkuY2F0Y2goZnVuY3Rpb24oZSl7IGNvbnNvbGUuZXJyb3IoZSk7IH0pOwogICAgICAgIH0gZWxzZSBpZiAocmF3ICYmIHR5cGVvZiByYXcuZ2V0RGF0YSA9PT0gJ2Z1bmN0aW9uJykgewogICAgICAgICAgcHJvY2Vzc0RhdGEocmF3KTsKICAgICAgICB9CiAgICAgIH0gY2F0Y2goZSkgewogICAgICAgIGNvbnNvbGUuZXJyb3IoZSk7CiAgICAgIH0KICAgIH0pOwoKICAgIGZ1bmN0aW9uIHByb2Nlc3NEYXRhKHJhdykgewogICAgICB2YXIgcmVzdWx0ID0gcmF3LmdldERhdGEoKTsKICAgICAgdmFyIGRhdGEgICA9IHJlc3VsdC5kYXRhOwogICAgICB2YXIgc2NoZW1hID0gcmVzdWx0LnNjaGVtYTsKCiAgICAgIHZhciBjaElkeCA9IC0xLCBzdElkeCA9IC0xLCBhbXRJZHggPSAtMTsKICAgICAgZm9yICh2YXIgaSA9IDA7IGkgPCBzY2hlbWEubGVuZ3RoOyBpKyspIHsKICAgICAgICB2YXIgbiA9IHNjaGVtYVtpXS5uYW1lOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5jaGFubmVsKSBjaElkeCAgPSBpOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5zdGF0dXMpICBzdElkeCAgPSBpOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5hbW91bnQpICBhbXRJZHggPSBpOwogICAgICB9CiAgICAgIGlmIChjaElkeCA8IDAgfHwgc3RJZHggPCAwIHx8IGFtdElkeCA8IDApIHsgY29uc29sZS5lcnJvcignY29sdW1ucyBub3QgZm91bmQnKTsgcmV0dXJuOyB9CgogICAgICB2YXIgY2hhbm5lbHMgPSB7fSwgc3RhdHVzZXMgPSB7fSwgZmxvd3MgPSB7fTsKICAgICAgZm9yICh2YXIgciA9IDA7IHIgPCBkYXRhLmxlbmd0aDsgcisrKSB7CiAgICAgICAgdmFyIGNoICA9IGRhdGFbcl1bY2hJZHhdICB8fCAnVW5rbm93bic7CiAgICAgICAgdmFyIHN0ICA9IGRhdGFbcl1bc3RJZHhdICB8fCAnVW5rbm93bic7CiAgICAgICAgdmFyIGFtdCA9ICtkYXRhW3JdW2FtdElkeF0gfHwgMDsKICAgICAgICBjaGFubmVsc1tjaF0gPSB0cnVlOwogICAgICAgIHN0YXR1c2VzW3N0XSA9IHRydWU7CiAgICAgICAgdmFyIGtleSA9IGNoICsgJ3x8JyArIHN0OwogICAgICAgIGZsb3dzW2tleV0gPSAoZmxvd3Nba2V5XSB8fCAwKSArIGFtdDsKICAgICAgfQoKICAgICAgdmFyIG5vZGVzID0gW107CiAgICAgIHZhciBub2RlSW5kZXggPSB7fTsKCiAgICAgIHZhciBjaExpc3QgPSBPYmplY3Qua2V5cyhjaGFubmVscyk7CiAgICAgIGNoTGlzdC5mb3JFYWNoKGZ1bmN0aW9uKGNoLCBpKSB7CiAgICAgICAgbm9kZUluZGV4WydjaF8nICsgY2hdID0gbm9kZXMubGVuZ3RoOwogICAgICAgIG5vZGVzLnB1c2goeyBuYW1lOiBjaCwgZ3JvdXA6ICdjaGFubmVsJywgY29sb3JJZHg6IGkgfSk7CiAgICAgIH0pOwoKICAgICAgdmFyIHN0TGlzdCA9IE9iamVjdC5rZXlzKHN0YXR1c2VzKTsKICAgICAgc3RMaXN0LmZvckVhY2goZnVuY3Rpb24oc3QpIHsKICAgICAgICBub2RlSW5kZXhbJ3N0XycgKyBzdF0gPSBub2Rlcy5sZW5ndGg7CiAgICAgICAgbm9kZXMucHVzaCh7IG5hbWU6IHN0LCBncm91cDogJ3N0YXR1cycgfSk7CiAgICAgIH0pOwoKICAgICAgdmFyIGxpbmtzID0gW107CiAgICAgIGZvciAodmFyIGtleSBpbiBmbG93cykgewogICAgICAgIHZhciBwYXJ0cyA9IGtleS5zcGxpdCgnfHwnKTsKICAgICAgICB2YXIgY2gyID0gcGFydHNbMF0sIHN0MiA9IHBhcnRzWzFdOwogICAgICAgIGxpbmtzLnB1c2goewogICAgICAgICAgc291cmNlOiAgbm9kZUluZGV4WydjaF8nICsgY2gyXSwKICAgICAgICAgIHRhcmdldDogIG5vZGVJbmRleFsnc3RfJyArIHN0Ml0sCiAgICAgICAgICB2YWx1ZTogICBmbG93c1trZXldLAogICAgICAgICAgY2hhbm5lbDogY2gyCiAgICAgICAgfSk7CiAgICAgIH0KCiAgICAgIGRyYXdTYW5rZXkoeyBub2Rlczogbm9kZXMsIGxpbmtzOiBsaW5rcyB9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBkcmF3U2Fua2V5KGdyYXBoKSB7CiAgICAgIHZhciBjb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2hhcnQtYXJlYScpOwogICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoZnVuY3Rpb24oKSB7CiAgICAgICAgdmFyIFcgPSBjb250YWluZXIuY2xpZW50V2lkdGggIHx8IDcwMDsKICAgICAgICB2YXIgSCA9IGNvbnRhaW5lci5jbGllbnRIZWlnaHQgfHwgNDIwOwoKICAgICAgICB2YXIgbWFyZ2luID0geyB0b3A6IDEwLCByaWdodDogMTIwLCBib3R0b206IDEwLCBsZWZ0OiAxMjAgfTsKICAgICAgICB2YXIgdyA9IFcgLSBtYXJnaW4ubGVmdCAtIG1hcmdpbi5yaWdodDsKICAgICAgICB2YXIgaCA9IEggLSBtYXJnaW4udG9wICAtIG1hcmdpbi5ib3R0b207CgogICAgICAgIHZhciBzdmcgPSBkMy5zZWxlY3QoJyN2aXotc3ZnJykKICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIFcpCiAgICAgICAgICAuYXR0cignaGVpZ2h0JywgSCkKICAgICAgICAgIC5hcHBlbmQoJ2cnKQogICAgICAgICAgLmF0dHIoJ3RyYW5zZm9ybScsICd0cmFuc2xhdGUoJyArIG1hcmdpbi5sZWZ0ICsgJywnICsgbWFyZ2luLnRvcCArICcpJyk7CgogICAgICAgIHZhciBzYW5rZXkgPSBkMy5zYW5rZXkoKQogICAgICAgICAgLm5vZGVXaWR0aChDT05GSUcubm9kZVdpZHRoKQogICAgICAgICAgLm5vZGVQYWRkaW5nKENPTkZJRy5ub2RlUGFkZGluZykKICAgICAgICAgIC5leHRlbnQoW1swLCAwXSwgW3csIGhdXSk7CgogICAgICAgIHZhciBzYW5rZXlEYXRhID0gc2Fua2V5KHsKICAgICAgICAgIG5vZGVzOiBncmFwaC5ub2Rlcy5tYXAoZnVuY3Rpb24oZCkgeyByZXR1cm4gT2JqZWN0LmFzc2lnbih7fSwgZCk7IH0pLAogICAgICAgICAgbGlua3M6IGdyYXBoLmxpbmtzLm1hcChmdW5jdGlvbihkKSB7IHJldHVybiBPYmplY3QuYXNzaWduKHt9LCBkKTsgfSkKICAgICAgICB9KTsKCiAgICAgICAgLy8gbGlua3MKICAgICAgICB2YXIgbGlua0cgPSBzdmcuYXBwZW5kKCdnJykuYXR0cignZmlsbCcsICdub25lJyk7CgogICAgICAgIHNhbmtleURhdGEubGlua3MuZm9yRWFjaChmdW5jdGlvbihkKSB7CiAgICAgICAgICB2YXIgY2hOYW1lID0gZC5jaGFubmVsOwogICAgICAgICAgdmFyIGNoSWR4ICA9IE9iamVjdC5rZXlzKENIQU5ORUxfQ09MT1JTKS5sZW5ndGg7CiAgICAgICAgICB2YXIgY29sb3IgID0gZ2V0Q2hhbm5lbENvbG9yKGNoTmFtZSwgZC5zb3VyY2UuY29sb3JJZHggIT09IHVuZGVmaW5lZCA/IGQuc291cmNlLmNvbG9ySWR4IDogY2hJZHgpOwoKICAgICAgICAgIHZhciBwYXRoID0gbGlua0cuYXBwZW5kKCdwYXRoJykKICAgICAgICAgICAgLmF0dHIoJ2QnLCBkMy5zYW5rZXlMaW5rSG9yaXpvbnRhbCgpKGQpKQogICAgICAgICAgICAuYXR0cignc3Ryb2tlJywgY29sb3IpCiAgICAgICAgICAgIC5hdHRyKCdzdHJva2Utb3BhY2l0eScsIDApCiAgICAgICAgICAgIC5hdHRyKCdzdHJva2Utd2lkdGgnLCBNYXRoLm1heCgxLCBkLndpZHRoKSk7CgogICAgICAgICAgcGF0aC50cmFuc2l0aW9uKCkKICAgICAgICAgICAgLmR1cmF0aW9uKENPTkZJRy5hbmltRHVyYXRpb24pCiAgICAgICAgICAgIC5kZWxheShNYXRoLnJhbmRvbSgpICogMzAwKQogICAgICAgICAgICAuYXR0cignc3Ryb2tlLW9wYWNpdHknLCAwLjM1KTsKCiAgICAgICAgICBwYXRoLm9uKCdtb3VzZW92ZXInLCBmdW5jdGlvbigpIHsKICAgICAgICAgICAgZDMuc2VsZWN0KHRoaXMpLmF0dHIoJ3N0cm9rZS1vcGFjaXR5JywgMC42NSk7CiAgICAgICAgICB9KS5vbignbW91c2VvdXQnLCBmdW5jdGlvbigpIHsKICAgICAgICAgICAgZDMuc2VsZWN0KHRoaXMpLmF0dHIoJ3N0cm9rZS1vcGFjaXR5JywgMC4zNSk7CiAgICAgICAgICB9KTsKICAgICAgICB9KTsKCiAgICAgICAgLy8gbm9kZXMKICAgICAgICBzYW5rZXlEYXRhLm5vZGVzLmZvckVhY2goZnVuY3Rpb24oZCkgewogICAgICAgICAgdmFyIGNvbG9yOwogICAgICAgICAgaWYgKGQuZ3JvdXAgPT09ICdjaGFubmVsJykgewogICAgICAgICAgICBjb2xvciA9IGdldENoYW5uZWxDb2xvcihkLm5hbWUsIGQuY29sb3JJZHggfHwgMCk7CiAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICBjb2xvciA9IENPTkZJRy5zdGF0dXNDb2xvcnNbZC5uYW1lXSB8fCAnIzk0YTNiOCc7CiAgICAgICAgICB9CgogICAgICAgICAgdmFyIG5vZGVIID0gZC55MSAtIGQueTA7CgogICAgICAgICAgc3ZnLmFwcGVuZCgncmVjdCcpCiAgICAgICAgICAgIC5hdHRyKCd4JywgZC54MCkuYXR0cigneScsIGQueTApCiAgICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIGQueDEgLSBkLngwKQogICAgICAgICAgICAuYXR0cignaGVpZ2h0Jywgbm9kZUgpCiAgICAgICAgICAgIC5hdHRyKCdyeCcsIDQpCiAgICAgICAgICAgIC5hdHRyKCdmaWxsJywgY29sb3IpCiAgICAgICAgICAgIC5hdHRyKCdmaWxsLW9wYWNpdHknLCAwLjkpOwoKICAgICAgICAgIC8vIGxlZnQtc2lkZSBsYWJlbHMgKGNoYW5uZWxzKQogICAgICAgICAgaWYgKGQuZ3JvdXAgPT09ICdjaGFubmVsJykgewogICAgICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgICAgICAuYXR0cignY2xhc3MnLCAnbm9kZS1sYWJlbCcpCiAgICAgICAgICAgICAgLmF0dHIoJ3gnLCBkLngwIC0gOCkKICAgICAgICAgICAgICAuYXR0cigneScsIGQueTAgKyBub2RlSCAvIDIgLSA1KQogICAgICAgICAgICAgIC5hdHRyKCd0ZXh0LWFuY2hvcicsICdlbmQnKQogICAgICAgICAgICAgIC5hdHRyKCdkb21pbmFudC1iYXNlbGluZScsICdtaWRkbGUnKQogICAgICAgICAgICAgIC50ZXh0KGQubmFtZSk7CgogICAgICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgICAgICAuYXR0cignY2xhc3MnLCAnbm9kZS12YWx1ZScpCiAgICAgICAgICAgICAgLmF0dHIoJ3gnLCBkLngwIC0gOCkKICAgICAgICAgICAgICAuYXR0cigneScsIGQueTAgKyBub2RlSCAvIDIgKyAxMCkKICAgICAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnZW5kJykKICAgICAgICAgICAgICAuYXR0cignZG9taW5hbnQtYmFzZWxpbmUnLCAnbWlkZGxlJykKICAgICAgICAgICAgICAudGV4dChmbXQoZC52YWx1ZSkpOwogICAgICAgICAgfQoKICAgICAgICAgIC8vIHJpZ2h0LXNpZGUgbGFiZWxzIChzdGF0dXNlcykKICAgICAgICAgIGlmIChkLmdyb3VwID09PSAnc3RhdHVzJykgewogICAgICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgICAgICAuYXR0cignY2xhc3MnLCAnbm9kZS1sYWJlbCcpCiAgICAgICAgICAgICAgLmF0dHIoJ3gnLCBkLngxICsgOCkKICAgICAgICAgICAgICAuYXR0cigneScsIGQueTAgKyBub2RlSCAvIDIgLSA1KQogICAgICAgICAgICAgIC5hdHRyKCdkb21pbmFudC1iYXNlbGluZScsICdtaWRkbGUnKQogICAgICAgICAgICAgIC50ZXh0KGQubmFtZSk7CgogICAgICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgICAgICAuYXR0cignY2xhc3MnLCAnbm9kZS12YWx1ZScpCiAgICAgICAgICAgICAgLmF0dHIoJ3gnLCBkLngxICsgOCkKICAgICAgICAgICAgICAuYXR0cigneScsIGQueTAgKyBub2RlSCAvIDIgKyAxMCkKICAgICAgICAgICAgICAuYXR0cignZG9taW5hbnQtYmFzZWxpbmUnLCAnbWlkZGxlJykKICAgICAgICAgICAgICAudGV4dChmbXQoZC52YWx1ZSkpOwogICAgICAgICAgfQogICAgICAgIH0pOwogICAgICB9KTsKICAgIH0KCiAgfSkoKTsKCiAgdml6LmV2ZW50cy5lbWl0UmVuZGVyQ29tcGxldGVkRXZlbnQoKTs\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICBib2R5IHsgICAgICAgICAgCiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogIH0KCiAgI2NvbnRhaW5lciB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGhlaWdodDogMTAwdmg7CiAgICBwYWRkaW5nOiAyMHB4IDI0cHggMTZweDsKICB9CgogICNoZWFkZXIgeyBtYXJnaW4tYm90dG9tOiAxNHB4OyB9CgogICN0aXRsZSB7CiAgICBmb250LXNpemU6IDE3cHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBsZXR0ZXItc3BhY2luZzogLTAuM3B4OwogIH0KCiAgI3N1YnRpdGxlIHsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGNvbG9yOiAjNjQ3NDhiOwogICAgbWFyZ2luLXRvcDogM3B4OwogIH0KCiAgI2NoYXJ0LWFyZWEgewogICAgZmxleDogMTsKICAgIG1pbi1oZWlnaHQ6IDA7CiAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgfQoKICAjdml6LXN2ZyB7CiAgICB3aWR0aDogMTAwJTsKICAgIGhlaWdodDogMTAwJTsKICAgIGRpc3BsYXk6IGJsb2NrOwogIH0KCiAgLm5vZGUtbGFiZWwgewogICAgZm9udC1zaXplOiAxMnB4OwogICAgZm9udC13ZWlnaHQ6IDYwMDsKICAgIGZpbGw6ICMxZTI5M2I7CiAgICBwb2ludGVyLWV2ZW50czogbm9uZTsKICB9CgogIC5ub2RlLXZhbHVlIHsKICAgIGZvbnQtc2l6ZTogMTBweDsKICAgIGZpbGw6ICM2NDc0OGI7CiAgICBwb2ludGVyLWV2ZW50czogbm9uZTsKICB9\\\",\\\"htmlCodeBase64\\\":\\\"IDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2QzQDcvZGlzdC9kMy5taW4uanMiPjwvc2NyaXB0PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZDMtc2Fua2V5QDAuMTIuMy9kaXN0L2QzLXNhbmtleS5taW4uanMiPjwvc2NyaXB0PgoKICA8ZGl2IGlkPSJjb250YWluZXIiPgogICAgPGRpdiBpZD0iaGVhZGVyIj4KICAgICAgPGRpdiBpZD0idGl0bGUiPlRyYW5zYWN0aW9uIEZsb3cgYnkgQ2hhbm5lbCAmIFN0YXR1czwvZGl2PgogICAgICA8ZGl2IGlkPSJzdWJ0aXRsZSI+RmxvdyB3aWR0aCBwcm9wb3J0aW9uYWwgdG8gdHJhbnNhY3Rpb24gdm9sdW1lPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgaWQ9ImNoYXJ0LWFyZWEiPgogICAgICA8c3ZnIGlkPSJ2aXotc3ZnIj48L3N2Zz4KICAgIDwvZGl2PgogIDwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: Transaction Flow by Channel & Status
+      dynamic_description: "."
+    viz_guid: df57a025-94a0-4add-afe8-78d780086c68
+  - id: Viz_19
+    answer:
+      name: Income v/s Risk Score by Loan Status
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Risk Score] [Annual Income] [Loan_Status] [Loan Amount] [Loan Id]"
+      answer_columns:
+      - name: Loan Id
+      - name: Loan_Status
+      - name: Total Annual Income
+      - name: Total Loan Amount
+      - name: Total Risk Score
+      table:
+        table_columns:
+        - column_id: Loan Id
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Loan_Status
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        - column_id: Total Loan Amount
+          headline_aggregation: SUM
+        - column_id: Total Risk Score
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Loan_Status
+        - Loan Id
+        - Total Risk Score
+        - Total Annual Income
+        - Total Loan Amount
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Loan Id
+        - column_id: Loan_Status
+        - column_id: Total Annual Income
+        - column_id: Total Loan Amount
+        - column_id: Total Risk Score
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Loan_Status\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Risk Score\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Loan Amount\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"3a550eea-4717-4a18-8460-61a3ffe5441d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Risk Score\"],\"isOpposite\": false}},{\"id\": \"b60407ba-625c-4c9b-ba0c-de0e8d5429ac\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": true}},{\"id\": \"c286cead-2d4c-4175-b457-b1b47b960aef\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Loan Amount\"],\"isOpposite\": true}},{\"id\": \"ecd65ee8-8870-4c87-a417-99cc0482a137\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Loan_Status\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Loan_Status
+            - Total Risk Score
+            - Total Annual Income
+            - Total Loan Amount
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIkxvYW5fU3RhdHVzIgogICAqICJMb2FuIElkIgogICAqICJUb3RhbCBSaXNrIFNjb3JlIgogICAqICJUb3RhbCBBbm51YWwgSW5jb21lIgogICAqICJUb3RhbCBMb2FuIEFtb3VudCIKICAgKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAtLS0gRU5EIC0tLQogICAqLwoKICAoZnVuY3Rpb24oKSB7CgogICAgLy8g4pSA4pSAIENPTkZJRyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHZhciBDT05GSUcgPSB7CiAgICAgIHF1ZXJ5OiAnVG90YWwgUmlzayBTY29yZSBUb3RhbCBBbm51YWwgSW5jb21lIExvYW5fU3RhdHVzIFRvdGFsIExvYW4gQW1vdW50IExvYW4gSWQnLAogICAgICBjb2x1bW5zOiB7CiAgICAgICAgcmlza1Njb3JlOiAgICdUb3RhbCBSaXNrIFNjb3JlJywKICAgICAgICBpbmNvbWU6ICAgICAgJ1RvdGFsIEFubnVhbCBJbmNvbWUnLAogICAgICAgIGxvYW5TdGF0dXM6ICAnTG9hbl9TdGF0dXMnLAogICAgICAgIGxvYW5BbW91bnQ6ICAnVG90YWwgTG9hbiBBbW91bnQnCiAgICAgIH0sCiAgICAgIHN0YXR1c0NvbG9yczogewogICAgICAgICdBY3RpdmUnOiAgICB7IGZpbGw6ICcjNDg5NWVmJywgYWxwaGE6IDAuNTUgfSwKICAgICAgICAnQXBwcm92ZWQnOiAgeyBmaWxsOiAnIzNmYjk1MCcsIGFscGhhOiAwLjYwIH0sCiAgICAgICAgJ0RlZmF1bHRlZCc6IHsgZmlsbDogJyNmODUxNDknLCBhbHBoYTogMC43NSB9LAogICAgICAgICdQZW5kaW5nJzogICB7IGZpbGw6ICcjZDI5OTIyJywgYWxwaGE6IDAuNjAgfQogICAgICB9LAogICAgICBkZWZhdWx0Q29sb3I6ICB7IGZpbGw6ICcjOTRhM2I4JywgYWxwaGE6IDAuNCB9LAogICAgICBkb3RNaW5SOiAgICAgICAyLAogICAgICBkb3RNYXhSOiAgICAgICA3LAogICAgICBhbmltU3RlcHM6ICAgICA0MCwKICAgICAgbWFyZ2luOiAgICAgICAgeyB0b3A6IDEwLCByaWdodDogMjAsIGJvdHRvbTogNDQsIGxlZnQ6IDU4IH0KICAgIH07CiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCiAgICBmdW5jdGlvbiBmbXQodikgewogICAgICBpZiAodiA+PSAxMDAwMDAwKSByZXR1cm4gKHYgLyAxMDAwMDAwKS50b0ZpeGVkKDEpICsgJ00nOwogICAgICBpZiAodiA+PSAxMDAwKSAgICByZXR1cm4gKHYgLyAxMDAwKS50b0ZpeGVkKDApICsgJ0snOwogICAgICByZXR1cm4gdi50b0ZpeGVkKDApOwogICAgfQoKICAgIGZ1bmN0aW9uIHdhaXRGb3JEMyhjYikgewogICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjYigpOyByZXR1cm47IH0KICAgICAgdmFyIHQgPSBzZXRJbnRlcnZhbChmdW5jdGlvbigpIHsKICAgICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjbGVhckludGVydmFsKHQpOyBjYigpOyB9CiAgICAgIH0sIDEwMCk7CiAgICB9CgogICAgd2FpdEZvckQzKGZ1bmN0aW9uKCkgewogICAgICB0cnkgewogICAgICAgIHZhciByYXcgPSB2aXouZ2V0RGF0YUZyb21TZWFyY2hRdWVyeShDT05GSUcucXVlcnkpOwogICAgICAgIGlmIChyYXcgJiYgdHlwZW9mIHJhdy50aGVuID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICByYXcudGhlbihmdW5jdGlvbihyZXMpIHsgcHJvY2Vzc0RhdGEocmVzKTsgfSkuY2F0Y2goZnVuY3Rpb24oZSl7IGNvbnNvbGUuZXJyb3IoZSk7IH0pOwogICAgICAgIH0gZWxzZSBpZiAocmF3ICYmIHR5cGVvZiByYXcuZ2V0RGF0YSA9PT0gJ2Z1bmN0aW9uJykgewogICAgICAgICAgcHJvY2Vzc0RhdGEocmF3KTsKICAgICAgICB9CiAgICAgIH0gY2F0Y2goZSkgewogICAgICAgIGNvbnNvbGUuZXJyb3IoZSk7CiAgICAgIH0KICAgIH0pOwoKICAgIGZ1bmN0aW9uIHByb2Nlc3NEYXRhKHJhdykgewogICAgICB2YXIgcmVzdWx0ID0gcmF3LmdldERhdGEoKTsKICAgICAgdmFyIGRhdGEgICA9IHJlc3VsdC5kYXRhOwogICAgICB2YXIgc2NoZW1hID0gcmVzdWx0LnNjaGVtYTsKCiAgICAgIHZhciByaXNrSWR4ID0gLTEsIGluY29tZUlkeCA9IC0xLCBzdGF0dXNJZHggPSAtMSwgYW10SWR4ID0gLTE7CiAgICAgIGZvciAodmFyIGkgPSAwOyBpIDwgc2NoZW1hLmxlbmd0aDsgaSsrKSB7CiAgICAgICAgdmFyIG4gPSBzY2hlbWFbaV0ubmFtZTsKICAgICAgICBpZiAobiA9PT0gQ09ORklHLmNvbHVtbnMucmlza1Njb3JlKSAgcmlza0lkeCAgID0gaTsKICAgICAgICBpZiAobiA9PT0gQ09ORklHLmNvbHVtbnMuaW5jb21lKSAgICAgaW5jb21lSWR4ICA9IGk7CiAgICAgICAgaWYgKG4gPT09IENPTkZJRy5jb2x1bW5zLmxvYW5TdGF0dXMpIHN0YXR1c0lkeCAgPSBpOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5sb2FuQW1vdW50KSBhbXRJZHggICAgID0gaTsKICAgICAgfQogICAgICBpZiAocmlza0lkeCA8IDAgfHwgaW5jb21lSWR4IDwgMCB8fCBzdGF0dXNJZHggPCAwKSB7IGNvbnNvbGUuZXJyb3IoJ2NvbHVtbnMgbm90IGZvdW5kJyk7IHJldHVybjsgfQoKICAgICAgdmFyIHBvaW50cyA9IFtdOwogICAgICBmb3IgKHZhciByID0gMDsgciA8IGRhdGEubGVuZ3RoOyByKyspIHsKICAgICAgICB2YXIgcmlzayAgID0gK2RhdGFbcl1bcmlza0lkeF07CiAgICAgICAgdmFyIGluY29tZSA9ICtkYXRhW3JdW2luY29tZUlkeF07CiAgICAgICAgdmFyIHN0YXR1cyA9ICBkYXRhW3JdW3N0YXR1c0lkeF0gfHwgJ1Vua25vd24nOwogICAgICAgIHZhciBhbXQgICAgPSBhbXRJZHggPj0gMCA/ICgrZGF0YVtyXVthbXRJZHhdIHx8IDApIDogMDsKICAgICAgICBpZiAocmlzayA+IDAgJiYgaW5jb21lID4gMCkgewogICAgICAgICAgcG9pbnRzLnB1c2goeyByaXNrOiByaXNrLCBpbmNvbWU6IGluY29tZSwgc3RhdHVzOiBzdGF0dXMsIGFtdDogYW10IH0pOwogICAgICAgIH0KICAgICAgfQoKICAgICAgZHJhd1NjYXR0ZXIocG9pbnRzKTsKICAgIH0KCiAgICBmdW5jdGlvbiBkcmF3U2NhdHRlcihwb2ludHMpIHsKICAgICAgdmFyIGNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjaGFydC1hcmVhJyk7CiAgICAgIHJlcXVlc3RBbmltYXRpb25GcmFtZShmdW5jdGlvbigpIHsKICAgICAgICB2YXIgVyA9IGNvbnRhaW5lci5jbGllbnRXaWR0aCAgfHwgNzAwOwogICAgICAgIHZhciBIID0gY29udGFpbmVyLmNsaWVudEhlaWdodCB8fCA0MDA7CiAgICAgICAgdmFyIG0gPSBDT05GSUcubWFyZ2luOwogICAgICAgIHZhciB3ID0gVyAtIG0ubGVmdCAtIG0ucmlnaHQ7CiAgICAgICAgdmFyIGggPSBIIC0gbS50b3AgIC0gbS5ib3R0b207CgogICAgICAgIHZhciBjYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc2NhdHRlci1jYW52YXMnKTsKICAgICAgICBjYW52YXMud2lkdGggID0gVzsKICAgICAgICBjYW52YXMuaGVpZ2h0ID0gSDsKICAgICAgICB2YXIgY3R4ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7CgogICAgICAgIHZhciBpbmNvbWVFeHQgPSBkMy5leHRlbnQocG9pbnRzLCBmdW5jdGlvbihwKXsgcmV0dXJuIHAuaW5jb21lOyB9KTsKICAgICAgICB2YXIgcmlza0V4dCAgID0gWzMwMCwgODUwXTsKICAgICAgICB2YXIgYW10RXh0ICAgID0gZDMuZXh0ZW50KHBvaW50cywgZnVuY3Rpb24ocCl7IHJldHVybiBwLmFtdDsgfSk7CgogICAgICAgIHZhciB4U2NhbGUgPSBkMy5zY2FsZUxpbmVhcigpLmRvbWFpbihpbmNvbWVFeHQpLnJhbmdlKFttLmxlZnQsIG0ubGVmdCArIHddKS5uaWNlKCk7CiAgICAgICAgdmFyIHlTY2FsZSA9IGQzLnNjYWxlTGluZWFyKCkuZG9tYWluKHJpc2tFeHQpLnJhbmdlKFttLnRvcCArIGgsIG0udG9wXSkubmljZSgpOwogICAgICAgIHZhciByU2NhbGUgPSBkMy5zY2FsZVNxcnQoKS5kb21haW4oW2FtdEV4dFswXSwgYW10RXh0WzFdXSkucmFuZ2UoW0NPTkZJRy5kb3RNaW5SLCBDT05GSUcuZG90TWF4Ul0pOwoKICAgICAgICB2YXIgc3ZnID0gZDMuc2VsZWN0KCcjc2NhdHRlci1heGVzJykKICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIFcpLmF0dHIoJ2hlaWdodCcsIEgpOwoKICAgICAgICBzdmcuYXBwZW5kKCdnJykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAndHJhbnNsYXRlKDAsJyArIChtLnRvcCArIGgpICsgJyknKQogICAgICAgICAgLmNhbGwoZDMuYXhpc0JvdHRvbSh4U2NhbGUpLnRpY2tzKDYpLnRpY2tGb3JtYXQoZm10KS50aWNrU2l6ZSgtaCkpCiAgICAgICAgICAuY2FsbChmdW5jdGlvbihheCkgewogICAgICAgICAgICBheC5zZWxlY3QoJy5kb21haW4nKS5yZW1vdmUoKTsKICAgICAgICAgICAgYXguc2VsZWN0QWxsKCdsaW5lJykuYXR0cignc3Ryb2tlJywgJyNlMmU4ZjAnKTsKICAgICAgICAgICAgYXguc2VsZWN0QWxsKCd0ZXh0JykuYXR0cignZmlsbCcsICcjNjQ3NDhiJykuYXR0cignZm9udC1zaXplJywgJzExcHgnKTsKICAgICAgICAgIH0pOwoKICAgICAgICBzdmcuYXBwZW5kKCdnJykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAndHJhbnNsYXRlKCcgKyBtLmxlZnQgKyAnLDApJykKICAgICAgICAgIC5jYWxsKGQzLmF4aXNMZWZ0KHlTY2FsZSkudGlja3MoNSkudGlja1NpemUoLXcpKQogICAgICAgICAgLmNhbGwoZnVuY3Rpb24oYXgpIHsKICAgICAgICAgICAgYXguc2VsZWN0KCcuZG9tYWluJykucmVtb3ZlKCk7CiAgICAgICAgICAgIGF4LnNlbGVjdEFsbCgnbGluZScpLmF0dHIoJ3N0cm9rZScsICcjZTJlOGYwJyk7CiAgICAgICAgICAgIGF4LnNlbGVjdEFsbCgndGV4dCcpLmF0dHIoJ2ZpbGwnLCAnIzY0NzQ4YicpLmF0dHIoJ2ZvbnQtc2l6ZScsICcxMXB4Jyk7CiAgICAgICAgICB9KTsKCiAgICAgICAgc3ZnLmFwcGVuZCgndGV4dCcpCiAgICAgICAgICAuYXR0cigneCcsIG0ubGVmdCArIHcgLyAyKS5hdHRyKCd5JywgSCAtIDYpCiAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnbWlkZGxlJykKICAgICAgICAgIC5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTJweCcpCiAgICAgICAgICAudGV4dCgnQW5udWFsIEluY29tZScpOwoKICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAncm90YXRlKC05MCknKQogICAgICAgICAgLmF0dHIoJ3gnLCAtKG0udG9wICsgaCAvIDIpKS5hdHRyKCd5JywgMTQpCiAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnbWlkZGxlJykKICAgICAgICAgIC5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTJweCcpCiAgICAgICAgICAudGV4dCgnUmlzayBTY29yZScpOwoKICAgICAgICB2YXIgb3JkZXIgPSBbJ0NvbXBsZXRlZCcsICdBcHByb3ZlZCcsICdBY3RpdmUnLCAnUGVuZGluZycsICdEZWZhdWx0ZWQnXTsKICAgICAgICBwb2ludHMuc29ydChmdW5jdGlvbihhLCBiKSB7CiAgICAgICAgICByZXR1cm4gb3JkZXIuaW5kZXhPZihhLnN0YXR1cykgLSBvcmRlci5pbmRleE9mKGIuc3RhdHVzKTsKICAgICAgICB9KTsKCiAgICAgICAgdmFyIHN0ZXAgPSAwOwogICAgICAgIHZhciBiYXRjaFNpemUgPSBNYXRoLmNlaWwocG9pbnRzLmxlbmd0aCAvIENPTkZJRy5hbmltU3RlcHMpOwoKICAgICAgICBmdW5jdGlvbiBkcmF3QmF0Y2goKSB7CiAgICAgICAgICB2YXIgc3RhcnQgPSBzdGVwICogYmF0Y2hTaXplOwogICAgICAgICAgdmFyIGVuZCAgID0gTWF0aC5taW4oc3RhcnQgKyBiYXRjaFNpemUsIHBvaW50cy5sZW5ndGgpOwogICAgICAgICAgZm9yICh2YXIgaSA9IHN0YXJ0OyBpIDwgZW5kOyBpKyspIHsKICAgICAgICAgICAgdmFyIHAgICAgICA9IHBvaW50c1tpXTsKICAgICAgICAgICAgdmFyIGNmZyAgICA9IENPTkZJRy5zdGF0dXNDb2xvcnNbcC5zdGF0dXNdIHx8IENPTkZJRy5kZWZhdWx0Q29sb3I7CiAgICAgICAgICAgIHZhciBjeCAgICAgPSB4U2NhbGUocC5pbmNvbWUpOwogICAgICAgICAgICB2YXIgY3kgICAgID0geVNjYWxlKHAucmlzayk7CiAgICAgICAgICAgIHZhciByYWRpdXMgPSBhbXRFeHRbMV0gPiAwID8gclNjYWxlKHAuYW10KSA6IENPTkZJRy5kb3RNaW5SOwoKICAgICAgICAgICAgY3R4LmJlZ2luUGF0aCgpOwogICAgICAgICAgICBjdHguYXJjKGN4LCBjeSwgcmFkaXVzLCAwLCBNYXRoLlBJICogMik7CiAgICAgICAgICAgIGN0eC5maWxsU3R5bGUgPSBjZmcuZmlsbDsKICAgICAgICAgICAgY3R4Lmdsb2JhbEFscGhhID0gY2ZnLmFscGhhOwogICAgICAgICAgICBjdHguZmlsbCgpOwogICAgICAgICAgfQogICAgICAgICAgY3R4Lmdsb2JhbEFscGhhID0gMTsKICAgICAgICAgIHN0ZXArKzsKICAgICAgICAgIGlmIChzdGVwIDwgQ09ORklHLmFuaW1TdGVwcykgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGRyYXdCYXRjaCk7CiAgICAgICAgfQoKICAgICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoZHJhd0JhdGNoKTsKCiAgICAgICAgdmFyIGxlZ2VuZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsZWdlbmQnKTsKICAgICAgICB2YXIgc3RhdHVzZXMgPSBPYmplY3Qua2V5cyhDT05GSUcuc3RhdHVzQ29sb3JzKTsKICAgICAgICBzdGF0dXNlcy5mb3JFYWNoKGZ1bmN0aW9uKHMpIHsKICAgICAgICAgIHZhciBpdGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7CiAgICAgICAgICBpdGVtLmNsYXNzTmFtZSA9ICdsZWdlbmQtaXRlbSc7CiAgICAgICAgICBpdGVtLmlubmVySFRNTCA9ICc8ZGl2IGNsYXNzPSJsZWdlbmQtZG90IiBzdHlsZT0iYmFja2dyb3VuZDonICsgQ09ORklHLnN0YXR1c0NvbG9yc1tzXS5maWxsICsgJyI+PC9kaXY+JyArIHM7CiAgICAgICAgICBsZWdlbmQuYXBwZW5kQ2hpbGQoaXRlbSk7CiAgICAgICAgfSk7CgogICAgICAgIHZhciBzaXplTm90ZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgIHNpemVOb3RlLmNsYXNzTmFtZSA9ICdsZWdlbmQtaXRlbSc7CiAgICAgICAgc2l6ZU5vdGUuc3R5bGUubWFyZ2luTGVmdCA9ICdhdXRvJzsKICAgICAgICBzaXplTm90ZS5zdHlsZS5jb2xvciA9ICcjNjQ3NDhiJzsKICAgICAgICBzaXplTm90ZS50ZXh0Q29udGVudCA9IHBvaW50cy5sZW5ndGgudG9Mb2NhbGVTdHJpbmcoKSArICcgbG9hbnMgcGxvdHRlZCc7CiAgICAgICAgbGVnZW5kLmFwcGVuZENoaWxkKHNpemVOb3RlKTsKICAgICAgfSk7CiAgICB9CgogIH0pKCk7CgogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7Cg\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQoKICBib2R5IHsKICAgIGJhY2tncm91bmQ6ICNmMWY1Zjk7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGZvbnQtZmFtaWx5OiAnSW50ZXInLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmOwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIG92ZXJmbG93OiBoaWRkZW47CiAgfQoKICAjY29udGFpbmVyIHsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIHBhZGRpbmc6IDIwcHggMjRweCAxNHB4OwogIH0KCiAgI2hlYWRlciB7IG1hcmdpbi1ib3R0b206IDE0cHg7IH0KCiAgI3RpdGxlIHsKICAgIGZvbnQtc2l6ZTogMTdweDsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGxldHRlci1zcGFjaW5nOiAtMC4zcHg7CiAgfQoKICAjc3VidGl0bGUgewogICAgZm9udC1zaXplOiAxMnB4OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBtYXJnaW4tdG9wOiAzcHg7CiAgfQoKICAjY2hhcnQtYXJlYSB7CiAgICBmbGV4OiAxOwogICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgbWluLWhlaWdodDogMDsKICB9CgogICNzY2F0dGVyLWNhbnZhcyB7CiAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICB0b3A6IDA7IGxlZnQ6IDA7CiAgfQoKICAjc2NhdHRlci1heGVzIHsKICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgIHRvcDogMDsgbGVmdDogMDsKICAgIHdpZHRoOiAxMDAlOwogICAgaGVpZ2h0OiAxMDAlOwogICAgcG9pbnRlci1ldmVudHM6IG5vbmU7CiAgfQoKICAjbGVnZW5kIHsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBnYXA6IDE4cHg7CiAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAgcGFkZGluZzogMTBweCAwIDJweDsKICAgIGZsZXgtd3JhcDogd3JhcDsKICB9CgogIC5sZWdlbmQtaXRlbSB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGdhcDogNnB4OwogICAgZm9udC1zaXplOiAxMnB4OwogICAgY29sb3I6ICM2NDc0OGI7CiAgfQoKICAubGVnZW5kLWRvdCB7CiAgICB3aWR0aDogMTBweDsKICAgIGhlaWdodDogMTBweDsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIGZsZXgtc2hyaW5rOiAwOwogIH0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZDNANy9kaXN0L2QzLm1pbi5qcyI+PC9zY3JpcHQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogIDxkaXYgaWQ9ImNvbnRhaW5lciI+CiAgICA8ZGl2IGlkPSJoZWFkZXIiPgogICAgICA8ZGl2IGlkPSJ0aXRsZSI+SW5jb21lIHZzIFJpc2sgU2NvcmUgYnkgTG9hbiBTdGF0dXM8L2Rpdj4KICAgICAgPGRpdiBpZD0ic3VidGl0bGUiPkVhY2ggcG9pbnQgaXMgYSBsb2FuIMK3IHNpemUgPSBsb2FuIGFtb3VudDwvZGl2PgogICAgPC9kaXY+CiAgICA8ZGl2IGlkPSJjaGFydC1hcmVhIj4KICAgICAgPGNhbnZhcyBpZD0ic2NhdHRlci1jYW52YXMiPjwvY2FudmFzPgogICAgICA8c3ZnIGlkPSJzY2F0dGVyLWF4ZXMiPjwvc3ZnPgogICAgPC9kaXY+CiAgICA8ZGl2IGlkPSJsZWdlbmQiPjwvZGl2PgogIDwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: Income v/s Risk Score by Loan Status
+      dynamic_description: "."
+    viz_guid: d06e909a-7710-4142-b662-933ba6970915
+  - id: Viz_20
+    answer:
+      name: "."
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Annual Income]"
+      answer_columns:
+      - name: Total Annual Income
+      table:
+        table_columns:
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c6b0b0c-2379-43a9-adcb-9b4ec6dc5a06\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": false}},{\"id\": \"e8317b92-cf37-4a29-b7be-4f97921237bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Total Annual Income
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"IC8qKgogICAqIEF2YWlsYWJsZSBDb2x1bW5zOgogICAqICJUb3RhbCBBbm51YWwgSW5jb21lIgogICAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqIC0tLSBFTkQgLS0tCiAgICovCgogIChmdW5jdGlvbigpIHsKCiAgICAvLyDilIDilIAgQ09ORklHIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICAgdmFyIENPTkZJRyA9IHsKICAgICAgYWNjZW50OiAnIzQ4OTVlZicsCiAgICAgIHRpdGxlOiAgJ1Jpc2sgU2NvcmUgRGlzdHJpYnV0aW9uIGJ5IEFjY291bnQgVHlwZScsCiAgICAgIGJ1bGxldHM6IFsKICAgICAgICAnUG9ydGZvbGlvIGF2ZXJhZ2UgcmlzayBzY29yZSBzaXRzIGF0IDxlbT41NzYgb3V0IG9mIDg1MDwvZW0+JywKICAgICAgICAnPGVtPkJ1c2luZXNzICYgSW52ZXN0bWVudDwvZW0+IGFjY291bnRzIHNob3cgYSB3aWRlciBzcHJlYWQgdG93YXJkIHRoZSBoaWdoLXJpc2sgdGFpbCcsCiAgICAgICAgJzxlbT5DaGVja2luZyAmIFNhdmluZ3M8L2VtPiBhY2NvdW50cyBjbHVzdGVyIG1vcmUgdGlnaHRseSBhcm91bmQgdGhlIG1lYW4nLAogICAgICAgICdBIGZsYXQgb3Igd2lkZSBjdXJ2ZSBzaWduYWxzIDxlbT5oaWRkZW4gY29uY2VudHJhdGlvbiByaXNrPC9lbT4gd2l0aGluIHRoZSBzZWdtZW50JywKICAgICAgICAnV2lkZSBkaXN0cmlidXRpb25zIHdhcnJhbnQgc3RyZXNzLXRlc3RpbmcgYW5kIDxlbT5zZWdtZW50LWxldmVsIHJldmlldzwvZW0+JwogICAgICBdLAogICAgICBmb290ZXI6ICAnUmV0YWlsIEJhbmtpbmcgTW9kZWwgwrcgUmlzayBBbmFseXNpcycsCiAgICAgIGJ1bGxldERlbGF5OiAxMjAKICAgIH07CgogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25vdGUtY2FyZCcpLnN0eWxlLnNldFByb3BlcnR5KCctLWFjY2VudCcsIENPTkZJRy5hY2NlbnQpOwoKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLXRpdGxlJykuaW5uZXJIVE1MID0gQ09ORklHLnRpdGxlOwoKICAgIHZhciB1bCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLWJ1bGxldHMnKTsKICAgIENPTkZJRy5idWxsZXRzLmZvckVhY2goZnVuY3Rpb24odGV4dCwgaSkgewogICAgICB2YXIgbGkgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdsaScpOwogICAgICBsaS5zdHlsZS5hbmltYXRpb25EZWxheSA9ICgwLjM1ICsgaSAqIENPTkZJRy5idWxsZXREZWxheSAvIDEwMDApICsgJ3MnOwoKICAgICAgdmFyIGRvdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgZG90LmNsYXNzTmFtZSA9ICdidWxsZXQtZG90JzsKCiAgICAgIHZhciBzcGFuID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICBzcGFuLmNsYXNzTmFtZSA9ICdidWxsZXQtdGV4dCc7CiAgICAgIHNwYW4uaW5uZXJIVE1MID0gdGV4dDsKCiAgICAgIGxpLmFwcGVuZENoaWxkKGRvdCk7CiAgICAgIGxpLmFwcGVuZENoaWxkKHNwYW4pOwogICAgICB1bC5hcHBlbmRDaGlsZChsaSk7CiAgICB9KTsKCiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FyZC1mb290ZXInKS50ZXh0Q29udGVudCA9IENPTkZJRy5mb290ZXI7CgogIH0pKCk7Ci8vIFRob3VnaHRTcG90OiBVbmNvbW1lbnQgdGhlIGxpbmUgYmVsb3cgdG8gc2lnbmFsIHJlbmRlciBjb21wbGV0aW9uCiB2aXouZXZlbnRzLmVtaXRSZW5kZXJDb21wbGV0ZWRFdmVudCgpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAKICBib2R5IHsKICAgIGJhY2tncm91bmQ6ICNmMWY1Zjk7CiAgICBoZWlnaHQ6IDEwMHZoOwogICAgZGlzcGxheTogZmxleDsKICAgIGZvbnQtZmFtaWx5OiAnSW50ZXInLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmOwogICAgcGFkZGluZzogMTZweDsKICB9CgogICNub3RlLWNhcmQgewogICAgYmFja2dyb3VuZDogI2ZmZmZmZjsKICAgIGJvcmRlcjogMXB4IHNvbGlkICNlMmU4ZjA7CiAgICBib3JkZXItbGVmdDogM3B4IHNvbGlkIHZhcigtLWFjY2VudCwgIzQ4OTVlZik7CiAgICBib3JkZXItcmFkaXVzOiAxMHB4OwogICAgcGFkZGluZzogMjBweCAxOHB4IDE2cHg7CiAgICB3aWR0aDogMTAwJTsKICAgIG1heC13aWR0aDogMzQwcHg7CiAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogICAgYm94LXNoYWRvdzogMCAxcHggNHB4IHJnYmEoMCwwLDAsMC4wNik7CiAgfQoKICAjbm90ZS1jYXJkOjpiZWZvcmUgewogICAgY29udGVudDogJyc7CiAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICB0b3A6IDA7IGxlZnQ6IDA7IHJpZ2h0OiAwOwogICAgaGVpZ2h0OiAxcHg7CiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoOTBkZWcsIHZhcigtLWFjY2VudCwgIzQ4OTVlZiksIHRyYW5zcGFyZW50KTsKICAgIG9wYWNpdHk6IDAuNDsKICB9CgogICNjYXJkLWhlYWRlciB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgYWxpZ24taXRlbXM6IGNlbnRlcjsKICAgIGdhcDogN3B4OwogICAgbWFyZ2luLWJvdHRvbTogMTBweDsKICB9CgogICNoZWFkZXItaWNvbiB7CiAgICB3aWR0aDogN3B4OwogICAgaGVpZ2h0OiA3cHg7CiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1hY2NlbnQsICM0ODk1ZWYpOwogICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgYm94LXNoYWRvdzogMCAwIDZweCB2YXIoLS1hY2NlbnQsICM0ODk1ZWYpOwogICAgYW5pbWF0aW9uOiBwdWxzZSAyLjRzIGVhc2UtaW4tb3V0IGluZmluaXRlOwogIH0KCiAgQGtleWZyYW1lcyBwdWxzZSB7CiAgICAwJSwgMTAwJSB7IGJveC1zaGFkb3c6IDAgMCA0cHggdmFyKC0tYWNjZW50LCAjNDg5NWVmKTsgb3BhY2l0eTogMTsgfQogICAgNTAlICAgICAgIHsgYm94LXNoYWRvdzogMCAwIDEycHggdmFyKC0tYWNjZW50LCAjNDg5NWVmKTsgb3BhY2l0eTogMC43OyB9CiAgfQoKICAjaGVhZGVyLWxhYmVsIHsKICAgIGZvbnQtc2l6ZTogMTBweDsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBsZXR0ZXItc3BhY2luZzogMS40cHg7CiAgICBjb2xvcjogdmFyKC0tYWNjZW50LCAjNDg5NWVmKTsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgfQoKICAjY2FyZC10aXRsZSB7CiAgICBmb250LXNpemU6IDE0cHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgY29sb3I6ICMxZTI5M2I7CiAgICBsaW5lLWhlaWdodDogMS4zNTsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgICBvcGFjaXR5OiAwOwogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDZweCk7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjVzIGVhc2UgZm9yd2FyZHM7CiAgICBhbmltYXRpb24tZGVsYXk6IDAuMXM7CiAgfQoKICAjY2FyZC1kaXZpZGVyIHsKICAgIGhlaWdodDogMXB4OwogICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCAjZTJlOGYwLCB0cmFuc3BhcmVudCk7CiAgICBtYXJnaW4tYm90dG9tOiAxMnB4OwogICAgb3BhY2l0eTogMDsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDAuNHMgZWFzZSBmb3J3YXJkczsKICAgIGFuaW1hdGlvbi1kZWxheTogMC4yczsKICB9CgogICNjYXJkLWJ1bGxldHMgewogICAgbGlzdC1zdHlsZTogbm9uZTsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAgZ2FwOiA5cHg7CiAgfQoKICAjY2FyZC1idWxsZXRzIGxpIHsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBnYXA6IDhweDsKICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0OwogICAgZm9udC1zaXplOiAxMnB4OwogICAgbGluZS1oZWlnaHQ6IDEuNTU7CiAgICBjb2xvcjogIzY0NzQ4YjsKICAgIG9wYWNpdHk6IDA7CiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoOHB4KTsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDAuNDVzIGVhc2UgZm9yd2FyZHM7CiAgfQoKICAjY2FyZC1idWxsZXRzIGxpIC5idWxsZXQtZG90IHsKICAgIHdpZHRoOiA1cHg7CiAgICBoZWlnaHQ6IDVweDsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIGJhY2tncm91bmQ6IHZhcigtLWFjY2VudCwgIzQ4OTVlZik7CiAgICBmbGV4LXNocmluazogMDsKICAgIG1hcmdpbi10b3A6IDVweDsKICAgIG9wYWNpdHk6IDAuNzsKICB9CgogICNjYXJkLWJ1bGxldHMgbGkgLmJ1bGxldC10ZXh0IGVtIHsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgZm9udC1zdHlsZTogbm9ybWFsOwogICAgZm9udC13ZWlnaHQ6IDYwMDsKICB9CgogICNjYXJkLWZvb3RlciB7CiAgICBtYXJnaW4tdG9wOiAxNHB4OwogICAgcGFkZGluZy10b3A6IDEwcHg7CiAgICBib3JkZXItdG9wOiAxcHggc29saWQgI2UyZThmMDsKICAgIGZvbnQtc2l6ZTogMTBweDsKICAgIGNvbG9yOiAjOTRhM2I4OwogICAgbGV0dGVyLXNwYWNpbmc6IDAuM3B4OwogICAgb3BhY2l0eTogMDsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDAuNHMgZWFzZSBmb3J3YXJkczsKICB9CgogIEBrZXlmcmFtZXMgZmFkZVVwIHsKICAgIHRvIHsgb3BhY2l0eTogMTsgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9CiAgfQ\\u003d\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0ibm90ZS1jYXJkIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDxkaXYgaWQ9ImNhcmQtaGVhZGVyIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICA8ZGl2IGlkPSJoZWFkZXItaWNvbiI+PC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgIDxkaXYgaWQ9ImhlYWRlci1sYWJlbCI+QU5BTFlTVCBOT1RFPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDwvZGl2PgogICAgPGRpdiBpZD0iY2FyZC10aXRsZSI+PC9kaXY+CiAgICA8ZGl2IGlkPSJjYXJkLWRpdmlkZXIiPjwvZGl2PgogICAgPHVsIGlkPSJjYXJkLWJ1bGxldHMiPjwvdWw+CiAgICA8ZGl2IGlkPSJjYXJkLWZvb3RlciI+PC9kaXY+CiAgPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: "."
+      dynamic_description: "."
+    viz_guid: 4b322e07-ad56-43d6-aca7-f00ca500dd41
+  - id: Viz_21
+    answer:
+      name: "."
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Annual Income]"
+      answer_columns:
+      - name: Total Annual Income
+      table:
+        table_columns:
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c6b0b0c-2379-43a9-adcb-9b4ec6dc5a06\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": false}},{\"id\": \"e8317b92-cf37-4a29-b7be-4f97921237bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Total Annual Income
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIlRvdGFsIEFubnVhbCBJbmNvbWUiCiAgICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogLS0tIEVORCAtLS0KICAgKi8KCiAgKGZ1bmN0aW9uKCkgewoKICAgIC8vIOKUgOKUgCBDT05GSUcg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgICB2YXIgQ09ORklHID0gewogICAgICBhY2NlbnQ6ICcjZjcyNTg1JywKICAgICAgdGl0bGU6ICAnTG9hbiBQb3J0Zm9saW8gQnVyZGVuJywKICAgICAgYnVsbGV0czogWwogICAgICAgICdCbG9jayBzaXplIHJlcHJlc2VudHMgPGVtPnRvdGFsIGxvYW4gdmFsdWU8L2VtPiDigJQgYmlnZ2VyIG1lYW5zIG1vcmUgY2FwaXRhbCBhdCBzdGFrZScsCiAgICAgICAgJ0RhcmtlciBzaGFkaW5nIGluZGljYXRlcyBhIDxlbT5oaWdoZXIgc2hhcmUgb2YgcGVuZGluZyByZXBheW1lbnQ8L2VtPiB3aXRoaW4gdGhhdCBzZWdtZW50JywKICAgICAgICAnPGVtPkxhcmdlciBhbmQgZGFya2VyIGJsb2NrczwvZW0+IGNhcnJ5IHRoZSBncmVhdGVzdCBjb25jZW50cmF0aW9uIG9mIHVucmVjb3ZlcmVkIGNhcGl0YWwnLAogICAgICAgICdUaGVzZSBhcmUgdGhlIHNlZ21lbnRzIG1vc3QgZXhwb3NlZCBpbiBhIDxlbT5jcmVkaXQgc3RyZXNzIGV2ZW50PC9lbT4nLAogICAgICAgICdQcmlvcml0aXNlIDxlbT5jb2xsZWN0aW9ucyBhbmQgcmVzdHJ1Y3R1cmluZyBlZmZvcnRzPC9lbT4gd2hlcmUgc2l6ZSBhbmQgZGFya25lc3MgY29udmVyZ2UnCiAgICAgIF0sCiAgICAgIGZvb3RlcjogICdSZXRhaWwgQmFua2luZyBNb2RlbCDCtyBMb2FuIEV4cG9zdXJlIEFuYWx5c2lzJywKICAgICAgYnVsbGV0RGVsYXk6IDEyMAogICAgfTsKICAgIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdub3RlLWNhcmQnKS5zdHlsZS5zZXRQcm9wZXJ0eSgnLS1hY2NlbnQnLCBDT05GSUcuYWNjZW50KTsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLXRpdGxlJykuaW5uZXJIVE1MID0gQ09ORklHLnRpdGxlOwoKICAgIHZhciB1bCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLWJ1bGxldHMnKTsKICAgIENPTkZJRy5idWxsZXRzLmZvckVhY2goZnVuY3Rpb24odGV4dCwgaSkgewogICAgICB2YXIgbGkgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdsaScpOwogICAgICBsaS5zdHlsZS5hbmltYXRpb25EZWxheSA9ICgwLjM1ICsgaSAqIENPTkZJRy5idWxsZXREZWxheSAvIDEwMDApICsgJ3MnOwoKICAgICAgdmFyIGRvdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgZG90LmNsYXNzTmFtZSA9ICdidWxsZXQtZG90JzsKCiAgICAgIHZhciBzcGFuID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICBzcGFuLmNsYXNzTmFtZSA9ICdidWxsZXQtdGV4dCc7CiAgICAgIHNwYW4uaW5uZXJIVE1MID0gdGV4dDsKCiAgICAgIGxpLmFwcGVuZENoaWxkKGRvdCk7CiAgICAgIGxpLmFwcGVuZENoaWxkKHNwYW4pOwogICAgICB1bC5hcHBlbmRDaGlsZChsaSk7CiAgICB9KTsKCiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FyZC1mb290ZXInKS50ZXh0Q29udGVudCA9IENPTkZJRy5mb290ZXI7CgogIH0pKCk7CgogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7Cg\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICBib2R5IHsgICAgICAgICAgCiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIHBhZGRpbmc6IDE2cHg7CiAgfQoKICAjbm90ZS1jYXJkIHsKICAgIGJhY2tncm91bmQ6ICNmZmZmZmY7CiAgICBib3JkZXI6IDFweCBzb2xpZCAjZTJlOGYwOwogICAgYm9yZGVyLWxlZnQ6IDNweCBzb2xpZCB2YXIoLS1hY2NlbnQsICNmNzI1ODUpOwogICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIHBhZGRpbmc6IDIwcHggMThweCAxNnB4OwogICAgd2lkdGg6IDEwMCU7CiAgICBtYXgtd2lkdGg6IDM0MHB4OwogICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgb3ZlcmZsb3c6IGhpZGRlbjsKICAgIGJveC1zaGFkb3c6IDAgMXB4IDRweCByZ2JhKDAsMCwwLDAuMDYpOwogIH0KCiAgI25vdGUtY2FyZDo6YmVmb3JlIHsKICAgIGNvbnRlbnQ6ICcnOwogICAgcG9zaXRpb246IGFic29sdXRlOwogICAgdG9wOiAwOyBsZWZ0OiAwOyByaWdodDogMDsKICAgIGhlaWdodDogMXB4OwogICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCB2YXIoLS1hY2NlbnQsICNmNzI1ODUpLCB0cmFuc3BhcmVudCk7CiAgICBvcGFjaXR5OiAwLjQ7CiAgfQoKICAjY2FyZC1oZWFkZXIgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBnYXA6IDdweDsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgfQoKICAjaGVhZGVyLWljb24gewogICAgd2lkdGg6IDdweDsKICAgIGhlaWdodDogN3B4OwogICAgYmFja2dyb3VuZDogdmFyKC0tYWNjZW50LCAjZjcyNTg1KTsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIGJveC1zaGFkb3c6IDAgMCA2cHggdmFyKC0tYWNjZW50LCAjZjcyNTg1KTsKICAgIGFuaW1hdGlvbjogcHVsc2UgMi40cyBlYXNlLWluLW91dCBpbmZpbml0ZTsKICB9CgogIEBrZXlmcmFtZXMgcHVsc2UgewogICAgMCUsIDEwMCUgeyBib3gtc2hhZG93OiAwIDAgNHB4IHZhcigtLWFjY2VudCwgI2Y3MjU4NSk7IG9wYWNpdHk6IDE7IH0KICAgIDUwJSAgICAgICB7IGJveC1zaGFkb3c6IDAgMCAxMnB4IHZhcigtLWFjY2VudCwgI2Y3MjU4NSk7IG9wYWNpdHk6IDAuNzsgfQogIH0KCiAgI2hlYWRlci1sYWJlbCB7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgbGV0dGVyLXNwYWNpbmc6IDEuNHB4OwogICAgY29sb3I6IHZhcigtLWFjY2VudCwgI2Y3MjU4NSk7CiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogIH0KCiAgI2NhcmQtdGl0bGUgewogICAgZm9udC1zaXplOiAxNHB4OwogICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgbGluZS1oZWlnaHQ6IDEuMzU7CiAgICBtYXJnaW4tYm90dG9tOiAxMHB4OwogICAgb3BhY2l0eTogMDsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg2cHgpOwogICAgYW5pbWF0aW9uOiBmYWRlVXAgMC41cyBlYXNlIGZvcndhcmRzOwogICAgYW5pbWF0aW9uLWRlbGF5OiAwLjFzOwogIH0KCiAgI2NhcmQtZGl2aWRlciB7CiAgICBoZWlnaHQ6IDFweDsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgI2UyZThmMCwgdHJhbnNwYXJlbnQpOwogICAgbWFyZ2luLWJvdHRvbTogMTJweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgICBhbmltYXRpb24tZGVsYXk6IDAuMnM7CiAgfQoKICAjY2FyZC1idWxsZXRzIHsKICAgIGxpc3Qtc3R5bGU6IG5vbmU7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGdhcDogOXB4OwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZ2FwOiA4cHg7CiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGxpbmUtaGVpZ2h0OiAxLjU1OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBvcGFjaXR5OiAwOwogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDhweCk7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjQ1cyBlYXNlIGZvcndhcmRzOwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSAuYnVsbGV0LWRvdCB7CiAgICB3aWR0aDogNXB4OwogICAgaGVpZ2h0OiA1cHg7CiAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1hY2NlbnQsICNmNzI1ODUpOwogICAgZmxleC1zaHJpbms6IDA7CiAgICBtYXJnaW4tdG9wOiA1cHg7CiAgICBvcGFjaXR5OiAwLjc7CiAgfQoKICAjY2FyZC1idWxsZXRzIGxpIC5idWxsZXQtdGV4dCBlbSB7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGZvbnQtc3R5bGU6IG5vcm1hbDsKICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgfQoKICAjY2FyZC1mb290ZXIgewogICAgbWFyZ2luLXRvcDogMTRweDsKICAgIHBhZGRpbmctdG9wOiAxMHB4OwogICAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNlMmU4ZjA7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBjb2xvcjogIzk0YTNiODsKICAgIGxldHRlci1zcGFjaW5nOiAwLjNweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgfQoKICBAa2V5ZnJhbWVzIGZhZGVVcCB7CiAgICB0byB7IG9wYWNpdHk6IDE7IHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfQogIH0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0ibm90ZS1jYXJkIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDxkaXYgaWQ9ImNhcmQtaGVhZGVyIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICA8ZGl2IGlkPSJoZWFkZXItaWNvbiI+PC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgIDxkaXYgaWQ9ImhlYWRlci1sYWJlbCI+QU5BTFlTVCBOT1RFPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDwvZGl2PgogICAgPGRpdiBpZD0iY2FyZC10aXRsZSI+PC9kaXY+CiAgICA8ZGl2IGlkPSJjYXJkLWRpdmlkZXIiPjwvZGl2PgogICAgPHVsIGlkPSJjYXJkLWJ1bGxldHMiPjwvdWw+CiAgICA8ZGl2IGlkPSJjYXJkLWZvb3RlciI+PC9kaXY+CiAgPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: "."
+      dynamic_description: "."
+    viz_guid: 99a0c2c2-7bd0-44ec-a795-4de864271df2
+  - id: Viz_22
+    answer:
+      name: "."
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Annual Income]"
+      answer_columns:
+      - name: Total Annual Income
+      table:
+        table_columns:
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c6b0b0c-2379-43a9-adcb-9b4ec6dc5a06\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": false}},{\"id\": \"e8317b92-cf37-4a29-b7be-4f97921237bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Total Annual Income
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"IC8qKgogICAqIEF2YWlsYWJsZSBDb2x1bW5zOgogICAqICJUb3RhbCBBbm51YWwgSW5jb21lIgogICAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqIC0tLSBFTkQgLS0tCiAgICovCgogIChmdW5jdGlvbigpIHsKCiAgICAvLyDilIDilIAgQ09ORklHIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICAgdmFyIENPTkZJRyA9IHsKICAgICAgYWNjZW50OiAnIzRjYzlmMCcsCiAgICAgIHRpdGxlOiAgJ1RyYW5zYWN0aW9uIEZsb3cgYnkgQ2hhbm5lbCAmIFN0YXR1cycsCiAgICAgIGJ1bGxldHM6IFsKICAgICAgICAnQ3JlZGl0IHJpc2sgZG9lcyBub3Qgb3BlcmF0ZSBpbiBpc29sYXRpb24g4oCUIDxlbT5vcGVyYXRpb25hbCBmYWlsdXJlcyBjb21wb3VuZCBpdDwvZW0+JywKICAgICAgICAnQSBib3Jyb3dlciBpbiBhcnJlYXJzIG9yIFBlbmRpbmcgc2hvd3MgPGVtPndoaWNoIGNoYW5uZWxzIGNyZWF0ZSB0aGF0IGZyaWN0aW9uPC9lbT4nLAogICAgICAgICdIaWdoLXZvbHVtZSBjaGFubmVscyB3aXRoIGhpZ2ggZmFpbHVyZSByYXRlcyA8ZW0+YW1wbGlmeSBwb3J0Zm9saW8td2lkZSBjcmVkaXQgcmlzazwvZW0+JywKICAgICAgICAnRml4aW5nIGNoYW5uZWwgcmVsaWFiaWxpdHkgaXMgbm90IGp1c3QgYSBVWCBwcm9ibGVtIOKAlCA8ZW0+aXQgaXMgYSBjcmVkaXQgcmlzayBpbnRlcnZlbnRpb248L2VtPicKICAgICAgXSwKICAgICAgZm9vdGVyOiAgJ1JldGFpbCBCYW5raW5nIE1vZGVsIMK3IE9wZXJhdGlvbmFsICYgQ3JlZGl0IFJpc2snLAogICAgICBidWxsZXREZWxheTogMTIwCiAgICB9OwogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25vdGUtY2FyZCcpLnN0eWxlLnNldFByb3BlcnR5KCctLWFjY2VudCcsIENPTkZJRy5hY2NlbnQpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NhcmQtdGl0bGUnKS5pbm5lckhUTUwgPSBDT05GSUcudGl0bGU7CgogICAgdmFyIHVsID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NhcmQtYnVsbGV0cycpOwogICAgQ09ORklHLmJ1bGxldHMuZm9yRWFjaChmdW5jdGlvbih0ZXh0LCBpKSB7CiAgICAgIHZhciBsaSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2xpJyk7CiAgICAgIGxpLnN0eWxlLmFuaW1hdGlvbkRlbGF5ID0gKDAuMzUgKyBpICogQ09ORklHLmJ1bGxldERlbGF5IC8gMTAwMCkgKyAncyc7CgogICAgICB2YXIgZG90ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICBkb3QuY2xhc3NOYW1lID0gJ2J1bGxldC1kb3QnOwoKICAgICAgdmFyIHNwYW4gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7CiAgICAgIHNwYW4uY2xhc3NOYW1lID0gJ2J1bGxldC10ZXh0JzsKICAgICAgc3Bhbi5pbm5lckhUTUwgPSB0ZXh0OwoKICAgICAgbGkuYXBwZW5kQ2hpbGQoZG90KTsKICAgICAgbGkuYXBwZW5kQ2hpbGQoc3Bhbik7CiAgICAgIHVsLmFwcGVuZENoaWxkKGxpKTsKICAgIH0pOwoKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLWZvb3RlcicpLnRleHRDb250ZW50ID0gQ09ORklHLmZvb3RlcjsKCiAgfSkoKTsKCiAgdml6LmV2ZW50cy5lbWl0UmVuZGVyQ29tcGxldGVkRXZlbnQoKTs\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICBib2R5IHsgICAgICAgICAgCiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIHBhZGRpbmc6IDE2cHg7CiAgfQoKICAjbm90ZS1jYXJkIHsKICAgIGJhY2tncm91bmQ6ICNmZmZmZmY7CiAgICBib3JkZXI6IDFweCBzb2xpZCAjZTJlOGYwOwogICAgYm9yZGVyLWxlZnQ6IDNweCBzb2xpZCB2YXIoLS1hY2NlbnQsICM0Y2M5ZjApOwogICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIHBhZGRpbmc6IDIwcHggMThweCAxNnB4OwogICAgd2lkdGg6IDEwMCU7CiAgICBtYXgtd2lkdGg6IDM0MHB4OwogICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgb3ZlcmZsb3c6IGhpZGRlbjsKICAgIGJveC1zaGFkb3c6IDAgMXB4IDRweCByZ2JhKDAsMCwwLDAuMDYpOwogIH0KCiAgI25vdGUtY2FyZDo6YmVmb3JlIHsKICAgIGNvbnRlbnQ6ICcnOwogICAgcG9zaXRpb246IGFic29sdXRlOwogICAgdG9wOiAwOyBsZWZ0OiAwOyByaWdodDogMDsKICAgIGhlaWdodDogMXB4OwogICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCB2YXIoLS1hY2NlbnQsICM0Y2M5ZjApLCB0cmFuc3BhcmVudCk7CiAgICBvcGFjaXR5OiAwLjQ7CiAgfQoKICAjY2FyZC1oZWFkZXIgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBnYXA6IDdweDsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgfQoKICAjaGVhZGVyLWljb24gewogICAgd2lkdGg6IDdweDsKICAgIGhlaWdodDogN3B4OwogICAgYmFja2dyb3VuZDogdmFyKC0tYWNjZW50LCAjNGNjOWYwKTsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIGJveC1zaGFkb3c6IDAgMCA2cHggdmFyKC0tYWNjZW50LCAjNGNjOWYwKTsKICAgIGFuaW1hdGlvbjogcHVsc2UgMi40cyBlYXNlLWluLW91dCBpbmZpbml0ZTsKICB9CgogIEBrZXlmcmFtZXMgcHVsc2UgewogICAgMCUsIDEwMCUgeyBib3gtc2hhZG93OiAwIDAgNHB4IHZhcigtLWFjY2VudCwgIzRjYzlmMCk7IG9wYWNpdHk6IDE7IH0KICAgIDUwJSAgICAgICB7IGJveC1zaGFkb3c6IDAgMCAxMnB4IHZhcigtLWFjY2VudCwgIzRjYzlmMCk7IG9wYWNpdHk6IDAuNzsgfQogIH0KCiAgI2hlYWRlci1sYWJlbCB7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgbGV0dGVyLXNwYWNpbmc6IDEuNHB4OwogICAgY29sb3I6IHZhcigtLWFjY2VudCwgIzRjYzlmMCk7CiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogIH0KCiAgI2NhcmQtdGl0bGUgewogICAgZm9udC1zaXplOiAxNHB4OwogICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgbGluZS1oZWlnaHQ6IDEuMzU7CiAgICBtYXJnaW4tYm90dG9tOiAxMHB4OwogICAgb3BhY2l0eTogMDsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg2cHgpOwogICAgYW5pbWF0aW9uOiBmYWRlVXAgMC41cyBlYXNlIGZvcndhcmRzOwogICAgYW5pbWF0aW9uLWRlbGF5OiAwLjFzOwogIH0KCiAgI2NhcmQtZGl2aWRlciB7CiAgICBoZWlnaHQ6IDFweDsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgI2UyZThmMCwgdHJhbnNwYXJlbnQpOwogICAgbWFyZ2luLWJvdHRvbTogMTJweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgICBhbmltYXRpb24tZGVsYXk6IDAuMnM7CiAgfQoKICAjY2FyZC1idWxsZXRzIHsKICAgIGxpc3Qtc3R5bGU6IG5vbmU7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGdhcDogOXB4OwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZ2FwOiA4cHg7CiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGxpbmUtaGVpZ2h0OiAxLjU1OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBvcGFjaXR5OiAwOwogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDhweCk7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjQ1cyBlYXNlIGZvcndhcmRzOwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSAuYnVsbGV0LWRvdCB7CiAgICB3aWR0aDogNXB4OwogICAgaGVpZ2h0OiA1cHg7CiAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1hY2NlbnQsICM0Y2M5ZjApOwogICAgZmxleC1zaHJpbms6IDA7CiAgICBtYXJnaW4tdG9wOiA1cHg7CiAgICBvcGFjaXR5OiAwLjc7CiAgfQoKICAjY2FyZC1idWxsZXRzIGxpIC5idWxsZXQtdGV4dCBlbSB7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGZvbnQtc3R5bGU6IG5vcm1hbDsKICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgfQoKICAjY2FyZC1mb290ZXIgewogICAgbWFyZ2luLXRvcDogMTRweDsKICAgIHBhZGRpbmctdG9wOiAxMHB4OwogICAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNlMmU4ZjA7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBjb2xvcjogIzk0YTNiODsKICAgIGxldHRlci1zcGFjaW5nOiAwLjNweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgfQoKICBAa2V5ZnJhbWVzIGZhZGVVcCB7CiAgICB0byB7IG9wYWNpdHk6IDE7IHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfQogIH0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0ibm90ZS1jYXJkIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDxkaXYgaWQ9ImNhcmQtaGVhZGVyIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICA8ZGl2IGlkPSJoZWFkZXItaWNvbiI+PC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgIDxkaXYgaWQ9ImhlYWRlci1sYWJlbCI+QU5BTFlTVCBOT1RFPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDwvZGl2PgogICAgPGRpdiBpZD0iY2FyZC10aXRsZSI+PC9kaXY+CiAgICA8ZGl2IGlkPSJjYXJkLWRpdmlkZXIiPjwvZGl2PgogICAgPHVsIGlkPSJjYXJkLWJ1bGxldHMiPjwvdWw+CiAgICA8ZGl2IGlkPSJjYXJkLWZvb3RlciI+PC9kaXY+CiAgPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: "."
+      dynamic_description: "."
+    viz_guid: 857ad889-6799-4261-8023-0ebd737f6288
+  - id: Viz_23
+    answer:
+      name: "."
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Annual Income]"
+      answer_columns:
+      - name: Total Annual Income
+      table:
+        table_columns:
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c6b0b0c-2379-43a9-adcb-9b4ec6dc5a06\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": false}},{\"id\": \"e8317b92-cf37-4a29-b7be-4f97921237bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Total Annual Income
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIlRvdGFsIEFubnVhbCBJbmNvbWUiCiAgICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogLS0tIEVORCAtLS0KICAgKi8KCiAgKGZ1bmN0aW9uKCkgewoKICAgIC8vIOKUgOKUgCBDT05GSUcg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgICB2YXIgQ09ORklHID0gewogICAgICBhY2NlbnQ6ICcjYTg1NWY3JywKICAgICAgdGl0bGU6ICAnSW5jb21lIHZzIFJpc2sgU2NvcmUgYnkgTG9hbiBTdGF0dXMnLAogICAgICBidWxsZXRzOiBbCiAgICAgICAgJ0VhY2ggcG9pbnQgaXMgYSBzaW5nbGUgbG9hbiBwbG90dGVkIGJ5IDxlbT5ib3Jyb3dlciBpbmNvbWUgYWdhaW5zdCByaXNrIHNjb3JlPC9lbT4nLAogICAgICAgICc8ZW0+RGVmYXVsdHMgZG8gbm90IGNvbmNlbnRyYXRlPC9lbT4gbmVhdGx5IGFtb25nIGxvdy1pbmNvbWUgYm9ycm93ZXJzIGFsb25lJywKICAgICAgICAnRWxldmF0ZWQgcmlzayBzY29yZXMgY3V0IDxlbT5hY3Jvc3MgaW5jb21lIGJhbmRzPC9lbT4g4oCUIGluY29tZSBhbG9uZSBpcyBub3QgcHJlZGljdGl2ZScsCiAgICAgICAgJ1JlZCBjbHVzdGVyIHBvc2l0aW9uIHJldmVhbHMgdGhlIDxlbT50cnVlIGRlZmF1bHQgcmlzayBwcm9maWxlPC9lbT4gb2YgdGhlIHBvcnRmb2xpbycsCiAgICAgICAgJ01ha2VzIHRoZSBjYXNlIGZvciA8ZW0+cmlzay1zY29yZS13ZWlnaHRlZCBkZWNpc2lvbmluZzwvZW0+IG92ZXIgc2ltcGxlIGluY29tZSB0aHJlc2hvbGRzJwogICAgICBdLAogICAgICBmb290ZXI6ICAnUmV0YWlsIEJhbmtpbmcgTW9kZWwgwrcgQ3JlZGl0IFJpc2sgQW5hbHlzaXMnLAogICAgICBidWxsZXREZWxheTogMTIwCiAgICB9OwogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25vdGUtY2FyZCcpLnN0eWxlLnNldFByb3BlcnR5KCctLWFjY2VudCcsIENPTkZJRy5hY2NlbnQpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NhcmQtdGl0bGUnKS5pbm5lckhUTUwgPSBDT05GSUcudGl0bGU7CgogICAgdmFyIHVsID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NhcmQtYnVsbGV0cycpOwogICAgQ09ORklHLmJ1bGxldHMuZm9yRWFjaChmdW5jdGlvbih0ZXh0LCBpKSB7CiAgICAgIHZhciBsaSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2xpJyk7CiAgICAgIGxpLnN0eWxlLmFuaW1hdGlvbkRlbGF5ID0gKDAuMzUgKyBpICogQ09ORklHLmJ1bGxldERlbGF5IC8gMTAwMCkgKyAncyc7CgogICAgICB2YXIgZG90ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc3BhbicpOwogICAgICBkb3QuY2xhc3NOYW1lID0gJ2J1bGxldC1kb3QnOwoKICAgICAgdmFyIHNwYW4gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7CiAgICAgIHNwYW4uY2xhc3NOYW1lID0gJ2J1bGxldC10ZXh0JzsKICAgICAgc3Bhbi5pbm5lckhUTUwgPSB0ZXh0OwoKICAgICAgbGkuYXBwZW5kQ2hpbGQoZG90KTsKICAgICAgbGkuYXBwZW5kQ2hpbGQoc3Bhbik7CiAgICAgIHVsLmFwcGVuZENoaWxkKGxpKTsKICAgIH0pOwoKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYXJkLWZvb3RlcicpLnRleHRDb250ZW50ID0gQ09ORklHLmZvb3RlcjsKCiAgfSkoKTsKCiAgLyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIkxvYW5fU3RhdHVzIgogICAqICJMb2FuIElkIgogICAqICJUb3RhbCBSaXNrIFNjb3JlIgogICAqICJUb3RhbCBBbm51YWwgSW5jb21lIgogICAqICJUb3RhbCBMb2FuIEFtb3VudCIKICAgKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICAgKiAtLS0gRU5EIC0tLQogICAqLwoKICAoZnVuY3Rpb24oKSB7CgogICAgLy8g4pSA4pSAIENPTkZJRyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHZhciBDT05GSUcgPSB7CiAgICAgIHF1ZXJ5OiAnVG90YWwgUmlzayBTY29yZSBUb3RhbCBBbm51YWwgSW5jb21lIExvYW5fU3RhdHVzIFRvdGFsIExvYW4gQW1vdW50IExvYW4gSWQnLAogICAgICBjb2x1bW5zOiB7CiAgICAgICAgcmlza1Njb3JlOiAgICdUb3RhbCBSaXNrIFNjb3JlJywKICAgICAgICBpbmNvbWU6ICAgICAgJ1RvdGFsIEFubnVhbCBJbmNvbWUnLAogICAgICAgIGxvYW5TdGF0dXM6ICAnTG9hbl9TdGF0dXMnLAogICAgICAgIGxvYW5BbW91bnQ6ICAnVG90YWwgTG9hbiBBbW91bnQnCiAgICAgIH0sCiAgICAgIHN0YXR1c0NvbG9yczogewogICAgICAgICdBY3RpdmUnOiAgICB7IGZpbGw6ICcjNDg5NWVmJywgYWxwaGE6IDAuNTUgfSwKICAgICAgICAnQXBwcm92ZWQnOiAgeyBmaWxsOiAnIzNmYjk1MCcsIGFscGhhOiAwLjYwIH0sCiAgICAgICAgJ0RlZmF1bHRlZCc6IHsgZmlsbDogJyNmODUxNDknLCBhbHBoYTogMC43NSB9LAogICAgICAgICdQZW5kaW5nJzogICB7IGZpbGw6ICcjZDI5OTIyJywgYWxwaGE6IDAuNjAgfQogICAgICB9LAogICAgICBkZWZhdWx0Q29sb3I6ICB7IGZpbGw6ICcjOTRhM2I4JywgYWxwaGE6IDAuNCB9LAogICAgICBkb3RNaW5SOiAgICAgICAyLAogICAgICBkb3RNYXhSOiAgICAgICA3LAogICAgICBhbmltU3RlcHM6ICAgICA0MCwKICAgICAgbWFyZ2luOiAgICAgICAgeyB0b3A6IDEwLCByaWdodDogMjAsIGJvdHRvbTogNDQsIGxlZnQ6IDU4IH0KICAgIH07CiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCiAgICBmdW5jdGlvbiBmbXQodikgewogICAgICBpZiAodiA+PSAxMDAwMDAwKSByZXR1cm4gKHYgLyAxMDAwMDAwKS50b0ZpeGVkKDEpICsgJ00nOwogICAgICBpZiAodiA+PSAxMDAwKSAgICByZXR1cm4gKHYgLyAxMDAwKS50b0ZpeGVkKDApICsgJ0snOwogICAgICByZXR1cm4gdi50b0ZpeGVkKDApOwogICAgfQoKICAgIGZ1bmN0aW9uIHdhaXRGb3JEMyhjYikgewogICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjYigpOyByZXR1cm47IH0KICAgICAgdmFyIHQgPSBzZXRJbnRlcnZhbChmdW5jdGlvbigpIHsKICAgICAgICBpZiAodHlwZW9mIGQzICE9PSAndW5kZWZpbmVkJykgeyBjbGVhckludGVydmFsKHQpOyBjYigpOyB9CiAgICAgIH0sIDEwMCk7CiAgICB9CgogICAgd2FpdEZvckQzKGZ1bmN0aW9uKCkgewogICAgICB0cnkgewogICAgICAgIHZhciByYXcgPSB2aXouZ2V0RGF0YUZyb21TZWFyY2hRdWVyeShDT05GSUcucXVlcnkpOwogICAgICAgIGlmIChyYXcgJiYgdHlwZW9mIHJhdy50aGVuID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgICByYXcudGhlbihmdW5jdGlvbihyZXMpIHsgcHJvY2Vzc0RhdGEocmVzKTsgfSkuY2F0Y2goZnVuY3Rpb24oZSl7IGNvbnNvbGUuZXJyb3IoZSk7IH0pOwogICAgICAgIH0gZWxzZSBpZiAocmF3ICYmIHR5cGVvZiByYXcuZ2V0RGF0YSA9PT0gJ2Z1bmN0aW9uJykgewogICAgICAgICAgcHJvY2Vzc0RhdGEocmF3KTsKICAgICAgICB9CiAgICAgIH0gY2F0Y2goZSkgewogICAgICAgIGNvbnNvbGUuZXJyb3IoZSk7CiAgICAgIH0KICAgIH0pOwoKICAgIGZ1bmN0aW9uIHByb2Nlc3NEYXRhKHJhdykgewogICAgICB2YXIgcmVzdWx0ID0gcmF3LmdldERhdGEoKTsKICAgICAgdmFyIGRhdGEgICA9IHJlc3VsdC5kYXRhOwogICAgICB2YXIgc2NoZW1hID0gcmVzdWx0LnNjaGVtYTsKCiAgICAgIHZhciByaXNrSWR4ID0gLTEsIGluY29tZUlkeCA9IC0xLCBzdGF0dXNJZHggPSAtMSwgYW10SWR4ID0gLTE7CiAgICAgIGZvciAodmFyIGkgPSAwOyBpIDwgc2NoZW1hLmxlbmd0aDsgaSsrKSB7CiAgICAgICAgdmFyIG4gPSBzY2hlbWFbaV0ubmFtZTsKICAgICAgICBpZiAobiA9PT0gQ09ORklHLmNvbHVtbnMucmlza1Njb3JlKSAgcmlza0lkeCAgID0gaTsKICAgICAgICBpZiAobiA9PT0gQ09ORklHLmNvbHVtbnMuaW5jb21lKSAgICAgaW5jb21lSWR4ICA9IGk7CiAgICAgICAgaWYgKG4gPT09IENPTkZJRy5jb2x1bW5zLmxvYW5TdGF0dXMpIHN0YXR1c0lkeCAgPSBpOwogICAgICAgIGlmIChuID09PSBDT05GSUcuY29sdW1ucy5sb2FuQW1vdW50KSBhbXRJZHggICAgID0gaTsKICAgICAgfQogICAgICBpZiAocmlza0lkeCA8IDAgfHwgaW5jb21lSWR4IDwgMCB8fCBzdGF0dXNJZHggPCAwKSB7IGNvbnNvbGUuZXJyb3IoJ2NvbHVtbnMgbm90IGZvdW5kJyk7IHJldHVybjsgfQoKICAgICAgdmFyIHBvaW50cyA9IFtdOwogICAgICBmb3IgKHZhciByID0gMDsgciA8IGRhdGEubGVuZ3RoOyByKyspIHsKICAgICAgICB2YXIgcmlzayAgID0gK2RhdGFbcl1bcmlza0lkeF07CiAgICAgICAgdmFyIGluY29tZSA9ICtkYXRhW3JdW2luY29tZUlkeF07CiAgICAgICAgdmFyIHN0YXR1cyA9ICBkYXRhW3JdW3N0YXR1c0lkeF0gfHwgJ1Vua25vd24nOwogICAgICAgIHZhciBhbXQgICAgPSBhbXRJZHggPj0gMCA/ICgrZGF0YVtyXVthbXRJZHhdIHx8IDApIDogMDsKICAgICAgICBpZiAocmlzayA+IDAgJiYgaW5jb21lID4gMCkgewogICAgICAgICAgcG9pbnRzLnB1c2goeyByaXNrOiByaXNrLCBpbmNvbWU6IGluY29tZSwgc3RhdHVzOiBzdGF0dXMsIGFtdDogYW10IH0pOwogICAgICAgIH0KICAgICAgfQoKICAgICAgZHJhd1NjYXR0ZXIocG9pbnRzKTsKICAgIH0KCiAgICBmdW5jdGlvbiBkcmF3U2NhdHRlcihwb2ludHMpIHsKICAgICAgdmFyIGNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjaGFydC1hcmVhJyk7CiAgICAgIHJlcXVlc3RBbmltYXRpb25GcmFtZShmdW5jdGlvbigpIHsKICAgICAgICB2YXIgVyA9IGNvbnRhaW5lci5jbGllbnRXaWR0aCAgfHwgNzAwOwogICAgICAgIHZhciBIID0gY29udGFpbmVyLmNsaWVudEhlaWdodCB8fCA0MDA7CiAgICAgICAgdmFyIG0gPSBDT05GSUcubWFyZ2luOwogICAgICAgIHZhciB3ID0gVyAtIG0ubGVmdCAtIG0ucmlnaHQ7CiAgICAgICAgdmFyIGggPSBIIC0gbS50b3AgIC0gbS5ib3R0b207CgogICAgICAgIHZhciBjYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc2NhdHRlci1jYW52YXMnKTsKICAgICAgICBjYW52YXMud2lkdGggID0gVzsKICAgICAgICBjYW52YXMuaGVpZ2h0ID0gSDsKICAgICAgICB2YXIgY3R4ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7CgogICAgICAgIHZhciBpbmNvbWVFeHQgPSBkMy5leHRlbnQocG9pbnRzLCBmdW5jdGlvbihwKXsgcmV0dXJuIHAuaW5jb21lOyB9KTsKICAgICAgICB2YXIgcmlza0V4dCAgID0gWzMwMCwgODUwXTsKICAgICAgICB2YXIgYW10RXh0ICAgID0gZDMuZXh0ZW50KHBvaW50cywgZnVuY3Rpb24ocCl7IHJldHVybiBwLmFtdDsgfSk7CgogICAgICAgIHZhciB4U2NhbGUgPSBkMy5zY2FsZUxpbmVhcigpLmRvbWFpbihpbmNvbWVFeHQpLnJhbmdlKFttLmxlZnQsIG0ubGVmdCArIHddKS5uaWNlKCk7CiAgICAgICAgdmFyIHlTY2FsZSA9IGQzLnNjYWxlTGluZWFyKCkuZG9tYWluKHJpc2tFeHQpLnJhbmdlKFttLnRvcCArIGgsIG0udG9wXSkubmljZSgpOwogICAgICAgIHZhciByU2NhbGUgPSBkMy5zY2FsZVNxcnQoKS5kb21haW4oW2FtdEV4dFswXSwgYW10RXh0WzFdXSkucmFuZ2UoW0NPTkZJRy5kb3RNaW5SLCBDT05GSUcuZG90TWF4Ul0pOwoKICAgICAgICB2YXIgc3ZnID0gZDMuc2VsZWN0KCcjc2NhdHRlci1heGVzJykKICAgICAgICAgIC5hdHRyKCd3aWR0aCcsIFcpLmF0dHIoJ2hlaWdodCcsIEgpOwoKICAgICAgICBzdmcuYXBwZW5kKCdnJykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAndHJhbnNsYXRlKDAsJyArIChtLnRvcCArIGgpICsgJyknKQogICAgICAgICAgLmNhbGwoZDMuYXhpc0JvdHRvbSh4U2NhbGUpLnRpY2tzKDYpLnRpY2tGb3JtYXQoZm10KS50aWNrU2l6ZSgtaCkpCiAgICAgICAgICAuY2FsbChmdW5jdGlvbihheCkgewogICAgICAgICAgICBheC5zZWxlY3QoJy5kb21haW4nKS5yZW1vdmUoKTsKICAgICAgICAgICAgYXguc2VsZWN0QWxsKCdsaW5lJykuYXR0cignc3Ryb2tlJywgJyNlMmU4ZjAnKTsKICAgICAgICAgICAgYXguc2VsZWN0QWxsKCd0ZXh0JykuYXR0cignZmlsbCcsICcjNjQ3NDhiJykuYXR0cignZm9udC1zaXplJywgJzExcHgnKTsKICAgICAgICAgIH0pOwoKICAgICAgICBzdmcuYXBwZW5kKCdnJykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAndHJhbnNsYXRlKCcgKyBtLmxlZnQgKyAnLDApJykKICAgICAgICAgIC5jYWxsKGQzLmF4aXNMZWZ0KHlTY2FsZSkudGlja3MoNSkudGlja1NpemUoLXcpKQogICAgICAgICAgLmNhbGwoZnVuY3Rpb24oYXgpIHsKICAgICAgICAgICAgYXguc2VsZWN0KCcuZG9tYWluJykucmVtb3ZlKCk7CiAgICAgICAgICAgIGF4LnNlbGVjdEFsbCgnbGluZScpLmF0dHIoJ3N0cm9rZScsICcjZTJlOGYwJyk7CiAgICAgICAgICAgIGF4LnNlbGVjdEFsbCgndGV4dCcpLmF0dHIoJ2ZpbGwnLCAnIzY0NzQ4YicpLmF0dHIoJ2ZvbnQtc2l6ZScsICcxMXB4Jyk7CiAgICAgICAgICB9KTsKCiAgICAgICAgc3ZnLmFwcGVuZCgndGV4dCcpCiAgICAgICAgICAuYXR0cigneCcsIG0ubGVmdCArIHcgLyAyKS5hdHRyKCd5JywgSCAtIDYpCiAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnbWlkZGxlJykKICAgICAgICAgIC5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTJweCcpCiAgICAgICAgICAudGV4dCgnQW5udWFsIEluY29tZScpOwoKICAgICAgICBzdmcuYXBwZW5kKCd0ZXh0JykKICAgICAgICAgIC5hdHRyKCd0cmFuc2Zvcm0nLCAncm90YXRlKC05MCknKQogICAgICAgICAgLmF0dHIoJ3gnLCAtKG0udG9wICsgaCAvIDIpKS5hdHRyKCd5JywgMTQpCiAgICAgICAgICAuYXR0cigndGV4dC1hbmNob3InLCAnbWlkZGxlJykKICAgICAgICAgIC5hdHRyKCdmaWxsJywgJyM2NDc0OGInKS5hdHRyKCdmb250LXNpemUnLCAnMTJweCcpCiAgICAgICAgICAudGV4dCgnUmlzayBTY29yZScpOwoKICAgICAgICB2YXIgb3JkZXIgPSBbJ0NvbXBsZXRlZCcsICdBcHByb3ZlZCcsICdBY3RpdmUnLCAnUGVuZGluZycsICdEZWZhdWx0ZWQnXTsKICAgICAgICBwb2ludHMuc29ydChmdW5jdGlvbihhLCBiKSB7CiAgICAgICAgICByZXR1cm4gb3JkZXIuaW5kZXhPZihhLnN0YXR1cykgLSBvcmRlci5pbmRleE9mKGIuc3RhdHVzKTsKICAgICAgICB9KTsKCiAgICAgICAgdmFyIHN0ZXAgPSAwOwogICAgICAgIHZhciBiYXRjaFNpemUgPSBNYXRoLmNlaWwocG9pbnRzLmxlbmd0aCAvIENPTkZJRy5hbmltU3RlcHMpOwoKICAgICAgICBmdW5jdGlvbiBkcmF3QmF0Y2goKSB7CiAgICAgICAgICB2YXIgc3RhcnQgPSBzdGVwICogYmF0Y2hTaXplOwogICAgICAgICAgdmFyIGVuZCAgID0gTWF0aC5taW4oc3RhcnQgKyBiYXRjaFNpemUsIHBvaW50cy5sZW5ndGgpOwogICAgICAgICAgZm9yICh2YXIgaSA9IHN0YXJ0OyBpIDwgZW5kOyBpKyspIHsKICAgICAgICAgICAgdmFyIHAgICAgICA9IHBvaW50c1tpXTsKICAgICAgICAgICAgdmFyIGNmZyAgICA9IENPTkZJRy5zdGF0dXNDb2xvcnNbcC5zdGF0dXNdIHx8IENPTkZJRy5kZWZhdWx0Q29sb3I7CiAgICAgICAgICAgIHZhciBjeCAgICAgPSB4U2NhbGUocC5pbmNvbWUpOwogICAgICAgICAgICB2YXIgY3kgICAgID0geVNjYWxlKHAucmlzayk7CiAgICAgICAgICAgIHZhciByYWRpdXMgPSBhbXRFeHRbMV0gPiAwID8gclNjYWxlKHAuYW10KSA6IENPTkZJRy5kb3RNaW5SOwoKICAgICAgICAgICAgY3R4LmJlZ2luUGF0aCgpOwogICAgICAgICAgICBjdHguYXJjKGN4LCBjeSwgcmFkaXVzLCAwLCBNYXRoLlBJICogMik7CiAgICAgICAgICAgIGN0eC5maWxsU3R5bGUgPSBjZmcuZmlsbDsKICAgICAgICAgICAgY3R4Lmdsb2JhbEFscGhhID0gY2ZnLmFscGhhOwogICAgICAgICAgICBjdHguZmlsbCgpOwogICAgICAgICAgfQogICAgICAgICAgY3R4Lmdsb2JhbEFscGhhID0gMTsKICAgICAgICAgIHN0ZXArKzsKICAgICAgICAgIGlmIChzdGVwIDwgQ09ORklHLmFuaW1TdGVwcykgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGRyYXdCYXRjaCk7CiAgICAgICAgfQoKICAgICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoZHJhd0JhdGNoKTsKCiAgICAgICAgdmFyIGxlZ2VuZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsZWdlbmQnKTsKICAgICAgICB2YXIgc3RhdHVzZXMgPSBPYmplY3Qua2V5cyhDT05GSUcuc3RhdHVzQ29sb3JzKTsKICAgICAgICBzdGF0dXNlcy5mb3JFYWNoKGZ1bmN0aW9uKHMpIHsKICAgICAgICAgIHZhciBpdGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7CiAgICAgICAgICBpdGVtLmNsYXNzTmFtZSA9ICdsZWdlbmQtaXRlbSc7CiAgICAgICAgICBpdGVtLmlubmVySFRNTCA9ICc8ZGl2IGNsYXNzPSJsZWdlbmQtZG90IiBzdHlsZT0iYmFja2dyb3VuZDonICsgQ09ORklHLnN0YXR1c0NvbG9yc1tzXS5maWxsICsgJyI+PC9kaXY+JyArIHM7CiAgICAgICAgICBsZWdlbmQuYXBwZW5kQ2hpbGQoaXRlbSk7CiAgICAgICAgfSk7CgogICAgICAgIHZhciBzaXplTm90ZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgIHNpemVOb3RlLmNsYXNzTmFtZSA9ICdsZWdlbmQtaXRlbSc7CiAgICAgICAgc2l6ZU5vdGUuc3R5bGUubWFyZ2luTGVmdCA9ICdhdXRvJzsKICAgICAgICBzaXplTm90ZS5zdHlsZS5jb2xvciA9ICcjNjQ3NDhiJzsKICAgICAgICBzaXplTm90ZS50ZXh0Q29udGVudCA9IHBvaW50cy5sZW5ndGgudG9Mb2NhbGVTdHJpbmcoKSArICcgbG9hbnMgcGxvdHRlZCc7CiAgICAgICAgbGVnZW5kLmFwcGVuZENoaWxkKHNpemVOb3RlKTsKICAgICAgfSk7CiAgICB9CgogIH0pKCk7CgogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7Cg\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"KiB7IG1hcmdpbjogMDsgcGFkZGluZzogMDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICBib2R5IHsgICAgICAgICAgCiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIHBhZGRpbmc6IDE2cHg7CiAgfQoKICAjbm90ZS1jYXJkIHsKICAgIGJhY2tncm91bmQ6ICNmZmZmZmY7CiAgICBib3JkZXI6IDFweCBzb2xpZCAjZTJlOGYwOwogICAgYm9yZGVyLWxlZnQ6IDNweCBzb2xpZCB2YXIoLS1hY2NlbnQsICNhODU1ZjcpOwogICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIHBhZGRpbmc6IDIwcHggMThweCAxNnB4OwogICAgd2lkdGg6IDEwMCU7CiAgICBtYXgtd2lkdGg6IDM0MHB4OwogICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgb3ZlcmZsb3c6IGhpZGRlbjsKICAgIGJveC1zaGFkb3c6IDAgMXB4IDRweCByZ2JhKDAsMCwwLDAuMDYpOwogIH0KCiAgI25vdGUtY2FyZDo6YmVmb3JlIHsKICAgIGNvbnRlbnQ6ICcnOwogICAgcG9zaXRpb246IGFic29sdXRlOwogICAgdG9wOiAwOyBsZWZ0OiAwOyByaWdodDogMDsKICAgIGhlaWdodDogMXB4OwogICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCB2YXIoLS1hY2NlbnQsICNhODU1ZjcpLCB0cmFuc3BhcmVudCk7CiAgICBvcGFjaXR5OiAwLjQ7CiAgfQoKICAjY2FyZC1oZWFkZXIgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBnYXA6IDdweDsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgfQoKICAjaGVhZGVyLWljb24gewogICAgd2lkdGg6IDdweDsKICAgIGhlaWdodDogN3B4OwogICAgYmFja2dyb3VuZDogdmFyKC0tYWNjZW50LCAjYTg1NWY3KTsKICAgIGJvcmRlci1yYWRpdXM6IDUwJTsKICAgIGJveC1zaGFkb3c6IDAgMCA2cHggdmFyKC0tYWNjZW50LCAjYTg1NWY3KTsKICAgIGFuaW1hdGlvbjogcHVsc2UgMi40cyBlYXNlLWluLW91dCBpbmZpbml0ZTsKICB9CgogIEBrZXlmcmFtZXMgcHVsc2UgewogICAgMCUsIDEwMCUgeyBib3gtc2hhZG93OiAwIDAgNHB4IHZhcigtLWFjY2VudCwgI2E4NTVmNyk7IG9wYWNpdHk6IDE7IH0KICAgIDUwJSAgICAgICB7IGJveC1zaGFkb3c6IDAgMCAxMnB4IHZhcigtLWFjY2VudCwgI2E4NTVmNyk7IG9wYWNpdHk6IDAuNzsgfQogIH0KCiAgI2hlYWRlci1sYWJlbCB7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBmb250LXdlaWdodDogNzAwOwogICAgbGV0dGVyLXNwYWNpbmc6IDEuNHB4OwogICAgY29sb3I6IHZhcigtLWFjY2VudCwgI2E4NTVmNyk7CiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogIH0KCiAgI2NhcmQtdGl0bGUgewogICAgZm9udC1zaXplOiAxNHB4OwogICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgbGluZS1oZWlnaHQ6IDEuMzU7CiAgICBtYXJnaW4tYm90dG9tOiAxMHB4OwogICAgb3BhY2l0eTogMDsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg2cHgpOwogICAgYW5pbWF0aW9uOiBmYWRlVXAgMC41cyBlYXNlIGZvcndhcmRzOwogICAgYW5pbWF0aW9uLWRlbGF5OiAwLjFzOwogIH0KCiAgI2NhcmQtZGl2aWRlciB7CiAgICBoZWlnaHQ6IDFweDsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgI2UyZThmMCwgdHJhbnNwYXJlbnQpOwogICAgbWFyZ2luLWJvdHRvbTogMTJweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgICBhbmltYXRpb24tZGVsYXk6IDAuMnM7CiAgfQoKICAjY2FyZC1idWxsZXRzIHsKICAgIGxpc3Qtc3R5bGU6IG5vbmU7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGdhcDogOXB4OwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSB7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZ2FwOiA4cHg7CiAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDsKICAgIGZvbnQtc2l6ZTogMTJweDsKICAgIGxpbmUtaGVpZ2h0OiAxLjU1OwogICAgY29sb3I6ICM2NDc0OGI7CiAgICBvcGFjaXR5OiAwOwogICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDhweCk7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjQ1cyBlYXNlIGZvcndhcmRzOwogIH0KCiAgI2NhcmQtYnVsbGV0cyBsaSAuYnVsbGV0LWRvdCB7CiAgICB3aWR0aDogNXB4OwogICAgaGVpZ2h0OiA1cHg7CiAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1hY2NlbnQsICNhODU1ZjcpOwogICAgZmxleC1zaHJpbms6IDA7CiAgICBtYXJnaW4tdG9wOiA1cHg7CiAgICBvcGFjaXR5OiAwLjc7CiAgfQoKICAjY2FyZC1idWxsZXRzIGxpIC5idWxsZXQtdGV4dCBlbSB7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGZvbnQtc3R5bGU6IG5vcm1hbDsKICAgIGZvbnQtd2VpZ2h0OiA2MDA7CiAgfQoKICAjY2FyZC1mb290ZXIgewogICAgbWFyZ2luLXRvcDogMTRweDsKICAgIHBhZGRpbmctdG9wOiAxMHB4OwogICAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNlMmU4ZjA7CiAgICBmb250LXNpemU6IDEwcHg7CiAgICBjb2xvcjogIzk0YTNiODsKICAgIGxldHRlci1zcGFjaW5nOiAwLjNweDsKICAgIG9wYWNpdHk6IDA7CiAgICBhbmltYXRpb246IGZhZGVVcCAwLjRzIGVhc2UgZm9yd2FyZHM7CiAgfQoKICBAa2V5ZnJhbWVzIGZhZGVVcCB7CiAgICB0byB7IG9wYWNpdHk6IDE7IHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfQogIH0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0ibm90ZS1jYXJkIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDxkaXYgaWQ9ImNhcmQtaGVhZGVyIj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICA8ZGl2IGlkPSJoZWFkZXItaWNvbiI+PC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgIDxkaXYgaWQ9ImhlYWRlci1sYWJlbCI+QU5BTFlTVCBOT1RFPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgIDwvZGl2PgogICAgPGRpdiBpZD0iY2FyZC10aXRsZSI+PC9kaXY+CiAgICA8ZGl2IGlkPSJjYXJkLWRpdmlkZXIiPjwvZGl2PgogICAgPHVsIGlkPSJjYXJkLWJ1bGxldHMiPjwvdWw+CiAgICA8ZGl2IGlkPSJjYXJkLWZvb3RlciI+PC9kaXY+CiAgPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: "."
+      dynamic_description: "."
+    viz_guid: ad4904ea-b22a-489e-adf2-afd2216536a7
+  - id: Viz_24
+    answer:
+      name: "."
+      description: "."
+      tables:
+      - id: Retail_Banking_Model
+        name: Retail_Banking_Model
+        fqn: 8a82bfb1-31de-4eac-965c-aee25cd89273
+      search_query: "[Annual Income]"
+      answer_columns:
+      - name: Total Annual Income
+      table:
+        table_columns:
+        - column_id: Total Annual Income
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: CUSTOM_CHART
+        chart_columns:
+        - column_id: Total Annual Income
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Total Annual Income\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c6b0b0c-2379-43a9-adcb-9b4ec6dc5a06\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Annual Income\"],\"isOpposite\": false}},{\"id\": \"e8317b92-cf37-4a29-b7be-4f97921237bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Total Annual Income
+            mode: COLUMN_DRIVEN
+        custom_chart_name: Muze Studio
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAgICogQXZhaWxhYmxlIENvbHVtbnM6CiAgICogIlRvdGFsIEFubnVhbCBJbmNvbWUiCiAgICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogICAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAgICogLS0tIEVORCAtLS0KICAgKi8KCiAgKGZ1bmN0aW9uKCkgewoKICAgIC8vIOKUgOKUgCBDT05GSUcg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgICB2YXIgQ09ORklHID0gewogICAgICB0aXRsZTogJ0FjdGlvbnMgZm9yIHRoZSBQb3J0Zm9saW8gVGVhbScsCiAgICAgIGl0ZW1zOiBbCiAgICAgICAgJzxlbT5TdHJlc3MtdGVzdCBCdXNpbmVzcyBhbmQgSW52ZXN0bWVudCBzZWdtZW50czwvZW0+IOKAlCB3aWRlc3QgcmlzayBkaXN0cmlidXRpb25zLCBoaWdoZXN0IHRhaWwgZXhwb3N1cmUnLAogICAgICAgICc8ZW0+UHJpb3JpdGlzZSBjb2xsZWN0aW9ucyBpbiBoaWdoLWJ1cmRlbiBsb2FuIGJsb2NrczwvZW0+IOKAlCBsYXJnZXIgYW5kIGRhcmtlciB0cmVlbWFwIGNlbGxzIHJlcHJlc2VudCB0aGUgZ3JlYXRlc3QgdW5yZWNvdmVyZWQgY2FwaXRhbCcsCiAgICAgICAgJzxlbT5GaXggdGhlIGhpZ2hlc3Qtdm9sdW1lIHRyYW5zYWN0aW9uIGNoYW5uZWw8L2VtPiDigJQgcmVkdWNpbmcgZmFpbHVyZSByYXRlIHRoZXJlIGlzIGEgZGlyZWN0IGNyZWRpdCByaXNrIGludGVydmVudGlvbiwgbm90IGp1c3QgYSBVWCBmaXgnLAogICAgICAgICc8ZW0+UmV0aXJlIGluY29tZSBhcyBhIHN0YW5kYWxvbmUgdW5kZXJ3cml0aW5nIHNpZ25hbDwvZW0+IOKAlCBkZWZhdWx0cyBjdXQgYWNyb3NzIGFsbCBpbmNvbWUgYmFuZHMgZXF1YWxseScsCiAgICAgICAgJzxlbT5JbXBsZW1lbnQgcmlzay1zY29yZS13ZWlnaHRlZCBkZWNpc2lvbmluZzwvZW0+IGFjcm9zcyB0aGUgZnVsbCBwb3J0Zm9saW8sIG5vdCBqdXN0IGZsYWdnZWQgc2VnbWVudHMnCiAgICAgIF0sCiAgICAgIGZvb3RlcjogICdSZXRhaWwgQmFua2luZyBNb2RlbCAtIEV4ZWN1dGl2ZSBTdW1tYXJ5JywKICAgICAgaXRlbURlbGF5OiAxMzAKICAgIH07CiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncmVjLXRpdGxlJykudGV4dENvbnRlbnQgPSBDT05GSUcudGl0bGU7CgogICAgdmFyIGNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZWMtaXRlbXMnKTsKICAgIENPTkZJRy5pdGVtcy5mb3JFYWNoKGZ1bmN0aW9uKHRleHQsIGkpIHsKICAgICAgdmFyIGl0ZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsKICAgICAgaXRlbS5jbGFzc05hbWUgPSAncmVjLWl0ZW0nOwogICAgICBpdGVtLnN0eWxlLmFuaW1hdGlvbkRlbGF5ID0gKDAuMzUgKyBpICogQ09ORklHLml0ZW1EZWxheSAvIDEwMDApICsgJ3MnOwoKICAgICAgdmFyIG51bSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICBudW0uY2xhc3NOYW1lID0gJ3JlYy1udW1iZXInOwogICAgICBudW0udGV4dENvbnRlbnQgPSBpICsgMTsKCiAgICAgIHZhciB0eHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsKICAgICAgdHh0LmNsYXNzTmFtZSA9ICdyZWMtdGV4dCc7CiAgICAgIHR4dC5pbm5lckhUTUwgPSB0ZXh0OwoKICAgICAgaXRlbS5hcHBlbmRDaGlsZChudW0pOwogICAgICBpdGVtLmFwcGVuZENoaWxkKHR4dCk7CiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChpdGVtKTsKICAgIH0pOwoKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZWMtZm9vdGVyJykudGV4dENvbnRlbnQgPSBDT05GSUcuZm9vdGVyOwoKICB9KSgpOwogIHZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7\\\",\\\"cssCodeBase64\\\":\\\"ICogeyBtYXJnaW46IDA7IHBhZGRpbmc6IDA7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IH0KCiAgYm9keSB7CiAgICBiYWNrZ3JvdW5kOiAjZjFmNWY5OwogICAgaGVpZ2h0OiAxMDB2aDsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBmb250LWZhbWlseTogJ0ludGVyJywgJ1NlZ29lIFVJJywgc2Fucy1zZXJpZjsKICAgIHBhZGRpbmc6IDE2cHg7CiAgfQoKICAjcmVjLWNhcmQgewogICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgI2ZmZmRmNSAwJSwgI2ZmZmZmZiA2MCUsICNmOGZhZmYgMTAwJSk7CiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgMjA5LCAxMDIsIDAuMzUpOwogICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIHBhZGRpbmc6IDIwcHggMThweCAxNnB4OwogICAgd2lkdGg6IDEwMCU7CiAgICBwb3NpdGlvbjogcmVsYXRpdmU7CiAgICBvdmVyZmxvdzogaGlkZGVuOwogICAgYm94LXNoYWRvdzoKICAgICAgMCAwIDAgMXB4IHJnYmEoMjU1LCAyMDksIDEwMiwgMC4xKSwKICAgICAgMCAxcHggNHB4IHJnYmEoMCwgMCwgMCwgMC4wNik7CiAgfQoKICAjcmVjLWNhcmQ6OmJlZm9yZSB7CiAgICBjb250ZW50OiAnJzsKICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgIHRvcDogMDsgbGVmdDogMDsgcmlnaHQ6IDA7CiAgICBoZWlnaHQ6IDJweDsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsICNmZmQxNjYsIHRyYW5zcGFyZW50KTsKICB9CgogICNzaGltbWVyIHsKICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgIHRvcDogLTEwMCU7CiAgICBsZWZ0OiAtNjAlOwogICAgd2lkdGg6IDQwJTsKICAgIGhlaWdodDogMzAwJTsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgKICAgICAgMTA1ZGVnLAogICAgICB0cmFuc3BhcmVudCA0MCUsCiAgICAgIHJnYmEoMjU1LCAyMDksIDEwMiwgMC4wNikgNTAlLAogICAgICB0cmFuc3BhcmVudCA2MCUKICAgICk7CiAgICBhbmltYXRpb246IHNoaW1tZXIgNHMgZWFzZS1pbi1vdXQgaW5maW5pdGU7CiAgICBwb2ludGVyLWV2ZW50czogbm9uZTsKICB9CgogIEBrZXlmcmFtZXMgc2hpbW1lciB7CiAgICAwJSAgIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC0xMDAlKTsgfQogICAgMTAwJSB7IHRyYW5zZm9ybTogdHJhbnNsYXRlWCg1MDAlKTsgfQogIH0KCiAgI3JlYy1oZWFkZXIgewogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBnYXA6IDdweDsKICAgIG1hcmdpbi1ib3R0b206IDEwcHg7CiAgfQoKICAjcmVjLWljb24gewogICAgd2lkdGg6IDE4cHg7CiAgICBoZWlnaHQ6IDE4cHg7CiAgICBiYWNrZ3JvdW5kOiAjZmZkMTY2OwogICAgYm9yZGVyLXJhZGl1czogNHB4OwogICAgZGlzcGxheTogZmxleDsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsKICAgIGZvbnQtc2l6ZTogMTFweDsKICAgIGZvbnQtd2VpZ2h0OiA5MDA7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGxpbmUtaGVpZ2h0OiAxOwogICAgZmxleC1zaHJpbms6IDA7CiAgfQoKICAjcmVjLWxhYmVsIHsKICAgIGZvbnQtc2l6ZTogMTBweDsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBsZXR0ZXItc3BhY2luZzogMS40cHg7CiAgICBjb2xvcjogI2I0NTMwOTsKICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7CiAgfQoKICAjcmVjLXRpdGxlIHsKICAgIGZvbnQtc2l6ZTogMTRweDsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBjb2xvcjogIzFlMjkzYjsKICAgIGxpbmUtaGVpZ2h0OiAxLjM1OwogICAgbWFyZ2luLWJvdHRvbTogMTBweDsKICAgIG9wYWNpdHk6IDA7CiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoNnB4KTsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDAuNXMgZWFzZSBmb3J3YXJkczsKICAgIGFuaW1hdGlvbi1kZWxheTogMC4xczsKICB9CgogICNyZWMtZGl2aWRlciB7CiAgICBoZWlnaHQ6IDFweDsKICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgcmdiYSgyNTUsMjA5LDEwMiwwLjMpLCB0cmFuc3BhcmVudCk7CiAgICBtYXJnaW4tYm90dG9tOiAxNHB4OwogICAgb3BhY2l0eTogMDsKICAgIGFuaW1hdGlvbjogZmFkZVVwIDAuNHMgZWFzZSBmb3J3YXJkczsKICAgIGFuaW1hdGlvbi1kZWxheTogMC4yczsKICB9CgogICNyZWMtaXRlbXMgewogICAgZGlzcGxheTogZmxleDsKICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBnYXA6IDExcHg7CiAgfQoKICAucmVjLWl0ZW0gewogICAgZGlzcGxheTogZmxleDsKICAgIGdhcDogMTBweDsKICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0OwogICAgb3BhY2l0eTogMDsKICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg4cHgpOwogICAgYW5pbWF0aW9uOiBmYWRlVXAgMC40NXMgZWFzZSBmb3J3YXJkczsKICB9CgogIC5yZWMtbnVtYmVyIHsKICAgIHdpZHRoOiAyMHB4OwogICAgaGVpZ2h0OiAyMHB4OwogICAgYm9yZGVyLXJhZGl1czogNTAlOwogICAgYmFja2dyb3VuZDogcmdiYSgyNTUsIDIwOSwgMTAyLCAwLjE1KTsKICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjU1LCAyMDksIDEwMiwgMC40KTsKICAgIGNvbG9yOiAjYjQ1MzA5OwogICAgZm9udC1zaXplOiAxMHB4OwogICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgIGRpc3BsYXk6IGZsZXg7CiAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICBmbGV4LXNocmluazogMDsKICAgIG1hcmdpbi10b3A6IDFweDsKICB9CgogIC5yZWMtdGV4dCB7CiAgICBmb250LXNpemU6IDEycHg7CiAgICBsaW5lLWhlaWdodDogMS41NTsKICAgIGNvbG9yOiAjNjQ3NDhiOwogIH0KCiAgLnJlYy10ZXh0IGVtIHsKICAgIGNvbG9yOiAjMWUyOTNiOwogICAgZm9udC1zdHlsZTogbm9ybWFsOwogICAgZm9udC13ZWlnaHQ6IDYwMDsKICB9CgogICNyZWMtZm9vdGVyIHsKICAgIG1hcmdpbi10b3A6IDE0cHg7CiAgICBwYWRkaW5nLXRvcDogMTBweDsKICAgIGJvcmRlci10b3A6IDFweCBzb2xpZCAjZTJlOGYwOwogICAgZm9udC1zaXplOiAxMHB4OwogICAgY29sb3I6ICM5NGEzYjg7CiAgICBsZXR0ZXItc3BhY2luZzogMC4zcHg7CiAgICBvcGFjaXR5OiAwOwogICAgYW5pbWF0aW9uOiBmYWRlVXAgMC40cyBlYXNlIGZvcndhcmRzOwogIH0KCiAgQGtleWZyYW1lcyBmYWRlVXAgewogICAgdG8geyBvcGFjaXR5OiAxOyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7IH0KICB9CgoKICAgIAo\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0icmVjLWNhcmQiPgogICAgPGRpdiBpZD0icmVjLWhlYWRlciI+CiAgICAgIDxkaXYgaWQ9InJlYy1pY29uIj4mZ3Q7PC9kaXY+CiAgICAgIDxkaXYgaWQ9InJlYy1sYWJlbCI+UkVDT01NRU5EQVRJT05TPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgaWQ9InJlYy10aXRsZSI+PC9kaXY+CiAgICA8ZGl2IGlkPSJyZWMtZGl2aWRlciI+PC9kaXY+CiAgICA8ZGl2IGlkPSJyZWMtaXRlbXMiPjwvZGl2PgogICAgPGRpdiBpZD0icmVjLWZvb3RlciI+PC9kaXY+CiAgICA8ZGl2IGlkPSJzaGltbWVyIj48L2Rpdj4KICA8L2Rpdj4\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99.79879275653923,0.20120724346077168]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+      dynamic_name: "."
+      dynamic_description: "."
+    viz_guid: 474ec273-86c3-4029-bc8f-30be1cf3700d
+  groups:
+  - id: Group_1
+    name: Key Performance Indicators
+    description: Core metrics with monthly trends for daily portfolio monitoring
+    visualizations:
+    - Viz_8
+    - Viz_9
+    - Viz_10
+    - Viz_11
+    - Viz_12
+    - Viz_13
+    - Viz_14
+    group_guid: 2d1d2ed4-d726-48f2-a18d-43f269330748
+  - id: Group_2
+    name: Customer Portfolio & Geography
+    description: Geographic distribution and customer demographics
+    visualizations:
+    - Viz_1
+    - Viz_2
+    - Viz_7
+    group_guid: bfa5998e-04eb-42ec-b3d1-8210b0d1ad88
+  - id: Group_3
+    name: Credit & Account Analysis
+    description: Credit utilization and transaction flow insights
+    visualizations:
+    - Viz_6
+    group_guid: d45517de-9b1d-4eb0-9896-3addc37112ec
+  - id: Group_4
+    name: Loan Portfolio Management
+    description: "Loan distribution, status, and risk-return analysis"
+    visualizations:
+    - Viz_3
+    - Viz_4
+    - Viz_5
+    group_guid: 9dbce91b-305e-40cc-9dc8-6a889e070ff5
+  - id: Group_5
+    name: Risk Score
+    description: "."
+    visualizations:
+    - Viz_20
+    - Viz_16
+    group_guid: ef7e06af-5c9a-40d0-b3a7-17b36507dffa
+  - id: Group_6
+    name: Loan Portfolio
+    description: "."
+    visualizations:
+    - Viz_17
+    - Viz_21
+    group_guid: 0156ea9d-21c5-4eb4-8155-844a3c1dff3b
+  - id: Group_7
+    name: Transaction Flow deep dive
+    description: "."
+    visualizations:
+    - Viz_22
+    - Viz_18
+    group_guid: 83e86000-cf5f-406c-8346-cce63fb581fd
+  - id: Group_8
+    name: Income v/s Risk Score
+    description: "."
+    visualizations:
+    - Viz_19
+    - Viz_23
+    group_guid: 7f032b8c-3f8b-478c-9616-55ca42d91d74
+  layout:
+    tabs:
+    - name: Overview
+      description: ""
+      tiles:
+      - visualization_id: Group_1
+        x: 0
+        "y": 0
+        height: 13
+        width: 12
+      - visualization_id: Group_2
+        x: 0
+        "y": 13
+        height: 10
+        width: 12
+      - visualization_id: Group_3
+        x: 0
+        "y": 23
+        height: 9
+        width: 12
+      - visualization_id: Group_4
+        x: 0
+        "y": 32
+        height: 14
+        width: 12
+      id: 23287996-5faf-4711-a0a0-02bb6eff1c15
+      group_layouts:
+      - id: Group_1
+        tiles:
+        - visualization_id: Viz_13
+          x: 4
+          "y": 8
+          height: 4
+          width: 4
+        - visualization_id: Viz_11
+          x: 8
+          "y": 4
+          height: 4
+          width: 4
+        - visualization_id: Viz_12
+          x: 0
+          "y": 8
+          height: 4
+          width: 4
+        - visualization_id: Viz_9
+          x: 0
+          "y": 4
+          height: 4
+          width: 4
+        - visualization_id: Viz_10
+          x: 4
+          "y": 4
+          height: 4
+          width: 4
+        - visualization_id: Viz_8
+          x: 0
+          "y": 0
+          height: 4
+          width: 12
+        - visualization_id: Viz_14
+          x: 8
+          "y": 8
+          height: 4
+          width: 4
+      - id: Group_2
+        tiles:
+        - visualization_id: Viz_7
+          x: 9
+          "y": 0
+          height: 10
+          width: 3
+        - visualization_id: Viz_1
+          x: 0
+          "y": 0
+          height: 10
+          width: 5
+        - visualization_id: Viz_2
+          x: 5
+          "y": 0
+          height: 10
+          width: 4
+      - id: Group_3
+        tiles:
+        - visualization_id: Viz_6
+          x: 0
+          "y": 0
+          height: 8
+          width: 12
+      - id: Group_4
+        tiles:
+        - visualization_id: Viz_5
+          x: 6
+          "y": 0
+          height: 7
+          width: 6
+        - visualization_id: Viz_4
+          x: 0
+          "y": 7
+          height: 7
+          width: 12
+        - visualization_id: Viz_3
+          x: 0
+          "y": 0
+          height: 7
+          width: 6
+    - name: Analysis
+      description: ""
+      tiles:
+      - visualization_id: Viz_15
+        x: 0
+        "y": 0
+        height: 5
+        width: 12
+      - visualization_id: Group_5
+        x: 0
+        "y": 5
+        height: 8
+        width: 12
+      - visualization_id: Group_6
+        x: 0
+        "y": 13
+        height: 8
+        width: 12
+      - visualization_id: Group_7
+        x: 0
+        "y": 21
+        height: 8
+        width: 12
+      - visualization_id: Group_8
+        x: 0
+        "y": 29
+        height: 8
+        width: 12
+      - visualization_id: Viz_24
+        x: 0
+        "y": 37
+        height: 5
+        width: 12
+      id: f3ec7739-0330-46ce-ba70-2970df8e539a
+      group_layouts:
+      - id: Group_5
+        tiles:
+        - visualization_id: Viz_16
+          x: 3
+          "y": 0
+          height: 8
+          width: 9
+        - visualization_id: Viz_20
+          x: 0
+          "y": 0
+          height: 8
+          width: 3
+      - id: Group_6
+        tiles:
+        - visualization_id: Viz_17
+          x: 0
+          "y": 0
+          height: 8
+          width: 9
+        - visualization_id: Viz_21
+          x: 9
+          "y": 0
+          height: 8
+          width: 3
+      - id: Group_7
+        tiles:
+        - visualization_id: Viz_18
+          x: 3
+          "y": 0
+          height: 8
+          width: 9
+        - visualization_id: Viz_22
+          x: 0
+          "y": 0
+          height: 8
+          width: 3
+      - id: Group_8
+        tiles:
+        - visualization_id: Viz_19
+          x: 0
+          "y": 0
+          height: 8
+          width: 9
+        - visualization_id: Viz_23
+          x: 9
+          "y": 0
+          height: 8
+          width: 3
+  style:
+    style_properties:
+    - name: lb_border_type
+      value: CURVED
+    - name: lb_brand_color
+      value: LBC_C
+    - name: hide_group_title
+      value: "false"
+    - name: hide_group_description
+      value: "true"
+    - name: hide_group_tile_description
+      value: "true"
+    - name: hide_tile_description
+      value: "true"
+    - name: kpi_hero_font_size
+      value: M
+    overrides:
+    - object_id: Group_3
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+    - object_id: Group_2
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+    - object_id: Group_4
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+      - name: hide_group_title
+        value: "false"
+      - name: hide_group_description
+        value: "true"
+      - name: hide_group_tile_description
+        value: "true"
+      - name: kpi_hero_font_size
+        value: M
+      - name: is_linked
+        value: "false"
+    - object_id: Group_1
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C

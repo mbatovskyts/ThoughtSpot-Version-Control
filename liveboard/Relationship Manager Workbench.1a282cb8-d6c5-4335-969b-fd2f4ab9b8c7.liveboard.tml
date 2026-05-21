@@ -1055,6 +1055,19 @@ liveboard:
     - Viz_19
     - Viz_23
     group_guid: 7f032b8c-3f8b-478c-9616-55ca42d91d74
+  filters:
+  - column:
+    - Account Type
+    oper: in
+    values:
+    - "{null}"
+    - Business
+    - Checking
+    - Investment
+    - Savings
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
   layout:
     tabs:
     - name: Overview
@@ -1243,6 +1256,9 @@ liveboard:
           "y": 0
           height: 8
           width: 3
+  ordered_chips:
+  - name: Account Type
+    type: FILTER
   style:
     style_properties:
     - name: lb_border_type

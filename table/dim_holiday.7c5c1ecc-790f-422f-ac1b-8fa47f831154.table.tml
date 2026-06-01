@@ -1,0 +1,39 @@
+guid: 7c5c1ecc-790f-422f-ac1b-8fa47f831154
+table:
+  name: dim_holiday
+  db: project-5a9ec5ee-2073-40b8-bf8
+  schema: MyDB
+  db_table: dim_holiday
+  connection:
+    name: GBQ-anuj
+    fqn: d6dc857b-610b-4fa3-be4f-737768f6bf5d
+  columns:
+  - name: holiday_date
+    db_column_name: holiday_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: DATE
+  - name: week_end_date
+    db_column_name: week_end_date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: DATE
+  - name: holiday_name
+    db_column_name: holiday_name
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  - name: holiday_type
+    db_column_name: holiday_type
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  properties:
+    spotter_config:
+      is_spotter_enabled: false

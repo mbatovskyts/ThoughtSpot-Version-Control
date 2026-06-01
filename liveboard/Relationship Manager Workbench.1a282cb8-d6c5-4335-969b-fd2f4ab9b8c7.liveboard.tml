@@ -992,6 +992,42 @@ liveboard:
       dynamic_name: "."
       dynamic_description: "."
     viz_guid: 474ec273-86c3-4029-bc8f-30be1cf3700d
+  - id: Viz_25
+    answer:
+      name: Total Sales by Holiday Name
+      tables:
+      - id: vsm holiday testing
+        name: vsm holiday testing
+        fqn: 05b3dac3-98e0-445b-8b58-17782b882b42
+      search_query: "[Sales] [Holiday Name]"
+      answer_columns:
+      - name: Holiday Name
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Holiday Name
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Holiday Name
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: COLUMN
+        chart_columns:
+        - column_id: Holiday Name
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Holiday Name
+          "y":
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_OFF\",\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Holiday Name\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"8ad7d501-0e0a-4c54-8ef9-68354af7e9be\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"585b5982-1117-4a7f-9b59-95aefafd3be9\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Holiday Name\"]}}],\"systemSeriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#2E75F0\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: e17c81ee-d0c0-4edf-aac6-7a82f0cb3ea8
   groups:
   - id: Group_1
     name: Key Performance Indicators
@@ -1057,7 +1093,7 @@ liveboard:
     group_guid: 7f032b8c-3f8b-478c-9616-55ca42d91d74
   filters:
   - column:
-    - Account Type
+    - Retail_Banking_Model::Account Type
     oper: in
     values:
     - "{null}"
@@ -1093,6 +1129,7 @@ liveboard:
         "y": 32
         height: 14
         width: 12
+      - visualization_id: Viz_25
       id: 23287996-5faf-4711-a0a0-02bb6eff1c15
       group_layouts:
       - id: Group_1
@@ -1257,7 +1294,7 @@ liveboard:
           height: 8
           width: 3
   ordered_chips:
-  - name: Account Type
+  - name: Retail_Banking_Model::Account Type
     type: FILTER
   style:
     style_properties:

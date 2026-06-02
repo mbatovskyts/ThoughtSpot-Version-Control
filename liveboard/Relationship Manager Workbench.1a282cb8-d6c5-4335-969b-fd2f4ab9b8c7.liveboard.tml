@@ -1259,6 +1259,19 @@ liveboard:
   ordered_chips:
   - name: Account Type
     type: FILTER
+  views:
+  - view_guid: d1b8bac0-98a0-49fc-a520-988dd8f5e539
+    name: anuj
+    view_filters:
+    - column:
+      - Account Type
+      oper: in
+      values:
+      - "{null}"
+      - checking
+      - investment
+      - savings
+    is_public: false
   style:
     style_properties:
     - name: lb_border_type

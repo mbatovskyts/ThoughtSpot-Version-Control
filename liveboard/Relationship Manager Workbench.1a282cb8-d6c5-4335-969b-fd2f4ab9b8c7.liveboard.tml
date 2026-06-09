@@ -1060,11 +1060,23 @@ liveboard:
     - Account Type
     oper: in
     values:
-    - "{null}"
-    - Business
-    - Checking
-    - Investment
-    - Savings
+    - business
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
+    - Country
+    oper: in
+    values:
+    - australia
+    is_mandatory: true
+    is_single_value: false
+    display_name: ""
+  - column:
+    - City
+    oper: in
+    values:
+    - aaronberg
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -1259,6 +1271,10 @@ liveboard:
   ordered_chips:
   - name: Account Type
     type: FILTER
+  - name: Country
+    type: FILTER
+  - name: City
+    type: FILTER
   views:
   - view_guid: d1b8bac0-98a0-49fc-a520-988dd8f5e539
     name: anuj
@@ -1271,6 +1287,16 @@ liveboard:
       - checking
       - investment
       - savings
+    - column:
+      - Country
+      oper: in
+      values:
+      - australia
+    - column:
+      - City
+      oper: in
+      values:
+      - aaronberg
     is_public: false
   style:
     style_properties:

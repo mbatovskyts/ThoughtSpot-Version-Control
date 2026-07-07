@@ -1044,9 +1044,6 @@ liveboard:
         height: 8
         width: 6
       id: c0812336-add6-4ab1-b691-98367df65625
-    - name: Collection Tab
-      description: ""
-      id: 3d477fde-0802-48f2-a7ad-221c3ee96df3
     - name: New test Tab
       description: ""
       tiles:

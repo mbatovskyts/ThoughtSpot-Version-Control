@@ -769,7 +769,7 @@ liveboard:
           "y":
           - Invoice Count
         client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Customer\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Invoice Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"5f1881d9-9320-458b-9f8b-45f1dca387d8\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Invoice Count\"],\"isOpposite\": false}},{\"id\": \"47e3511c-f109-4e2d-95ca-30245332ddc7\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Customer\"]}}],\"systemSeriesColors\": [{\"serieName\": \"globallogistics\",\"color\": \"#FCC838\"},{\"serieName\": \"retailgiant\",\"color\": \"#48D1E0\"},{\"serieName\": \"techcorp\",\"color\": \"#2E75F0\"}]}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Customer\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Invoice Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"a56874a8-b321-4d12-850b-968d86c0de39\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"19b757dd-227a-429e-aeb2-627305f667dc\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"5f1881d9-9320-458b-9f8b-45f1dca387d8\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Invoice Count\"],\"isOpposite\": false}},{\"id\": \"47e3511c-f109-4e2d-95ca-30245332ddc7\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Customer\"]}}],\"systemSeriesColors\": [{\"serieName\": \"globallogistics\",\"color\": \"#FCC838\"},{\"serieName\": \"retailgiant\",\"color\": \"#48D1E0\"},{\"serieName\": \"techcorp\",\"color\": \"#2E75F0\"}]}"
       display_mode: CHART_MODE
     viz_guid: c50a869e-5685-49c3-81d6-07d8e0b5ad97
   - id: Viz_13
@@ -805,7 +805,7 @@ liveboard:
           "y":
           - Invoice Count
         client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Invoice\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Invoice Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"705d1b36-d251-4e36-8c17-85794bef2333\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Invoice Count\"],\"isOpposite\": false}},{\"id\": \"e71908f5-2150-461a-a625-1cd1adc5d266\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Invoice\"]}}],\"systemSeriesColors\": [{\"serieName\": \"a123bdf\",\"color\": \"#FCC838\"},{\"serieName\": \"b987xyz\",\"color\": \"#48D1E0\"},{\"serieName\": \"c456mno\",\"color\": \"#2E75F0\"}]}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Invoice\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Invoice Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"d11d0210-7821-4dfe-80f5-bcb57eaed264\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"6bca4804-96c2-44d8-b368-e651e178d2b6\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"705d1b36-d251-4e36-8c17-85794bef2333\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Invoice Count\"],\"isOpposite\": false}},{\"id\": \"e71908f5-2150-461a-a625-1cd1adc5d266\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Invoice\"]}}],\"systemSeriesColors\": [{\"serieName\": \"a123bdf\",\"color\": \"#FCC838\"},{\"serieName\": \"b987xyz\",\"color\": \"#48D1E0\"},{\"serieName\": \"c456mno\",\"color\": \"#2E75F0\"}]}"
       display_mode: CHART_MODE
     viz_guid: a975a8c7-16a1-482a-a2ef-a025b9e64d1d
   - id: Viz_14
@@ -1044,6 +1044,9 @@ liveboard:
         height: 8
         width: 6
       id: c0812336-add6-4ab1-b691-98367df65625
+    - name: Collection Tab
+      description: ""
+      id: 3d477fde-0802-48f2-a7ad-221c3ee96df3
     - name: New test Tab
       description: ""
       tiles:
@@ -1143,7 +1146,7 @@ liveboard:
       oper: =
     is_public: false
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   - view_guid: a5914a5d-ece9-498b-899d-d762b7c7311a
     name: Acc - N
@@ -1194,7 +1197,7 @@ liveboard:
       oper: =
     is_public: false
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   - view_guid: a28bbbc0-0ed3-426a-bdeb-ca2504d559ba
     name: Account Active _ N
@@ -1245,7 +1248,7 @@ liveboard:
       oper: =
     is_public: false
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   - view_guid: 9a5ee849-7905-4de5-95a1-192304b51a43
     name: Default
@@ -1294,7 +1297,7 @@ liveboard:
       oper: =
     is_public: true
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   - view_guid: 8db5a1f0-a7fc-4344-b93b-bd36d7f69887
     name: Active Account - Yes
@@ -1345,7 +1348,7 @@ liveboard:
       oper: =
     is_public: false
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   - view_guid: 4ed7898f-45a3-4707-9c6c-b44cf866b36d
     name: Account - Y
@@ -1396,7 +1399,7 @@ liveboard:
       oper: =
     is_public: false
     view_parameters:
-    - name: Nazish - Risk Control Recommendations::Drill Down By
+    - name: Nazish - Risk Control Recommendations 1::Drill Down By
       id: dd438364-c91c-4609-b3a8-831e89a93413
   style:
     style_properties:

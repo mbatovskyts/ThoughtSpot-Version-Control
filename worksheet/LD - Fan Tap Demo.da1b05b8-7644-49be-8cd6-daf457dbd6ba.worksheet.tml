@@ -1,0 +1,110 @@
+guid: da1b05b8-7644-49be-8cd6-daf457dbd6ba
+model:
+  name: LD - Fan Tap Demo
+  model_tables:
+  - name: LD - Line Flags.csv
+    fqn: c814dcf8-843a-4b53-9005-922b0f26d846
+    joins:
+    - with: LD - Invoice Lines.csv
+      'on': '[LD - Line Flags\.csv::Invoice] = [LD - Invoice Lines\.csv::Invoice] AND [LD - Line Flags\.csv::Invoice Line] = [LD - Invoice Lines\.csv::Invoice Line]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: LD - Invoice Lines.csv
+    fqn: 9829b76c-fc4d-4143-995d-c8c2af1223ce
+    joins:
+    - with: LD - Invoice.csv
+      'on': '[LD - Invoice Lines\.csv::Invoice] = [LD - Invoice\.csv::Invoice]'
+      type: INNER
+      cardinality: MANY_TO_ONE
+  - name: LD - Invoice.csv
+    fqn: e333adf5-1c11-48fd-af46-2ecaf90c554c
+  formulas:
+  - id: formula_Invoice Count
+    name: Invoice Count
+    expr: 'unique count ( [LD - Invoice.csv::Invoice] ) '
+  - id: formula_Invoice Line Count
+    name: Invoice Line Count
+    expr: unique count ( concat ( [LD - Invoice Lines.csv::Invoice] , to_string ( [LD - Invoice Lines.csv::Invoice Line] ) ) )
+  columns:
+  - name: Customer
+    column_id: LD - Invoice.csv::Customer
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Client
+      - Buyer
+      synonym_type: AUTO_GENERATED
+      ai_context: Business entity identifier representing the purchasing organization or individual who places orders and receives invoices for products and services.
+  - name: Invoice Count
+    formula_id: formula_Invoice Count
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Invoice Line Count
+    formula_id: formula_Invoice Line Count
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Invoice
+    column_id: LD - Invoice.csv::Invoice
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Bill
+      - Receipt
+      synonym_type: AUTO_GENERATED
+      ai_context: Unique transaction document identifier that groups related line items into a single billing record for customer order processing and payment collection.
+  - name: Region
+    column_id: LD - Invoice.csv::Region
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Area
+      - Zone
+      synonym_type: AUTO_GENERATED
+      ai_context: Geographical or organizational territory designation where sales transactions occur, enabling territorial performance analysis and market segmentation.
+  - name: Invoice Line
+    column_id: LD - Invoice Lines.csv::Invoice Line
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      synonyms:
+      - Bill Entry
+      - Receipt Line
+      synonym_type: AUTO_GENERATED
+      ai_context: Sequential numeric identifier that distinguishes individual line items within each invoice, providing granular tracking of product entries per transaction.
+  - name: Line Price
+    column_id: LD - Invoice Lines.csv::Line_Price
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      synonyms:
+      - Unit Cost
+      - Item Price
+      ai_context: Monetary value amount associated with each individual invoice line item, representing the revenue generated from specific product sales within transactions.
+  - name: Product
+    column_id: LD - Invoice Lines.csv::Product
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Item
+      - Goods
+      synonym_type: AUTO_GENERATED
+      ai_context: Specific item or service identifier sold to customers, enabling product performance analysis and inventory tracking across sales transactions.
+  - name: Flags
+    column_id: LD - Line Flags.csv::Flags
+    properties:
+      column_type: ATTRIBUTE
+      synonyms:
+      - Indicators
+      - Markers
+      synonym_type: AUTO_GENERATED
+      ai_context: Transaction classification indicators or status markers used to categorize, filter, or apply business rules to specific invoice line items for enhanced analysis.
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true

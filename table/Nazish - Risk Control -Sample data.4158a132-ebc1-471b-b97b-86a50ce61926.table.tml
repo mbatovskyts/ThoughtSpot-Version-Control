@@ -1,0 +1,390 @@
+guid: 4158a132-ebc1-471b-b97b-86a50ce61926
+table:
+  name: Nazish - Risk Control -Sample data
+  db: PS_TRAINING
+  schema: PUBLIC
+  db_table: risk control -sample data_789cbb77-8a36-4ead-9414-2e56ad145625
+  connection:
+    name: PS Training
+    fqn: 2dc8897c-26a2-4d9f-871c-1d4b6350cfe8
+  columns:
+  - name: Acct_Nbr
+    db_column_name: Acct_Nbr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Acct_Name
+    db_column_name: Acct_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rpt_Key
+    db_column_name: Rpt_Key
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Rec_Key
+    db_column_name: Rec_Key
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rcmdn_Id
+    db_column_name: Rcmdn_Id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Divn
+    db_column_name: Divn
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: SBU
+    db_column_name: SBU
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Workrqt_Crt_Tsp
+    db_column_name: Workrqt_Crt_Tsp
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Lku_Id
+    db_column_name: Lku_Id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Svc_Rep
+    db_column_name: Svc_Rep
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: UW_Undwr_Name
+    db_column_name: UW_Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Ref
+    db_column_name: Ref
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rcmdn_Catg
+    db_column_name: Rcmdn_Catg
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Dt_Iss
+    db_column_name: Dt_Iss
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Dt_Iss_Yr
+    db_column_name: Dt_Iss_Yr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Compiled_With_Dt
+    db_column_name: Compiled_With_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: MM/dd/yyyy HH:mm:ss
+    db_column_properties:
+      data_type: DATE_TIME
+  - name: Dt_Cmpl
+    db_column_name: Dt_Cmpl
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Rcmdn_Status
+    db_column_name: Rcmdn_Status
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rcmdn_Criticality
+    db_column_name: Rcmdn_Criticality
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Descr
+    db_column_name: Descr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rqt_Typ
+    db_column_name: Rqt_Typ
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Crrnt_Ttl
+    db_column_name: Crrnt_Ttl
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rcmdn_LOB
+    db_column_name: Rcmdn_LOB
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Loc
+    db_column_name: Loc
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Loc_City
+    db_column_name: Loc_City
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Loc_St
+    db_column_name: Loc_St
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Loc_ZIP
+    db_column_name: Loc_ZIP
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Loc_Actv
+    db_column_name: Loc_Actv
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Spn_Pol_Nbr
+    db_column_name: Spn_Pol_Nbr
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Pol_Term_Eff_Dt
+    db_column_name: Pol_Term_Eff_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Pol_Term_Exp_Dt
+    db_column_name: Pol_Term_Exp_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Min_Acct_Dt
+    db_column_name: Min_Acct_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Pol_Infrc_Ind
+    db_column_name: Pol_Infrc_Ind
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Pol_Infrc_Ind_New
+    db_column_name: Pol_Infrc_Ind_New
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Rgn_Name
+    db_column_name: Rgn_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Dist_Br_Name
+    db_column_name: Dist_Br_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Pri_Prdcr_Name
+    db_column_name: Pri_Prdcr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Seg_Name
+    db_column_name: Seg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Cust_Seg_Name
+    db_column_name: Cust_Seg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Cust_Sbsgmt_Name
+    db_column_name: Cust_Sbsgmt_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Cust_Seg_Rptg_Name
+    db_column_name: Cust_Seg_Rptg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Lob_Name
+    db_column_name: Lob_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: EB_PC_Ind
+    db_column_name: EB_PC_Ind
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: UW_Cov
+    db_column_name: UW_Cov
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: EUI_Undwr_Name
+    db_column_name: EUI_Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: EUI_Undwr_Cd
+    db_column_name: EUI_Undwr_Cd
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Snpshot_Eff_Dt
+    db_column_name: Snpshot_Eff_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: GBP_Amt
+    db_column_name: GBP_Amt
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Fnl_LOB
+    db_column_name: Fnl_LOB
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Undwr_Name
+    db_column_name: Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Dist_Dim
+    db_column_name: Dist_Dim
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Crt_Dttm
+    db_column_name: Crt_Dttm
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Updt_Dttm
+    db_column_name: Updt_Dttm
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: VARCHAR
+  properties:
+    spotter_config:
+      is_spotter_enabled: true

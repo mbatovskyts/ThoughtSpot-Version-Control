@@ -1,0 +1,33 @@
+guid: c814dcf8-843a-4b53-9005-922b0f26d846
+table:
+  name: LD - Line Flags.csv
+  db: CSVUPLOADS
+  schema: PUBLIC
+  db_table: ld - line flags.csv_81b7320e-ca13-4ca4-b533-d13f6b5c5843
+  connection:
+    name: TD Demo
+    fqn: 81ff5071-1426-4dc2-bc0f-8b4fe956f1fc
+  columns:
+  - name: Invoice
+    db_column_name: Invoice
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  - name: Invoice Line
+    db_column_name: Invoice Line
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+    db_column_properties:
+      data_type: INT64
+  - name: Flags
+    db_column_name: Flags
+    properties:
+      column_type: ATTRIBUTE
+    db_column_properties:
+      data_type: VARCHAR
+  properties:
+    spotter_config:
+      is_spotter_enabled: false

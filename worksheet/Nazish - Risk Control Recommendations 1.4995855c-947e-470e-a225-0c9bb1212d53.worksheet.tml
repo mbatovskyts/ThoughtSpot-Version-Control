@@ -1,0 +1,364 @@
+guid: 4995855c-947e-470e-a225-0c9bb1212d53
+model:
+  name: Nazish - Risk Control Recommendations 1
+  description: The worksheet titled "Nazish - Risk Control Recommendations" provides a comprehensive overview of various accounts and their associated risk control measures. It includes detailed information about each account such as account names, numbers, and descriptions, along with specific data on policy enforcement and recommendation statuses. Additionally, the worksheet captures geographical details, segmentations, and financial figures to support risk assessment and decision-making processes. (AI generated)
+  model_tables:
+  - name: Nazish - Risk Control -Sample data
+    fqn: 4158a132-ebc1-471b-b97b-86a50ce61926
+  formulas:
+  - id: formula_# Accounts
+    name: '# Accounts'
+    expr: unique count ( [Nazish - Risk Control -Sample data::Acct_Nbr] )
+  - id: formula_# Recs
+    name: '# Recs'
+    expr: unique count ( [Nazish - Risk Control -Sample data::Rec_Key] )
+  - id: formula_Active Account Ind
+    name: Active Account Ind
+    expr: ifnull ( [Nazish - Risk Control -Sample data::Pol_Infrc_Ind_New] , 'N' )
+  - id: formula_Formula for parameter
+    name: Formula for parameter
+    expr: if ( [Drill Down By] = 'Segment' ) then [Nazish - Risk Control -Sample data::Cust_Seg_Name] else if ( [Drill Down By] = 'Subsegment' ) then [Nazish - Risk Control -Sample data::Cust_Sbsgmt_Name] else if ( [Drill Down By] = 'Distribution Branch' ) then [Nazish - Risk Control -Sample data::Dist_Br_Name] else ''
+  - id: formula_Location
+    name: Location
+    expr: concat ( [Nazish - Risk Control -Sample data::Loc] , ',' , [Nazish - Risk Control -Sample data::Loc_City] , ',' , [Nazish - Risk Control -Sample data::Loc_St] , ',' , [Nazish - Risk Control -Sample data::Loc_ZIP] )
+  - id: formula_cnt
+    name: cnt
+    expr: unique count ( [Nazish - Risk Control -Sample data::Rec_Key] )
+  - id: formula_fx date
+    name: fx date
+    expr: to_date ( concat ( month ( [formula_Date Iss Converted] ) , ' ' , year_name ( [formula_Date Iss Converted] ) ) , 'MMMM yyyy' )
+  - id: formula_Date Iss Converted
+    name: Date Iss Converted
+    expr: to_date ( [Nazish - Risk Control -Sample data::Dt_Iss] , 'yyyy-MM-dd' )
+  columns:
+  - name: Acct Nbr
+    column_id: Nazish - Risk Control -Sample data::Acct_Nbr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: '# Accounts'
+    formula_id: formula_# Accounts
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: '# Recs'
+    formula_id: formula_# Recs
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Active Account Ind
+    formula_id: formula_Active Account Ind
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Location
+    formula_id: formula_Location
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: cnt
+    formula_id: formula_cnt
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Formula for parameter
+    formula_id: formula_Formula for parameter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Date Iss Converted
+    formula_id: formula_Date Iss Converted
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Acct Name
+    column_id: Nazish - Risk Control -Sample data::Acct_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rpt Key
+    column_id: Nazish - Risk Control -Sample data::Rpt_Key
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Rec Key
+    column_id: Nazish - Risk Control -Sample data::Rec_Key
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rcmdn Id
+    column_id: Nazish - Risk Control -Sample data::Rcmdn_Id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Divn
+    column_id: Nazish - Risk Control -Sample data::Divn
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Sbu
+    column_id: Nazish - Risk Control -Sample data::SBU
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Workrqt Crt Tsp
+    column_id: Nazish - Risk Control -Sample data::Workrqt_Crt_Tsp
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Lku Id
+    column_id: Nazish - Risk Control -Sample data::Lku_Id
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Svc Rep
+    column_id: Nazish - Risk Control -Sample data::Svc_Rep
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Uw Undwr Name
+    column_id: Nazish - Risk Control -Sample data::UW_Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Ref
+    column_id: Nazish - Risk Control -Sample data::Ref
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rcmdn Catg
+    column_id: Nazish - Risk Control -Sample data::Rcmdn_Catg
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Dt Iss
+    column_id: Nazish - Risk Control -Sample data::Dt_Iss
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Dt Iss Yr
+    column_id: Nazish - Risk Control -Sample data::Dt_Iss_Yr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Compiled With Dt
+    column_id: Nazish - Risk Control -Sample data::Compiled_With_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      format_pattern: MM/dd/yyyy HH:mm:ss
+  - name: Dt Cmpl
+    column_id: Nazish - Risk Control -Sample data::Dt_Cmpl
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Rcmdn Status
+    description: test 1
+    column_id: Nazish - Risk Control -Sample data::Rcmdn_Status
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rcmdn Criticality
+    column_id: Nazish - Risk Control -Sample data::Rcmdn_Criticality
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Descr
+    column_id: Nazish - Risk Control -Sample data::Descr
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rqt Typ
+    column_id: Nazish - Risk Control -Sample data::Rqt_Typ
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Crrnt Ttl
+    column_id: Nazish - Risk Control -Sample data::Crrnt_Ttl
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rcmdn Lob
+    column_id: Nazish - Risk Control -Sample data::Rcmdn_LOB
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Loc
+    column_id: Nazish - Risk Control -Sample data::Loc
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Loc City
+    column_id: Nazish - Risk Control -Sample data::Loc_City
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Loc St
+    column_id: Nazish - Risk Control -Sample data::Loc_St
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Loc Zip
+    column_id: Nazish - Risk Control -Sample data::Loc_ZIP
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Loc Actv
+    column_id: Nazish - Risk Control -Sample data::Loc_Actv
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Spn Pol Nbr
+    column_id: Nazish - Risk Control -Sample data::Spn_Pol_Nbr
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Pol Term Eff Dt
+    column_id: Nazish - Risk Control -Sample data::Pol_Term_Eff_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Pol Term Exp Dt
+    column_id: Nazish - Risk Control -Sample data::Pol_Term_Exp_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Min Acct Dt
+    column_id: Nazish - Risk Control -Sample data::Min_Acct_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Pol Infrc Ind
+    column_id: Nazish - Risk Control -Sample data::Pol_Infrc_Ind
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Pol Infrc Ind New
+    column_id: Nazish - Risk Control -Sample data::Pol_Infrc_Ind_New
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Rgn Name
+    column_id: Nazish - Risk Control -Sample data::Rgn_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Dist Br Name
+    column_id: Nazish - Risk Control -Sample data::Dist_Br_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Pri Prdcr Name
+    column_id: Nazish - Risk Control -Sample data::Pri_Prdcr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Seg Name
+    column_id: Nazish - Risk Control -Sample data::Seg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Cust Seg Name
+    column_id: Nazish - Risk Control -Sample data::Cust_Seg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Cust Sbsgmt Name
+    column_id: Nazish - Risk Control -Sample data::Cust_Sbsgmt_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Cust Seg Rptg Name
+    column_id: Nazish - Risk Control -Sample data::Cust_Seg_Rptg_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Lob Name
+    column_id: Nazish - Risk Control -Sample data::Lob_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Eb Pc Ind
+    column_id: Nazish - Risk Control -Sample data::EB_PC_Ind
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Uw Cov
+    column_id: Nazish - Risk Control -Sample data::UW_Cov
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Eui Undwr Name
+    column_id: Nazish - Risk Control -Sample data::EUI_Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Eui Undwr Cd
+    column_id: Nazish - Risk Control -Sample data::EUI_Undwr_Cd
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Snpshot Eff Dt
+    column_id: Nazish - Risk Control -Sample data::Snpshot_Eff_Dt
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Gbp Amt
+    column_id: Nazish - Risk Control -Sample data::GBP_Amt
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+  - name: Fnl Lob
+    column_id: Nazish - Risk Control -Sample data::Fnl_LOB
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Undwr Name
+    column_id: Nazish - Risk Control -Sample data::Undwr_Name
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Dist Dim
+    column_id: Nazish - Risk Control -Sample data::Dist_Dim
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Crt Dttm
+    column_id: Nazish - Risk Control -Sample data::Crt_Dttm
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Updt Dttm
+    column_id: Nazish - Risk Control -Sample data::Updt_Dttm
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: fx date
+    formula_id: formula_fx date
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  properties:
+    is_bypass_rls: false
+    join_progressive: true
+    spotter_config:
+      is_spotter_enabled: true
+  parameters:
+  - id: dd438364-c91c-4609-b3a8-831e89a93413
+    name: Drill Down By
+    data_type: CHAR
+    default_value: Segment
+    list_config:
+      list_choice:
+      - value: Segment
+      - value: Subsegment
+      - value: Distribution Branch
+    description: ''

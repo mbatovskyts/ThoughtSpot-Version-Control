@@ -876,6 +876,68 @@ liveboard:
       display_mode: CHART_MODE
       dynamic_name: Copy of Outstanding Recommendations by Top 10 Customer Segment
     viz_guid: 4a7f6755-2303-4d48-a916-0f9d2c04410f
+  - id: Viz_15
+    answer:
+      name: Outstanding Recommendations by Top 10 Customer Segment
+      tables:
+      - id: Nazish - Risk Control Recommendations 1
+        name: Nazish - Risk Control Recommendations 1
+        fqn: 4995855c-947e-470e-a225-0c9bb1212d53
+      search_query: "[# Accounts] [# Recs] [Rcmdn Status] [Rcmdn Criticality] [Rcmdn Status].'in progress' [Rcmdn Status].outstanding [Formula for parameter] [Formula for parameter] != '{null}'"
+      answer_columns:
+      - name: "# Accounts"
+      - name: "# Recs"
+      - name: Formula for parameter
+      - name: Rcmdn Criticality
+      - name: Rcmdn Status
+      table:
+        table_columns:
+        - column_id: "# Accounts"
+          show_headline: false
+        - column_id: "# Recs"
+          show_headline: false
+        - column_id: Formula for parameter
+          show_headline: false
+        - column_id: Rcmdn Criticality
+          show_headline: false
+        - column_id: Rcmdn Status
+          show_headline: false
+        ordered_column_ids:
+        - Rcmdn Status
+        - Rcmdn Criticality
+        - Formula for parameter
+        - "# Accounts"
+        - "# Recs"
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: PIVOT_TABLE
+        chart_columns:
+        - column_id: "# Accounts"
+        - column_id: "# Recs"
+        - column_id: Formula for parameter
+        - column_id: Rcmdn Criticality
+        - column_id: Rcmdn Status
+        axis_configs:
+        - x:
+          - Formula for parameter
+          "y":
+          - "# Recs"
+          - "# Accounts"
+          color:
+          - Rcmdn Criticality
+          - Rcmdn Status
+        - x:
+          - Formula for parameter
+          "y":
+          - "# Recs"
+          - "# Accounts"
+          color:
+          - Rcmdn Criticality
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"showStackedLabels\": true,\"allLabels\": true},\"columnProperties\": [{\"columnId\": \"Rcmdn Status\",\"columnProperty\": {\"dataLabels\": true}},{\"columnId\": \"Rcmdn Criticality\",\"columnProperty\": {\"dataLabels\": true}},{\"columnId\": \"# Accounts\",\"columnProperty\": {\"dataLabels\": true}},{\"columnId\": \"# Recs\",\"columnProperty\": {\"dataLabels\": true}},{\"columnId\": \"Formula for parameter\",\"columnProperty\": {\"dataLabels\": true}}],\"axisProperties\": [{\"id\": \"baffb73d-de09-4fb4-aa64-05f36add204c\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"# Recs\"],\"isOpposite\": false}},{\"id\": \"f5582880-c063-4e97-bbd5-bc9041bb6fb9\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"# Accounts\"],\"isOpposite\": true}},{\"id\": \"d54038f7-188c-4c65-acb7-52f27d103ae8\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Formula for parameter\"]}}],\"seriesColors\": [{\"serieName\": \"# Accounts\",\"color\": \"#48D1E0\"},{\"serieName\": \"# recs\",\"color\": \"#2E75F0\"},{\"serieName\": \"account inactive, critical\",\"color\": \"#C26232\"},{\"serieName\": \"account inactive, risk improvement\",\"color\": \"#FFCCB3\"},{\"serieName\": \"change in terms and conditions, critical\",\"color\": \"#FF8142\"},{\"serieName\": \"change in terms and conditions, risk improvement\",\"color\": \"#6A4ABA\"},{\"serieName\": \"complied, critical\",\"color\": \"#D1C0FB\"},{\"serieName\": \"complied, risk improvement\",\"color\": \"#8C62F5\"},{\"serieName\": \"coverage not written, critical\",\"color\": \"#049160\"},{\"serieName\": \"coverage not written, risk improvement\",\"color\": \"#9BE5CB\"},{\"serieName\": \"in progress, critical\",\"color\": \"#06BF7F\"},{\"serieName\": \"in progress, risk improvement\",\"color\": \"#FCD977\"},{\"serieName\": \"no longer applies, critical\",\"color\": \"#BF982A\"},{\"serieName\": \"no longer applies, risk improvement\",\"color\": \"#FDE9AF\"},{\"serieName\": \"no uw action   reissue, critical\",\"color\": \"#FCC838\"},{\"serieName\": \"no uw action   reissue, risk improvement\",\"color\": \"#82DFE9\"},{\"serieName\": \"outstanding, critical\",\"color\": \"#369FAA\"},{\"serieName\": \"outstanding, risk improvement\",\"color\": \"#B5ECF2\"},{\"serieName\": \"uw action required, critical\",\"color\": \"#48D1E0\"},{\"serieName\": \"uw action required, risk improvement\",\"color\": \"#71A1F4\"},{\"serieName\": \"waived, critical\",\"color\": \"#2359B6\"},{\"serieName\": \"waived, risk improvement\",\"color\": \"#ABC7F9\"},{\"serieName\": \"# accounts\",\"color\": \"#2E75F0\"},{\"serieName\": \"critical, in progress\",\"color\": \"#9FA1AF\"},{\"serieName\": \"critical, outstanding\",\"color\": \"#3B6E8F\"},{\"serieName\": \"risk improvement, in progress\",\"color\": \"#636466\"},{\"serieName\": \"risk improvement, outstanding\",\"color\": \"#00415C\"}],\"systemSeriesColors\": [{\"serieName\": \"# Accounts\",\"color\": \"#48D1E0\"},{\"serieName\": \"# recs\",\"color\": \"#2E75F0\"},{\"serieName\": \"account inactive, critical\",\"color\": \"#C26232\"},{\"serieName\": \"account inactive, risk improvement\",\"color\": \"#FFCCB3\"},{\"serieName\": \"change in terms and conditions, critical\",\"color\": \"#FF8142\"},{\"serieName\": \"change in terms and conditions, risk improvement\",\"color\": \"#6A4ABA\"},{\"serieName\": \"complied, critical\",\"color\": \"#D1C0FB\"},{\"serieName\": \"complied, risk improvement\",\"color\": \"#8C62F5\"},{\"serieName\": \"coverage not written, critical\",\"color\": \"#049160\"},{\"serieName\": \"coverage not written, risk improvement\",\"color\": \"#9BE5CB\"},{\"serieName\": \"in progress, critical\",\"color\": \"#06BF7F\"},{\"serieName\": \"in progress, risk improvement\",\"color\": \"#FCD977\"},{\"serieName\": \"no longer applies, critical\",\"color\": \"#BF982A\"},{\"serieName\": \"no longer applies, risk improvement\",\"color\": \"#FDE9AF\"},{\"serieName\": \"no uw action   reissue, critical\",\"color\": \"#FCC838\"},{\"serieName\": \"no uw action   reissue, risk improvement\",\"color\": \"#82DFE9\"},{\"serieName\": \"outstanding, critical\",\"color\": \"#369FAA\"},{\"serieName\": \"outstanding, risk improvement\",\"color\": \"#B5ECF2\"},{\"serieName\": \"uw action required, critical\",\"color\": \"#48D1E0\"},{\"serieName\": \"uw action required, risk improvement\",\"color\": \"#71A1F4\"},{\"serieName\": \"waived, critical\",\"color\": \"#2359B6\"},{\"serieName\": \"waived, risk improvement\",\"color\": \"#ABC7F9\"},{\"serieName\": \"# accounts\",\"color\": \"#2E75F0\"},{\"serieName\": \"critical, in progress\",\"color\": \"#06BF7F\"},{\"serieName\": \"critical, outstanding\",\"color\": \"#FCC838\"},{\"serieName\": \"risk improvement, in progress\",\"color\": \"#48D1E0\"},{\"serieName\": \"risk improvement, outstanding\",\"color\": \"#71A1F4\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 067a084f-8113-4a24-90dc-098ba14c4937
   filters:
   - column:
     - Nazish - Risk Control Recommendations 1::Active Account Ind
@@ -1060,6 +1122,7 @@ liveboard:
         "y": 0
         height: 8
         width: 6
+      - visualization_id: Viz_15
       id: bd685f43-4bea-4de5-926e-dc3f6ac5bac1
   parameter_overrides:
   - key: dd438364-c91c-4609-b3a8-831e89a93413

@@ -1,0 +1,917 @@
+guid: 8d44ee1f-6f20-4093-b3f2-51638a3e8f57
+liveboard:
+  name: Chasm Trap Example
+  description: "An educational Liveboard demonstrating chasm trap models, bridge tables, and common pitfalls when working with mixed-grain data. Learn how daily sales and monthly forecast data can be properly joined while avoiding data fan-out issues."
+  visualizations:
+  - id: Viz_1
+    viz_guid: 31ebb71a-d603-4991-b58a-b9fba79a0ff4
+    note_tile:
+      html_parsed_string: "<h2 class=\"theme-module__editor-h2\"><span style=\"white-space: pre-wrap;\">What is a Chasm Trap?</span></h2><p class=\"theme-module__editor-paragraph\"><span style=\"white-space: pre-wrap;\">A chasm trap occurs when two fact tables are joined through a shared dimension, but operate at different levels of granularity. Without proper handling, this creates a many-to-many relationship that causes data to fan out incorrectly.</span></p><h2 class=\"theme-module__editor-h2\"><span style=\"white-space: pre-wrap;\">The Solution: Bridge Tables</span></h2><p class=\"theme-module__editor-paragraph\"><span style=\"white-space: pre-wrap;\">Bridge tables align the grain between fact tables by creating a common level of aggregation. In this model:</span></p><ul class=\"theme-module__editor-ul\"><li value=\"1\" class=\"theme-module__editor-list-item\"><b><strong class=\"theme-module__editor-text-bold\" style=\"white-space: pre-wrap;\">Daily Sales</strong></b><span style=\"white-space: pre-wrap;\"> - Transaction-level data (daily grain)</span></li><li value=\"2\" class=\"theme-module__editor-list-item\"><b><strong class=\"theme-module__editor-text-bold\" style=\"white-space: pre-wrap;\">Monthly Forecast</strong></b><span style=\"white-space: pre-wrap;\"> - Planning data (monthly grain)</span></li><li value=\"3\" class=\"theme-module__editor-list-item\"><b><strong class=\"theme-module__editor-text-bold\" style=\"white-space: pre-wrap;\">Bridge Table</strong></b><span style=\"white-space: pre-wrap;\"> - Aligns both to a shared monthly grain</span></li></ul><p class=\"theme-module__editor-paragraph\"><br><img id=\"a569798b-7ede-4b5f-8a79-ff0a1e7f3387\" alt=\"UPLOAD\" style=\"height: inherit; width: 68.0944021710712%; max-width: 100%;\"><br></p><p class=\"theme-module__editor-paragraph\"><br></p><div class=\"pinboard-note-tile-module__noteTileBg editor-module__bgNode\" style=\"background-color: revert-layer;\"></div>"
+  - id: Viz_2
+    viz_guid: c57d4707-17a4-473c-b099-009909b491c4
+    note_tile:
+      html_parsed_string: |-
+        <h2>⚠️ Warning: Mixed Granularity</h2>
+        <br>
+        <p>When you add a <strong>daily-level column</strong> (like Transaction Date) to a query that includes <strong>monthly Forecast data</strong>, you break the bridge table alignment.</p>
+        <p><strong>What Happens:</strong></p>
+        <ul>
+        <li>The monthly forecast value gets repeated for EVERY day in the month</li>
+        <li>If there are 30 days, your forecast appears 30x higher than reality</li>
+        <li>Aggregations become meaningless</li>
+        </ul>
+        <p><strong>[Image B - Insert Grain Mismatch Diagram Here]</strong></p>
+        <p><strong>Safe Columns with Forecast:</strong></p>
+        <ul>
+        <li>Shared Month</li>
+        <li>Product Category</li>
+        <li>Forecast Product Category</li>
+        </ul>
+        <p><strong>Dangerous Columns with Forecast:</strong></p>
+        <ul>
+        <li>Transaction Date</li>
+        <li>Transaction ID</li>
+        <li>Any daily-grain field</li>
+        </ul>
+  - id: Viz_3
+    viz_guid: 8de5a289-b7f4-4fd4-bed4-99ca0f7be859
+    note_tile:
+      html_parsed_string: |-
+        <h2>⚠️ Warning: Dimension Mismatch</h2>
+        <br>
+        <p>The <strong>Forecast</strong> in this model is defined at the <strong>Product Category</strong> level only - it does NOT include Store-level detail.</p>
+        <p><strong>The Problem:</strong></p>
+        <p>When you filter by Store Name:</p>
+        <ul>
+        <li>Sales correctly filters to that store</li>
+        <li>Forecast has NO store dimension - it cannot filter!</li>
+        <li>The FULL forecast amount appears against filtered sales</li>
+        <li>Variance calculations become completely wrong</li>
+        </ul>
+        <p><strong>[Image C - Insert Store Filter Risk Diagram Here]</strong></p>
+        <p><strong>Safe Filters with Forecast:</strong></p>
+        <ul>
+        <li>Product Category</li>
+        <li>Forecast Month</li>
+        </ul>
+        <p><strong>Dangerous Filters with Forecast:</strong></p>
+        <ul>
+        <li>Store Name</li>
+        <li>Region</li>
+        <li>Store State</li>
+        <li>Any store-level attribute</li>
+        </ul>
+  - id: Viz_4
+    answer:
+      name: "✅ Correct: Monthly Grain Alignment"
+      description: Using Shared Month keeps forecast and sales at the same grain level
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Shared Month] [Shared Month].monthly"
+      answer_columns:
+      - name: Month(Shared Month)
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Shared Month)
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Forecast Amount
+          - Total Sales
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 7839feb0-b6c9-4e41-be1d-a4fe3738cb9c
+  - id: Viz_5
+    answer:
+      name: "✅ Correct: Forecast by Category"
+      description: Product Category exists in both fact tables - safe to use
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Product Category]"
+      answer_columns:
+      - name: Product Category
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Product Category
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+      chart:
+        type: BAR
+        chart_columns:
+        - column_id: Product Category
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Product Category
+          "y":
+          - Total Forecast Amount
+          - Total Sales
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: b6f7e60c-01d1-4562-a597-45697b85ce79
+  - id: Viz_6
+    answer:
+      name: "❌ WRONG: Daily Grain Breaks Forecast"
+      description: Transaction Date causes forecast to fan out - values are inflated!
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Transaction Date].daily"
+      answer_columns:
+      - name: Day(Transaction Date)
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Day(Transaction Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Day(Transaction Date)
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Day(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Total Forecast Amount\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}}]}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Day(Transaction Date)
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Day(Transaction Date)
+          "y":
+          - Total Forecast Amount
+          - Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"Day(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Total Forecast Amount\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}},{\"columnId\": \"Measure names\",\"columnProperty\": {}},{\"columnId\": \"Measure values\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"835028f4-a420-47db-a718-868eff9a1b1d\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Day(Transaction Date)\"]}},{\"id\": \"9d00dc53-fc66-463d-826c-07169372c8dd\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Forecast Amount\",\"Total Sales\"],\"isOpposite\": false}}],\"systemSeriesColors\": [{\"serieName\": \"Total Forecast Amount\",\"color\": \"#4E55fd\"},{\"serieName\": \"Total Sales\",\"color\": \"#A83Dff\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 5bd5781f-d843-40d2-a057-4129c06db418
+  - id: Viz_7
+    answer:
+      name: "✅ Correct: Category Trend Over Time"
+      description: Using Shared Month with Product Category maintains proper grain
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Shared Month] [Shared Month].monthly [Product Category]"
+      answer_columns:
+      - name: Month(Shared Month)
+      - name: Product Category
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Product Category
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+      chart:
+        type: STACKED_BAR
+        chart_columns:
+        - column_id: Month(Shared Month)
+        - column_id: Product Category
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Forecast Amount
+          color:
+          - Product Category
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 7b40a417-c193-4610-88be-16a6a174c1c4
+  - id: Viz_8
+    answer:
+      name: "❌ WRONG: Store Dimension Not in Forecast"
+      description: Notice how Forecast Amount repeats for every store - this is the fan-out problem!
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Store Name] [Product Category]"
+      answer_columns:
+      - name: Product Category
+      - name: Store Name
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Store Name
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Store Name
+        - Product Category
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+      chart:
+        type: ADVANCED_LINE_STACKED_COLUMN
+        chart_columns:
+        - column_id: Product Category
+        - column_id: Store Name
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        client_state: ""
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: x-axis
+            axes:
+            - type: FLAT
+              column: Store Name
+            mode: AXIS_DRIVEN
+          - key: y-axis-column
+            axes:
+            - type: MERGED
+              columns:
+              - Total Forecast Amount
+            mode: AXIS_DRIVEN
+          - key: y-axis-line
+            axes:
+            - type: MERGED
+              columns:
+              - Total Sales
+            mode: AXIS_DRIVEN
+          - key: slice-with-color
+            axes:
+            - type: FLAT
+              column: Product Category
+            mode: AXIS_DRIVEN
+          - key: trellis-by
+            mode: AXIS_DRIVEN
+      display_mode: TABLE_MODE
+    viz_guid: 580def49-48d4-4cbe-96dc-eb6a6c0520eb
+  - id: Viz_9
+    answer:
+      name: "✅ Correct: Forecast at Category Level"
+      description: Forecast is defined at Product Category level - no store dimension
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Product Category]"
+      answer_columns:
+      - name: Product Category
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Product Category
+        - Total Forecast Amount
+        - Total Sales
+        client_state: ""
+      chart:
+        type: BAR
+        chart_columns:
+        - column_id: Product Category
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Product Category
+          "y":
+          - Total Forecast Amount
+          - Total Sales
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: a34a2735-aef6-412a-914e-0d4602ab4d5e
+  - id: Viz_10
+    answer:
+      name: Total Forecast
+      description: Correctly aggregated at monthly grain
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "sum [Forecast Amount] [Shared Month].monthly"
+      answer_columns:
+      - name: Month(Shared Month)
+      - name: Total Forecast Amount
+      table:
+        table_columns:
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Total Forecast Amount
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Shared Month)
+        - column_id: Total Forecast Amount
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Forecast Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 2e929685-1c4a-494e-acb0-d5cdaca0cb60
+  - id: Viz_11
+    answer:
+      name: Total Sales
+      description: Actual sales performance
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Sales] [Shared Month].monthly"
+      answer_columns:
+      - name: Month(Shared Month)
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Total Sales
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Month(Shared Month)
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Sales
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: c4f56c61-6aa0-42a5-b326-f01e81780286
+  - id: Viz_12
+    answer:
+      name: Forecast Variance
+      description: Difference between forecast and actual
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Variance] [Shared Month].monthly"
+      answer_columns:
+      - name: Forecast Variance
+      - name: Month(Shared Month)
+      table:
+        table_columns:
+        - column_id: Forecast Variance
+          headline_aggregation: TABLE_AGGR
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Forecast Variance
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Forecast Variance
+        - column_id: Month(Shared Month)
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Forecast Variance
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 80dd4045-fdd9-44f0-a7a1-0c393dc35429
+  - id: Viz_13
+    answer:
+      name: Forecast vs Actual Trend
+      description: Monthly comparison with variance tracking
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Sales] [Forecast Variance] [Shared Month].monthly"
+      answer_columns:
+      - name: Forecast Variance
+      - name: Month(Shared Month)
+      - name: Total Forecast Amount
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Forecast Variance
+          headline_aggregation: TABLE_AGGR
+        - column_id: Month(Shared Month)
+          headline_aggregation: MIN-MAX
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Month(Shared Month)
+        - Total Forecast Amount
+        - Total Sales
+        - Forecast Variance
+        client_state: ""
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Forecast Variance
+        - column_id: Month(Shared Month)
+        - column_id: Total Forecast Amount
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Month(Shared Month)
+          "y":
+          - Total Forecast Amount
+          - Total Sales
+          - Forecast Variance
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 5f890be5-13df-4baf-bbb5-681e37701167
+  - id: Viz_14
+    answer:
+      name: Daily Sales Pattern
+      description: Sales-only view at daily grain (safe - no forecast)
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Sales] [Shared Date].daily [Product Category]"
+      answer_columns:
+      - name: Day(Shared Date)
+      - name: Product Category
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Day(Shared Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Day(Shared Date)
+        - Product Category
+        - Total Sales
+        client_state: ""
+      chart:
+        type: STACKED_AREA
+        chart_columns:
+        - column_id: Day(Shared Date)
+        - column_id: Product Category
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Day(Shared Date)
+          "y":
+          - Total Sales
+          color:
+          - Product Category
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: 289f10c7-b590-4e23-a9b5-40df8e3e2674
+  - id: Viz_15
+    answer:
+      name: Forecast Distribution
+      description: Forecast breakdown by category
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Forecast Amount] [Forecast Product Category]"
+      answer_columns:
+      - name: Forecast Product Category
+      - name: Total Forecast Amount
+      table:
+        table_columns:
+        - column_id: Forecast Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Forecast Amount
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Forecast Product Category
+        - Total Forecast Amount
+        client_state: ""
+      chart:
+        type: PIE
+        chart_columns:
+        - column_id: Forecast Product Category
+        - column_id: Total Forecast Amount
+        axis_configs:
+        - x:
+          - Forecast Product Category
+          "y":
+          - Total Forecast Amount
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: e01083c2-d994-4a66-b57f-b2ee5186afe9
+  - id: Viz_16
+    viz_guid: 9768713f-06c4-4d85-b85d-20f5443bf5dc
+    note_tile:
+      html_parsed_string: |-
+        <h2>Golden Rules for Chasm Trap Models</h2>
+        <br>
+        <body>
+        <p><strong>✅ DO:</strong></p>
+        <ul>
+        <li>Use Shared Month for time-based analysis</li>
+        <li>Filter by dimensions that exist in BOTH fact tables</li>
+        <li>Check your totals against known values</li>
+        </ul>
+        <p><strong>❌ DON'T:</strong></p>
+        <ul>
+        <li>Mix daily columns with monthly forecast</li>
+        <li>Filter by Store when forecast is at Category level</li>
+        <li>Assume variance calculations are correct without validation</li>
+        </ul>
+        <p><strong>Key Insight:</strong> If your forecast total looks suspiciously high, you've likely broken the grain alignment!</p>
+        </body>
+  - id: Viz_17
+    viz_guid: e947ce9a-8bea-4345-b71b-9c2ae95b969c
+    note_tile:
+      html_parsed_string: |-
+        <h2>How to Spot Fan-Out Problems</h2>
+        <br>
+        <body>
+        <p><strong>Warning Signs of Data Fan-Out:</strong></p>
+        <p>🚨 <strong>Red Flags:</strong></p>
+        <ul>
+        <li>Forecast values that seem 10x-30x too high</li>
+        <li>Same forecast number repeating across rows</li>
+        <li>Variance calculations that don't make business sense</li>
+        <li>Row counts that explode unexpectedly</li>
+        </ul>
+        <p><strong>Validation Technique:</strong></p>
+        <p>Always compare your query results against a simple aggregation at the correct grain. If the totals don't match, investigate your joins and filters.</p>
+        <p><strong>Remember:</strong> The bridge table only works when you respect the grain boundaries it establishes.</p>
+        </body>
+  - id: Viz_18
+    answer:
+      name: "✅ Safe: Daily Sales Only"
+      description: Daily grain is safe when analyzing sales alone - no forecast mixing
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Sales] [Shared Date].daily [Product Category]"
+      answer_columns:
+      - name: Day(Shared Date)
+      - name: Product Category
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Day(Shared Date)
+          headline_aggregation: MIN-MAX
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
+        - column_id: Total Sales
+          headline_aggregation: SUM
+        ordered_column_ids:
+        - Day(Shared Date)
+        - Product Category
+        - Total Sales
+        client_state: ""
+      chart:
+        type: STACKED_AREA
+        chart_columns:
+        - column_id: Day(Shared Date)
+        - column_id: Product Category
+        - column_id: Total Sales
+        axis_configs:
+        - x:
+          - Day(Shared Date)
+          "y":
+          - Total Sales
+          color:
+          - Product Category
+        client_state: ""
+      display_mode: CHART_MODE
+    viz_guid: ebc9a748-cd4e-4819-9692-f1ace1e0a4df
+  groups:
+  - id: Group_1
+    name: Key Metrics
+    description: Correctly aggregated KPIs at proper grain
+    visualizations:
+    - Viz_10
+    - Viz_11
+    - Viz_12
+    group_guid: b88320e6-67e8-433f-93d6-ee641850c6a2
+  - id: Group_2
+    name: Correct Usage Examples
+    description: Charts showing proper grain alignment
+    visualizations:
+    - Viz_13
+    - Viz_4
+    - Viz_5
+    group_guid: e9c88634-d5aa-451b-a22f-d045cdf3dc4f
+  - id: Group_3
+    name: "Safe: Sales-Only Analysis"
+    description: Daily grain is fine when not mixing with forecast
+    visualizations:
+    - Viz_14
+    - Viz_15
+    group_guid: 623402ea-3c44-474e-ae3c-8ddfeed1d5c7
+  - id: Group_4
+    name: "Correct vs Incorrect: Daily Grain"
+    description: Side-by-side comparison showing the fan-out problem
+    visualizations:
+    - Viz_7
+    - Viz_6
+    group_guid: 2b50a8d5-b592-43d2-aa3d-f2ef8dd38007
+  - id: Group_5
+    name: "Correct vs Incorrect: Store Filter"
+    description: Side-by-side comparison showing dimension mismatch
+    visualizations:
+    - Viz_9
+    - Viz_8
+    group_guid: 525499f9-19b8-43ca-beb7-90f772568d71
+  layout:
+    tabs:
+    - name: Overview
+      description: Introduction to Chasm Trap and Bridge Tables
+      tiles:
+      - visualization_id: Viz_1
+        x: 0
+        "y": 0
+        height: 10
+        width: 4
+      - visualization_id: Group_1
+        x: 4
+        "y": 0
+        height: 5
+        width: 8
+      - visualization_id: Viz_16
+        x: 4
+        "y": 5
+        height: 5
+        width: 4
+      - visualization_id: Group_2
+        x: 0
+        "y": 10
+        height: 8
+        width: 12
+      - visualization_id: Group_3
+        x: 8
+        "y": 5
+        height: 5
+        width: 4
+      id: 3548c5d4-3620-418d-926c-679b88baffdb
+      group_layouts:
+      - id: Group_1
+        tiles:
+        - visualization_id: Viz_11
+          x: 4
+          "y": 0
+          height: 5
+          width: 4
+        - visualization_id: Viz_12
+          x: 8
+          "y": 0
+          height: 5
+          width: 4
+        - visualization_id: Viz_10
+          x: 0
+          "y": 0
+          height: 5
+          width: 4
+      - id: Group_2
+        tiles:
+        - visualization_id: Viz_5
+          x: 6
+          "y": 4
+          height: 4
+          width: 6
+        - visualization_id: Viz_4
+          x: 6
+          "y": 0
+          height: 4
+          width: 6
+        - visualization_id: Viz_13
+          x: 0
+          "y": 0
+          height: 8
+          width: 6
+      - id: Group_3
+        tiles:
+        - visualization_id: Viz_14
+          x: 0
+          "y": 0
+          height: 5
+          width: 6
+        - visualization_id: Viz_15
+          x: 6
+          "y": 0
+          height: 5
+          width: 6
+    - name: Mixed Grain
+      description: ""
+      tiles:
+      - visualization_id: Viz_2
+        x: 0
+        "y": 0
+        height: 7
+        width: 4
+      - visualization_id: Group_4
+        x: 4
+        "y": 0
+        height: 7
+        width: 8
+      - visualization_id: Viz_17
+        x: 0
+        "y": 7
+        height: 6
+        width: 4
+      - visualization_id: Viz_18
+        x: 4
+        "y": 7
+        height: 6
+        width: 8
+      id: 4751b88d-d5a2-43bf-8916-f25810b474d3
+      group_layouts:
+      - id: Group_4
+        tiles:
+        - visualization_id: Viz_7
+          x: 0
+          "y": 0
+          height: 9
+          width: 6
+        - visualization_id: Viz_6
+          x: 6
+          "y": 0
+          height: 9
+          width: 6
+    - name: Store Filter
+      description: Risks of filtering by dimensions not in forecast
+      tiles:
+      - visualization_id: Viz_3
+        x: 0
+        "y": 0
+        height: 12
+        width: 4
+      - visualization_id: Group_5
+        x: 4
+        "y": 0
+        height: 12
+        width: 8
+      id: 8a050086-cea2-46ea-bf5e-4d14691bf4cc
+      group_layouts:
+      - id: Group_5
+        tiles:
+        - visualization_id: Viz_9
+          x: 0
+          "y": 0
+          height: 6
+          width: 12
+        - visualization_id: Viz_8
+          x: 0
+          "y": 6
+          height: 6
+          width: 12
+  style:
+    style_properties:
+    - name: lb_border_type
+      value: CURVED
+    - name: lb_brand_color
+      value: LBC_C
+    - name: hide_group_title
+      value: "false"
+    - name: hide_group_description
+      value: "false"
+    - name: hide_group_tile_description
+      value: "false"
+    - name: hide_tile_description
+      value: "false"
+    - name: kpi_hero_font_size
+      value: M
+    overrides:
+    - object_id: Group_3
+      style_properties:
+      - name: group_brand_color
+        value: GBC_E
+    - object_id: Group_4
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+    - object_id: Viz_12
+      style_properties:
+      - name: is_highlighted
+        value: "false"
+      - name: is_linked
+        value: "false"
+    - object_id: Viz_17
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_F
+    - object_id: Viz_10
+      style_properties:
+      - name: is_highlighted
+        value: "false"
+      - name: is_linked
+        value: "false"
+    - object_id: Viz_3
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_G
+    - object_id: Viz_6
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_H
+    - object_id: Group_1
+      style_properties:
+      - name: group_brand_color
+        value: GBC_E
+    - object_id: Viz_2
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_G
+    - object_id: Viz_8
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_H
+    - object_id: Viz_11
+      style_properties:
+      - name: is_highlighted
+        value: "false"
+      - name: is_linked
+        value: "false"
+    - object_id: Group_5
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+    - object_id: Viz_16
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_E
+    - object_id: Group_2
+      style_properties:
+      - name: group_brand_color
+        value: GBC_C
+    - object_id: Viz_1
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_C

@@ -15,6 +15,7 @@ table:
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
+      value_casing: ALL_LOWERCASE
     db_column_properties:
       data_type: VARCHAR
   - name: SKU
@@ -30,6 +31,7 @@ table:
     db_column_name: PRODUCTTYPE
     properties:
       column_type: ATTRIBUTE
+      value_casing: MIXED
     db_column_properties:
       data_type: VARCHAR
   rls_rules:

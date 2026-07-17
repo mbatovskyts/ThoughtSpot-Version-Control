@@ -76,6 +76,7 @@ model:
       synonyms:
       - Prediction Item Type
       - Estimate Goods Classification
+      is_attribution_dimension: false
       synonym_type: AUTO_GENERATED
       ai_context: Product category classification used in monthly sales forecasting, matching actual product categories to enable forecast accuracy comparison and variance analysis.
   - name: Product Category
@@ -87,12 +88,14 @@ model:
       - Category Product
       - Product Type
       - Product Level 1
+      is_attribution_dimension: false
       synonym_type: USER_DEFINED
       ai_context: Classification grouping for products including apparel categories like bags, socks, shirts, jackets, and headwear, enabling category-level sales analysis.
   - name: Product Category (Product Table)
     column_id: DIM_RETAPP_PRODUCTS::Product Category
     properties:
       column_type: ATTRIBUTE
+      is_attribution_dimension: false
       synonym_type: AUTO_GENERATED
       ai_context: Product classification sourced from master product table, containing standardized category groupings for consistent product hierarchy and cross-reference analysis.
   - name: Avg Sale Price Per Item

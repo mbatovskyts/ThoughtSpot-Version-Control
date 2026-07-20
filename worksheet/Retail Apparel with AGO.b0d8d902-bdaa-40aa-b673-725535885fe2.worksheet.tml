@@ -1,6 +1,6 @@
 guid: b0d8d902-bdaa-40aa-b673-725535885fe2
 model:
-  name: Retail Apparel with AGO With Instructions
+  name: Retail Apparel with AGO
   description: The "Retail Apparel" worksheet provides a comprehensive overview of sales transactions across various store locations. It captures details about each product, including its category, name, price, and the quantity sold, along with the average number of items ordered per transaction. Additionally, it includes geographical and identification information for each store, such as the city, county, state, zip code, and precise latitude and longitude, as well as the specific transaction dates and IDs. (AI generated)
   model_tables:
   - name: DIM_RETAPP_PRODUCTS
@@ -37,16 +37,31 @@ model:
     expr: sum ( [FACT_RETAPP_SALES::Quantity] ) / unique count ( [FACT_RETAPP_SALES::Transaction ID] )
   - id: formula_Global Date Filter
     name: Global Date Filter
-    expr: if ( [Date Column Picker] = "Shipping Date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "Transaction Date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
+    expr: if ( [Date Column Picker] = "shipping date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "transaction date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
   - id: formula_Metric
     name: Metric
-    expr: if ( [Metric Selector] = 'Transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'Sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null
+    expr: if ( [Metric Selector] = 'transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null
+  - id: formula_Month Year
+    name: Month Year
+    expr: concat ( to_string ( year ( [FACT_RETAPP_SALES::Transaction Date] ) ) , if ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) < 10 ) then concat ( "0" , to_string ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) ) ) else to_string ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) ) )
+  - id: formula_Region Bucket Filter
+    name: Region Bucket Filter
+    expr: if ( [Region Filter Parameter] = [DIM_RETAPP_STORES::Region] ) then "east bucket" else "other regions"
+  - id: formula_Sales Testing
+    name: Sales Testing
+    expr: sum ( [FACT_RETAPP_SALES::Sales] )
   - id: formula_Shipping Date
     name: Shipping Date
     expr: add_days ( [FACT_RETAPP_SALES::Transaction Date] , [FACT_RETAPP_SALES::Quantity] )
+  - id: formula_Transaction Date Attribute Filter
+    name: Transaction Date Attribute Filter
+    expr: to_string ( [FACT_RETAPP_SALES::Transaction Date] , "YYYY-MM" )
   - id: formula_Transactions
     name: Transactions
     expr: count ( [FACT_RETAPP_SALES::Transaction ID] )
+  - id: formula_model_access
+    name: model_access
+    expr: '''yes'''
   columns:
   - name: Global Date Filter
     formula_id: formula_Global Date Filter
@@ -55,6 +70,7 @@ model:
       index_type: DONT_INDEX
       ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods. This column should only be used as attributes. All filters should come from one of the Ago Columns
   - name: Transactions
+    description: This is the unique count of transaction id
     formula_id: formula_Transactions
     properties:
       column_type: MEASURE
@@ -160,7 +176,7 @@ model:
         longitude: true
       synonym_type: USER_DEFINED
       ai_context: Geographic coordinate indicating north-south position of retail locations for mapping and proximity analysis.
-  - name: Region
+  - name: Sales_Region
     column_id: DIM_RETAPP_STORES::Region
     properties:
       column_type: ATTRIBUTE
@@ -229,7 +245,7 @@ model:
       synonym_type: AUTO_GENERATED
       ai_context: Administrative district location of retail stores supporting regional market analysis and territorial performance assessment.
   - name: Sales
-    description: This shows the total sales for a item but does not include shipping cost
+    description: This Description is coming from the table level.
     column_id: FACT_RETAPP_SALES::Sales
     properties:
       column_type: MEASURE
@@ -237,8 +253,8 @@ model:
       index_type: DONT_INDEX
       currency_type:
         iso_code: USD
-      synonym_type: USER_DEFINED
       ai_context: Total revenue amount for items sold excluding shipping costs, providing core financial performance measurement for business analysis.
+      sync_with_source: true
   - name: Item Price
     column_id: FACT_RETAPP_SALES::Item Price
     properties:
@@ -272,6 +288,36 @@ model:
       index_type: DONT_INDEX
       synonym_type: USER_DEFINED
       ai_context: Unique numeric identifier for individual purchase transactions, aggregated at monthly level for business reporting and analysis purposes.
+  - name: Transaction Date Attribute Filter
+    formula_id: formula_Transaction Date Attribute Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: Sales Testing
+    formula_id: formula_Sales Testing
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      currency_type:
+        iso_code: USD
+  - name: Month Year
+    formula_id: formula_Month Year
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_attribution_dimension: false
+  - name: Region Bucket Filter
+    formula_id: formula_Region Bucket Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: model_access
+    formula_id: formula_model_access
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_mandatory_token_filter: false
   properties:
     is_bypass_rls: false
     join_progressive: true
@@ -297,4 +343,9 @@ model:
         display_name: Sales
       - value: Transactions
         display_name: Transactions
+    description: ''
+  - id: b73ced9a-97f1-4055-afe6-021a1c9d7288
+    name: Region Filter Parameter
+    data_type: CHAR
+    default_value: east
     description: ''

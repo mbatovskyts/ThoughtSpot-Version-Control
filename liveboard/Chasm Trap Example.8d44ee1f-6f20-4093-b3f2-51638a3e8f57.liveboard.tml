@@ -652,43 +652,6 @@ liveboard:
         client_state: ""
       display_mode: CHART_MODE
     viz_guid: ebc9a748-cd4e-4819-9692-f1ace1e0a4df
-  - id: Viz_19
-    answer:
-      name: Monthly Sales
-      tables:
-      - id: Retail Apparel with AGO
-        name: Retail Apparel with AGO
-        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
-      search_query: "[Sales] [Transaction Date].monthly"
-      answer_columns:
-      - name: Month(Transaction Date)
-      - name: Total Sales
-      table:
-        table_columns:
-        - column_id: Month(Transaction Date)
-          show_headline: false
-        - column_id: Total Sales
-          show_headline: false
-        ordered_column_ids:
-        - Month(Transaction Date)
-        - Total Sales
-        client_state: ""
-        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
-      chart:
-        type: KPI
-        chart_columns:
-        - column_id: Month(Transaction Date)
-        - column_id: Total Sales
-        axis_configs:
-        - x:
-          - Month(Transaction Date)
-          "y":
-          - Total Sales
-        client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":false,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\"}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\"}}],\"axisProperties\": [{\"id\": \"6489a09a-c139-4b5d-86dc-3fa624aadde2\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"],\"name\": \"Transactions\",\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"976b78a3-9b29-4fbe-8c25-ed170fcc76ca\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"name\": \" Sales\",\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"seriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}],\"customColorSelectorArray\": [\"#ff243a\",\"#169753\",\"#06BF7F\",\"#E22B3D\"]}"
-      display_mode: CHART_MODE
-      dynamic_name: Monthly Sales
-    viz_guid: a57efc53-a1cf-47fe-8da5-88ffe4929b64
   groups:
   - id: Group_1
     name: Key Metrics
@@ -727,22 +690,6 @@ liveboard:
     - Viz_9
     - Viz_8
     group_guid: 525499f9-19b8-43ca-beb7-90f772568d71
-  filters:
-  - column:
-    - Retail Apparel with AGO::SKU
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
-  - column:
-    - Retail Apparel with AGO::Product Name
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
-  - column:
-    - Retail Apparel with AGO::Product Category
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
   layout:
     tabs:
     - name: Overview
@@ -773,11 +720,6 @@ liveboard:
         "y": 5
         height: 5
         width: 4
-      - visualization_id: Viz_19
-        x: 0
-        "y": 18
-        height: 4
-        width: 3
       id: 3548c5d4-3620-418d-926c-679b88baffdb
       group_layouts:
       - id: Group_1
@@ -890,13 +832,6 @@ liveboard:
           "y": 6
           height: 6
           width: 12
-  ordered_chips:
-  - name: Retail Apparel with AGO::SKU
-    type: FILTER
-  - name: Retail Apparel with AGO::Product Name
-    type: FILTER
-  - name: Retail Apparel with AGO::Product Category
-    type: FILTER
   style:
     style_properties:
     - name: lb_border_type

@@ -481,26 +481,33 @@ liveboard:
       - id: Retail Apparel with AGO
         name: Retail Apparel with AGO
         fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
-      search_query: "[Transaction Date].monthly [Transactions]"
+      search_query: "[Transaction Date].monthly [Transactions] [Product Category]"
       answer_columns:
       - name: Month(Transaction Date)
+      - name: Product Category
       - name: Transactions
       table:
         table_columns:
         - column_id: Month(Transaction Date)
           headline_aggregation: MIN-MAX
+        - column_id: Product Category
+          headline_aggregation: COUNT_DISTINCT
         - column_id: Transactions
           headline_aggregation: SUM
         ordered_column_ids:
         - Month(Transaction Date)
+        - Product Category
         - Transactions
         client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Transactions\",\"columnProperty\": {}}]}"
       chart:
         type: ADVANCED_LINE
         chart_columns:
         - column_id: Month(Transaction Date)
+        - column_id: Product Category
         - column_id: Transactions
         client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {\"xGridlineEnabled\": true,\"yGridlineEnabled\": true},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {}},{\"columnId\": \"Transactions\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"fbc1b6a1-ba3d-474c-9519-766f2406329f\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Transactions\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"axisName\\\":{\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"enabled\\\":true}}}\"}},{\"id\": \"ab86fade-b782-4184-9f7e-9ddf2273b57f\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"axisName\\\":{\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"enabled\\\":true}}}\"}}],\"seriesColors\": [{\"serieName\": \"Transactions\",\"color\": \"#3AAFAF\"}]}"
         custom_chart_config:
         - key: basic
           dimensions:
@@ -517,8 +524,12 @@ liveboard:
           - key: slice-with-color
             mode: AXIS_DRIVEN
           - key: trellis-by
+            axes:
+            - type: FLAT
+              column: Product Category
             mode: AXIS_DRIVEN
-        viz_style: "{\"overrides\": {\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": true,\"y_gridline_enabled\": true}},\"axis_properties\": [{\"linked_columns\": [\"Month(Transaction Date)\"],\"properties\": {\"is_name_visible\": true,\"is_label_visible\": true}},{\"linked_columns\": [\"Transactions\"],\"properties\": {\"is_name_visible\": true,\"is_label_visible\": true}}],\"column_properties\": [{\"column_id\": \"Transactions\",\"properties\": {\"color\": \"#3AAFAF\"}}]}}"
+        custom_visual_props: "{\"axisVisualProps\":{\"Month(Transaction Date)\":{\"name-color\":{\"color\":\"#5f5f5f\",\"style\":[]},\"label-color\":{\"color\":\"#858585\",\"style\":[]},\"show-x-axis-gridlines\":true,\"x-axis-gridline-style\":{\"dashStyle\":\"Solid\",\"thickness\":1,\"color\":\"#EAEDF2\"}},\"Transactions\":{\"log-scale\":false,\"inheritAxisNameStyle\":{\"textStyle\":{\"color\":\"#5f5f5f\",\"style\":[]},\"isLinked\":true},\"inheritNF\":{\"format\":{\"__typename\":\"FormatConfig\",\"category\":\"NUMBER\",\"isCategoryEditable\":true,\"numberFormatConfig\":{\"__typename\":\"NumberFormatConfig\",\"decimals\":0,\"negativeValueFormat\":\"PREFIX_DASH\",\"removeTrailingZeroes\":false,\"toSeparateThousands\":true,\"unit\":\"AUTO\"}},\"isLinked\":true},\"inheritValueLabelStyle\":{\"textStyle\":{\"color\":\"#858585\",\"style\":[]},\"isLinked\":true},\"show-y-axis-gridlines\":true,\"y-axis-gridline-style\":{\"dashStyle\":\"Solid\",\"thickness\":1,\"color\":\"#EAEDF2\"}}},\"columnVisualProps\":{\"Transactions\":{\"line-color\":\"#3AAFAF\",\"line-style\":{\"dashStyle\":\"Solid\",\"thickness\":2},\"data-marker\":false,\"conditionalFormatting\":{\"rows\":[]}},\"Month(Transaction Date)\":{\"cartesian-hide-null-values\":true}},\"dataLabelVisualProps\":{\"cartesian-data-labels\":{\"show-labels\":false},\"Transactions\":{\"cartesian-data-labels\":{\"cartesian-data-labels-enable\":false}}},\"tooltipVisualProps\":{\"global-tooltip\":{\"show-tooltip\":true,\"tooltip-show-details\":false,\"tooltip-show-aggregates\":false,\"tooltipBackground\":{\"backgroundColor\":\"#1d232f\",\"borderColor\":\"#1d232f\",\"backgroundOpacity\":\"100\"},\"tooltip-column-name\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]},\"tooltip-column-value\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]}}},\"legendVisualProps\":{\"legend\":{\"show-legend\":true,\"legend-position\":\"Top\"}},\"displayVisualProps\":{\"display\":{\"fit-to-screen\":false},\"axis-display\":{\"x-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false},\"y-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false}},\"totals-summary\":{\"show-row-grand-totals\":false,\"show-column-grand-totals\":false,\"show-row-sub-totals\":false,\"show-column-sub-totals\":false,\"totals-position\":\"End\"},\"trellis\":{\"trellis-shared-axis\":false,\"trellis-subplot-color\":false,\"trellis-title-show\":true,\"trellis-title-color\":\"#000000\",\"trellis-border-show\":false,\"trellis-border-color\":\"#000000\"},\"other\":{\"chart-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"},\"plotted-area-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"}},\"regression-lines\":{\"show-regression-lines\":false}}}"
+        viz_style: "{}"
       display_mode: CHART_MODE
     viz_guid: ddef3ba2-e8f1-4c65-bede-b434f2c8a589
   groups:

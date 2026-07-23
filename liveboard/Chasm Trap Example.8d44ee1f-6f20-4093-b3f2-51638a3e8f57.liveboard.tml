@@ -729,18 +729,18 @@ liveboard:
     group_guid: 525499f9-19b8-43ca-beb7-90f772568d71
   filters:
   - column:
-    - Chasm Trap Example::Product Category
-    - Retail Apparel with AGO::Product Category
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
-  - column:
     - Retail Apparel with AGO::SKU
     is_mandatory: false
     is_single_value: false
     display_name: ""
   - column:
     - Retail Apparel with AGO::Product Name
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
+    - Retail Apparel with AGO::Product Category
+    - Chasm Trap Example::Product Category
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -892,11 +892,11 @@ liveboard:
           height: 6
           width: 12
   ordered_chips:
-  - name: Chasm Trap Example::Product Category
-    type: FILTER
   - name: Retail Apparel with AGO::SKU
     type: FILTER
   - name: Retail Apparel with AGO::Product Name
+    type: FILTER
+  - name: Retail Apparel with AGO::Product Category
     type: FILTER
   style:
     style_properties:

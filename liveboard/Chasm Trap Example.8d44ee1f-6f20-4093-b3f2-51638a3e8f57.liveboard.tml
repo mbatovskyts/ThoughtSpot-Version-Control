@@ -739,8 +739,8 @@ liveboard:
     is_single_value: false
     display_name: ""
   - column:
-    - Retail Apparel with AGO::Product Category
     - Chasm Trap Example::Product Category
+    - Retail Apparel with AGO::Product Category
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -896,7 +896,7 @@ liveboard:
     type: FILTER
   - name: Retail Apparel with AGO::Product Name
     type: FILTER
-  - name: Retail Apparel with AGO::Product Category
+  - name: Chasm Trap Example::Product Category
     type: FILTER
   style:
     style_properties:

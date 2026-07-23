@@ -257,44 +257,6 @@ liveboard:
     viz_guid: 065d1ab4-cfdd-4225-bb71-416da74db3bb
   - id: Viz_8
     answer:
-      name: Monthly Sales
-      tables:
-      - id: Retail Apparel with AGO
-        name: Retail Apparel with AGO
-        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
-      search_query: "[Transaction Date].monthly [Sales]"
-      answer_columns:
-      - name: Month(Transaction Date)
-      - name: Total Sales
-      table:
-        table_columns:
-        - column_id: Month(Transaction Date)
-          show_headline: false
-        - column_id: Total Sales
-          show_headline: false
-        ordered_column_ids:
-        - Month(Transaction Date)
-        - Total Sales
-        client_state: ""
-        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
-      chart:
-        type: LINE
-        chart_columns:
-        - column_id: Month(Transaction Date)
-        - column_id: Total Sales
-        axis_configs:
-        - x:
-          - Month(Transaction Date)
-          "y":
-          - Total Sales
-        client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {\"xGridlineEnabled\": true,\"yGridlineEnabled\": true},\"responsiveLayoutPreference\": \"AUTO_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{\\\"gridLineColor\\\":\\\"#7f8592\\\",\\\"gridLineWidth\\\":1,\\\"gridLineDashStyle\\\":\\\"SOLID_LINE\\\"},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":null}\",\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Month(Transaction Date)\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":true,\\\"lineStyle\\\":null,\\\"markerStyle\\\":{\\\"type\\\":\\\"diamond\\\"}}}\",\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"b04e27fe-3e16-482c-8d3c-fa075a4f3c77\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"04829384-55d4-4950-b83f-e7a812466417\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"278dbdd4-c9c9-493b-a311-5bf35cb4cf10\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true},\\\"inheritNF\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":{\\\"id\\\":\\\"\\\",\\\"type\\\":\\\"\\\",\\\"key\\\":\\\"\\\"}}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":true,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"6\\\",\\\"tickColor\\\":\\\"#008999\\\"}}}\"}},{\"id\": \"14458f23-3eaf-47c9-8782-3682fcff6884\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Transaction Date)\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"systemSeriesColors\": [{\"serieName\": \"Total Sales\",\"color\": \"#4E55fd\"}]}"
-        viz_style: "{\"overrides\": {\"column_properties\": [{\"column_id\": \"Total Sales\",\"properties\": {\"color\": \"#3AAFAF\"}}]}}"
-      display_mode: CHART_MODE
-      dynamic_name: Monthly Sales
-    viz_guid: 514c9a40-ff42-4d38-b574-f810acc9a92b
-  - id: Viz_9
-    answer:
       name: Sales Monthly By Region & Product Category
       tables:
       - id: Retail Apparel with AGO
@@ -356,7 +318,7 @@ liveboard:
       - key: Metric Selector
         value: Sales
     viz_guid: 24d6cf74-ca70-473e-b59c-fdd302393bf8
-  - id: Viz_10
+  - id: Viz_9
     answer:
       name: Monthly Transactions
       tables:
@@ -396,7 +358,7 @@ liveboard:
         value: Transactions
       dynamic_name: Monthly Transactions
     viz_guid: 3b5c40a2-2e6b-40c4-b0f7-5319c8bfe44b
-  - id: Viz_11
+  - id: Viz_10
     answer:
       name: Sales by Monthly Transaction Date
       description: Testing Download
@@ -434,7 +396,7 @@ liveboard:
       display_mode: CHART_MODE
       dynamic_description: Testing Download
     viz_guid: 2e35ff3d-b17a-4544-ba11-894f09ec0435
-  - id: Viz_12
+  - id: Viz_11
     answer:
       name: Monthly Quantity
       tables:
@@ -474,7 +436,7 @@ liveboard:
         value: Transactions
       dynamic_name: Monthly Quantity
     viz_guid: db56ae06-9e02-4b39-a529-6bdfd31bef25
-  - id: Viz_13
+  - id: Viz_12
     answer:
       name: Transactions by Monthly Transaction Date
       tables:
@@ -538,15 +500,14 @@ liveboard:
     description: "Core KPIs tracking sales, transactions, and quantity trends"
     visualizations:
     - Viz_1
-    - Viz_10
-    - Viz_12
+    - Viz_9
+    - Viz_11
     group_guid: ee65dedf-6106-47f6-932f-daa27d777d01
   - id: Group_2
     name: Sales Trends
     description: Monthly sales performance and transaction patterns
     visualizations:
-    - Viz_8
-    - Viz_13
+    - Viz_12
     group_guid: 88e4435e-958a-440c-ae24-125596912460
   - id: Group_3
     name: Product Performance
@@ -559,7 +520,7 @@ liveboard:
     description: Store-level metrics and details
     visualizations:
     - Viz_7
-    - Viz_11
+    - Viz_10
     group_guid: c3d93d6c-61ac-4bf0-89d8-cca48d5b4f2c
   - id: Group_5
     name: Regional Analysis
@@ -573,7 +534,7 @@ liveboard:
     description: In-depth tables and breakdowns
     visualizations:
     - Viz_5
-    - Viz_9
+    - Viz_8
     group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
   filters:
   - column:
@@ -582,7 +543,7 @@ liveboard:
     - Viz_4
     - Viz_7
     - Viz_6
-    - Viz_11
+    - Viz_10
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -630,12 +591,12 @@ liveboard:
       group_layouts:
       - id: Group_1
         tiles:
-        - visualization_id: Viz_12
+        - visualization_id: Viz_11
           x: 8
           "y": 0
           height: 6
           width: 4
-        - visualization_id: Viz_10
+        - visualization_id: Viz_9
           x: 4
           "y": 0
           height: 6
@@ -647,16 +608,11 @@ liveboard:
           width: 4
       - id: Group_2
         tiles:
-        - visualization_id: Viz_13
+        - visualization_id: Viz_12
           x: 0
           "y": 0
           height: 8
-          width: 6
-        - visualization_id: Viz_8
-          x: 6
-          "y": 0
-          height: 8
-          width: 6
+          width: 12
       - id: Group_3
         tiles:
         - visualization_id: Viz_2
@@ -691,7 +647,7 @@ liveboard:
           "y": 0
           height: 3
           width: 12
-        - visualization_id: Viz_11
+        - visualization_id: Viz_10
           x: 0
           "y": 3
           height: 5
@@ -715,7 +671,7 @@ liveboard:
           "y": 0
           height: 8
           width: 5
-        - visualization_id: Viz_9
+        - visualization_id: Viz_8
           x: 5
           "y": 0
           height: 8
@@ -811,7 +767,7 @@ liveboard:
         value: "true"
       - name: kpi_hero_font_size
         value: M
-    - object_id: Viz_11
+    - object_id: Viz_10
       style_properties:
       - name: tile_brand_color
         value: TBC_J
@@ -821,7 +777,7 @@ liveboard:
       style_properties:
       - name: group_brand_color
         value: GBC_B
-    - object_id: Viz_12
+    - object_id: Viz_11
       style_properties:
       - name: tile_brand_color
         value: TBC_J
@@ -845,7 +801,7 @@ liveboard:
         value: TBC_J
       - name: tile_kpi_color
         value: TKS_A
-    - object_id: Viz_10
+    - object_id: Viz_9
       style_properties:
       - name: tile_brand_color
         value: TBC_J

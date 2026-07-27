@@ -84,10 +84,6 @@ liveboard:
       display_mode: CHART_MODE
     viz_guid: d6133c94-2187-446f-bd14-127e7f2a38e4
   - id: Viz_3
-    viz_guid: 19c0bb62-5881-4329-a334-97b3cd3cf805
-    note_tile:
-      html_parsed_string: "<h2 class=\"theme-module__editor-h2\" dir=\"ltr\" style=\"text-align: center;\"><span style=\"white-space: pre-wrap;\">Welcome to Mike Batovsky's Demo Liveboard!</span><br></h2><p class=\"theme-module__editor-paragraph\" dir=\"ltr\" style=\"text-align: center;\"><a href=\"https://www.youtube.com/watch?v=p5KCA8LqOrI\" target=\"_blank\" rel=\"noreferrer\" class=\"theme-module__editor-link\"><span style=\"white-space: pre-wrap;\">Click here for more info</span></a></p><p class=\"theme-module__editor-paragraph\" dir=\"ltr\" style=\"text-align: center;\"><img id=\"68866ea4-27fd-4be6-9bf7-42b32665f940\" alt=\"UPLOAD\" style=\"height: inherit; width: 76%; max-width: 100%;\"></p><div class=\"pinboard-note-tile-module__noteTileBg editor-module__bgNode\" style=\"background-color: rgb(255, 255, 255);\"></div>"
-  - id: Viz_4
     answer:
       name: Total Sales by Product Name
       tables:
@@ -131,7 +127,7 @@ liveboard:
         viz_style: "{\"overrides\": {\"legend_properties\": {\"color_palette\": {\"colors\": [\"#b8e8ea\",\"#9ddfe2\",\"#8DD9D9\",\"#6fc9cb\",\"#57b5b7\",\"#92d4d6\",\"#6fc9cb\",\"#5CC4C4\",\"#4ab3b3\",\"#3a9d9d\",\"#6fc9cb\",\"#52bebe\",\"#3AAFAF\",\"#2e9a9a\",\"#248585\",\"#52bebe\",\"#3fa3a3\",\"#2D8A8A\",\"#257676\",\"#1d6262\",\"#3fa3a3\",\"#2e8d8d\",\"#22636B\",\"#1c5559\",\"#164749\",\"#f5c18a\",\"#f2a955\",\"#F28E2B\",\"#c27222\",\"#91551a\",\"#d0afc7\",\"#c095b4\",\"#B07AA1\",\"#8d6281\",\"#6a4961\",\"#c4ac9f\",\"#b0917f\",\"#9C755F\",\"#7d5e4c\",\"#5e4639\"]}},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": true,\"y_gridline_enabled\": true}}}}"
       display_mode: CHART_MODE
     viz_guid: b970c1df-c46f-4588-914f-2dd77acec6c9
-  - id: Viz_5
+  - id: Viz_4
     answer:
       name: Hyperlink Example
       tables:
@@ -182,7 +178,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"Liveboard Hyper Link With Store ID Runtime FIlter\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"9ec4505c-c28b-4b02-8686-8f394c459cc5\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Liveboard Hyper Link With Store ID Runtime FIlter\"],\"isOpposite\": false}},{\"id\": \"215ceb61-9702-4032-abeb-0321bbbae2d7\",\"properties\": {\"axisType\": \"X\"}}]}"
       display_mode: TABLE_MODE
     viz_guid: dfebce4d-6bbd-4b42-9184-b43024133ec9
-  - id: Viz_6
+  - id: Viz_5
     answer:
       name: Total Sales by Monthly Transaction Date
       tables:
@@ -226,7 +222,7 @@ liveboard:
         viz_style: "{\"overrides\": {\"legend_properties\": {\"color_palette\": {\"colors\": [\"#C9F0F5\",\"#8DD9D9\",\"#5CC4C4\",\"#3AAFAF\",\"#2D8A8A\",\"#D4E8F0\",\"#A8D1E0\",\"#7DBAD0\",\"#51A3C0\",\"#3D7A91\",\"#E8D4F0\",\"#D1A8E0\",\"#BA7DD0\",\"#A351C0\",\"#7A3D91\",\"#F0E8D4\",\"#E0D1A8\",\"#D0BA7D\",\"#C0A351\",\"#917A3D\",\"#D4F0E8\",\"#A8E0D1\",\"#7DD0BA\",\"#51C0A3\",\"#3D917A\",\"#F0D4E8\",\"#E0A8D1\",\"#D07DBA\",\"#C051A3\",\"#913D7A\",\"#E8F0D4\",\"#D1E0A8\",\"#BAD07D\",\"#A3C051\",\"#7A913D\",\"#F0E8E8\",\"#E0D1D1\",\"#D0BABA\",\"#C0A3A3\",\"#917A7A\"]}},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": true,\"y_gridline_enabled\": true}}}}"
       display_mode: CHART_MODE
     viz_guid: 18f8061f-ead0-4f23-ae37-b248f2fb87c5
-  - id: Viz_7
+  - id: Viz_6
     answer:
       name: Store Name In View
       tables:
@@ -255,7 +251,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Store Name\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"2160a617-5655-4165-abaa-4281f64acb1d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Store Name\"],\"isOpposite\": false}},{\"id\": \"309eb6f5-63d5-491e-a9a8-d94e23d5c5e0\",\"properties\": {\"axisType\": \"X\"}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"4d5d212d-8d35-4f64-90c9-bc22431f2bc7\",\"color\": \"#FF8142\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"}]}"
       display_mode: CHART_MODE
     viz_guid: 065d1ab4-cfdd-4225-bb71-416da74db3bb
-  - id: Viz_8
+  - id: Viz_7
     answer:
       name: Sales Monthly By Region & Product Category
       tables:
@@ -318,7 +314,7 @@ liveboard:
       - key: Metric Selector
         value: Sales
     viz_guid: 24d6cf74-ca70-473e-b59c-fdd302393bf8
-  - id: Viz_9
+  - id: Viz_8
     answer:
       name: Monthly Transactions
       tables:
@@ -358,7 +354,7 @@ liveboard:
         value: Transactions
       dynamic_name: Monthly Transactions
     viz_guid: 3b5c40a2-2e6b-40c4-b0f7-5319c8bfe44b
-  - id: Viz_10
+  - id: Viz_9
     answer:
       name: Sales by Monthly Transaction Date
       description: Testing Download
@@ -396,7 +392,7 @@ liveboard:
       display_mode: CHART_MODE
       dynamic_description: Testing Download
     viz_guid: 2e35ff3d-b17a-4544-ba11-894f09ec0435
-  - id: Viz_11
+  - id: Viz_10
     answer:
       name: Monthly Quantity
       tables:
@@ -436,7 +432,7 @@ liveboard:
         value: Transactions
       dynamic_name: Monthly Quantity
     viz_guid: db56ae06-9e02-4b39-a529-6bdfd31bef25
-  - id: Viz_12
+  - id: Viz_11
     answer:
       name: Transactions by Monthly Transaction Date
       tables:
@@ -494,20 +490,26 @@ liveboard:
         viz_style: "{}"
       display_mode: CHART_MODE
     viz_guid: ddef3ba2-e8f1-4c65-bede-b434f2c8a589
+  - id: Viz_12
+    viz_guid: ec9c6e25-1056-4f20-a73c-aae14ecfd805
+    ai_tile:
+      target_agent: insight_code_runner
+      analysis_code: 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
+      template_id: text_long_form
   groups:
   - id: Group_1
     name: Key Metrics
     description: "Core KPIs tracking sales, transactions, and quantity trends"
     visualizations:
     - Viz_1
-    - Viz_9
-    - Viz_11
+    - Viz_8
+    - Viz_10
     group_guid: ee65dedf-6106-47f6-932f-daa27d777d01
   - id: Group_2
     name: Sales Trends
     description: Monthly sales performance and transaction patterns
     visualizations:
-    - Viz_12
+    - Viz_11
     group_guid: 88e4435e-958a-440c-ae24-125596912460
   - id: Group_3
     name: Product Performance
@@ -519,31 +521,31 @@ liveboard:
     name: Store Analytics
     description: Store-level metrics and details
     visualizations:
-    - Viz_7
-    - Viz_10
+    - Viz_6
+    - Viz_9
     group_guid: c3d93d6c-61ac-4bf0-89d8-cca48d5b4f2c
   - id: Group_5
     name: Regional Analysis
     description: Sales and quantity by region
     visualizations:
-    - Viz_4
-    - Viz_6
+    - Viz_3
+    - Viz_5
     group_guid: 90648342-236d-4922-8f43-fd80c7ed4bd1
   - id: Group_6
     name: Detailed Data
     description: In-depth tables and breakdowns
     visualizations:
-    - Viz_5
-    - Viz_8
+    - Viz_4
+    - Viz_7
     group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
   filters:
   - column:
     - Sales_Region
     excluded_visualizations:
-    - Viz_4
-    - Viz_7
+    - Viz_3
     - Viz_6
-    - Viz_10
+    - Viz_5
+    - Viz_9
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -567,7 +569,7 @@ liveboard:
     - name: Overview
       description: ""
       tiles:
-      - visualization_id: Viz_3
+      - visualization_id: Viz_12
         x: 0
         "y": 0
         height: 6
@@ -591,24 +593,24 @@ liveboard:
       group_layouts:
       - id: Group_1
         tiles:
-        - visualization_id: Viz_11
-          x: 8
-          "y": 0
-          height: 6
-          width: 4
-        - visualization_id: Viz_9
-          x: 4
-          "y": 0
-          height: 6
-          width: 4
         - visualization_id: Viz_1
           x: 0
           "y": 0
           height: 6
           width: 4
+        - visualization_id: Viz_8
+          x: 4
+          "y": 0
+          height: 6
+          width: 4
+        - visualization_id: Viz_10
+          x: 8
+          "y": 0
+          height: 6
+          width: 4
       - id: Group_2
         tiles:
-        - visualization_id: Viz_12
+        - visualization_id: Viz_11
           x: 0
           "y": 0
           height: 8
@@ -642,36 +644,36 @@ liveboard:
       group_layouts:
       - id: Group_4
         tiles:
-        - visualization_id: Viz_7
+        - visualization_id: Viz_6
           x: 0
           "y": 0
           height: 3
           width: 12
-        - visualization_id: Viz_10
+        - visualization_id: Viz_9
           x: 0
           "y": 3
           height: 5
           width: 12
       - id: Group_5
         tiles:
-        - visualization_id: Viz_4
+        - visualization_id: Viz_3
           x: 0
           "y": 0
           height: 8
           width: 6
-        - visualization_id: Viz_6
+        - visualization_id: Viz_5
           x: 6
           "y": 0
           height: 8
           width: 6
       - id: Group_6
         tiles:
-        - visualization_id: Viz_5
+        - visualization_id: Viz_4
           x: 0
           "y": 0
           height: 8
           width: 5
-        - visualization_id: Viz_8
+        - visualization_id: Viz_7
           x: 5
           "y": 0
           height: 8
@@ -767,7 +769,7 @@ liveboard:
         value: "true"
       - name: kpi_hero_font_size
         value: M
-    - object_id: Viz_10
+    - object_id: Viz_9
       style_properties:
       - name: tile_brand_color
         value: TBC_J
@@ -777,7 +779,7 @@ liveboard:
       style_properties:
       - name: group_brand_color
         value: GBC_B
-    - object_id: Viz_11
+    - object_id: Viz_10
       style_properties:
       - name: tile_brand_color
         value: TBC_J
@@ -795,13 +797,13 @@ liveboard:
       style_properties:
       - name: tile_brand_color
         value: TBC_B
-    - object_id: Viz_7
+    - object_id: Viz_6
       style_properties:
       - name: tile_brand_color
         value: TBC_J
       - name: tile_kpi_color
         value: TKS_A
-    - object_id: Viz_9
+    - object_id: Viz_8
       style_properties:
       - name: tile_brand_color
         value: TBC_J

@@ -573,12 +573,12 @@ liveboard:
         x: 0
         "y": 0
         height: 6
-        width: 3
+        width: 4
       - visualization_id: Group_1
-        x: 3
+        x: 4
         "y": 0
         height: 6
-        width: 9
+        width: 8
       - visualization_id: Group_2
         x: 0
         "y": 6
@@ -593,20 +593,20 @@ liveboard:
       group_layouts:
       - id: Group_1
         tiles:
-        - visualization_id: Viz_1
-          x: 0
+        - visualization_id: Viz_10
+          x: 8
           "y": 0
-          height: 6
+          height: 8
           width: 4
         - visualization_id: Viz_8
           x: 4
           "y": 0
-          height: 6
+          height: 8
           width: 4
-        - visualization_id: Viz_10
-          x: 8
+        - visualization_id: Viz_1
+          x: 0
           "y": 0
-          height: 6
+          height: 8
           width: 4
       - id: Group_2
         tiles:

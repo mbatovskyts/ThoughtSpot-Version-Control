@@ -541,6 +541,9 @@ liveboard:
   filters:
   - column:
     - Sales_Region
+    oper: in
+    values:
+    - East
     excluded_visualizations:
     - Viz_3
     - Viz_6

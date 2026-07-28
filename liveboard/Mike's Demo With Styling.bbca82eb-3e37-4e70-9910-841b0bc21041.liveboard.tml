@@ -490,12 +490,6 @@ liveboard:
         viz_style: "{}"
       display_mode: CHART_MODE
     viz_guid: ddef3ba2-e8f1-4c65-bede-b434f2c8a589
-  - id: Viz_12
-    viz_guid: ec9c6e25-1056-4f20-a73c-aae14ecfd805
-    ai_tile:
-      target_agent: insight_code_runner
-      analysis_code: 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
-      template_id: text_long_form
   groups:
   - id: Group_1
     name: Key Metrics
@@ -569,11 +563,6 @@ liveboard:
     - name: Overview
       description: ""
       tiles:
-      - visualization_id: Viz_12
-        x: 0
-        "y": 0
-        height: 6
-        width: 4
       - visualization_id: Group_1
         x: 4
         "y": 0
@@ -593,8 +582,8 @@ liveboard:
       group_layouts:
       - id: Group_1
         tiles:
-        - visualization_id: Viz_10
-          x: 8
+        - visualization_id: Viz_1
+          x: 0
           "y": 0
           height: 8
           width: 4
@@ -603,8 +592,8 @@ liveboard:
           "y": 0
           height: 8
           width: 4
-        - visualization_id: Viz_1
-          x: 0
+        - visualization_id: Viz_10
+          x: 8
           "y": 0
           height: 8
           width: 4

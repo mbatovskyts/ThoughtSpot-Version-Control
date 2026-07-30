@@ -564,6 +564,12 @@ liveboard:
     display_name: ""
   - column:
     - Shipping Date
+    excluded_visualizations:
+    - Viz_1
+    - Viz_8
+    - Viz_10
+    - Viz_11
+    - Viz_2
     is_mandatory: false
     is_single_value: false
     display_name: ""

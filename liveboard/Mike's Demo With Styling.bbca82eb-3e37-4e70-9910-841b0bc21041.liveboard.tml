@@ -570,10 +570,10 @@ liveboard:
     - Viz_10
     - Viz_11
     - Viz_2
-    is_mandatory: true
+    is_mandatory: false
     date_filter:
       type: LAST_N_PERIOD
-      number: 10
+      number: 8
       oper: =
       date_period: YEAR
       include_current_period: false
@@ -737,7 +737,7 @@ liveboard:
       - Shipping Date
       date_filter:
         type: LAST_N_PERIOD
-        number: 10
+        number: 8
         oper: =
         date_period: YEAR
         include_current_period: false
@@ -757,7 +757,7 @@ liveboard:
       - Shipping Date
       date_filter:
         type: LAST_N_PERIOD
-        number: 10
+        number: 8
         oper: =
         date_period: YEAR
         include_current_period: false

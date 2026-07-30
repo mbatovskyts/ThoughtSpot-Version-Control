@@ -571,7 +571,12 @@ liveboard:
     - Viz_11
     - Viz_2
     is_mandatory: true
-    is_single_value: false
+    date_filter:
+      type: LAST_N_PERIOD
+      number: 10
+      oper: =
+      date_period: YEAR
+      include_current_period: false
     display_name: ""
   layout:
     tabs:
@@ -731,8 +736,11 @@ liveboard:
     - column:
       - Shipping Date
       date_filter:
-        type: EXACT_DATE
+        type: LAST_N_PERIOD
+        number: 10
         oper: =
+        date_period: YEAR
+        include_current_period: false
     is_public: false
   - view_guid: 02b1bbd6-827f-4380-bc6c-66e8d1e37d8d
     name: Testing
@@ -748,8 +756,11 @@ liveboard:
     - column:
       - Shipping Date
       date_filter:
-        type: EXACT_DATE
+        type: LAST_N_PERIOD
+        number: 10
         oper: =
+        date_period: YEAR
+        include_current_period: false
     is_public: false
   style:
     style_properties:

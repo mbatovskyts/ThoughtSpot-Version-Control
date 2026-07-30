@@ -570,7 +570,7 @@ liveboard:
     - Viz_10
     - Viz_11
     - Viz_2
-    is_mandatory: false
+    is_mandatory: true
     is_single_value: false
     display_name: ""
   layout:

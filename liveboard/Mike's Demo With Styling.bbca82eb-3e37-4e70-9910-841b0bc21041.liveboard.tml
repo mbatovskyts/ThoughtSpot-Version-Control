@@ -767,7 +767,7 @@ liveboard:
     - name: lb_border_type
       value: CURVED
     - name: lb_brand_color
-      value: LBC_B
+      value: LBC_E
     - name: hide_group_title
       value: "false"
     - name: hide_group_description
@@ -829,6 +829,8 @@ liveboard:
         value: TBC_J
       - name: tile_kpi_color
         value: TKS_A
+      - name: kpi_hero_font_size
+        value: S
     - object_id: Group_2
       style_properties:
       - name: group_brand_color
@@ -839,3 +841,5 @@ liveboard:
         value: TBC_J
       - name: tile_kpi_color
         value: TKS_A
+      - name: kpi_hero_font_size
+        value: S

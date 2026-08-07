@@ -652,6 +652,34 @@ liveboard:
         client_state: ""
       display_mode: CHART_MODE
     viz_guid: ebc9a748-cd4e-4819-9692-f1ace1e0a4df
+  - id: Viz_19
+    answer:
+      name: Version Control Testing
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      search_query: "[Version Control Testing] [Shared Date].2023"
+      answer_columns:
+      - name: Version Control Testing
+      table:
+        table_columns:
+        - column_id: Version Control Testing
+          show_headline: false
+        ordered_column_ids:
+        - Version Control Testing
+        client_state: ""
+      chart:
+        type: KPI
+        chart_columns:
+        - column_id: Version Control Testing
+        axis_configs:
+        - "y":
+          - Version Control Testing
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true,\"showAnalyseChangeCta\": true}},\"columnProperties\": [{\"columnId\": \"Version Control Testing\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"92ed10c4-b50c-4221-80ce-efa9be2078e1\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Version Control Testing\"],\"isOpposite\": false}},{\"id\": \"886f5784-4118-45ed-a226-f6f15cf486bc\",\"properties\": {\"axisType\": \"X\"}}]}"
+      display_mode: CHART_MODE
+    viz_guid: 40e1b1e8-da02-4102-a6c6-1d1f3c8d300f
   groups:
   - id: Group_1
     name: Key Metrics
@@ -720,6 +748,7 @@ liveboard:
         "y": 5
         height: 5
         width: 4
+      - visualization_id: Viz_19
       id: 3548c5d4-3620-418d-926c-679b88baffdb
       group_layouts:
       - id: Group_1

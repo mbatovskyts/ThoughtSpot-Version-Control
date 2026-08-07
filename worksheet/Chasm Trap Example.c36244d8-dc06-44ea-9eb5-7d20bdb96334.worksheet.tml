@@ -59,6 +59,9 @@ model:
   - id: formula_SKU Count
     name: SKU Count
     expr: 'unique count ( [DIM_RETAPP_PRODUCTS::SKU] ) '
+  - id: formula_Version Control Testing
+    name: Version Control Testing
+    expr: '''version 1'' '
   columns:
   - name: Shared Month
     column_id: Monthly Bridge::Shared Monthly
@@ -276,6 +279,11 @@ model:
       format_pattern: MMM yyyy
       synonym_type: AUTO_GENERATED
       ai_context: Monthly time period for which sales forecasts were generated, establishing the temporal scope for comparing predicted versus actual performance results.
+  - name: Version Control Testing
+    formula_id: formula_Version Control Testing
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
   properties:
     is_bypass_rls: false
     join_progressive: true

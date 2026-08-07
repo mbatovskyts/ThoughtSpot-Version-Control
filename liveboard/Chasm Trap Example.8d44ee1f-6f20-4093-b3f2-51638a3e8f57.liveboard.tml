@@ -725,8 +725,8 @@ liveboard:
       tiles:
       - visualization_id: Viz_1
         x: 0
-        "y": 0
-        height: 10
+        "y": 2
+        height: 8
         width: 4
       - visualization_id: Group_1
         x: 4
@@ -749,15 +749,14 @@ liveboard:
         height: 5
         width: 4
       - visualization_id: Viz_19
+        x: 0
+        "y": 0
+        height: 2
+        width: 4
       id: 3548c5d4-3620-418d-926c-679b88baffdb
       group_layouts:
       - id: Group_1
         tiles:
-        - visualization_id: Viz_10
-          x: 0
-          "y": 0
-          height: 5
-          width: 4
         - visualization_id: Viz_11
           x: 4
           "y": 0
@@ -768,22 +767,27 @@ liveboard:
           "y": 0
           height: 5
           width: 4
-      - id: Group_2
-        tiles:
-        - visualization_id: Viz_13
+        - visualization_id: Viz_10
           x: 0
           "y": 0
-          height: 8
+          height: 5
+          width: 4
+      - id: Group_2
+        tiles:
+        - visualization_id: Viz_5
+          x: 6
+          "y": 4
+          height: 4
           width: 6
         - visualization_id: Viz_4
           x: 6
           "y": 0
           height: 4
           width: 6
-        - visualization_id: Viz_5
-          x: 6
-          "y": 4
-          height: 4
+        - visualization_id: Viz_13
+          x: 0
+          "y": 0
+          height: 8
           width: 6
       - id: Group_3
         tiles:

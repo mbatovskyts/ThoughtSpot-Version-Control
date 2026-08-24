@@ -722,6 +722,31 @@ liveboard:
         type: EXACT_DATE
         oper: =
     is_public: false
+  - view_guid: 8ac8e1f6-2d22-4636-82e4-d54afdbd61e6
+    name: Midwest
+    view_filters:
+    - column:
+      - Sales_Region
+      oper: in
+      values:
+      - Midwest
+    - column:
+      - Transaction Date
+      date_filter:
+        type: LAST_N_PERIOD
+        number: 5
+        oper: =
+        date_period: YEAR
+        include_current_period: false
+    - column:
+      - Shipping Date
+      date_filter:
+        type: LAST_N_PERIOD
+        number: 8
+        oper: =
+        date_period: YEAR
+        include_current_period: false
+    is_public: false
   style:
     style_properties:
     - name: lb_border_type

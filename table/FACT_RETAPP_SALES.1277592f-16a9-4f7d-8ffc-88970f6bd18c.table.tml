@@ -2,7 +2,7 @@ guid: 1277592f-16a9-4f7d-8ffc-88970f6bd18c
 table:
   name: FACT_RETAPP_SALES
   db: RETAILAPPAREL
-  schema: PUBLIC
+  schema: "${bat_schema_var}"
   db_table: FACT_RETAPP_SALES_NEW
   connection:
     name: TS Demo Snowflake

@@ -722,46 +722,6 @@ liveboard:
         type: EXACT_DATE
         oper: =
     is_public: false
-  - view_guid: 62ed183c-ac9e-46eb-9c6d-2dd2df0e55a5
-    name: test 2
-    view_filters:
-    - column:
-      - Sales_Region
-      oper: =
-    - column:
-      - Transaction Date
-      date_filter:
-        type: EXACT_DATE
-        oper: =
-    - column:
-      - Shipping Date
-      date_filter:
-        type: LAST_N_PERIOD
-        number: 8
-        oper: =
-        date_period: YEAR
-        include_current_period: false
-    is_public: false
-  - view_guid: 02b1bbd6-827f-4380-bc6c-66e8d1e37d8d
-    name: Testing
-    view_filters:
-    - column:
-      - Sales_Region
-      oper: =
-    - column:
-      - Transaction Date
-      date_filter:
-        type: EXACT_DATE
-        oper: =
-    - column:
-      - Shipping Date
-      date_filter:
-        type: LAST_N_PERIOD
-        number: 8
-        oper: =
-        date_period: YEAR
-        include_current_period: false
-    is_public: false
   style:
     style_properties:
     - name: lb_border_type

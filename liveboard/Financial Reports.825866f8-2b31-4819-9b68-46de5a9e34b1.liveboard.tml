@@ -330,12 +330,12 @@ liveboard:
       height: 4
       width: 4
     - visualization_id: Viz_2
-      x: 0
+      x: 4
       "y": 0
       height: 4
       width: 4
     - visualization_id: Viz_3
-      x: 4
+      x: 0
       "y": 0
       height: 4
       width: 4

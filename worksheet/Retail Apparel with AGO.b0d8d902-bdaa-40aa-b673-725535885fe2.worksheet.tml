@@ -217,6 +217,10 @@ model:
       synonyms:
       - Province
       - Territory
+      geo_config:
+        region_name:
+          country: UNITED STATES
+          region_name: state
       synonym_type: AUTO_GENERATED
       ai_context: State-level geographical location of retail stores enabling statewide market analysis and regulatory compliance tracking.
   - name: Store Longitude

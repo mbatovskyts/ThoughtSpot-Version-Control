@@ -497,6 +497,47 @@ liveboard:
       target_agent: insight_code_runner
       analysis_code: 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
       template_id: text_long_form
+  - id: Viz_13
+    answer:
+      name: Weekly Active Users
+      tables:
+      - id: "TS: BI Server"
+        name: "TS: BI Server"
+        fqn: eaab6de7-c556-468c-8b4b-ff6d78dd3ecf
+      formulas:
+      - id: formula_.int domain Users
+        name: .int domain Users
+        expr: "contains ( [User] , \".int\" )"
+        was_auto_generated: false
+      search_query: "[Timestamp] [Timestamp].weekly unique count [User] [formula_.int domain Users] = false [User] != [User].{null} [User].tsadmin [User].system"
+      answer_columns:
+      - name: Unique Number of User
+      - name: Week(Timestamp)
+      table:
+        table_columns:
+        - column_id: Unique Number of User
+          headline_aggregation: AVERAGE
+        - column_id: Week(Timestamp)
+          headline_aggregation: MIN-MAX
+        ordered_column_ids:
+        - Week(Timestamp)
+        - Unique Number of User
+        client_state: "{\"widthState\":{},\"wrapTableHeader\":true}"
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\",\"wrapTableHeader\": true,\"columnProperties\": [{\"columnId\": \"Week(Timestamp)\",\"columnProperty\": {}},{\"columnId\": \"Unique Number of User\",\"columnProperty\": {}}]}"
+      chart:
+        type: COLUMN
+        chart_columns:
+        - column_id: Unique Number of User
+        - column_id: Week(Timestamp)
+        axis_configs:
+        - x:
+          - Week(Timestamp)
+          "y":
+          - Unique Number of User
+        client_state: "{\"seriesColors\":{\"Unique Number of User\":\"#abc7f9\",\"highcharts-regression\":\"#06BF7F\"},\"chartProperties\":{\"gridLines\":{\"yGridlineEnabled\":true},\"showRoundedNumbers\":true,\"chartSpecific\":{},\"responsiveLayoutPreference\":1.0,\"showLinearRegressionLine\":true},\"axisProperties\":{\"e63d9862-d324-4364-ba99-1b774c2c624a\":{\"linkedColumns\":[\"Unique Number of User\"],\"axisType\":\"Y\",\"isOpposite\":false},\"94e43f8f-5fcc-4eac-b6c4-5f05468cf7f5\":{\"linkedColumns\":[\"Week(Timestamp)\"],\"axisType\":\"X\"}},\"systemSeriesColors\":{\"Unique Number of User\":\"#06BF7F\",\"highcharts-regression\":\"#06BF7F\"},\"version\":\"V3\",\"columnProperties\":{\"Week(Timestamp)\":{},\"Unique Number of User\":{\"dataLabels\":true}}}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {\"yGridlineEnabled\": true},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"Week(Timestamp)\",\"columnProperty\": {}},{\"columnId\": \"Unique Number of User\",\"columnProperty\": {\"dataLabels\": true}}],\"axisProperties\": [{\"id\": \"e63d9862-d324-4364-ba99-1b774c2c624a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Unique Number of User\"],\"isOpposite\": false}},{\"id\": \"94e43f8f-5fcc-4eac-b6c4-5f05468cf7f5\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Week(Timestamp)\"]}}],\"seriesColors\": [{\"serieName\": \"Unique Number of User\",\"color\": \"#abc7f9\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#06BF7F\"}],\"systemSeriesColors\": [{\"serieName\": \"Unique Number of User\",\"color\": \"#06BF7F\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#06BF7F\"}]}"
+      display_mode: CHART_MODE
+    viz_guid: 00cca2c8-5d9e-450e-adad-d4e4b10d4904
   groups:
   - id: Group_1
     name: Key Metrics
@@ -541,7 +582,7 @@ liveboard:
     group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
   filters:
   - column:
-    - Sales_Region
+    - Retail Apparel with AGO::Sales_Region
     oper: in
     values:
     - East
@@ -554,7 +595,7 @@ liveboard:
     is_single_value: false
     display_name: ""
   - column:
-    - Transaction Date
+    - Retail Apparel with AGO::Transaction Date
     is_mandatory: false
     date_filter:
       type: LAST_N_PERIOD
@@ -564,7 +605,7 @@ liveboard:
       include_current_period: false
     display_name: ""
   - column:
-    - Shipping Date
+    - Retail Apparel with AGO::Shipping Date
     excluded_visualizations:
     - Viz_1
     - Viz_8
@@ -655,6 +696,7 @@ liveboard:
         "y": 8
         height: 8
         width: 12
+      - visualization_id: Viz_13
       id: bd9e25d5-407e-4c6c-a7fc-d460423a5374
       group_layouts:
       - id: Group_4
@@ -694,23 +736,23 @@ liveboard:
           height: 8
           width: 7
   ordered_chips:
-  - name: Sales_Region
+  - name: Retail Apparel with AGO::Sales_Region
     type: FILTER
-  - name: Transaction Date
+  - name: Retail Apparel with AGO::Transaction Date
     type: FILTER
-  - name: Shipping Date
+  - name: Retail Apparel with AGO::Shipping Date
     type: FILTER
   views:
   - view_guid: e7c5b39b-4f3b-4ee5-a54b-36f58ebdd5b5
     name: Mike View
     view_filters:
     - column:
-      - Sales_Region
+      - Retail Apparel with AGO::Sales_Region
       oper: in
       values:
       - East
     - column:
-      - Transaction Date
+      - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
         number: 5
@@ -718,7 +760,7 @@ liveboard:
         date_period: YEAR
         include_current_period: false
     - column:
-      - Shipping Date
+      - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: EXACT_DATE
         oper: =
@@ -727,12 +769,12 @@ liveboard:
     name: Midwest
     view_filters:
     - column:
-      - Sales_Region
+      - Retail Apparel with AGO::Sales_Region
       oper: in
       values:
       - Midwest
     - column:
-      - Transaction Date
+      - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
         number: 5
@@ -740,7 +782,7 @@ liveboard:
         date_period: YEAR
         include_current_period: false
     - column:
-      - Shipping Date
+      - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
         number: 8
@@ -752,13 +794,13 @@ liveboard:
     name: South
     view_filters:
     - column:
-      - Sales_Region
+      - Retail Apparel with AGO::Sales_Region
       oper: in
       values:
       - South
       - Southwest
     - column:
-      - Transaction Date
+      - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
         number: 5
@@ -766,7 +808,7 @@ liveboard:
         date_period: YEAR
         include_current_period: false
     - column:
-      - Shipping Date
+      - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
         number: 8

@@ -83,7 +83,7 @@ liveboard:
       - id: Retail Apparel with AGO With Instructions
         name: Retail Apparel with AGO With Instructions
         fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
-      search_query: "top 10 [Product Name] [Sales] [Product Category]"
+      search_query: "top 10 [Product Name] [Sales] [Product Category] [Product Category].pants"
       answer_columns:
       - name: Product Category
       - name: Product Name
@@ -116,7 +116,7 @@ liveboard:
           color:
           - Product Category
         client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"legendPosition\": \"TOP_LEGEND\"},\"columnProperties\": [{\"columnId\": \"Product Name\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}},{\"columnId\": \"Product Category\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"2dba0d4d-ae44-4526-8305-1eaf2314ba51\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"e7c9c24c-4f18-4c8d-8e3e-2d915e6f4a41\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Product Name\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"},{\"serieName\": \"bags\",\"color\": \"#Fce800\"},{\"serieName\": \"dresses\",\"color\": \"#25fb8a\"},{\"serieName\": \"jackets\",\"color\": \"#A83Dff\"},{\"serieName\": \"vests\",\"color\": \"#4E55fd\"},{\"serieName\": \"sweatshirts\",\"color\": \"#fe3bfc\"}]}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"legendPosition\": \"TOP_LEGEND\",\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Product Name\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Product Category\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"2dba0d4d-ae44-4526-8305-1eaf2314ba51\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"e7c9c24c-4f18-4c8d-8e3e-2d915e6f4a41\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Product Name\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"},{\"serieName\": \"bags\",\"color\": \"#Fce800\"},{\"serieName\": \"dresses\",\"color\": \"#25fb8a\"},{\"serieName\": \"jackets\",\"color\": \"#A83Dff\"},{\"serieName\": \"vests\",\"color\": \"#4E55fd\"},{\"serieName\": \"sweatshirts\",\"color\": \"#fe3bfc\"},{\"serieName\": \"pants\",\"color\": \"#A83Dff\"}]}"
       display_mode: CHART_MODE
     viz_guid: b2a5982d-da4e-498c-a4b1-2493b3d406e1
   - id: Viz_4
@@ -345,7 +345,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\"}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
       display_mode: CHART_MODE
       parameters:
-      - id: b15f9d46-0035-4d1d-928a-e813caea0ed0
+      - id: aa4e82d8-c7b0-4329-88c7-2e30b320b7e1
         name: End Date Parameter
         data_type: DATE
         default_value: 04/30/2025
@@ -368,7 +368,7 @@ liveboard:
           - value: 09/30/2024
             display_name: Sept 2024
         description: ""
-      - id: 0b1bf023-41cf-4d74-8cb4-84c2ba8754a2
+      - id: 17adef43-6005-48f3-a3c3-0f17d0d8aff3
         name: Start Date Parameter
         data_type: DATE
         default_value: 04/01/2025
@@ -848,7 +848,7 @@ liveboard:
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"GREATER_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"fontProperties\": {\"color\": \"#4E55fd\"},\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Total sales\",\"isHighlightRow\": false}]},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}"
       display_mode: TABLE_MODE
       parameters:
-      - id: b6011474-297b-4bdb-89dc-7386ab436465
+      - id: f14d5ab8-6aeb-4f98-a4c9-8c7036566b89
         name: End Date Parameter
         data_type: DATE
         default_value: 04/30/2025
@@ -871,7 +871,7 @@ liveboard:
           - value: 09/30/2024
             display_name: Sept 2024
         description: ""
-      - id: 8a4d374e-e81b-4c0d-85cd-e41a58d993d0
+      - id: f30dcbbf-54b8-4fee-96b7-3064f7550f8e
         name: Start Date Parameter
         data_type: DATE
         default_value: 04/01/2025
@@ -896,10 +896,118 @@ liveboard:
         description: ""
       dynamic_name: Period Comparison Sales Report
     viz_guid: 6548ef98-05f5-4cbf-a3c0-6a60eef71d38
+  - id: Viz_18
+    answer:
+      name: "Region, sales share"
+      tables:
+      - id: Chasm Trap Example
+        name: Chasm Trap Example
+        fqn: c36244d8-dc06-44ea-9eb5-7d20bdb96334
+      formulas:
+      - id: formula_sales share
+        name: sales share
+        expr: "[formula_Sales by Region] / [formula_Sales (all)] * 100"
+        was_auto_generated: false
+      - id: formula_Sales (all)
+        name: Sales (all)
+        expr: "group_aggregate ( sum ( [Sales] ) , { } , query_filters ( ) )"
+        was_auto_generated: false
+      - id: formula_Sales by Region
+        name: Sales by Region
+        expr: "group_aggregate ( sum ( [Sales] ) , query_groups ( ) , query_filters ( ) )"
+        was_auto_generated: false
+      search_query: "[formula_sales share] [Region] [Transaction Date] = 'january 2022'"
+      answer_columns:
+      - name: Region
+      - name: sales share
+      table:
+        table_columns:
+        - column_id: Region
+          show_headline: false
+        - column_id: sales share
+          show_headline: false
+        ordered_column_ids:
+        - Region
+        - sales share
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: MUZE_STUDIO
+        chart_columns:
+        - column_id: Region
+        - column_id: sales share
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Region\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"sales share\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"dataLabels\": true,\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"05d0d354-c226-4d4c-8b79-3bba0d8bba88\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"sales share\"],\"isOpposite\": false}},{\"id\": \"23a342fe-982f-4944-acc3-db0519207a24\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Region\"]}}],\"systemSeriesColors\": [{\"serieName\": \"east\",\"color\": \"#Fce800\"},{\"serieName\": \"midwest\",\"color\": \"#25fb8a\"},{\"serieName\": \"south\",\"color\": \"#A83Dff\"},{\"serieName\": \"southwest\",\"color\": \"#7177fd\"},{\"serieName\": \"west\",\"color\": \"#4E55fd\"}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: fields
+            columns:
+            - Region
+            - sales share
+            mode: COLUMN_DRIVEN
+        custom_visual_props: "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiUmVnaW9uIgogKiAic2FsZXMgc2hhcmUiCiAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogLS0tIEVORCAtLS0gCiAqLwoKY29uc3QgeyBtdXplLCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5IH0gPSB2aXo7CmNvbnN0IHsgRGF0YU1vZGVsIH0gPSBtdXplOwoKY29uc3QgdHNEYXRhID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwoKY29uc3QgUkVHSU9OX0ZJRUxEID0gIlJlZ2lvbiI7CmNvbnN0IFNBTEVTX1NIQVJFX0ZJRUxEID0gInNhbGVzIHNoYXJlIjsKCmNvbnN0IHNjaGVtYSA9IFsKICB7IG5hbWU6IFJFR0lPTl9GSUVMRCwgdHlwZTogJ2RpbWVuc2lvbicgfSwKICB7IG5hbWU6IFNBTEVTX1NIQVJFX0ZJRUxELCB0eXBlOiAnbWVhc3VyZScsIGRlZkFnZ0ZuOiAnc3VtJyB9Cl07Cgpjb25zdCBkbSA9IG5ldyBEYXRhTW9kZWwodHNEYXRhLCBzY2hlbWEpOwpjb25zdCBjYW52YXMgPSBtdXplLmNhbnZhcygpOwoKY2FudmFzCiAgLmRhdGEoZG0pCiAgLnJvd3MoW1NBTEVTX1NIQVJFX0ZJRUxEXSkKICAuY29sdW1ucyhbUkVHSU9OX0ZJRUxEXSkKICAubGF5ZXJzKFsKICAgIHsKICAgICAgbWFyazogJ2JhcicsCiAgICAgIGVuY29kaW5nOiB7CiAgICAgICAgY29sb3I6IHsgdmFsdWU6ICcjNTU3MkFGJyB9IAogICAgICB9CiAgICB9LAogICAgewogICAgICBtYXJrOiAndGV4dCcsCiAgICAgIGVuY29kaW5nOiB7CiAgICAgICAgeDogUkVHSU9OX0ZJRUxELAogICAgICAgIHk6IFNBTEVTX1NIQVJFX0ZJRUxELAogICAgICAgIHRleHQ6IHsKICAgICAgICAgIGZpZWxkOiBTQUxFU19TSEFSRV9GSUVMRCwKICAgICAgICAgIGZvcm1hdHRlcjogKHZhbCkgPT4gewogICAgICAgICAgICBjb25zdCBudW1lcmljVmFsID0gKHZhbCAmJiB0eXBlb2YgdmFsID09PSAnb2JqZWN0JykgPyB2YWwucmF3VmFsdWUgOiB2YWw7CiAgICAgICAgICAgIAogICAgICAgICAgICBpZiAoaXNOYU4obnVtZXJpY1ZhbCkgfHwgbnVtZXJpY1ZhbCA9PT0gbnVsbCkgcmV0dXJuICcnOwoKICAgICAgICAgICAgLy8gSGFuZGxlIGJvdGggMC4yODQ1IChkZWNpbWFsKSBhbmQgMjguNDUgKHdob2xlKSBmb3JtYXRzCiAgICAgICAgICAgIGNvbnN0IGRpc3BsYXlWYWwgPSBudW1lcmljVmFsIDw9IDEgPyBudW1lcmljVmFsICogMTAwIDogbnVtZXJpY1ZhbDsKICAgICAgICAgICAgCiAgICAgICAgICAgIC8vIENIQU5HRUQ6IEluY3JlYXNlZCB0byAyIGRlY2ltYWwgcGxhY2VzCiAgICAgICAgICAgIHJldHVybiBgJHtkaXNwbGF5VmFsLnRvRml4ZWQoMil9JWA7IAogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgZW5jb2RpbmdUcmFuc2Zvcm06IChwb2ludHMpID0+IHsKICAgICAgICBwb2ludHMuZm9yRWFjaChwID0+IHAueSAtPSAxMik7CiAgICAgICAgcmV0dXJuIHBvaW50czsKICAgICAgfQogICAgfQogIF0pCiAgLmNvbmZpZyh7CiAgICBheGVzOiB7CiAgICAgIHg6IHsgbmFtZTogJ1JlZ2lvbicgfSwKICAgICAgeTogewogICAgICAgIG5hbWU6ICdTYWxlcyBTaGFyZSAoJSknLAogICAgICAgIHRpY2tGb3JtYXQ6ICh2YWwpID0+IHsKICAgICAgICAgICAgaWYgKGlzTmFOKHZhbCkpIHJldHVybiAnJzsKICAgICAgICAgICAgY29uc3QgdiA9IHZhbCA8PSAxID8gdmFsICogMTAwIDogdmFsOwogICAgICAgICAgICAvLyBLZXB0IGF4aXMgdGlja3MgYXQgd2hvbGUgbnVtYmVycyBmb3IgYSBjbGVhbmVyIGxvb2sKICAgICAgICAgICAgcmV0dXJuIGAke3YudG9GaXhlZCgwKX0lYDsKICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9KQogIC50aXRsZSgnU2FsZXMgU2hhcmUgQW5hbHlzaXMnKQogIC53aWR0aCh3aW5kb3cuaW5uZXJXaWR0aCAtIDIwKQogIC5oZWlnaHQod2luZG93LmlubmVySGVpZ2h0IC0gNTApCiAgLm1vdW50KCcjY2hhcnQnKTs\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Lm11emUtbGF5ZXItdGV4dCB0ZXh0IHsKICAgIGZpbGw6ICMzMzMgIWltcG9ydGFudDsKICAgIGZvbnQtc2l6ZTogMTJweCAhaW1wb3J0YW50OwogICAgZm9udC13ZWlnaHQ6IGJvbGQ7Cn0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[67.87620064034151,32.123799359658484]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}"
+      display_mode: CHART_MODE
+    viz_guid: b026006c-8606-42a1-ba68-299ac4b454f3
+  - id: Viz_19
+    answer:
+      name: Sales by Monthly Transaction Date
+      tables:
+      - id: Retail Apparel with AGO With Instructions
+        name: Retail Apparel with AGO With Instructions
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Global Date Filter].monthly [Region].east [Region].midwest [Transactions]"
+      answer_columns:
+      - name: Month(Global Date Filter)
+        custom_name: Shipping Date Monthly
+        dynamic_title: "[${PARAMETER:Date Column Picker}] Monthly"
+      - name: Transactions
+      table:
+        table_columns:
+        - column_id: Month(Global Date Filter)
+          show_headline: false
+        - column_id: Transactions
+          show_headline: false
+        ordered_column_ids:
+        - Month(Global Date Filter)
+        - Transactions
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: LINE
+        chart_columns:
+        - column_id: Month(Global Date Filter)
+        - column_id: Transactions
+        axis_configs:
+        - x:
+          - Month(Global Date Filter)
+          "y":
+          - Transactions
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": true,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showAnalyseChangeCta\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}}},\"columnProperties\": [{\"columnId\": \"Month(Global Date Filter)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Transactions\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"dabfce4b-b3da-43bc-8092-37ed0af9b79d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Transactions\"],\"isOpposite\": false}},{\"id\": \"f31fede9-137b-4f13-9788-ca63a2364052\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Global Date Filter)\"]}}],\"seriesColors\": [{\"serieName\": \"445fbf24-7f2f-493a-800d-fd1b03d36186\",\"color\": \"#4E55fd\"}],\"systemSeriesColors\": [{\"serieName\": \"445fbf24-7f2f-493a-800d-fd1b03d36186\",\"color\": \"#4E55fd\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#25fb8a\"},{\"serieName\": \"Transactions\",\"color\": \"#fe3bfc\"}]}"
+      display_mode: CHART_MODE
+      parameter_values:
+      - key: Date Column Picker
+        value: Shipping Date
+    viz_guid: fc5fdc96-4061-4da7-803c-54bfa79f41b3
   filters:
+  - column:
+    - Retail Apparel with AGO With Instructions::Global Date Filter
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
+    - Retail Apparel with AGO With Instructions::Transaction Date
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
   - column:
     - Retail Apparel with AGO With Instructions::Region
     - (Sample) Retail - Apparel::region
+    oper: in
+    values:
+    - East
+    - Midwest
     excluded_visualizations:
     - Viz_5
     - Viz_6
@@ -1016,12 +1124,26 @@ liveboard:
         "y": 28
         height: 8
         width: 12
+      - visualization_id: Viz_18
+        x: 0
+        "y": 36
+        height: 8
+        width: 6
+      - visualization_id: Viz_19
+        x: 6
+        "y": 36
+        height: 8
+        width: 6
       id: a28fb8c1-df6f-4daf-ae4b-efa7768b2da2
   parameter_overrides:
   - key: 5df3f23f-7cdf-43a0-96a6-20c45704efac
     value:
       name: Retail Apparel with AGO With Instructions::Date Column Picker
   ordered_chips:
+  - name: Retail Apparel with AGO With Instructions::Global Date Filter
+    type: FILTER
+  - name: Retail Apparel with AGO With Instructions::Transaction Date
+    type: FILTER
   - name: Retail Apparel with AGO With Instructions::Region
     type: FILTER
   - name: Retail Apparel with AGO With Instructions::Product Category
@@ -1032,6 +1154,16 @@ liveboard:
   - view_guid: 9d7c1db1-89ad-4983-921b-caf3232fe7f7
     name: Midwest View
     view_filters:
+    - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Transaction Date
+      date_filter:
+        type: EXACT_DATE
+        oper: =
     - column:
       - Retail Apparel with AGO With Instructions::Region
       oper: in
@@ -1047,6 +1179,16 @@ liveboard:
   - view_guid: 47099262-52ee-4faa-9567-b57e2c68b1e6
     name: test 2
     view_filters:
+    - column:
+      - Retail Apparel with AGO With Instructions::Global Date Filter
+      date_filter:
+        type: EXACT_DATE
+        oper: =
+    - column:
+      - Retail Apparel with AGO With Instructions::Transaction Date
+      date_filter:
+        type: EXACT_DATE
+        oper: =
     - column:
       - Retail Apparel with AGO With Instructions::Region
       oper: =

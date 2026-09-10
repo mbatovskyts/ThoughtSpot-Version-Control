@@ -1,6 +1,6 @@
 guid: b0d8d902-bdaa-40aa-b673-725535885fe2
 model:
-  name: Retail Apparel with AGO With Instructions
+  name: Retail Apparel with AGO
   description: The "Retail Apparel" worksheet provides a comprehensive overview of sales transactions across various store locations. It captures details about each product, including its category, name, price, and the quantity sold, along with the average number of items ordered per transaction. Additionally, it includes geographical and identification information for each store, such as the city, county, state, zip code, and precise latitude and longitude, as well as the specific transaction dates and IDs. (AI generated)
   model_tables:
   - name: DIM_RETAPP_PRODUCTS
@@ -35,61 +35,42 @@ model:
   - id: formula_Average Items Ordered
     name: Average Items Ordered
     expr: sum ( [FACT_RETAPP_SALES::Quantity] ) / unique count ( [FACT_RETAPP_SALES::Transaction ID] )
-  - id: formula_Data Set Filter
-    name: Data Set Filter
-    expr: if ( ( [Data Set Selection] = "Set A" and [DIM_RETAPP_PRODUCTS::Product Category] = 'Pants' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else if ( ( [Data Set Selection] = "Set B" and [Product Colocate - Product_Catigory::Product Category] = 'Shirts' ) or [Product Colocate - Product_Catigory::Product Category] = 'ALL' ) then true else false
   - id: formula_Global Date Filter
     name: Global Date Filter
-    expr: if ( [Date Column Picker] = "Shipping Date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "Transaction Date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
+    expr: if ( [Date Column Picker] = "shipping date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "transaction date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
   - id: formula_Metric
     name: Metric
-    expr: if ( [Metric Selector] = 'Transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'Sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null
-  - id: formula_NJ Zip Code
-    name: NJ Zip Code
-    expr: if ( [DIM_RETAPP_STORES::Store Zip Code] = "80301" ) then "07101" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "60642" ) then "07102" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "49512" ) then "07103" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "02215" ) then "070104" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "21045" ) then "07105" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "55369" ) then "07302" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "86001" ) then "07304" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "89145" ) then "07305" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "48103" ) then "07307" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "94702" ) then "07310" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "91006" ) then "08540" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "59718" ) then "08542" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "89052" ) then "08522" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "85226" ) then "08401" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "01701" ) then "08404" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "59106" ) then "08608" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "80920" ) then "07030" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "07936" ) then "07501" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "19702" ) then "07502" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "50266" ) then "07503" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "83704" ) then "08099" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "55420" ) then "07207" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "06854" ) then "07962" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "30329" ) then "08023" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "63144" ) then "07846" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "30022" ) then "08362" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "06110" ) then "07099" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "03860" ) then "07091" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "60062" ) then "07007" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "46250" ) then "07303" else if ( [DIM_RETAPP_STORES::Store Zip Code] = "28217" ) then "08641" else [DIM_RETAPP_STORES::Store Zip Code]
-  - id: formula_Region Share
-    name: Region Share
-    expr: sum ( [FACT_RETAPP_SALES::Sales] ) / group_aggregate ( sum ( [FACT_RETAPP_SALES::Sales] ) , query_groups ( ) - { [DIM_RETAPP_STORES::Region] } , query_filters ( ) )
+    expr: if ( [Metric Selector] = 'transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null
+  - id: formula_Month Year
+    name: Month Year
+    expr: concat ( to_string ( year ( [FACT_RETAPP_SALES::Transaction Date] ) ) , if ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) < 10 ) then concat ( "0" , to_string ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) ) ) else to_string ( month_number ( [FACT_RETAPP_SALES::Transaction Date] ) ) )
+  - id: formula_Region Bucket Filter
+    name: Region Bucket Filter
+    expr: if ( [Region Filter Parameter] = [DIM_RETAPP_STORES::Region] ) then "east bucket" else "other regions"
+  - id: formula_Sales Testing
+    name: Sales Testing
+    expr: sum ( [FACT_RETAPP_SALES::Sales] )
   - id: formula_Shipping Date
     name: Shipping Date
     expr: add_days ( [FACT_RETAPP_SALES::Transaction Date] , [FACT_RETAPP_SALES::Quantity] )
-  - id: formula_Store ID Filter
-    name: Store ID Filter
-    expr: '[Store ID Parameter] = [FACT_RETAPP_SALES::Store ID]'
+  - id: formula_Transaction Date Attribute Filter
+    name: Transaction Date Attribute Filter
+    expr: to_string ( [FACT_RETAPP_SALES::Transaction Date] , "YYYY-MM" )
   - id: formula_Transactions
     name: Transactions
     expr: count ( [FACT_RETAPP_SALES::Transaction ID] )
+  - id: formula_model_access
+    name: model_access
+    expr: '''yes'''
   columns:
   - name: Global Date Filter
     formula_id: formula_Global Date Filter
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
-      ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods.
-  - name: Region Share
-    formula_id: formula_Region Share
-    properties:
-      column_type: MEASURE
-      aggregation: SUM
-      index_type: DONT_INDEX
-      ai_context: Percentage contribution of regional performance to total business metrics, supporting market penetration analysis.
-  - name: NJ Zip Code (Demo Only)
-    formula_id: formula_NJ Zip Code
-    properties:
-      column_type: ATTRIBUTE
-      index_type: DONT_INDEX
-      geo_config:
-        region_name:
-          country: UNITED STATES
-          region_name: zip code
-      ai_context: Specialized postal code filter for New Jersey locations enabling focused analysis of specific state market performance.
-  - name: Store ID Filter
-    formula_id: formula_Store ID Filter
-    properties:
-      column_type: ATTRIBUTE
-      index_type: DONT_INDEX
-      ai_context: Boolean filter control for selecting specific retail locations in analytical queries and focused store performance analysis.
+      ai_context: Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods. This column should only be used as attributes. All filters should come from one of the Ago Columns
   - name: Transactions
+    description: This is the unique count of transaction id
     formula_id: formula_Transactions
     properties:
       column_type: MEASURE
@@ -109,7 +90,7 @@ model:
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
-      ai_context: Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.
+      ai_context: Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.This column should only be used as attributes. All filters should come from one of the Ago Columns.
   - name: Metric
     formula_id: formula_Metric
     properties:
@@ -146,7 +127,7 @@ model:
       column_type: MEASURE
       aggregation: SUM
       index_type: DONT_INDEX
-      ai_context: Historical comparison metric displaying performance data from previous months for seasonal analysis and monthly trending.
+      ai_context: This column is used only as a filtering column to align time phases to is correct values. For example the last 6 months should be Months Ago<=6. This month should be Months Ago=1
   - name: Year To Date Filter
     column_id: Retail Apparel AGO Dim::Year To Date Filter
     properties:
@@ -195,7 +176,7 @@ model:
         longitude: true
       synonym_type: USER_DEFINED
       ai_context: Geographic coordinate indicating north-south position of retail locations for mapping and proximity analysis.
-  - name: Region
+  - name: Sales_Region
     column_id: DIM_RETAPP_STORES::Region
     properties:
       column_type: ATTRIBUTE
@@ -236,6 +217,10 @@ model:
       synonyms:
       - Province
       - Territory
+      geo_config:
+        region_name:
+          country: UNITED STATES
+          region_name: state
       synonym_type: AUTO_GENERATED
       ai_context: State-level geographical location of retail stores enabling statewide market analysis and regulatory compliance tracking.
   - name: Store Longitude
@@ -264,7 +249,7 @@ model:
       synonym_type: AUTO_GENERATED
       ai_context: Administrative district location of retail stores supporting regional market analysis and territorial performance assessment.
   - name: Sales
-    description: This shows the total sales for a item but does not include shipping cost
+    description: This Description is coming from the table level.
     column_id: FACT_RETAPP_SALES::Sales
     properties:
       column_type: MEASURE
@@ -272,8 +257,8 @@ model:
       index_type: DONT_INDEX
       currency_type:
         iso_code: USD
-      synonym_type: USER_DEFINED
       ai_context: Total revenue amount for items sold excluding shipping costs, providing core financial performance measurement for business analysis.
+      sync_with_source: true
   - name: Item Price
     column_id: FACT_RETAPP_SALES::Item Price
     properties:
@@ -291,7 +276,7 @@ model:
       index_type: DONT_INDEX
       synonym_type: USER_DEFINED
       default_date_bucket: WEEKLY
-      ai_context: Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.
+      ai_context: Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.This column should only be used as attributes. All filters should come from one of the Ago Columns.
   - name: Quantity
     column_id: FACT_RETAPP_SALES::Quantity
     properties:
@@ -307,32 +292,42 @@ model:
       index_type: DONT_INDEX
       synonym_type: USER_DEFINED
       ai_context: Unique numeric identifier for individual purchase transactions, aggregated at monthly level for business reporting and analysis purposes.
-  - name: Data Set Filter
-    formula_id: formula_Data Set Filter
+  - name: Transaction Date Attribute Filter
+    formula_id: formula_Transaction Date Attribute Filter
     properties:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
-      ai_context: Boolean filter control for segmenting data subsets enabling targeted analysis of specific business data categories.
+  - name: Sales Testing
+    formula_id: formula_Sales Testing
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
+      currency_type:
+        iso_code: USD
+  - name: Month Year
+    formula_id: formula_Month Year
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_attribution_dimension: false
+  - name: Region Bucket Filter
+    formula_id: formula_Region Bucket Filter
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+  - name: model_access
+    formula_id: formula_model_access
+    properties:
+      column_type: ATTRIBUTE
+      index_type: DONT_INDEX
+      is_mandatory_token_filter: false
   properties:
     is_bypass_rls: false
     join_progressive: true
     spotter_config:
       is_spotter_enabled: true
   parameters:
-  - id: 83434443-22ab-42bd-849f-c0f0aaeedc27
-    name: Combined Filter Parameter
-    data_type: CHAR
-    default_value: Shirts
-    description: ''
-  - id: 114c5646-40e2-4c19-a202-a4f6fc3e7b5d
-    name: Data Set Selection
-    data_type: CHAR
-    default_value: Set A
-    list_config:
-      list_choice:
-      - value: Set A
-      - value: Set B
-    description: ''
   - id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
     name: Date Column Picker
     data_type: CHAR
@@ -353,22 +348,8 @@ model:
       - value: Transactions
         display_name: Transactions
     description: ''
-  - id: 24f93e44-b67d-4607-b426-ce9f254e13ff
-    name: Product Category Per
+  - id: b73ced9a-97f1-4055-afe6-021a1c9d7288
+    name: Region Filter Parameter
     data_type: CHAR
-    default_value: pants
-    list_config:
-      list_choice:
-      - value: pants
-      - value: shirts
-    description: ''
-  - id: 3006f74d-9425-4ae7-bbf7-21e1bc5daf64
-    name: Select a Date
-    data_type: DATE
-    default_value: 06/01/2025
-    description: ''
-  - id: ef52aa76-c1f1-4f92-a128-19d8038a073d
-    name: Store ID Parameter
-    data_type: INT64
-    default_value: '5'
+    default_value: east
     description: ''

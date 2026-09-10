@@ -588,6 +588,56 @@ liveboard:
         viz_style: "{}"
       display_mode: CHART_MODE
     viz_guid: dde6fa97-cc60-4069-9a02-5ccd6dd07f93
+  - id: Viz_15
+    answer:
+      name: Total Sales by Monthly Global Date Filter
+      tables:
+      - id: Retail Apparel with AGO
+        name: Retail Apparel with AGO
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "[Sales] [Global Date Filter].monthly"
+      answer_columns:
+      - name: Month(Global Date Filter)
+      - name: Total Sales
+      table:
+        table_columns:
+        - column_id: Month(Global Date Filter)
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Global Date Filter)
+        - Total Sales
+        client_state: ""
+        client_state_v2: "{\"tableVizPropVersion\": \"V1\"}"
+      chart:
+        type: ADVANCED_COLUMN
+        chart_columns:
+        - column_id: Month(Global Date Filter)
+        - column_id: Total Sales
+        client_state: ""
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true,\"showAnalyseChangeCta\": true}},\"columnProperties\": [{\"columnId\": \"Month(Global Date Filter)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure names\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Measure values\",\"columnProperty\": {\"kpiColumnProperties\": {\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9ed8b5f6-f12d-450f-8588-b6245748e812\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"0955277f-746c-4b8c-b71c-09d23ee475c3\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Global Date Filter)\"]}}]}"
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: x-axis
+            axes:
+            - type: FLAT
+              column: Month(Global Date Filter)
+            mode: AXIS_DRIVEN
+          - key: y-axis
+            axes:
+            - type: FLAT
+              column: Total Sales
+            mode: AXIS_DRIVEN
+          - key: slice-with-color
+            mode: AXIS_DRIVEN
+          - key: trellis-by
+            mode: AXIS_DRIVEN
+        custom_visual_props: "{\"clientState\":\"\",\"axisVisualProps\":{\"Month(Global Date Filter)\":{\"axis-label-rotation\":\"Vertical\",\"name-color\":{\"color\":\"#5f5f5f\",\"style\":[]},\"label-color\":{\"color\":\"#858585\",\"style\":[]},\"show-x-axis-gridlines\":false},\"Total Sales\":{\"log-scale\":false,\"inheritAxisNameStyle\":{\"textStyle\":{\"color\":\"#5f5f5f\",\"style\":[]},\"isLinked\":true},\"inheritNF\":{\"format\":{\"category\":\"CURRENCY\",\"isCategoryEditable\":true,\"currencyFormatConfig\":{\"decimals\":0,\"removeTrailingZeroes\":false,\"toSeparateThousands\":true,\"locale\":\"USD\",\"unit\":\"AUTO\"}},\"isLinked\":true},\"inheritValueLabelStyle\":{\"textStyle\":{\"color\":\"#858585\",\"style\":[]},\"isLinked\":true},\"show-y-axis-gridlines\":true,\"y-axis-gridline-style\":{\"dashStyle\":\"Solid\",\"thickness\":1,\"color\":\"#EAEDF2\"}}},\"columnVisualProps\":{\"Total Sales\":{\"bar-size-auto\":true,\"bar-color\":\"#4E55fd\"},\"Month(Global Date Filter)\":{\"cartesian-hide-null-values\":true}},\"displayVisualProps\":{\"display\":{\"fit-to-screen\":false},\"axis-display\":{\"x-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false},\"y-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false}},\"totals-summary\":{\"show-row-grand-totals\":false,\"show-column-grand-totals\":false,\"show-row-sub-totals\":false,\"show-column-sub-totals\":false,\"totals-position\":\"End\"},\"trellis\":{\"trellis-shared-axis\":false,\"trellis-subplot-color\":false,\"trellis-title-show\":true,\"trellis-title-color\":\"#000000\",\"trellis-border-show\":false,\"trellis-border-color\":\"#000000\"},\"other\":{\"chart-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"},\"plotted-area-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"}},\"regression-lines\":{\"show-regression-lines\":false}},\"dataLabelVisualProps\":{\"cartesian-data-labels\":{\"show-labels\":false},\"Total Sales\":{\"cartesian-data-labels\":{\"cartesian-data-labels-enable\":false,\"cartesian-data-labels-show-settings\":false}}},\"legendVisualProps\":{\"legend\":{\"show-legend\":true,\"legend-position\":\"Top\"}},\"tooltipVisualProps\":{\"global-tooltip\":{\"show-tooltip\":true,\"tooltip-show-details\":false,\"tooltip-show-aggregates\":false,\"tooltipBackground\":{\"backgroundColor\":\"#1d232f\",\"borderColor\":\"#1d232f\",\"backgroundOpacity\":\"100\"},\"tooltip-column-name\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]},\"tooltip-column-value\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]}}}}"
+        viz_style: "{}"
+      display_mode: CHART_MODE
+    viz_guid: 097c8ce5-709f-4e3f-9bab-c3c10e9c4314
   groups:
   - id: Group_1
     name: Key Metrics
@@ -748,6 +798,7 @@ liveboard:
         width: 12
       - visualization_id: Viz_13
       - visualization_id: Viz_14
+      - visualization_id: Viz_15
       id: bd9e25d5-407e-4c6c-a7fc-d460423a5374
       group_layouts:
       - id: Group_4

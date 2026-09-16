@@ -1,7 +1,7 @@
 guid: 1277592f-16a9-4f7d-8ffc-88970f6bd18c
 table:
   name: FACT_RETAPP_SALES
-  db: RETAILAPPAREL
+  db: "${bat_db_var}"
   schema: "${bat_schema_var}"
   db_table: FACT_RETAPP_SALES_NEW
   connection:
@@ -70,12 +70,6 @@ table:
       name: DIM_RETAPP_PRODUCTS
       fqn: ad7d476f-1be7-42da-8f25-816af6ee5d16
     "on": "[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]"
-    type: OUTER
-  - name: C_DIM_RETAPP_STORES
-    destination:
-      name: DIM_RETAPP_STORES
-      fqn: 8cd69308-f086-4751-bb1d-ad487e7f503b
-    "on": "[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]"
     type: OUTER
   properties:
     spotter_config:

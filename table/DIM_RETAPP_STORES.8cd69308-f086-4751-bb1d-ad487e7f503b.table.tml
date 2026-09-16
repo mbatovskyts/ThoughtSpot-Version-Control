@@ -1,8 +1,8 @@
 guid: 8cd69308-f086-4751-bb1d-ad487e7f503b
 table:
   name: DIM_RETAPP_STORES
-  db: RETAILAPPAREL
-  schema: PUBLIC
+  db: "${bat_db_var}"
+  schema: "${bat_schema_var}"
   db_table: DIM_RETAPP_STORES
   connection:
     name: TS Demo Snowflake

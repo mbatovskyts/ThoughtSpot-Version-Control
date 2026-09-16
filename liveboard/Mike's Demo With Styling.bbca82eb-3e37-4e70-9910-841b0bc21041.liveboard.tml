@@ -833,6 +833,38 @@ liveboard:
     view_parameters:
     - name: Date Column Picker
       id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+  - view_guid: e48553c3-3306-42c8-b191-08fef8e1a57a
+    name: All Views
+    view_filters:
+    - column:
+      - Retail Apparel with AGO::Sales_Region
+      oper: in
+      values:
+      - midwest
+      - west
+      - East
+      - South
+      - Southwest
+    - column:
+      - Retail Apparel with AGO::Transaction Date
+      date_filter:
+        type: LAST_N_PERIOD
+        number: 5
+        oper: =
+        date_period: YEAR
+        include_current_period: false
+    - column:
+      - Retail Apparel with AGO::Shipping Date
+      date_filter:
+        type: LAST_N_PERIOD
+        number: 8
+        oper: =
+        date_period: YEAR
+        include_current_period: false
+    is_public: false
+    view_parameters:
+    - name: Date Column Picker
+      id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
   - view_guid: 8ac8e1f6-2d22-4636-82e4-d54afdbd61e6
     name: Midwest
     view_filters:

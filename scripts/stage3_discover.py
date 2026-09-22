@@ -81,54 +81,13 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
     manifest: list[dict] = []
     seen_guids: set[str] = set()
 
-    # Resolve tag name → GUID so tag_identifiers filter works reliably.
-    # Returns None when the service account lacks tag-management privilege; in that
-    # case we fall back to fetching all objects and filtering client-side by tag name.
+    # Resolve tag GUID; some TS versions also accept the name directly in tag_identifiers.
+    # Use GUID when available, otherwise fall back to passing the name string.
     tag_guid = _resolve_tag_guid(source_client, tag)
+    tag_id_for_filter = tag_guid if tag_guid else tag
 
     for meta_type in SEARCH_TYPES:
-        if tag_guid:
-            # Fast path: server-side tag filter
-            body: dict = {
-                "metadata": [{"type": meta_type}],
-                "tag_identifiers": [tag_guid],
-                "record_size": -1,
-                "record_offset": 0,
-            }
-            resp = source_client.post("/metadata/search", body)
-            if resp.status_code != 200:
-                print(f"[WARN] search_metadata(tag) type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
-                      file=sys.stderr)
-                continue
-            raw = resp.json()
-            all_objects = _unwrap_response(raw)
-            print(f"[DEBUG] type={meta_type}: server-tag-filter returned {len(all_objects)} objects "
-                  f"(tag_guid={tag_guid})")
-            objects = all_objects
-        else:
-            # Fallback: fetch all objects, filter client-side by tag name
-            body = {
-                "metadata": [{"type": meta_type}],
-                "record_size": -1,
-                "record_offset": 0,
-            }
-            resp = source_client.post("/metadata/search", body)
-            if resp.status_code != 200:
-                print(f"[WARN] search_metadata(all) type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
-                      file=sys.stderr)
-                continue
-            raw = resp.json()
-            all_objects = _unwrap_response(raw)
-            print(f"[DEBUG] type={meta_type}: total_in_org={len(all_objects)} (no tag filter, client-side filter next)")
-            if all_objects:
-                sample = all_objects[0]
-                # Log top-level keys and tag-related fields to show where tags live
-                print(f"[DEBUG] sample keys: {list(sample.keys())}")
-                print(f"[DEBUG] sample top-level tags: {sample.get('tags')}")
-                hdr = sample.get("metadata_header") or {}
-                print(f"[DEBUG] sample metadata_header.tags: {hdr.get('tags')}")
-            objects = [o for o in all_objects if tag in _extract_tags(o)]
-            print(f"[DEBUG] type={meta_type}: {len(objects)} objects have tag '{tag}' (client-side filtered)")
+        objects = _search_by_tag(source_client, meta_type, tag, tag_id_for_filter)
         for obj in objects:
             guid = obj.get("metadata_id", "")
             if guid in seen_guids:
@@ -214,6 +173,72 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
                         report.add_pulled(dep_rec)
 
     return manifest
+
+
+def _search_by_tag(
+    source_client: TSClient,
+    meta_type: str,
+    tag_name: str,
+    tag_id_for_filter: str,
+) -> list[dict]:
+    """
+    Return objects of meta_type tagged with tag_name.
+
+    1. Server-side tag filter with include_headers=true (tag_identifiers accepts GUID or name).
+    2. If 0 results: fetch all with include_headers=true, filter client-side by tag name.
+    """
+    # Primary: server-side tag filter
+    body: dict = {
+        "metadata": [{"type": meta_type}],
+        "tag_identifiers": [tag_id_for_filter],
+        "include_headers": True,
+        "record_size": -1,
+        "record_offset": 0,
+    }
+    resp = source_client.post("/metadata/search", body)
+    if resp.status_code == 200:
+        objects = _unwrap_response(resp.json())
+        print(
+            f"[DEBUG] type={meta_type}: server-tag-filter returned {len(objects)} objects "
+            f"(tag_id={tag_id_for_filter})"
+        )
+        if objects:
+            sample = objects[0]
+            hdr = sample.get("metadata_header") or {}
+            print(f"[DEBUG] sample.metadata_header.tags={hdr.get('tags')}")
+            return objects
+    else:
+        print(
+            f"[WARN] search_metadata(tag) type={meta_type} HTTP {resp.status_code}: {resp.text[:200]}",
+            file=sys.stderr,
+        )
+
+    # Fallback: fetch all objects, filter client-side
+    print(f"[DEBUG] type={meta_type}: 0 via server-tag-filter, falling back to client-side filter")
+    body_all: dict = {
+        "metadata": [{"type": meta_type}],
+        "include_headers": True,
+        "record_size": -1,
+        "record_offset": 0,
+    }
+    resp_all = source_client.post("/metadata/search", body_all)
+    if resp_all.status_code != 200:
+        print(
+            f"[WARN] search_metadata(all) type={meta_type} HTTP {resp_all.status_code}: {resp_all.text[:200]}",
+            file=sys.stderr,
+        )
+        return []
+    all_objects = _unwrap_response(resp_all.json())
+    print(f"[DEBUG] type={meta_type}: total_in_org={len(all_objects)} (client-side filter next)")
+    if all_objects:
+        sample = all_objects[0]
+        print(f"[DEBUG] sample keys: {list(sample.keys())}")
+        print(f"[DEBUG] sample.tags={sample.get('tags')}")
+        hdr = sample.get("metadata_header") or {}
+        print(f"[DEBUG] sample.metadata_header.tags={hdr.get('tags')}")
+    tagged = [o for o in all_objects if tag_name in _extract_tags(o)]
+    print(f"[DEBUG] type={meta_type}: {len(tagged)} objects have tag '{tag_name}' (client-side)")
+    return tagged
 
 
 def _extract_tags(obj: dict) -> list[str]:

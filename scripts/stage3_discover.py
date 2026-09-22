@@ -2,9 +2,8 @@
 """
 Stage 3: Discover tagged objects in the source org.
 
-Finds all objects tagged with <org_key>_readyformigration across all
-in-scope types, resolves dependencies per dependency_mode, and writes
-manifest.json.
+Finds all objects tagged with <migration_tag> across all in-scope types,
+resolves dependencies per dependency_mode, and writes manifest.json.
 
 Objects without obj_id are recorded as failures and excluded.
 """
@@ -21,15 +20,30 @@ from lib.report import RunReport, ObjectRecord
 
 # Types to search per iteration
 # Each entry: (metadata_type, subtypes_list_or_None, canonical_folder_name)
+# NOTE: None subtypes = no subtype filter (catch-all for that metadata_type)
 SEARCH_TYPES = [
-    ("LOGICAL_TABLE", ["TABLE"],              "tables"),
-    ("LOGICAL_TABLE", ["SQL_VIEW"],            "views"),
-    ("LOGICAL_TABLE", ["WORKSHEET"],           "models"),
-    ("LOGICAL_TABLE", ["AGGR_WORKSHEET"],      "models"),  # TODO(verify): Sets subtype
-    ("ANSWER",        None,                    "answers"),
-    ("LIVEBOARD",     None,                    "liveboards"),
-    ("COLLECTION",    None,                    "collections"),
+    ("LOGICAL_TABLE", ["TABLE"],           "tables"),
+    ("LOGICAL_TABLE", ["SQL_VIEW"],          "views"),
+    ("LOGICAL_TABLE", ["WORKSHEET"],         "models"),
+    ("LOGICAL_TABLE", ["AGGR_WORKSHEET"],    "models"),
+    ("LOGICAL_TABLE", ["MODEL"],             "models"),  # newer ThoughtSpot versions
+    ("LOGICAL_TABLE", None,                 "tables"),   # catch-all: any remaining subtype
+    ("ANSWER",        None,                 "answers"),
+    ("LIVEBOARD",     None,                 "liveboards"),
+    ("COLLECTION",    None,                 "collections"),
 ]
+
+
+def _unwrap_response(raw) -> list:
+    """Handle both plain list and wrapped {data: [...]} response formats."""
+    if isinstance(raw, list):
+        return raw
+    if isinstance(raw, dict):
+        # Try common wrapper keys
+        for key in ("data", "results", "objects", "metadata"):
+            if key in raw and isinstance(raw[key], list):
+                return raw[key]
+    return []
 
 
 def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict]:
@@ -37,27 +51,36 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
     dep_mode = cfg.get("dependency_mode", "include")
     manifest: list[dict] = []
     seen_guids: set[str] = set()
-    failed_obj_ids: set[str] = set()
+    debug_logged = False
 
     for meta_type, subtypes, folder in SEARCH_TYPES:
         body: dict = {
             "tag_identifiers": [tag],
-            "record_size": -1,
+            "record_size": 500,
             "record_offset": 0,
+            "type": meta_type,
         }
         if subtypes:
             body["subtypes"] = subtypes
 
-        resp = source_client.post(f"/metadata/search", {
-            **body,
-            "type": meta_type,
-        })
+        resp = source_client.post("/metadata/search", body)
         if resp.status_code != 200:
             print(f"[WARN] search_metadata type={meta_type} subtypes={subtypes} "
                   f"returned HTTP {resp.status_code}", file=sys.stderr)
             continue
 
-        objects = resp.json()
+        raw = resp.json()
+        # Log response shape once for diagnostics
+        if not debug_logged:
+            debug_logged = True
+            shape = type(raw).__name__
+            count = len(raw) if isinstance(raw, list) else (
+                len(raw.get("data", raw.get("results", []))) if isinstance(raw, dict) else "?")
+            print(f"[DEBUG] First search response: HTTP {resp.status_code}, "
+                  f"type={meta_type} subtypes={subtypes}, "
+                  f"response shape={shape}, unwrapped count={count}")
+
+        objects = _unwrap_response(raw)
         for obj in objects:
             guid = obj.get("metadata_id", "")
             if guid in seen_guids:
@@ -124,7 +147,6 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
                                 suggested_action="Assign obj_id to this dependency.",
                             )
                             report.mark_failed(rec)
-                            failed_obj_ids.add(dep_guid)
                             continue
                         dep_entry = {
                             "type": dep_type,

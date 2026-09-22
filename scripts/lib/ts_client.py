@@ -59,7 +59,7 @@ class TSClient:
 
     def authenticate(self) -> None:
         """Obtain a new bearer token for this org. Raises AuthError on failure."""
-        url = f"{self.base_url}/api/rest/2.0/auth/token/custom"
+        url = f"{self.base_url}/api/rest/2.0/auth/token/full"
         payload = {
             "username": self._username,
             "secret_key": self._secret_key,
@@ -271,7 +271,7 @@ class TSClient:
 
     def search_connections(self, name: str | None = None) -> list[dict]:
         body: dict[str, Any] = {"record_size": -1, "record_offset": 0}
-        if name:
+        if name:          
             body["connections"] = [{"name_pattern": name}]
         return self.post_json("/connection/search", body)
 

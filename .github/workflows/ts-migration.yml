@@ -61,6 +61,10 @@ jobs:
               with open(path) as f:
                   cfg = yaml.safe_load(f)
               key = cfg.get('org_key', '')
+              stem = os.path.splitext(os.path.basename(path))[0]
+              if stem != key:
+                  print(f'::notice::Skipping {path}: filename stem "{stem}" != org_key "{key}" (template file?)')
+                  continue
               if target == 'all' or target == key:
                   org_keys.append(key)
 

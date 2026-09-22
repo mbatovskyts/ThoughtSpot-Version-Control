@@ -1,0 +1,32 @@
+org_key: github
+display_name: Mike Batovsky Dev
+
+# Tag applied to objects in the source org to queue them for migration.
+# Objects without this tag are ignored.
+migration_tag: Github_ReadyForMigration
+
+source:
+  base_url: https://ps-internal.thoughtspot.cloud/
+  org_id: 1530174970  # Mike Batovsky Dev
+
+target:
+  base_url: https://ps-internal.thoughtspot.cloud/  # same cluster, different org
+  org_id: 426706049  # Batovsky Prod Demo
+
+# include: pull dependencies even if not tagged
+# skip_if_exists: skip a dependency that already exists in target
+# require_tagged: only migrate explicitly tagged objects (no auto-deps)
+dependency_mode: include
+
+variables:
+  database:
+    ts_variable_name: bat_db_var
+    # Path A confirmed: TML carries ${bat_db_var} — no in-memory substitution needed.
+    # source_value and target_value are used only for the safety gate readback check.
+    source_value: ""   # TODO: fill in the actual source DB name (e.g. DEV_DATABASE)
+    target_value: ""   # TODO: fill in the actual target DB name (e.g. PROD_DATABASE)
+  schema:
+    ts_variable_name: bat_schema_var
+    source_value: ""   # TODO: fill in the actual source schema name
+    target_value: ""   # TODO: fill in the actual target schema name
+  extra: []

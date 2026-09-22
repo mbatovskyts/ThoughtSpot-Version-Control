@@ -1,0 +1,162 @@
+"""
+TML parsing, sanitization, and Path B substitution utilities.
+
+TML files are exported as JSON strings. This module:
+  - Parses TML JSON
+  - Removes guid / fqn fields before commit
+  - Removes the migration tag from the tags list
+  - Detects literal db/schema values (Path B)
+  - Substitutes source -> target db/schema values in memory (Path B, never persisted)
+  - Scans for ts_var() references in RLS rules
+  - Produces deterministic JSON for meaningful git diffs
+"""
+from __future__ import annotations
+
+import json
+import re
+from typing import Any
+
+_TS_VAR_RE = re.compile(r"ts_var\(['\"]([^'\"]+)['\"]\)")
+_GUID_RE = re.compile(
+    r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+    re.IGNORECASE,
+)
+
+# Fields to strip from TML before committing to git
+_STRIP_KEYS = {"guid", "fqn"}
+
+
+def parse_tml(tml_string: str) -> dict:
+    return json.loads(tml_string)
+
+
+def to_tml_string(tml_dict: dict) -> str:
+    """Deterministic JSON serialization for stable git diffs."""
+    return json.dumps(tml_dict, indent=2, sort_keys=True, ensure_ascii=False)
+
+
+def sanitize(tml_dict: dict, migration_tag: str) -> dict:
+    """
+    Return a sanitized copy of tml_dict:
+      - GUIDs / FQNs stripped
+      - migration_tag removed from tags list
+    """
+    result = _deep_strip_keys(tml_dict, _STRIP_KEYS)
+    result = _remove_tag(result, migration_tag)
+    return result
+
+
+def _deep_strip_keys(obj: Any, keys: set) -> Any:
+    if isinstance(obj, dict):
+        return {k: _deep_strip_keys(v, keys) for k, v in obj.items() if k not in keys}
+    if isinstance(obj, list):
+        return [_deep_strip_keys(item, keys) for item in obj]
+    return obj
+
+
+def _remove_tag(tml_dict: dict, tag_name: str) -> dict:
+    """Remove a tag from top-level header.tags list if present."""
+    header = tml_dict.get("header") or tml_dict.get("liveboard", {}).get("header") or {}
+    tags = header.get("tags", [])
+    if tag_name in tags:
+        filtered = [t for t in tags if t != tag_name]
+        # rebuild dict preserving structure
+        import copy
+        result = copy.deepcopy(tml_dict)
+        # locate and patch tags regardless of nesting level
+        _patch_tags(result, tag_name)
+        return result
+    return tml_dict
+
+
+def _patch_tags(obj: Any, tag_name: str) -> None:
+    if isinstance(obj, dict):
+        if "tags" in obj and isinstance(obj["tags"], list):
+            obj["tags"] = [t for t in obj["tags"] if t != tag_name]
+        for v in obj.values():
+            _patch_tags(v, tag_name)
+    elif isinstance(obj, list):
+        for item in obj:
+            _patch_tags(item, tag_name)
+
+
+def get_table_db_schema(tml_dict: dict) -> tuple[str | None, str | None]:
+    """
+    Extract (db, schema) from a LOGICAL_TABLE TML.
+    Returns (None, None) if not present.
+    """
+    table = tml_dict.get("table", {})
+    return table.get("db"), table.get("schema")
+
+
+def is_variable_bound(value: str | None) -> bool:
+    """
+    Heuristic: a value is variable-bound if it looks like a variable reference.
+    ThoughtSpot may use ${varname} or another pattern depending on Path A.
+    This is a best-effort check; the canonical check is the parameterize API.
+    TODO(verify): confirm variable reference format once Path A/B is resolved.
+    """
+    if value is None:
+        return False
+    return value.startswith("${") and value.endswith("}")
+
+
+def path_b_substitute(tml_dict: dict, source_db: str, target_db: str,
+                      source_schema: str, target_schema: str) -> dict:
+    """
+    Path B only: replace literal source db/schema with target values in memory.
+    The result is passed directly to the import API and is NEVER committed.
+    """
+    import copy
+    result = copy.deepcopy(tml_dict)
+    _substitute_in_table(result, source_db, target_db, source_schema, target_schema)
+    return result
+
+
+def _substitute_in_table(obj: Any, src_db: str, tgt_db: str,
+                         src_schema: str, tgt_schema: str) -> None:
+    if isinstance(obj, dict):
+        if "db" in obj and obj["db"] == src_db:
+            obj["db"] = tgt_db
+        if "schema" in obj and obj["schema"] == src_schema:
+            obj["schema"] = tgt_schema
+        for v in obj.values():
+            _substitute_in_table(v, src_db, tgt_db, src_schema, tgt_schema)
+    elif isinstance(obj, list):
+        for item in obj:
+            _substitute_in_table(item, src_db, tgt_db, src_schema, tgt_schema)
+
+
+def scan_ts_var_references(tml_dict: dict) -> set[str]:
+    """
+    Find all ts_var('name') references in the TML (used in RLS rules, formulas).
+    Returns a set of variable names.
+    """
+    text = json.dumps(tml_dict)
+    return set(_TS_VAR_RE.findall(text))
+
+
+def extract_connection_name(tml_dict: dict) -> str | None:
+    """
+    Extract the connection name from a LOGICAL_TABLE TML.
+    Tables reference their connection by name in the TML.
+    """
+    table = tml_dict.get("table", {})
+    db_table = table.get("db_table", {})
+    if isinstance(db_table, dict):
+        connection = db_table.get("connection", {})
+        return connection.get("name")
+    # Fallback: check top-level
+    connection = table.get("connection", {})
+    if isinstance(connection, dict):
+        return connection.get("name")
+    return None
+
+
+def slug_from_name(name: str) -> str:
+    """Convert an object name to a filesystem-safe slug."""
+    import unicodedata
+    normalized = unicodedata.normalize("NFKD", name)
+    ascii_str = normalized.encode("ascii", "ignore").decode()
+    slug = re.sub(r"[^\w\-]", "_", ascii_str).strip("_").lower()
+    return slug[:80] or "unnamed"

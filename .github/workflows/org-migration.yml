@@ -1,0 +1,360 @@
+# Reusable per-org migration workflow.
+# Called once per org by ts-migration.yml with its own concurrency group.
+#
+# Branch layout:
+#   ts-prod  - default branch; holds pipeline scripts + approved TML
+#   ts-dev   - TML-only export branch; scripts are overlaid at runtime from ts-prod
+name: Org Migration (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      org_key:
+        description: 'Org key matching a file in config/orgs/'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run: validate only, no writes, no tag removal'
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      TS_SOURCE_USERNAME:
+        required: true
+      TS_SOURCE_SECRET_KEY:
+        required: true
+      TS_TARGET_USERNAME:
+        required: true
+      TS_TARGET_SECRET_KEY:
+        required: true
+      GH_AUTOMATION_TOKEN:
+        required: false
+
+env:
+  ORG_KEY: ${{ inputs.org_key }}
+  DRY_RUN: ${{ inputs.dry_run }}
+  PYTHON_VERSION: '3.11'
+
+permissions:
+  contents: read
+
+jobs:
+  # ============================================================ #
+  # JOB 1: extract  (GitHub Environment: dev)                    #
+  # Stages 1-6: config, auth, discover, export, sanitize, commit #
+  # ============================================================ #
+  extract:
+    name: Extract (${{ inputs.org_key }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: dev
+    permissions:
+      contents: write
+    outputs:
+      run_id: ${{ steps.ids.outputs.run_id }}
+      timestamp: ${{ steps.ids.outputs.timestamp }}
+      manifest_count: ${{ steps.discover.outputs.manifest_count }}
+    env:
+      TS_SOURCE_USERNAME: ${{ secrets.TS_SOURCE_USERNAME }}
+      TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
+      TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
+      TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+    steps:
+      - name: Checkout ts-dev (TML storage)
+        uses: actions/checkout@v4
+        with:
+          ref: ts-dev
+          fetch-depth: 0
+          token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Overlay pipeline scripts from workflow source
+        # ts-dev stores TML only; scripts live on ts-prod (the workflow source branch).
+        # This step fetches scripts so the rest of the job can run without scripts on ts-dev.
+        run: |
+          git fetch origin ${{ github.ref_name }}
+          git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate run IDs
+        id: ids
+        run: |
+          RUN_ID="${{ github.run_id }}-${{ github.run_attempt }}"
+          TIMESTAMP=$(date -u '+%Y%m%dT%H%M%SZ')
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "timestamp=$TIMESTAMP" >> "$GITHUB_OUTPUT"
+          echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+          echo "TIMESTAMP=$TIMESTAMP" >> "$GITHUB_ENV"
+
+      - name: Stage 1 — Validate config
+        run: python -m scripts.stage1_config
+
+      - name: Stage 2 — Authenticate
+        run: python -m scripts.stage2_auth
+
+      - name: Stage 3 — Discover tagged objects
+        id: discover
+        run: |
+          python -m scripts.stage3_discover
+          COUNT=$(python -c "import json; d=json.load(open('manifest.json')); print(len(d.get('objects',[])))")
+          echo "manifest_count=$COUNT" >> "$GITHUB_OUTPUT"
+
+      - name: Stage 4 — Export TML
+        run: python -m scripts.stage4_export
+
+      - name: Stage 5 — Verify parameterization and sanitize
+        run: python -m scripts.stage5_sanitize
+
+      - name: Stage 6 — Commit to ts-dev
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python -m scripts.stage6_commit
+
+      - name: Upload stage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extract-${{ inputs.org_key }}-${{ steps.ids.outputs.run_id }}
+          path: |
+            manifest.json
+            stage2_auth.json
+            stage3_discover.json
+            stage4_export.json
+            sanitize_results.json
+          retention-days: 90
+
+  # ============================================================ #
+  # JOB 2: promote                                               #
+  # Stage 7: open PR from promote/<org>/<run_id> into ts-prod   #
+  # ============================================================ #
+  promote:
+    name: Promote (${{ inputs.org_key }})
+    needs: extract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      RUN_ID: ${{ needs.extract.outputs.run_id }}
+      TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
+      GH_TOKEN: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+    steps:
+      - name: Checkout ts-prod
+        uses: actions/checkout@v4
+        with:
+          ref: ts-prod
+          fetch-depth: 0
+          token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Stage 7 — Promote to ts-prod
+        run: python -m scripts.stage7_promote
+
+      - name: Upload promote artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promote-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+          path: stage7_promote.json
+          retention-days: 90
+
+  # ============================================================ #
+  # JOB 3: import  (GitHub Environment: prod)                    #
+  # Stages 8-9: prod prep, import                                #
+  # ============================================================ #
+  import:
+    name: Import (${{ inputs.org_key }})
+    needs: [extract, promote]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: prod
+    permissions:
+      contents: read
+    env:
+      RUN_ID: ${{ needs.extract.outputs.run_id }}
+      TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
+      TS_SOURCE_USERNAME: ${{ secrets.TS_SOURCE_USERNAME }}
+      TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
+      TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
+      TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+    steps:
+      - name: Checkout ts-prod
+        uses: actions/checkout@v4
+        with:
+          ref: ts-prod
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download extract artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+
+      - name: Stage 8 — Prod prep (variables, connections, validate)
+        run: python -m scripts.stage8_prod_prep
+
+      - name: Stage 9 — Import to production
+        if: ${{ !inputs.dry_run }}
+        run: python -m scripts.stage9_import
+
+      - name: Stage 9 — Dry-run skip notice
+        if: ${{ inputs.dry_run }}
+        run: echo '::notice::DRY_RUN=true — Stage 9 import skipped, no writes to target'
+
+      - name: Upload import artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: import-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+          path: |
+            prod_prep.json
+            stage9_import.json
+          retention-days: 90
+
+  # ============================================================ #
+  # JOB 4: untag_source  (GitHub Environment: dev)               #
+  # Stage 10: post-check + remove migration tag from successes  #
+  # ============================================================ #
+  untag_source:
+    name: Untag source (${{ inputs.org_key }})
+    needs: [extract, import]
+    if: ${{ !inputs.dry_run && needs.import.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: dev
+    permissions:
+      contents: read
+    env:
+      RUN_ID: ${{ needs.extract.outputs.run_id }}
+      TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
+      TS_SOURCE_USERNAME: ${{ secrets.TS_SOURCE_USERNAME }}
+      TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
+      TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
+      TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download import artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: import-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+
+      - name: Download extract artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+
+      - name: Stage 10 — Post-check and tag cleanup
+        run: python -m scripts.stage10_postcheck
+
+      - name: Upload postcheck artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postcheck-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+          path: stage10_postcheck.json
+          retention-days: 90
+
+  # ============================================================ #
+  # JOB 5: report  (if: always() — runs even on failure)        #
+  # Stage 11: consolidate all stage JSONs and write reports      #
+  # ============================================================ #
+  report:
+    name: Report (${{ inputs.org_key }})
+    needs: [extract, promote, import, untag_source]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      RUN_ID: ${{ needs.extract.outputs.run_id }}
+      TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
+    steps:
+      - name: Checkout ts-dev (TML storage)
+        uses: actions/checkout@v4
+        with:
+          ref: ts-dev
+          fetch-depth: 0
+          token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Overlay pipeline scripts from workflow source
+        run: |
+          git fetch origin ${{ github.ref_name }}
+          git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download all artifacts for this org
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}'
+          merge-multiple: true
+        continue-on-error: true
+
+      - name: Stage 11 — Generate reports
+        run: python -m scripts.stage11_report
+
+      - name: Commit reports to ts-dev
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          REPORT_DIR="reports/$ORG_KEY/${TIMESTAMP}_${RUN_ID}"
+          if [ -d "$REPORT_DIR" ]; then
+            git add "$REPORT_DIR"
+            git diff --cached --quiet || \
+              git commit -m "[skip ci] reports: $ORG_KEY run $RUN_ID" && \
+              git push origin ts-dev || true
+          fi
+
+      - name: Upload final reports as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+          path: reports/${{ inputs.org_key }}/
+          retention-days: 90
+
+      - name: Check for failures (fail the job if any objects failed)
+        run: python -m scripts.stage11_report --check-only

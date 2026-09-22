@@ -21,10 +21,7 @@ from lib.report import RunReport, ObjectRecord
 # Types to search — one API call per main metadata_type.
 # Subtype classification happens client-side from metadata_header.type.
 SEARCH_TYPES = [
-    "LOGICAL_TABLE",
-    "ANSWER",
     "LIVEBOARD",
-    "COLLECTION",
 ]
 
 # Maps metadata_header.type → folder name for LOGICAL_TABLE objects

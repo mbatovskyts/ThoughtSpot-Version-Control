@@ -59,6 +59,11 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      # Stage output files land in workspace so artifact upload/download works across jobs
+      CONFIG_OUT: config.json
+      MANIFEST_OUT: manifest.json
+      EXPORT_OUT: stage4_export.json
+      SANITIZE_OUT: sanitize_results.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
@@ -103,7 +108,7 @@ jobs:
         id: discover
         run: |
           python -m scripts.stage3_discover
-          COUNT=$(python -c "import json; d=json.load(open('manifest.json')); print(len(d.get('objects',[])))")
+          COUNT=$(python -c "import json; data=json.load(open('${MANIFEST_OUT}')); print(len(data))")
           echo "manifest_count=$COUNT" >> "$GITHUB_OUTPUT"
 
       - name: Stage 4 — Export TML
@@ -124,11 +129,11 @@ jobs:
         with:
           name: extract-${{ inputs.org_key }}-${{ steps.ids.outputs.run_id }}
           path: |
+            config.json
             manifest.json
-            stage2_auth.json
-            stage3_discover.json
             stage4_export.json
             sanitize_results.json
+          if-no-files-found: warn
           retention-days: 90
 
   # ============================================================ #
@@ -173,6 +178,7 @@ jobs:
         with:
           name: promote-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
           path: stage7_promote.json
+          if-no-files-found: warn
           retention-days: 90
 
   # ============================================================ #
@@ -194,6 +200,11 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      # Point to the downloaded artifact files (same cwd-relative names as extract job)
+      CONFIG_OUT: config.json
+      EXPORT_OUT: stage4_export.json
+      SANITIZE_OUT: sanitize_results.json
+      PROD_PREP_OUT: prod_prep.json
     steps:
       - name: Checkout ts-prod
         uses: actions/checkout@v4
@@ -233,6 +244,7 @@ jobs:
           path: |
             prod_prep.json
             stage9_import.json
+          if-no-files-found: warn
           retention-days: 90
 
   # ============================================================ #
@@ -287,6 +299,7 @@ jobs:
         with:
           name: postcheck-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
           path: stage10_postcheck.json
+          if-no-files-found: warn
           retention-days: 90
 
   # ============================================================ #
@@ -354,6 +367,7 @@ jobs:
         with:
           name: reports-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
           path: reports/${{ inputs.org_key }}/
+          if-no-files-found: warn
           retention-days: 90
 
       - name: Check for failures (fail the job if any objects failed)

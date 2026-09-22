@@ -42,6 +42,10 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
               file=sys.stderr)
         sys.exit(1)
 
+    if not manifest:
+        print(f"[STAGE 7] Manifest is empty — 0 objects discovered, nothing to promote.")
+        return ""
+
     os.chdir(repo_root)
     run(["git", "config", "user.email", "github-actions@github.com"])
     run(["git", "config", "user.name", "GitHub Actions"])
@@ -51,8 +55,14 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
     run(["git", "fetch", "origin", DEV_BRANCH])
     run(["git", "checkout", "-B", promote_branch, f"origin/{PROD_BRANCH}"])
 
-    # Bring in only orgs/<org_key>/ from dev
+    # Check if org TML exists on ts-dev before attempting checkout
     org_path = f"orgs/{org_key}/"
+    ls_result = run(["git", "ls-tree", f"origin/{DEV_BRANCH}", org_path],
+                    capture=True, check=False)
+    if not ls_result.stdout.strip():
+        print(f"[STAGE 7] No TML found at '{org_path}' on {DEV_BRANCH} — nothing to promote.")
+        return ""
+
     run(["git", "checkout", f"origin/{DEV_BRANCH}", "--", org_path])
 
     status = run(["git", "status", "--porcelain", org_path], capture=True)

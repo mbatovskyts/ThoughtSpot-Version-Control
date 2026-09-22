@@ -1,0 +1,221 @@
+#!/usr/bin/env python3
+"""
+Stage 8: Production preparation.
+
+1. Sync variables to target org (create missing definitions, set org values from config).
+2. Hard stop if any TABLE_MAPPING variable has no target_value in config.
+3. Connection preflight: verify each connection name found in table TML exists in target.
+4. Validate-only import to catch per-object issues before the real import.
+
+Never reads source variable values. Only writes target_value from config.
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.ts_client import TSClient
+from lib.tml_utils import parse_tml
+
+
+def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -> list[dict]:
+    """
+    Ensure variable definitions exist in the target; set org-scoped values.
+    Returns list of issues.
+    """
+    issues = []
+    variables_cfg = cfg.get("variables", {})
+
+    # Build map from ts_variable_name -> config entry
+    var_map: dict[str, dict] = {}
+    for field in ("database", "schema"):
+        v = variables_cfg.get(field, {})
+        name = v.get("ts_variable_name")
+        if name:
+            var_map[name] = {"type": "TABLE_MAPPING", **v}
+    for extra in variables_cfg.get("extra", []):
+        name = extra.get("ts_variable_name")
+        if name:
+            var_map[name] = extra
+
+    # Add ts_var() references found in TML
+    for name in var_sync_set:
+        if name not in var_map:
+            var_map[name] = {"ts_variable_name": name, "type": "FORMULA_VARIABLE"}
+
+    # Hard stop: TABLE_MAPPING without target_value
+    for name, v in var_map.items():
+        if v.get("type") == "TABLE_MAPPING" and not v.get("target_value"):
+            issues.append({
+                "severity": "FATAL",
+                "variable": name,
+                "message": f"TABLE_MAPPING variable '{name}' has no target_value in config. Hard stop.",
+            })
+
+    if any(i["severity"] == "FATAL" for i in issues):
+        for i in issues:
+            print(f"[FATAL] {i['message']}", file=sys.stderr)
+        sys.exit(1)
+
+    # Check variable API availability
+    try:
+        target_client.search_variables()
+    except Exception as e:
+        msg = str(e)
+        if "403" in msg or "not enabled" in msg.lower():
+            issues.append({
+                "severity": "WARNING",
+                "message": "Variable API not enabled on target cluster. "
+                           "Contact ThoughtSpot Support to enable it (26.4.0.cl+). "
+                           "Variable sync skipped.",
+            })
+            print("[WARN] Variable API not enabled — skipping variable sync.", file=sys.stderr)
+            return issues
+        raise
+
+    for name, v in var_map.items():
+        var_type = v.get("type", "TABLE_MAPPING")
+        target_value = v.get("target_value")
+        is_sensitive = v.get("is_sensitive", False)
+
+        # Check if variable exists
+        existing = target_client.search_variables(name_pattern=name)
+        found = next((x for x in existing if x.get("name") == name), None)
+
+        if found:
+            found_type = found.get("type", "")
+            if found_type and found_type != var_type:
+                issues.append({
+                    "severity": "ERROR",
+                    "variable": name,
+                    "message": f"Variable '{name}' exists in target with type '{found_type}', "
+                               f"config expects '{var_type}'. Cannot proceed with this variable.",
+                })
+                continue
+        else:
+            try:
+                target_client.create_variable(name, var_type, is_sensitive=is_sensitive)
+                print(f"[VARS] Created variable '{name}' ({var_type}) in target.")
+            except Exception as e:
+                issues.append({"severity": "ERROR", "variable": name,
+                                "message": f"Failed to create variable '{name}': {e}"})
+                continue
+
+        # Set org-scoped value (TABLE_MAPPING and CONNECTION_PROPERTY only)
+        if target_value and var_type in ("TABLE_MAPPING", "CONNECTION_PROPERTY"):
+            try:
+                target_client.set_variable_org_value(name, target_value)
+                print(f"[VARS] Set org value for variable '{name}'.")
+            except Exception as e:
+                issues.append({"severity": "ERROR", "variable": name,
+                                "message": f"Failed to set value for '{name}': {e}"})
+        elif var_type == "FORMULA_VARIABLE" and not target_value:
+            issues.append({
+                "severity": "INFO",
+                "variable": name,
+                "message": f"FORMULA_VARIABLE '{name}' has no target_value — "
+                           "values are assigned per-user at login (ABAC). Definition created only.",
+            })
+
+    return issues
+
+
+def connection_preflight(target_client: TSClient, connection_names: set[str]) -> list[dict]:
+    issues = []
+    for name in connection_names:
+        try:
+            conns = target_client.search_connections(name=name)
+            exact = [c for c in conns if c.get("name") == name]
+            if not exact:
+                issues.append({
+                    "severity": "ERROR",
+                    "connection": name,
+                    "message": f'Connection "{name}" missing in target org.',
+                })
+                print(f"[PREFLIGHT] FAIL: connection '{name}' not found in target.",
+                      file=sys.stderr)
+            else:
+                print(f"[PREFLIGHT] OK: connection '{name}' found in target.")
+        except Exception as e:
+            issues.append({"severity": "ERROR", "connection": name,
+                           "message": f"Error checking connection '{name}': {e}"})
+    return issues
+
+
+def validate_import(target_client: TSClient, tml_strings: list[str]) -> list[dict]:
+    """Run VALIDATE_ONLY import; return per-object validation issues."""
+    try:
+        result = target_client.import_tml(tml_strings, import_policy="VALIDATE_ONLY")
+        # Parse per-object results
+        # TODO(verify): exact structure of synchronous import response
+        objects = result if isinstance(result, list) else result.get("object", [])
+        issues = []
+        for obj in objects:
+            status = obj.get("response", {}).get("status", {}).get("status_code", "")
+            if status not in ("OK", "WARNING"):
+                issues.append({
+                    "severity": "VALIDATION_FAILED",
+                    "obj_id": obj.get("response", {}).get("header", {}).get("obj_id_ref", ""),
+                    "message": str(obj.get("response", {}).get("status", "")),
+                })
+        return issues
+    except Exception as e:
+        return [{"severity": "ERROR", "message": f"Validate-only import failed: {e}"}]
+
+
+def main():
+    org_key = os.environ["ORG_KEY"]
+    cfg_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
+    sanitize_path = os.environ.get("SANITIZE_OUT",
+                                   f"/tmp/ts_migration_{org_key}_sanitize_results.json")
+    export_path = os.environ.get("EXPORT_OUT", f"/tmp/ts_migration_{org_key}_export_results.json")
+    repo_root = Path(os.environ.get("REPO_ROOT", "."))
+
+    cfg = json.loads(Path(cfg_path).read_text())
+    sanitize_data = json.loads(Path(sanitize_path).read_text())
+    export_results = json.loads(Path(export_path).read_text())
+
+    var_sync_set = set(sanitize_data.get("var_sync_set", []))
+    connection_names = set(sanitize_data.get("connection_names", []))
+
+    tgt = cfg["target"]
+    target_client = TSClient(
+        tgt["base_url"], tgt["org_id"],
+        os.environ["TS_TARGET_USERNAME"],
+        os.environ["TS_TARGET_SECRET_KEY"],
+    )
+    target_client.authenticate()
+
+    var_issues = sync_variables(target_client, cfg, var_sync_set)
+    conn_issues = connection_preflight(target_client, connection_names)
+
+    # Collect TML strings for validate-only
+    tml_strings = []
+    for res in export_results:
+        if res.get("status") == "success" and res.get("tml_path"):
+            tml_path = repo_root / res["tml_path"]
+            if tml_path.exists():
+                tml_strings.append(tml_path.read_text(encoding="utf-8"))
+
+    validation_issues = []
+    if tml_strings:
+        validation_issues = validate_import(target_client, tml_strings)
+
+    all_issues = var_issues + conn_issues + validation_issues
+    out_path = os.environ.get("PROD_PREP_OUT",
+                              f"/tmp/ts_migration_{org_key}_prod_prep.json")
+    Path(out_path).write_text(json.dumps(all_issues, indent=2), encoding="utf-8")
+
+    fatal = [i for i in all_issues if i.get("severity") in ("FATAL", "ERROR")]
+    print(f"[STAGE 8] Prod prep complete. {len(fatal)} errors, "
+          f"{len(all_issues) - len(fatal)} warnings/info.")
+    if fatal:
+        print(f"[WARN] {len(fatal)} issues found. Affected objects will be excluded.",
+              file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

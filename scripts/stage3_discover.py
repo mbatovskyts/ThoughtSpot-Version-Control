@@ -120,6 +120,13 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
             raw = resp.json()
             all_objects = _unwrap_response(raw)
             print(f"[DEBUG] type={meta_type}: total_in_org={len(all_objects)} (no tag filter, client-side filter next)")
+            if all_objects:
+                sample = all_objects[0]
+                # Log top-level keys and tag-related fields to show where tags live
+                print(f"[DEBUG] sample keys: {list(sample.keys())}")
+                print(f"[DEBUG] sample top-level tags: {sample.get('tags')}")
+                hdr = sample.get("metadata_header") or {}
+                print(f"[DEBUG] sample metadata_header.tags: {hdr.get('tags')}")
             objects = [o for o in all_objects if tag in _extract_tags(o)]
             print(f"[DEBUG] type={meta_type}: {len(objects)} objects have tag '{tag}' (client-side filtered)")
         for obj in objects:
@@ -210,9 +217,12 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
 
 
 def _extract_tags(obj: dict) -> list[str]:
-    header = obj.get("metadata_header") or {}
-    tags = header.get("tags") or []
-    return [t if isinstance(t, str) else t.get("name", "") for t in tags]
+    # Tags may sit at top level OR nested under metadata_header depending on TS version
+    tag_list = obj.get("tags") or []
+    if not tag_list:
+        header = obj.get("metadata_header") or {}
+        tag_list = header.get("tags") or []
+    return [t if isinstance(t, str) else t.get("name", "") for t in tag_list]
 
 
 def main():

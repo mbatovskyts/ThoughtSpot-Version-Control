@@ -1,0 +1,89 @@
+# Entry-point workflow: one click migrates any single org or all orgs.
+# Triggered manually via workflow_dispatch from the Actions UI.
+name: ThoughtSpot Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      org:
+        description: 'Org key to migrate (e.g. "sales") or "all" for every configured org'
+        required: true
+        default: 'all'
+        type: string
+      dry_run:
+        description: 'Dry run: validate only, no writes to target, no tag removal'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  # ------------------------------------------------------------------ #
+  # setup: read config/orgs/*.yml and build the matrix of org keys      #
+  # ------------------------------------------------------------------ #
+  setup:
+    name: Build org matrix
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build matrix
+        id: build
+        shell: python3 {0}
+        env:
+          INPUT_ORG: ${{ inputs.org }}
+        run: |
+          import os, json, glob
+          import yaml
+
+          target = os.environ['INPUT_ORG'].strip().lower()
+          configs = sorted(glob.glob('config/orgs/*.yml'))
+          if not configs:
+              print('::error::No org config files found in config/orgs/')
+              raise SystemExit(1)
+
+          org_keys = []
+          for path in configs:
+              with open(path) as f:
+                  cfg = yaml.safe_load(f)
+              key = cfg.get('org_key', '')
+              if target == 'all' or target == key:
+                  org_keys.append(key)
+
+          if not org_keys:
+              print(f'::error::No org found matching "{target}"')
+              raise SystemExit(1)
+
+          matrix = json.dumps({'org_key': org_keys})
+          print(f'matrix={matrix}')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              fh.write(f'matrix={matrix}\n')
+
+      - name: Install PyYAML for setup step
+        run: pip install pyyaml --quiet
+        if: false  # already available in ubuntu-latest; kept as fallback
+
+  # ------------------------------------------------------------------ #
+  # migrate: one reusable-workflow call per org, no fail-fast           #
+  # ------------------------------------------------------------------ #
+  migrate:
+    name: Migrate org ${{ matrix.org_key }}
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    uses: ./.github/workflows/org-migration.yml
+    with:
+      org_key: ${{ matrix.org_key }}
+      dry_run: ${{ inputs.dry_run }}
+    secrets: inherit
+    concurrency:
+      group: ts-migration-${{ matrix.org_key }}
+      cancel-in-progress: false

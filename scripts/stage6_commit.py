@@ -42,6 +42,9 @@ def commit_and_push(org_key: str, run_id: str, repo_root: str = ".") -> bool:
 
     # Stage only this org's files
     org_path = f"orgs/{org_key}/"
+    if not Path(org_path).exists():
+        print(f"[STAGE 6] No TML files found at '{org_path}' — 0 objects exported, nothing to commit.")
+        return False
     run(["git", "add", org_path])
 
     status = run(["git", "status", "--porcelain", org_path], capture=True)

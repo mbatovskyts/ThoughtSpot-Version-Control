@@ -99,6 +99,33 @@ class TSClient:
         self._session.headers["X-Org-Id"] = str(self.org_id)
         log.debug("Set X-Org-Id=%s for session", self.org_id)
 
+        # Verify which org the session landed in — crucial for cluster-level keys.
+        try:
+            me_resp = self._session.get(
+                f"{self.base_url}/api/rest/2.0/auth/session/user", timeout=15
+            )
+            if me_resp.status_code == 200:
+                me = me_resp.json()
+                session_org = (
+                    me.get("org_id")
+                    or (me.get("orgs") or [{}])[0].get("org_id")
+                    or "unknown"
+                )
+                log.info(
+                    "Session user=%s session_org=%s configured_org=%s",
+                    me.get("name") or me.get("username") or "?",
+                    session_org,
+                    self.org_id,
+                )
+                import sys as _sys
+                print(
+                    f"[AUTH] session_org={session_org} configured_org={self.org_id} "
+                    f"user={me.get('name') or me.get('username') or '?'}",
+                    file=_sys.stderr,
+                )
+        except Exception as _e:
+            log.debug("Session-user check failed (non-fatal): %s", _e)
+
     def _ensure_token(self) -> None:
         if self._token is None or time.time() >= self._token_expires_at:
             self.authenticate()

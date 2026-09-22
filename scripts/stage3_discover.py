@@ -55,8 +55,8 @@ def _folder_for_object(meta_type: str, obj: dict) -> str:
     return {"ANSWER": "answers", "LIVEBOARD": "liveboards", "COLLECTION": "collections"}.get(meta_type, "misc")
 
 
-def _resolve_tag_guid(source_client: TSClient, tag_name: str) -> str:
-    """Return the GUID of a tag by exact name. Fetches all tags and matches client-side."""
+def _resolve_tag_guid(source_client: TSClient, tag_name: str) -> str | None:
+    """Return the GUID of a tag by exact name, or None if not found / tags not visible."""
     # Fetch all tags without a server-side filter — name_pattern behaviour varies by version
     all_tags = source_client.search_tags()
     all_names = [t.get("name") for t in all_tags]
@@ -66,9 +66,13 @@ def _resolve_tag_guid(source_client: TSClient, tag_name: str) -> str:
             guid = t.get("id") or t.get("tag_id") or t.get("identifier", "")
             print(f"[STAGE 3] Resolved tag '{tag_name}' → GUID {guid}")
             return guid
-    print(f"[ERROR] Tag '{tag_name}' not found in source org. "
-          f"Available tags: {all_names}", file=sys.stderr)
-    sys.exit(1)
+    print(
+        f"[WARN] Tag '{tag_name}' not found via /tags/search "
+        f"(service account may lack tag-management privilege). "
+        f"Falling back to client-side tag filtering on all objects.",
+        file=sys.stderr,
+    )
+    return None
 
 
 def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict]:
@@ -77,41 +81,47 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
     manifest: list[dict] = []
     seen_guids: set[str] = set()
 
-    # Resolve tag name → GUID so tag_identifiers filter works reliably
+    # Resolve tag name → GUID so tag_identifiers filter works reliably.
+    # Returns None when the service account lacks tag-management privilege; in that
+    # case we fall back to fetching all objects and filtering client-side by tag name.
     tag_guid = _resolve_tag_guid(source_client, tag)
 
     for meta_type in SEARCH_TYPES:
-        # Debug: log total object count without tag filter to verify connectivity
-        probe_resp = source_client.post("/metadata/search", {
-            "metadata": [{"type": meta_type}],
-            "record_size": 1,
-            "record_offset": 0,
-        })
-        probe_total = "?"
-        if probe_resp.status_code == 200:
-            probe_raw = probe_resp.json()
-            probe_total = len(probe_raw) if isinstance(probe_raw, list) else "?"
-        print(f"[DEBUG] type={meta_type}: total_in_org(sample)={probe_total} (no tag filter)")
-
-        body: dict = {
-            "metadata": [{"type": meta_type}],
-            "tag_identifiers": [tag_guid],
-            "record_size": 500,
-            "record_offset": 0,
-        }
-
-        resp = source_client.post("/metadata/search", body)
-        if resp.status_code != 200:
-            print(f"[WARN] search_metadata type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
-                  file=sys.stderr)
-            continue
-
-        raw = resp.json()
-        print(f"[DEBUG] type={meta_type}: HTTP {resp.status_code}, "
-              f"response={type(raw).__name__}, count={len(raw) if isinstance(raw, list) else '?'} "
-              f"(tag_identifier={tag_guid})")
-
-        objects = _unwrap_response(raw)
+        if tag_guid:
+            # Fast path: server-side tag filter
+            body: dict = {
+                "metadata": [{"type": meta_type}],
+                "tag_identifiers": [tag_guid],
+                "record_size": -1,
+                "record_offset": 0,
+            }
+            resp = source_client.post("/metadata/search", body)
+            if resp.status_code != 200:
+                print(f"[WARN] search_metadata(tag) type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
+                      file=sys.stderr)
+                continue
+            raw = resp.json()
+            all_objects = _unwrap_response(raw)
+            print(f"[DEBUG] type={meta_type}: server-tag-filter returned {len(all_objects)} objects "
+                  f"(tag_guid={tag_guid})")
+            objects = all_objects
+        else:
+            # Fallback: fetch all objects, filter client-side by tag name
+            body = {
+                "metadata": [{"type": meta_type}],
+                "record_size": -1,
+                "record_offset": 0,
+            }
+            resp = source_client.post("/metadata/search", body)
+            if resp.status_code != 200:
+                print(f"[WARN] search_metadata(all) type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
+                      file=sys.stderr)
+                continue
+            raw = resp.json()
+            all_objects = _unwrap_response(raw)
+            print(f"[DEBUG] type={meta_type}: total_in_org={len(all_objects)} (no tag filter, client-side filter next)")
+            objects = [o for o in all_objects if tag in _extract_tags(o)]
+            print(f"[DEBUG] type={meta_type}: {len(objects)} objects have tag '{tag}' (client-side filtered)")
         for obj in objects:
             guid = obj.get("metadata_id", "")
             if guid in seen_guids:
@@ -234,6 +244,17 @@ def main():
     if report.failed:
         print(f"[WARN] {len(report.failed)} objects excluded (no obj_id). See failures.",
               file=sys.stderr)
+
+    tagged_count = sum(1 for e in manifest if e.get("reason") == "tagged")
+    if tagged_count == 0:
+        print(
+            f"[ERROR] 0 objects with tag '{cfg['migration_tag']}' found in source org "
+            f"{src['org_id']}. Check [AUTH] lines above — if session_org != configured_org, "
+            f"the service account is not a member of that org and needs to be added in "
+            f"ThoughtSpot Admin > Orgs.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

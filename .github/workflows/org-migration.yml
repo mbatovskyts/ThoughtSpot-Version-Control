@@ -286,6 +286,10 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      CONFIG_OUT: config.json
+      MANIFEST_OUT: manifest.json
+      IMPORT_OUT: stage9_import.json
+      POSTCHECK_OUT: stage10_postcheck.json
     steps:
       - name: Checkout
         uses: actions/checkout@v4

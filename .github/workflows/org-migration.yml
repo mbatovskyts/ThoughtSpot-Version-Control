@@ -1,5 +1,9 @@
 # Reusable per-org migration workflow.
 # Called once per org by ts-migration.yml with its own concurrency group.
+#
+# Branch layout:
+#   ts-prod  - default branch; holds pipeline scripts + approved TML
+#   ts-dev   - TML-only export branch; scripts are overlaid at runtime from ts-prod
 name: Org Migration (reusable)
 
 on:
@@ -15,17 +19,14 @@ on:
         default: false
         type: boolean
     secrets:
-      # Source cluster (dev environment)
       TS_SOURCE_USERNAME:
         required: true
       TS_SOURCE_SECRET_KEY:
         required: true
-      # Target cluster (prod environment)
       TS_TARGET_USERNAME:
         required: true
       TS_TARGET_SECRET_KEY:
         required: true
-      # GitHub PAT for opening/auto-merging PRs (needs repo + workflow scopes)
       GH_AUTOMATION_TOKEN:
         required: false
 
@@ -59,12 +60,19 @@ jobs:
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
     steps:
-      - name: Checkout ts-dev
+      - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
         with:
           ref: ts-dev
           fetch-depth: 0
           token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Overlay pipeline scripts from workflow source
+        # ts-dev stores TML only; scripts live on ts-prod (the workflow source branch).
+        # This step fetches scripts so the rest of the job can run without scripts on ts-dev.
+        run: |
+          git fetch origin ${{ github.ref_name }}
+          git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -170,8 +178,6 @@ jobs:
   # ============================================================ #
   # JOB 3: import  (GitHub Environment: prod)                    #
   # Stages 8-9: prod prep, import                                #
-  # The prod environment's required-reviewers gate is the        #
-  # approval mechanism; skip reviewers for hands-off runs.      #
   # ============================================================ #
   import:
     name: Import (${{ inputs.org_key }})
@@ -232,8 +238,6 @@ jobs:
   # ============================================================ #
   # JOB 4: untag_source  (GitHub Environment: dev)               #
   # Stage 10: post-check + remove migration tag from successes  #
-  # Must use dev environment (source secrets). Separate job     #
-  # because a job can only use one environment at a time.       #
   # ============================================================ #
   untag_source:
     name: Untag source (${{ inputs.org_key }})
@@ -301,12 +305,17 @@ jobs:
       RUN_ID: ${{ needs.extract.outputs.run_id }}
       TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
     steps:
-      - name: Checkout ts-dev
+      - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
         with:
           ref: ts-dev
           fetch-depth: 0
           token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Overlay pipeline scripts from workflow source
+        run: |
+          git fetch origin ${{ github.ref_name }}
+          git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -322,7 +331,7 @@ jobs:
         with:
           pattern: '*-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}'
           merge-multiple: true
-        continue-on-error: true  # some artifacts may be absent if upstream jobs failed
+        continue-on-error: true
 
       - name: Stage 11 — Generate reports
         run: python -m scripts.stage11_report
@@ -348,6 +357,4 @@ jobs:
           retention-days: 90
 
       - name: Check for failures (fail the job if any objects failed)
-        run: |
-          # stage11_report.py exits 1 if there were failures; propagate that here
-          python -m scripts.stage11_report --check-only
+        run: python -m scripts.stage11_report --check-only

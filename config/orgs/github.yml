@@ -4,6 +4,10 @@ display_name: Mike Batovsky Dev
 # Tag applied to objects in the source org to queue them for migration.
 # Objects without this tag are ignored.
 migration_tag: Github_ReadyForMigration
+# GUID of the tag above. Find it in ThoughtSpot Admin > Tags, click the tag,
+# copy the GUID from the URL (?id=...). Required when the service account lacks
+# TAGMANAGEMENT privilege (can't resolve it via /tags/search).
+migration_tag_guid: ""
 
 source:
   base_url: https://ps-internal.thoughtspot.cloud/

@@ -153,6 +153,7 @@ jobs:
       RUN_ID: ${{ needs.extract.outputs.run_id }}
       TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
       GH_TOKEN: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+      MANIFEST_OUT: manifest.json
     steps:
       - name: Checkout ts-prod
         uses: actions/checkout@v4
@@ -169,6 +170,11 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Download extract artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
 
       - name: Stage 7 — Promote to ts-prod
         run: python -m scripts.stage7_promote

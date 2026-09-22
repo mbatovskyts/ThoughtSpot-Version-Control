@@ -174,7 +174,7 @@ class TSClient:
     ) -> list[dict]:
         body: dict[str, Any] = {"record_size": record_size, "record_offset": 0}
         if types:
-            body["type"] = types[0] if len(types) == 1 else types
+            body["metadata"] = [{"type": t} for t in types]
         if subtypes:
             body["subtypes"] = subtypes
         if tag_identifiers:

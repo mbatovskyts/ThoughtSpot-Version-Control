@@ -55,29 +55,59 @@ def _folder_for_object(meta_type: str, obj: dict) -> str:
     return {"ANSWER": "answers", "LIVEBOARD": "liveboards", "COLLECTION": "collections"}.get(meta_type, "misc")
 
 
+def _resolve_tag_guid(source_client: TSClient, tag_name: str) -> str:
+    """Return the GUID of a tag by name. Exits with error if not found."""
+    tags = source_client.search_tags(name_pattern=tag_name)
+    for t in tags:
+        if t.get("name") == tag_name:
+            guid = t.get("id") or t.get("tag_id") or t.get("identifier", "")
+            print(f"[STAGE 3] Resolved tag '{tag_name}' → GUID {guid}")
+            return guid
+    all_names = [t.get("name") for t in tags]
+    print(f"[ERROR] Tag '{tag_name}' not found in source org. "
+          f"Tags matching pattern: {all_names}", file=sys.stderr)
+    sys.exit(1)
+
+
 def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict]:
     tag = cfg["migration_tag"]
     dep_mode = cfg.get("dependency_mode", "include")
     manifest: list[dict] = []
     seen_guids: set[str] = set()
 
+    # Resolve tag name → GUID so tag_identifiers filter works reliably
+    tag_guid = _resolve_tag_guid(source_client, tag)
+
     for meta_type in SEARCH_TYPES:
+        # Debug: log total object count without tag filter to verify connectivity
+        probe_resp = source_client.post("/metadata/search", {
+            "metadata": [{"type": meta_type}],
+            "record_size": 1,
+            "record_offset": 0,
+        })
+        probe_total = "?"
+        if probe_resp.status_code == 200:
+            probe_raw = probe_resp.json()
+            probe_total = len(probe_raw) if isinstance(probe_raw, list) else "?"
+        print(f"[DEBUG] type={meta_type}: total_in_org(sample)={probe_total} (no tag filter)")
+
         body: dict = {
             "metadata": [{"type": meta_type}],
-            "tag_identifiers": [tag],
+            "tag_identifiers": [tag_guid],
             "record_size": 500,
             "record_offset": 0,
         }
 
         resp = source_client.post("/metadata/search", body)
         if resp.status_code != 200:
-            print(f"[WARN] search_metadata type={meta_type} returned HTTP {resp.status_code}",
+            print(f"[WARN] search_metadata type={meta_type} returned HTTP {resp.status_code}: {resp.text[:200]}",
                   file=sys.stderr)
             continue
 
         raw = resp.json()
         print(f"[DEBUG] type={meta_type}: HTTP {resp.status_code}, "
-              f"response={type(raw).__name__}, count={len(raw) if isinstance(raw, list) else '?'}")
+              f"response={type(raw).__name__}, count={len(raw) if isinstance(raw, list) else '?'} "
+              f"(tag_identifier={tag_guid})")
 
         objects = _unwrap_response(raw)
         for obj in objects:

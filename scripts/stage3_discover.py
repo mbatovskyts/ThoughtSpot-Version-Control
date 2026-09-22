@@ -18,32 +18,41 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
 from lib.report import RunReport, ObjectRecord
 
-# Types to search per iteration
-# Each entry: (metadata_type, subtypes_list_or_None, canonical_folder_name)
-# NOTE: None subtypes = no subtype filter (catch-all for that metadata_type)
+# Types to search — one API call per main metadata_type.
+# Subtype classification happens client-side from metadata_header.type.
 SEARCH_TYPES = [
-    ("LOGICAL_TABLE", ["TABLE"],           "tables"),
-    ("LOGICAL_TABLE", ["SQL_VIEW"],          "views"),
-    ("LOGICAL_TABLE", ["WORKSHEET"],         "models"),
-    ("LOGICAL_TABLE", ["AGGR_WORKSHEET"],    "models"),
-    ("LOGICAL_TABLE", ["MODEL"],             "models"),  # newer ThoughtSpot versions
-    ("LOGICAL_TABLE", None,                 "tables"),   # catch-all: any remaining subtype
-    ("ANSWER",        None,                 "answers"),
-    ("LIVEBOARD",     None,                 "liveboards"),
-    ("COLLECTION",    None,                 "collections"),
+    "LOGICAL_TABLE",
+    "ANSWER",
+    "LIVEBOARD",
+    "COLLECTION",
 ]
+
+# Maps metadata_header.type → folder name for LOGICAL_TABLE objects
+_TABLE_SUBTYPE_FOLDER = {
+    "TABLE":           "tables",
+    "SQL_VIEW":        "views",
+    "WORKSHEET":       "models",
+    "AGGR_WORKSHEET":  "models",
+    "MODEL":           "models",
+}
 
 
 def _unwrap_response(raw) -> list:
-    """Handle both plain list and wrapped {data: [...]} response formats."""
     if isinstance(raw, list):
         return raw
     if isinstance(raw, dict):
-        # Try common wrapper keys
         for key in ("data", "results", "objects", "metadata"):
             if key in raw and isinstance(raw[key], list):
                 return raw[key]
     return []
+
+
+def _folder_for_object(meta_type: str, obj: dict) -> str:
+    if meta_type == "LOGICAL_TABLE":
+        header = obj.get("metadata_header") or {}
+        subtype = header.get("type", "")
+        return _TABLE_SUBTYPE_FOLDER.get(subtype, "tables")
+    return {"ANSWER": "answers", "LIVEBOARD": "liveboards", "COLLECTION": "collections"}.get(meta_type, "misc")
 
 
 def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict]:
@@ -51,34 +60,24 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
     dep_mode = cfg.get("dependency_mode", "include")
     manifest: list[dict] = []
     seen_guids: set[str] = set()
-    debug_logged = False
 
-    for meta_type, subtypes, folder in SEARCH_TYPES:
+    for meta_type in SEARCH_TYPES:
         body: dict = {
+            "metadata": [{"type": meta_type}],
             "tag_identifiers": [tag],
             "record_size": 500,
             "record_offset": 0,
-            "type": meta_type,
         }
-        if subtypes:
-            body["subtypes"] = subtypes
 
         resp = source_client.post("/metadata/search", body)
         if resp.status_code != 200:
-            print(f"[WARN] search_metadata type={meta_type} subtypes={subtypes} "
-                  f"returned HTTP {resp.status_code}", file=sys.stderr)
+            print(f"[WARN] search_metadata type={meta_type} returned HTTP {resp.status_code}",
+                  file=sys.stderr)
             continue
 
         raw = resp.json()
-        # Log response shape once for diagnostics
-        if not debug_logged:
-            debug_logged = True
-            shape = type(raw).__name__
-            count = len(raw) if isinstance(raw, list) else (
-                len(raw.get("data", raw.get("results", []))) if isinstance(raw, dict) else "?")
-            print(f"[DEBUG] First search response: HTTP {resp.status_code}, "
-                  f"type={meta_type} subtypes={subtypes}, "
-                  f"response shape={shape}, unwrapped count={count}")
+        print(f"[DEBUG] type={meta_type}: HTTP {resp.status_code}, "
+              f"response={type(raw).__name__}, count={len(raw) if isinstance(raw, list) else '?'}")
 
         objects = _unwrap_response(raw)
         for obj in objects:
@@ -109,9 +108,9 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
                       file=sys.stderr)
                 continue
 
+            folder = _folder_for_object(meta_type, obj)
             entry = {
                 "type": meta_type,
-                "subtypes": subtypes or [],
                 "folder": folder,
                 "name": name,
                 "obj_id": obj_id,
@@ -150,8 +149,7 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
                             continue
                         dep_entry = {
                             "type": dep_type,
-                            "subtypes": [],
-                            "folder": _folder_for_type(dep_type),
+                            "folder": _folder_for_object(dep_type, dep),
                             "name": dep_name,
                             "obj_id": dep_obj_id,
                             "source_guid": dep_guid,
@@ -173,16 +171,6 @@ def _extract_tags(obj: dict) -> list[str]:
     header = obj.get("metadata_header") or {}
     tags = header.get("tags") or []
     return [t if isinstance(t, str) else t.get("name", "") for t in tags]
-
-
-def _folder_for_type(meta_type: str) -> str:
-    mapping = {
-        "LOGICAL_TABLE": "tables",
-        "ANSWER": "answers",
-        "LIVEBOARD": "liveboards",
-        "COLLECTION": "collections",
-    }
-    return mapping.get(meta_type, "misc")
 
 
 def main():

@@ -1,0 +1,53 @@
+# Example org configuration — copy and rename to config/orgs/<org_key>.yml
+# org_key must be lowercase with no spaces (used in paths, job names, concurrency keys).
+
+org_key: sales
+display_name: Sales
+
+# migration_tag MUST equal "<org_key>_readyformigration". Validated at Stage 1.
+migration_tag: sales_readyformigration
+
+# Source cluster (dev / read-only except for tag removal in Stage 10)
+source:
+  base_url: https://dev-ts.mycompany.com  # No trailing slash
+  org_id: 12                               # Integer org ID
+
+# Target cluster (prod / content destination)
+target:
+  base_url: https://prod-ts.mycompany.com # Must differ from source.base_url
+  org_id: 3                               # Integer org ID
+
+# Same-cluster migration: set source.base_url == target.base_url with different org_ids.
+# The pipeline accepts this; it validates that NOT (same url AND same org_id).
+
+# dependency_mode controls what happens to objects that the tagged items depend on:
+#   include          — always export and import all dependencies (recommended)
+#   skip_if_exists   — skip dependencies already present in the target by obj_id
+#   require_tagged   — fail if a dependency is not itself tagged for migration
+dependency_mode: include
+
+# Variable mappings for database/schema parameterization.
+# source_value is used ONLY to detect Path B literals and for safety-gate checks.
+# target_value is the only value ever written to the target cluster.
+# NEVER hardcode actual DB/schema names in scripts or committed TML.
+variables:
+  database:
+    ts_variable_name: ts_db_name        # Name of the TABLE_MAPPING variable in ThoughtSpot
+    source_value: DEV_DB                # Literal value in source TML (Path B detection)
+    target_value: PROD_DB               # Value to set in target org
+  schema:
+    ts_variable_name: ts_schema_name
+    source_value: DEV_SCHEMA
+    target_value: PROD_SCHEMA
+
+  # Optional extra variables (formula variables used in RLS, etc.)
+  # type: FORMULA_VARIABLE | TABLE_MAPPING | CONNECTION_PROPERTY
+  # For FORMULA_VARIABLE, target_value is set org-wide only if it is not an ABAC variable.
+  # ABAC formula variables (set per-user via token at login) have target_value omitted;
+  # the pipeline creates the definition only and logs that values are assigned at login.
+  extra: []
+  # Example:
+  # extra:
+  #   - ts_variable_name: region_filter
+  #     type: FORMULA_VARIABLE
+  #     target_value: "EMEA"

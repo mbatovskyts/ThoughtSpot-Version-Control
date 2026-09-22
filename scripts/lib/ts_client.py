@@ -73,7 +73,21 @@ class TSClient:
                 f"Auth failed for org {self.org_id} at {self.base_url}: "
                 f"HTTP {resp.status_code}  [secret_key REDACTED]"
             )
-        token = resp.text.strip().strip('"')
+        # Newer ThoughtSpot versions return {"token": "..."} (JSON object);
+        # older versions return the token as a plain string (sometimes quoted).
+        token = ""
+        try:
+            data = resp.json()
+            if isinstance(data, dict):
+                token = data.get("token") or data.get("access_token") or ""
+            else:
+                token = str(data).strip('"')
+        except Exception:
+            token = resp.text.strip().strip('"')
+        if not token:
+            raise AuthError(
+                f"Auth returned 200 but no token found in response for org {self.org_id}"
+            )
         self._token = token
         self._token_expires_at = time.time() + self._token_ttl_sec - TOKEN_TTL_BUFFER_SEC
         self._session.headers["Authorization"] = f"Bearer {token}"
@@ -271,7 +285,7 @@ class TSClient:
 
     def search_connections(self, name: str | None = None) -> list[dict]:
         body: dict[str, Any] = {"record_size": -1, "record_offset": 0}
-        if name:          
+        if name:
             body["connections"] = [{"name_pattern": name}]
         return self.post_json("/connection/search", body)
 

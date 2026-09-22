@@ -64,6 +64,7 @@ jobs:
       MANIFEST_OUT: manifest.json
       EXPORT_OUT: stage4_export.json
       SANITIZE_OUT: sanitize_results.json
+      MEMORY_EXPORT_OUT: stage4b_memory_export.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
@@ -115,6 +116,9 @@ jobs:
       - name: Stage 4 — Export TML
         run: python -m scripts.stage4_export
 
+      - name: Stage 4b — Export Model Memory (Spotter)
+        run: python -m scripts.stage4b_export_memory
+
       - name: Stage 5 — Verify parameterization and sanitize
         run: python -m scripts.stage5_sanitize
 
@@ -134,6 +138,8 @@ jobs:
             manifest.json
             stage4_export.json
             sanitize_results.json
+            stage4b_memory_export.json
+            orgs/${{ inputs.org_key }}/memory/memory.yaml
           if-no-files-found: warn
           retention-days: 90
 
@@ -209,9 +215,11 @@ jobs:
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
       # Point to the downloaded artifact files (same cwd-relative names as extract job)
       CONFIG_OUT: config.json
+      MANIFEST_OUT: manifest.json
       EXPORT_OUT: stage4_export.json
       SANITIZE_OUT: sanitize_results.json
       PROD_PREP_OUT: prod_prep.json
+      MEMORY_IMPORT_OUT: stage9b_memory_import.json
     steps:
       - name: Checkout ts-prod
         uses: actions/checkout@v4
@@ -243,6 +251,9 @@ jobs:
         if: ${{ inputs.dry_run }}
         run: echo '::notice::DRY_RUN=true — Stage 9 import skipped, no writes to target'
 
+      - name: Stage 9b — Import Model Memory (Spotter)
+        run: python -m scripts.stage9b_import_memory
+
       - name: Upload import artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -251,6 +262,7 @@ jobs:
           path: |
             prod_prep.json
             stage9_import.json
+            stage9b_memory_import.json
           if-no-files-found: warn
           retention-days: 90
 

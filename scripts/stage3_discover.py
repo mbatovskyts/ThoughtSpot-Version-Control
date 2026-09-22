@@ -58,31 +58,10 @@ def _folder_for_object(meta_type: str, obj: dict) -> str:
 def _resolve_tag_id(source_client: TSClient, tag_name: str, cfg: dict) -> str:
     """
     Return the tag identifier to use in tag_identifiers filter.
-    Priority: config migration_tag_guid > /tags/search GUID > tag name as last resort.
+    tag_identifiers accepts both the tag name and its GUID; the tag name is
+    simpler and confirmed to work. We use it directly.
     """
-    # 1. Explicit GUID in config (set this when service account lacks TAGMANAGEMENT)
-    cfg_guid = (cfg.get("migration_tag_guid") or "").strip()
-    if cfg_guid:
-        print(f"[STAGE 3] Using config-provided tag GUID: {cfg_guid}")
-        return cfg_guid
-
-    # 2. Resolve via /tags/search (requires TAGMANAGEMENT privilege)
-    for pattern in (tag_name, None):
-        try:
-            tags = source_client.search_tags(name_pattern=pattern)
-        except Exception:
-            tags = []
-        for t in tags:
-            if t.get("name") == tag_name:
-                guid = t.get("id") or t.get("tag_id") or t.get("identifier", "")
-                print(f"[STAGE 3] Resolved tag '{tag_name}' → GUID {guid}")
-                return guid
-    print(
-        f"[WARN] Could not resolve GUID for tag '{tag_name}' via /tags/search. "
-        f"Trying tag name directly in tag_identifiers. "
-        f"If this returns 0 objects, add migration_tag_guid to config/orgs/<org>.yml.",
-        file=sys.stderr,
-    )
+    print(f"[STAGE 3] Using tag name as identifier: {tag_name}")
     return tag_name
 
 
@@ -191,22 +170,33 @@ def _search_by_tag(
     tag_id_for_filter: str,
 ) -> list[dict]:
     """Return objects of meta_type that match the tag_identifiers server-side filter."""
-    body: dict = {
-        "metadata": [{"type": meta_type}],
-        "tag_identifiers": [tag_id_for_filter],
-        "record_size": -1,
-        "record_offset": 0,
-    }
-    resp = source_client.post("/metadata/search", body)
-    if resp.status_code != 200:
-        print(
-            f"[WARN] metadata/search type={meta_type} HTTP {resp.status_code}: {resp.text[:200]}",
-            file=sys.stderr,
-        )
-        return []
-    objects = _unwrap_response(resp.json())
-    print(f"[STAGE 3] type={meta_type}: tag filter returned {len(objects)} objects")
-    return objects
+    all_objects: list[dict] = []
+    offset = 0
+    page_size = 500  # avoid record_size:-1 which crashes TS when combined with tag_identifiers
+
+    while True:
+        body: dict = {
+            "metadata": [{"type": meta_type}],
+            "tag_identifiers": [tag_id_for_filter],
+            "include_headers": True,
+            "record_size": page_size,
+            "record_offset": offset,
+        }
+        resp = source_client.post("/metadata/search", body)
+        if resp.status_code != 200:
+            print(
+                f"[WARN] metadata/search type={meta_type} HTTP {resp.status_code}: {resp.text[:200]}",
+                file=sys.stderr,
+            )
+            return []
+        page = _unwrap_response(resp.json())
+        all_objects.extend(page)
+        if len(page) < page_size:
+            break
+        offset += page_size
+
+    print(f"[STAGE 3] type={meta_type}: tag filter returned {len(all_objects)} objects")
+    return all_objects
 
 
 def _extract_tags(obj: dict) -> list[str]:

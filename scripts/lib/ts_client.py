@@ -205,7 +205,11 @@ class TSClient:
         include_dependent_objects: bool = False,
         record_size: int = -1,
     ) -> list[dict]:
-        body: dict[str, Any] = {"record_size": record_size, "record_offset": 0}
+        body: dict[str, Any] = {
+            "record_size": record_size,
+            "record_offset": 0,
+            "include_headers": True,
+        }
         if types:
             body["metadata"] = [{"type": t} for t in types]
         if subtypes:

@@ -55,21 +55,20 @@ def load_and_validate_config(config_path: str) -> dict:
             f"must be one of: {sorted(ALLOWED_DEPENDENCY_MODES)}"
         )
 
+    # ts_variable_name is required when a variable block is present.
+    # source_value and target_value are optional: when blank, the pipeline verifies
+    # the variable exists in ThoughtSpot and assumes it is already configured there.
     variables = cfg.get("variables", {})
     db_var = variables.get("database", {})
     schema_var = variables.get("schema", {})
 
-    # Hard stop: TABLE_MAPPING variables must have target_value configured.
-    # (Empty string is treated as unconfigured for safety.)
-    if not db_var.get("target_value"):
+    if db_var and not db_var.get("ts_variable_name"):
         raise ConfigError(
-            "variables.database.target_value is required; "
-            "set the target database name to prevent source values reaching prod"
+            "variables.database.ts_variable_name is required when a database variable is configured"
         )
-    if not schema_var.get("target_value"):
+    if schema_var and not schema_var.get("ts_variable_name"):
         raise ConfigError(
-            "variables.schema.target_value is required; "
-            "set the target schema name to prevent source values reaching prod"
+            "variables.schema.ts_variable_name is required when a schema variable is configured"
         )
 
     return cfg

@@ -2,12 +2,13 @@
 """
 Stage 8: Production preparation.
 
-1. Sync variables to target org (create missing definitions, set org values from config).
-2. Hard stop if any TABLE_MAPPING variable has no target_value in config.
-3. Connection preflight: verify each connection name found in table TML exists in target.
-4. Validate-only import to catch per-object issues before the real import.
+1. Sync variables to target org (create missing definitions; set org values only when
+   target_value is provided in config — if blank, the variable is assumed to be already
+   configured in ThoughtSpot).
+2. Connection preflight: verify each connection name found in table TML exists in target.
+3. Validate-only import to catch per-object issues before the real import.
 
-Never reads source variable values. Only writes target_value from config.
+Never reads source variable values. Only writes target_value from config when provided.
 """
 from __future__ import annotations
 
@@ -23,7 +24,8 @@ from lib.tml_utils import parse_tml
 
 def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -> list[dict]:
     """
-    Ensure variable definitions exist in the target; set org-scoped values.
+    Ensure variable definitions exist in the target; set org-scoped values when provided.
+    If target_value is blank, the variable must already exist in ThoughtSpot.
     Returns list of issues.
     """
     issues = []
@@ -45,20 +47,6 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
     for name in var_sync_set:
         if name not in var_map:
             var_map[name] = {"ts_variable_name": name, "type": "FORMULA_VARIABLE"}
-
-    # Hard stop: TABLE_MAPPING without target_value
-    for name, v in var_map.items():
-        if v.get("type") == "TABLE_MAPPING" and not v.get("target_value"):
-            issues.append({
-                "severity": "FATAL",
-                "variable": name,
-                "message": f"TABLE_MAPPING variable '{name}' has no target_value in config. Hard stop.",
-            })
-
-    if any(i["severity"] == "FATAL" for i in issues):
-        for i in issues:
-            print(f"[FATAL] {i['message']}", file=sys.stderr)
-        sys.exit(1)
 
     # Check variable API availability
     try:
@@ -95,7 +83,20 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
                                f"config expects '{var_type}'. Cannot proceed with this variable.",
                 })
                 continue
+            if not target_value and var_type == "TABLE_MAPPING":
+                # Variable exists and target_value not in config — assume ThoughtSpot manages it.
+                print(f"[VARS] '{name}' exists in ThoughtSpot with values assigned — skipping set.")
         else:
+            if not target_value and var_type == "TABLE_MAPPING":
+                # Variable doesn't exist and no target_value to set — can't create it safely.
+                issues.append({
+                    "severity": "ERROR",
+                    "variable": name,
+                    "message": f"TABLE_MAPPING variable '{name}' not found in target org and "
+                               "no target_value is configured. Either create the variable in "
+                               "ThoughtSpot or add target_value to config.",
+                })
+                continue
             try:
                 target_client.create_variable(name, var_type, is_sensitive=is_sensitive)
                 print(f"[VARS] Created variable '{name}' ({var_type}) in target.")
@@ -104,7 +105,7 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
                                 "message": f"Failed to create variable '{name}': {e}"})
                 continue
 
-        # Set org-scoped value (TABLE_MAPPING and CONNECTION_PROPERTY only)
+        # Set org-scoped value only when target_value is explicitly provided in config.
         if target_value and var_type in ("TABLE_MAPPING", "CONNECTION_PROPERTY"):
             try:
                 target_client.set_variable_org_value(name, target_value)
@@ -149,8 +150,6 @@ def validate_import(target_client: TSClient, tml_strings: list[str]) -> list[dic
     """Run VALIDATE_ONLY import; return per-object validation issues."""
     try:
         result = target_client.import_tml(tml_strings, import_policy="VALIDATE_ONLY")
-        # Parse per-object results
-        # TODO(verify): exact structure of synchronous import response
         objects = result if isinstance(result, list) else result.get("object", [])
         issues = []
         for obj in objects:

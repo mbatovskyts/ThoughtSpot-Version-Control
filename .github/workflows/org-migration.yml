@@ -341,6 +341,13 @@ jobs:
     env:
       RUN_ID: ${{ needs.extract.outputs.run_id }}
       TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
+      CONFIG_OUT: config.json
+      MANIFEST_OUT: manifest.json
+      EXPORT_OUT: stage4_export.json
+      SANITIZE_OUT: sanitize_results.json
+      PROD_PREP_OUT: prod_prep.json
+      IMPORT_OUT: stage9_import.json
+      POSTCHECK_OUT: stage10_postcheck.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4

@@ -16,8 +16,12 @@ on:
         default: false
         type: boolean
 
+# Caller must grant at least the permissions requested by reusable workflow jobs.
+# extract/report need contents:write (commit TML to ts-dev).
+# promote needs contents:write + pull-requests:write (create branch + PR).
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   # ------------------------------------------------------------------ #
@@ -33,6 +37,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install PyYAML
+        run: pip install pyyaml --quiet
 
       - name: Build matrix
         id: build
@@ -65,10 +72,6 @@ jobs:
           print(f'matrix={matrix}')
           with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
               fh.write(f'matrix={matrix}\n')
-
-      - name: Install PyYAML for setup step
-        run: pip install pyyaml --quiet
-        if: false  # already available in ubuntu-latest; kept as fallback
 
   # ------------------------------------------------------------------ #
   # migrate: one reusable-workflow call per org, no fail-fast           #

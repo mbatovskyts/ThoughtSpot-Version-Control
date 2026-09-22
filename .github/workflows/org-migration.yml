@@ -74,10 +74,11 @@ jobs:
 
       - name: Overlay pipeline scripts from workflow source
         # ts-dev stores TML only; scripts live on ts-prod (the workflow source branch).
-        # This step fetches scripts so the rest of the job can run without scripts on ts-dev.
+        # Unstage after checkout so stage6_commit.py's git pull --rebase sees a clean index.
         run: |
           git fetch origin ${{ github.ref_name }}
           git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
+          git restore --staged scripts/ config/ requirements.txt
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -329,6 +330,7 @@ jobs:
         run: |
           git fetch origin ${{ github.ref_name }}
           git checkout origin/${{ github.ref_name }} -- scripts/ config/ requirements.txt
+          git restore --staged scripts/ config/ requirements.txt
 
       - name: Set up Python
         uses: actions/setup-python@v5

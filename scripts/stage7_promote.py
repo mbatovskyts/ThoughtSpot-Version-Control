@@ -32,9 +32,14 @@ def run(cmd: list[str], check: bool = True, capture: bool = False,
 
 def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".") -> str:
     """Create promote branch, apply org TML changes, open PR. Returns PR URL."""
-    gh_token = os.environ.get("GH_AUTOMATION_TOKEN") or os.environ.get("GITHUB_TOKEN", "")
+    gh_token = (
+        os.environ.get("GH_AUTOMATION_TOKEN")
+        or os.environ.get("GH_TOKEN")
+        or os.environ.get("GITHUB_TOKEN", "")
+    )
     if not gh_token:
-        print("[ERROR] GH_AUTOMATION_TOKEN not set.", file=sys.stderr)
+        print("[ERROR] No GitHub token found (set GH_AUTOMATION_TOKEN, GH_TOKEN, or GITHUB_TOKEN).",
+              file=sys.stderr)
         sys.exit(1)
 
     os.chdir(repo_root)

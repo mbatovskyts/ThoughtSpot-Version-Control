@@ -7,7 +7,7 @@ migration_tag: Github_ReadyForMigration
 # GUID of the tag above. Find it in ThoughtSpot Admin > Tags, click the tag,
 # copy the GUID from the URL (?id=...). Required when the service account lacks
 # TAGMANAGEMENT privilege (can't resolve it via /tags/search).
-migration_tag_guid: ""
+migration_tag_guid: "56778adb-9c24-452e-b933-d0f828da020a"
 
 source:
   base_url: https://ps-internal.thoughtspot.cloud/

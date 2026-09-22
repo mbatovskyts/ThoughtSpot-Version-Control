@@ -19,14 +19,17 @@ target:
 dependency_mode: include
 
 variables:
+  # ts_variable_name: name of the ThoughtSpot variable (required).
+  # source_value / target_value: optional overrides.
+  #   Leave blank when the variable is already configured in ThoughtSpot Admin > Variables.
+  #   The pipeline will verify the variable exists and skip setting its value.
+  #   Provide a value here only if you want the pipeline to manage it.
   database:
     ts_variable_name: bat_db_var
-    # Path A confirmed: TML carries ${bat_db_var} — no in-memory substitution needed.
-    # source_value and target_value are used only for the safety gate readback check.
-    source_value: ""   # TODO: fill in the actual source DB name (e.g. DEV_DATABASE)
-    target_value: ""   # TODO: fill in the actual target DB name (e.g. PROD_DATABASE)
+    source_value: ""
+    target_value: ""
   schema:
     ts_variable_name: bat_schema_var
-    source_value: ""   # TODO: fill in the actual source schema name
-    target_value: ""   # TODO: fill in the actual target schema name
+    source_value: ""
+    target_value: ""
   extra: []

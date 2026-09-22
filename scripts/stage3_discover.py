@@ -56,16 +56,18 @@ def _folder_for_object(meta_type: str, obj: dict) -> str:
 
 
 def _resolve_tag_guid(source_client: TSClient, tag_name: str) -> str:
-    """Return the GUID of a tag by name. Exits with error if not found."""
-    tags = source_client.search_tags(name_pattern=tag_name)
-    for t in tags:
+    """Return the GUID of a tag by exact name. Fetches all tags and matches client-side."""
+    # Fetch all tags without a server-side filter — name_pattern behaviour varies by version
+    all_tags = source_client.search_tags()
+    all_names = [t.get("name") for t in all_tags]
+    print(f"[STAGE 3] Tags visible to service account ({len(all_tags)}): {all_names}")
+    for t in all_tags:
         if t.get("name") == tag_name:
             guid = t.get("id") or t.get("tag_id") or t.get("identifier", "")
             print(f"[STAGE 3] Resolved tag '{tag_name}' → GUID {guid}")
             return guid
-    all_names = [t.get("name") for t in tags]
     print(f"[ERROR] Tag '{tag_name}' not found in source org. "
-          f"Tags matching pattern: {all_names}", file=sys.stderr)
+          f"Available tags: {all_names}", file=sys.stderr)
     sys.exit(1)
 
 

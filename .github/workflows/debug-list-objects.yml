@@ -1,0 +1,41 @@
+name: Debug – List Objects (no tag filter)
+
+on:
+  workflow_dispatch:
+    inputs:
+      org:
+        description: 'Org key (e.g. "github")'
+        required: true
+        default: 'github'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  debug:
+    name: List objects in source org
+    runs-on: ubuntu-latest
+    env:
+      ORG_KEY: ${{ inputs.org }}
+      TS_SOURCE_USERNAME: ${{ secrets.TS_SOURCE_USERNAME }}
+      TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
+      CONFIG_OUT: config.json
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pyyaml
+
+      - name: Write config
+        run: python scripts/stage1_config.py
+
+      - name: List objects (no tag filter)
+        run: python scripts/debug_list_objects.py

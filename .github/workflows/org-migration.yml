@@ -219,6 +219,7 @@ jobs:
       EXPORT_OUT: stage4_export.json
       SANITIZE_OUT: sanitize_results.json
       PROD_PREP_OUT: prod_prep.json
+      IMPORT_OUT: stage9_import.json
       MEMORY_IMPORT_OUT: stage9b_memory_import.json
     steps:
       - name: Checkout ts-prod

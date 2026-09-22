@@ -93,6 +93,20 @@ class TSClient:
         self._session.headers["Authorization"] = f"Bearer {token}"
         log.debug("Authenticated org_id=%s base_url=%s", self.org_id, self.base_url)
 
+        # Cluster-level secret keys may land in the default org (0) regardless of
+        # org_identifier in the token request.  Explicitly switch to the target org.
+        switch_url = f"{self.base_url}/api/rest/2.0/auth/session/org"
+        switch_resp = self._session.post(
+            switch_url,
+            json={"org_identifier": str(self.org_id)},
+            timeout=30,
+        )
+        if switch_resp.status_code not in (200, 204):
+            raise AuthError(
+                f"Org switch to {self.org_id} failed: HTTP {switch_resp.status_code}"
+            )
+        log.debug("Switched session to org_id=%s", self.org_id)
+
     def _ensure_token(self) -> None:
         if self._token is None or time.time() >= self._token_expires_at:
             self.authenticate()

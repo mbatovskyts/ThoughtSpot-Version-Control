@@ -1,6 +1,8 @@
 """Stage 1: Load and validate org config."""
+import json
 import os
 import sys
+from pathlib import Path
 import yaml
 
 
@@ -91,6 +93,10 @@ def main():
     except ConfigError as e:
         print(f"::error::Config validation failed: {e}", file=sys.stderr)
         sys.exit(1)
+
+    out_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
+    Path(out_path).write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    print(f"Config written to {out_path}")
 
 
 if __name__ == "__main__":

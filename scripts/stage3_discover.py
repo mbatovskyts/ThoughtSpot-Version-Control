@@ -235,7 +235,14 @@ def _search_by_tag(
         print(f"[DEBUG] sample keys: {list(sample.keys())}")
         print(f"[DEBUG] sample.tags={sample.get('tags')}")
         hdr = sample.get("metadata_header") or {}
+        print(f"[DEBUG] sample.metadata_header keys: {list(hdr.keys())}")
         print(f"[DEBUG] sample.metadata_header.tags={hdr.get('tags')}")
+        detail = sample.get("metadata_detail") or {}
+        print(f"[DEBUG] sample.metadata_detail keys: {list(detail.keys())[:20]}")
+        print(f"[DEBUG] sample.metadata_detail.tags={detail.get('tags')}")
+        # Log full object JSON (truncated) so we can find where tags live
+        import json as _json
+        print(f"[DEBUG] sample(500)={_json.dumps(sample)[:500]}")
     tagged = [o for o in all_objects if tag_name in _extract_tags(o)]
     print(f"[DEBUG] type={meta_type}: {len(tagged)} objects have tag '{tag_name}' (client-side)")
     return tagged

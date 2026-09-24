@@ -45,20 +45,31 @@ def post_check(
 
         result = import_map.get(obj_id, {})
         if result.get("status") == "success":
-            # Verify it actually exists in target
+            # Search by specific identifier to avoid record_size=-1 truncation.
+            # ThoughtSpot accepts custom obj_id as `identifier` in metadata/search.
             try:
-                existing = target_client.search_metadata(
-                    types=[obj_type], record_size=-1
-                )
-                found = any(
-                    obj.get("metadata_obj_id") == obj_id for obj in existing
-                )
-                if found:
-                    by_type[obj_type]["confirmed"] += 1
+                resp = target_client.post("/metadata/search", {
+                    "metadata": [{"type": obj_type, "identifier": obj_id}],
+                    "include_headers": True,
+                    "record_size": 1,
+                })
+                if resp.status_code == 200:
+                    raw = resp.json()
+                    page = raw if isinstance(raw, list) else (
+                        raw.get("data") or raw.get("metadata") or
+                        raw.get("results") or raw.get("objects") or []
+                    )
+                    if page:
+                        by_type[obj_type]["confirmed"] += 1
+                    else:
+                        mismatches.append({
+                            "obj_id": obj_id, "name": name, "type": obj_type,
+                            "issue": "Not found in target by obj_id after import.",
+                        })
                 else:
                     mismatches.append({
                         "obj_id": obj_id, "name": name, "type": obj_type,
-                        "issue": "Not found in target by obj_id after import.",
+                        "issue": f"Post-check search returned HTTP {resp.status_code}.",
                     })
             except Exception as e:
                 mismatches.append({

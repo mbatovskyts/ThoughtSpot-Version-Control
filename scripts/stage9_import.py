@@ -151,7 +151,7 @@ def _parse_import_status(resp: dict | list, obj_id: str) -> bool:
         status = obj.get("response", {}).get("status", {}).get("status_code", "ERROR")
         if status in ("OK", "WARNING"):
             return True
-    return bool(objects)  # fallback: non-empty response
+    return False  # no object reported OK/WARNING — treat as failure
 
 
 def _extract_error(resp: dict | list) -> str:

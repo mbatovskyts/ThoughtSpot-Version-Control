@@ -1,0 +1,609 @@
+{
+  "model": {
+    "column_groups": [
+      {
+        "column_group_info": [
+          {
+            "include_ungrouped_columns": false,
+            "name": "Date"
+          },
+          {
+            "include_ungrouped_columns": false,
+            "name": "Metric"
+          },
+          {
+            "include_ungrouped_columns": false,
+            "name": "Product"
+          },
+          {
+            "include_ungrouped_columns": false,
+            "name": "Store"
+          },
+          {
+            "include_ungrouped_columns": false,
+            "name": "Ago"
+          },
+          {
+            "include_ungrouped_columns": true,
+            "name": "ungrouped columns"
+          }
+        ],
+        "properties": {
+          "default_sort": "ENABLE",
+          "status": "ENABLE"
+        },
+        "type": "DATA_PANEL"
+      }
+    ],
+    "columns": [
+      {
+        "data_panel_column_groups": {
+          "Date": ""
+        },
+        "formula_id": "formula_Global Date Filter",
+        "name": "Global Date Filter",
+        "properties": {
+          "ai_context": "Universal date range selector enabling comprehensive time-based filtering across all business data and reporting periods. This column should only be used as attributes. All filters should come from one of the Ago Columns",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Universal Date Filter",
+            "Overall Date Filter"
+          ]
+        }
+      },
+      {
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "formula_id": "formula_Transactions",
+        "name": "Transactions",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Count of completed purchase events aggregated at monthly level for frequency analysis and customer engagement measurement.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "formula_id": "formula_Average Items Ordered",
+        "name": "Average Items Ordered",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Mean quantity of items per transaction, indicating customer basket size and purchasing behavior patterns.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Mean Items Ordered",
+            "Average Order Quantity"
+          ]
+        }
+      },
+      {
+        "data_panel_column_groups": {
+          "Date": ""
+        },
+        "formula_id": "formula_Shipping Date",
+        "name": "Shipping Date",
+        "properties": {
+          "ai_context": "Calendar date when purchased items were dispatched to customers, enabling fulfillment timeline and logistics analysis.This column should only be used as attributes. All filters should come from one of the Ago Columns.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Dispatch Date",
+            "Delivery Date"
+          ]
+        }
+      },
+      {
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "formula_id": "formula_Metric",
+        "name": "Metric",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "General business performance indicator providing flexible measurement capability for various analytical calculations.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Measure",
+            "Standard"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::Product Category",
+        "data_panel_column_groups": {
+          "Product": ""
+        },
+        "description": "Product categories are used to group similar product together",
+        "name": "Product Category",
+        "properties": {
+          "ai_context": "Hierarchical classification system grouping similar apparel products together for strategic analysis and inventory management across retail operations.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Classification",
+            "Grouping"
+          ]
+        }
+      },
+      {
+        "column_id": "Retail Apparel AGO Dim::Month To Date Filter",
+        "data_panel_column_groups": {
+          "Ago": ""
+        },
+        "name": "Month To Date Filter",
+        "properties": {
+          "ai_context": "Current month cumulative filter enabling analysis of performance from month beginning to current date.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Current Month Filter",
+            "Month So Far Filter"
+          ]
+        }
+      },
+      {
+        "column_id": "Retail Apparel AGO Dim::Weeks Ago",
+        "data_panel_column_groups": {
+          "Ago": ""
+        },
+        "name": "Weeks Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Historical comparison metric showing performance data from previous weeks for trend analysis and period-over-period evaluation. Weeks Ago starts a week=1 for the current week.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Weeks Prior",
+            "Weeks Before"
+          ]
+        }
+      },
+      {
+        "column_id": "Retail Apparel AGO Dim::Months Ago",
+        "data_panel_column_groups": {
+          "Ago": ""
+        },
+        "name": "Months Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "This column is used only as a filtering column to align time phases to is correct values. For example the last 6 months should be Months Ago<=6. This month should be Months Ago=1",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Months Prior",
+            "Months Before"
+          ]
+        }
+      },
+      {
+        "column_id": "Retail Apparel AGO Dim::Year To Date Filter",
+        "data_panel_column_groups": {
+          "Ago": ""
+        },
+        "name": "Year To Date Filter",
+        "properties": {
+          "ai_context": "Current year cumulative filter enabling analysis of performance from year beginning to current date.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "spotiq_preference": "EXCLUDE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Current Year Filter",
+            "Year So Far Filter"
+          ]
+        }
+      },
+      {
+        "column_id": "Retail Apparel AGO Dim::Years Ago",
+        "data_panel_column_groups": {
+          "Ago": ""
+        },
+        "name": "Years Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Historical comparison metric presenting performance data from previous years for annual growth analysis and long-term trending.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "spotiq_preference": "EXCLUDE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Years Prior",
+            "Years Before"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::Product Name",
+        "data_panel_column_groups": {
+          "Product": ""
+        },
+        "description": "This column is not indexed",
+        "name": "Product Name",
+        "properties": {
+          "ai_context": "Specific apparel item identifier providing detailed product-level information for individual merchandise tracking and performance analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Commodity",
+            "Goods"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::SKU",
+        "data_panel_column_groups": {
+          "Product": ""
+        },
+        "name": "SKU",
+        "properties": {
+          "ai_context": "Unique numeric stock keeping unit identifier for precise inventory tracking and product identification across retail operations.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Name",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store Name (Mike)",
+        "properties": {
+          "ai_context": "Descriptive name identifier for retail locations providing human-readable store identification for reporting purposes.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Latitude",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store Latitude",
+        "properties": {
+          "ai_context": "Geographic coordinate indicating north-south position of retail locations for mapping and proximity analysis.",
+          "column_type": "ATTRIBUTE",
+          "geo_config": {
+            "longitude": true
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Region",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Region",
+        "properties": {
+          "ai_context": "Broader geographical grouping of retail stores enabling macro-level market analysis and regional strategy development.",
+          "column_type": "ATTRIBUTE",
+          "custom_order": [
+            "East",
+            "South",
+            "West",
+            "Midwest",
+            "Southwest"
+          ],
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Zone",
+            "Area"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store City",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store City",
+        "properties": {
+          "ai_context": "Municipal location of retail stores enabling city-level market analysis and urban performance comparison.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Zip Code",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store Zip Code",
+        "properties": {
+          "ai_context": "Postal code location identifier for retail stores enabling precise demographic analysis and local market targeting.",
+          "column_type": "ATTRIBUTE",
+          "geo_config": {
+            "region_name": {
+              "country": "UNITED STATES",
+              "region_name": "zip code"
+            }
+          },
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Postal Code",
+            "ZIP Code"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store State",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store State",
+        "properties": {
+          "ai_context": "State-level geographical location of retail stores enabling statewide market analysis and regulatory compliance tracking.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Province",
+            "Territory"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Longitude",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store Longitude",
+        "properties": {
+          "ai_context": "Geographic coordinate indicating east-west position of retail locations for spatial analysis and territory mapping.",
+          "column_type": "ATTRIBUTE",
+          "geo_config": {
+            "longitude": true
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store ID",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store Id",
+        "properties": {
+          "ai_context": "Unique numeric identifier for individual retail locations enabling store-specific performance tracking and comparison.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store County",
+        "data_panel_column_groups": {
+          "Store": ""
+        },
+        "name": "Store County",
+        "properties": {
+          "ai_context": "Administrative district location of retail stores supporting regional market analysis and territorial performance assessment.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "District",
+            "Parish"
+          ]
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Sales",
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "description": "This shows the total sales for a item but does not include shipping cost",
+        "name": "Sales",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Total revenue amount for items sold excluding shipping costs, providing core financial performance measurement for business analysis.",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Item Price",
+        "data_panel_column_groups": {
+          "Product": ""
+        },
+        "name": "Item Price",
+        "properties": {
+          "ai_context": "Unit price value for individual merchandise items, supporting pricing strategy analysis and revenue calculations.",
+          "column_type": "ATTRIBUTE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "is_additive": true,
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Transaction Date",
+        "data_panel_column_groups": {
+          "Date": ""
+        },
+        "name": "Transaction Date",
+        "properties": {
+          "ai_context": "Calendar date when customer purchase transaction occurred, enabling temporal analysis and sales pattern identification.This column should only be used as attributes. All filters should come from one of the Ago Columns.",
+          "column_type": "ATTRIBUTE",
+          "default_date_bucket": "WEEKLY",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Quantity",
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "name": "Quantity",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Number of units purchased in each transaction, supporting volume analysis and customer purchasing behavior insights.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Transaction ID",
+        "data_panel_column_groups": {
+          "Metric": ""
+        },
+        "name": "Transaction Id",
+        "properties": {
+          "ai_context": "Unique numeric identifier for individual purchase transactions, aggregated at monthly level for business reporting and analysis purposes.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      }
+    ],
+    "description": "The \"Retail Apparel\" worksheet provides a comprehensive overview of sales transactions across various store locations. It captures details about each product, including its category, name, price, and the quantity sold, along with the average number of items ordered per transaction. Additionally, it includes geographical and identification information for each store, such as the city, county, state, zip code, and precise latitude and longitude, as well as the specific transaction dates and IDs. (AI generated)",
+    "formulas": [
+      {
+        "expr": "sum ( [FACT_RETAPP_SALES::Quantity] ) / unique count ( [FACT_RETAPP_SALES::Transaction ID] )",
+        "id": "formula_Average Items Ordered",
+        "name": "Average Items Ordered"
+      },
+      {
+        "expr": "if ( [Date Column Picker] = \"Shipping Date\" ) then [formula_Shipping Date] else if ( [Date Column Picker] = \"Transaction Date\" ) then [FACT_RETAPP_SALES::Transaction Date] else null",
+        "id": "formula_Global Date Filter",
+        "name": "Global Date Filter"
+      },
+      {
+        "expr": "if ( [Metric Selector] = 'Transactions' ) then [formula_Transactions] else if ( [Metric Selector] = 'Sales' ) then sum ( [FACT_RETAPP_SALES::Sales] ) else null",
+        "id": "formula_Metric",
+        "name": "Metric"
+      },
+      {
+        "expr": "add_days ( [FACT_RETAPP_SALES::Transaction Date] , [FACT_RETAPP_SALES::Quantity] )",
+        "id": "formula_Shipping Date",
+        "name": "Shipping Date"
+      },
+      {
+        "expr": "count ( [FACT_RETAPP_SALES::Transaction ID] )",
+        "id": "formula_Transactions",
+        "name": "Transactions"
+      }
+    ],
+    "model_tables": [
+      {
+        "name": "DIM_RETAPP_PRODUCTS",
+        "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f"
+      },
+      {
+        "name": "DIM_RETAPP_STORES",
+        "obj_id": "DIM_RETAPP_STORES-8cd69308"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]",
+            "type": "OUTER",
+            "with": "DIM_RETAPP_PRODUCTS"
+          },
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]",
+            "type": "OUTER",
+            "with": "DIM_RETAPP_STORES"
+          },
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::Transaction Date] = [Retail Apparel AGO Dim::Day(Transaction Date)]",
+            "type": "INNER",
+            "with": "Retail Apparel AGO Dim"
+          }
+        ],
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      },
+      {
+        "name": "Retail Apparel AGO Dim",
+        "obj_id": "RetailApparelAGODim-34342a9a"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "ONE_TO_ONE",
+            "on": "[Product Colocate - Product_Catigory::Product Category] = [DIM_RETAPP_PRODUCTS::Product Category]",
+            "type": "INNER",
+            "with": "DIM_RETAPP_PRODUCTS"
+          }
+        ],
+        "name": "Product Colocate - Product_Catigory"
+      }
+    ],
+    "name": "Retail Apparel with Ago With Column Groupings",
+    "parameters": [
+      {
+        "data_type": "CHAR",
+        "default_value": "Shipping Date",
+        "description": "",
+        "id": "f6ad8781-2bb1-45f6-8e7a-2572c3ca2eaf",
+        "list_config": {
+          "list_choice": [
+            {
+              "value": "Shipping Date"
+            },
+            {
+              "value": "Transaction Date"
+            }
+          ]
+        },
+        "name": "Date Column Picker"
+      },
+      {
+        "data_type": "CHAR",
+        "default_value": "Sales",
+        "description": "",
+        "id": "8d251969-dca7-41db-b6cc-5c7714304cbf",
+        "list_config": {
+          "list_choice": [
+            {
+              "display_name": "Sales",
+              "value": "Sales"
+            },
+            {
+              "display_name": "Transactions",
+              "value": "Transactions"
+            }
+          ]
+        },
+        "name": "Metric Selector"
+      }
+    ],
+    "properties": {
+      "is_bypass_rls": false,
+      "join_progressive": true,
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    }
+  },
+  "obj_id": "CopyofRetailApparelwithAGOWithInstructions-2f07c036"
+}

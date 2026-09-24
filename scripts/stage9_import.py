@@ -252,11 +252,14 @@ def main():
     failed_obj_ids: set[str] = set()
     all_results = []
 
-    for folder, types, subtypes in IMPORT_TIERS:
+    for folder, types, _subtypes in IMPORT_TIERS:
+        # Manifest entries use `folder` (set by stage3) not `subtypes`, so filter LOGICAL_TABLE
+        # objects by folder name which matches the tier name (tables/views/models).
+        # Other types have a single tier each, so no folder filter is needed.
         tier_entries = [
             e for e in manifest
             if e["type"] in types and
-               (not subtypes or any(s in e.get("subtypes", []) for s in subtypes))
+               ("LOGICAL_TABLE" not in types or e.get("folder") == folder)
         ]
         if not tier_entries:
             continue

@@ -27,6 +27,7 @@ def _find_by_obj_id(client: TSClient, obj_type: str, obj_id: str) -> bool:
     """Return True if an object with metadata_obj_id == obj_id exists in target."""
     page_size = 500
     offset = 0
+    all_obj_ids: list[str] = []
     while True:
         resp = client.post("/metadata/search", {
             "metadata": [{"type": obj_type}],
@@ -42,9 +43,17 @@ def _find_by_obj_id(client: TSClient, obj_type: str, obj_id: str) -> bool:
             raw.get("results") or raw.get("objects") or []
         )
         for item in page:
-            if item.get("metadata_obj_id") == obj_id:
+            found_id = item.get("metadata_obj_id")
+            if found_id:
+                all_obj_ids.append(found_id)
+            if found_id == obj_id:
                 return True
         if len(page) < page_size:
+            print(
+                f"[DEBUG] _find_by_obj_id({obj_type}, {obj_id!r}): scanned "
+                f"{offset + len(page)} items, {len(all_obj_ids)} had metadata_obj_id set. "
+                f"Sample obj_ids: {all_obj_ids[:10]}"
+            )
             return False
         offset += page_size
 

@@ -91,12 +91,7 @@ def _find_by_obj_id(
         )
         return "name"
 
-    # Diagnostic: log what obj_ids are actually present
-    print(
-        f"[DEBUG] Not found: obj_id={obj_id!r} name={name!r}. "
-        f"Target has {len(obj_id_map)} objects with custom obj_id. "
-        f"All obj_ids: {sorted(obj_id_map)}"
-    )
+    print(f"[DEBUG] Not found in target: obj_id={obj_id!r} name={name!r}")
     return "not_found"
 
 

@@ -139,7 +139,7 @@ jobs:
             stage4_export.json
             sanitize_results.json
             stage4b_memory_export.json
-            orgs/${{ inputs.org_key }}/memory/memory.yaml
+            orgs/${{ inputs.org_key }}/
           if-no-files-found: warn
           retention-days: 90
 

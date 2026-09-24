@@ -590,7 +590,7 @@ liveboard:
     viz_guid: dde6fa97-cc60-4069-9a02-5ccd6dd07f93
   groups:
   - id: Group_1
-    name: Key Metrics Migration Testing
+    name: Key Metrics - Arjun is Awesome!
     description: "Core KPIs tracking sales, transactions, and quantity trends"
     visualizations:
     - Viz_1

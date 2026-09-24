@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Debug: list object names from the source org with no tag filter.
-Confirms auth works and the account can read metadata.
+Debug: list object names from the source org filtered by migration_tag.
+Confirms auth works and the account can read tagged metadata.
 Prints up to 50 objects per type (LOGICAL_TABLE, ANSWER, LIVEBOARD, COLLECTION).
 Does not write any files or modify anything.
 """
@@ -32,9 +32,12 @@ def main():
     )
     client.authenticate()
 
+    tag = cfg["migration_tag"]
     for meta_type in SEARCH_TYPES:
         body = {
             "metadata": [{"type": meta_type}],
+            "tag_identifiers": [tag],
+            "include_headers": True,
             "record_size": 50,
             "record_offset": 0,
         }
@@ -45,7 +48,7 @@ def main():
 
         raw = resp.json()
         items = raw if isinstance(raw, list) else raw.get("data") or raw.get("metadata") or []
-        print(f"\n[DEBUG] {meta_type}: {len(items)} objects (first 50)")
+        print(f"\n[DEBUG] {meta_type}: {len(items)} tagged objects (tag={tag})")
         for obj in items:
             name = obj.get("metadata_name") or (obj.get("metadata_header") or {}).get("name") or "?"
             guid = obj.get("metadata_id", "")

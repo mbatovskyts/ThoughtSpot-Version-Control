@@ -23,6 +23,32 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
 
 
+def _find_by_obj_id(client: TSClient, obj_type: str, obj_id: str) -> bool:
+    """Return True if an object with metadata_obj_id == obj_id exists in target."""
+    page_size = 500
+    offset = 0
+    while True:
+        resp = client.post("/metadata/search", {
+            "metadata": [{"type": obj_type}],
+            "include_headers": True,
+            "record_size": page_size,
+            "record_offset": offset,
+        })
+        if resp.status_code != 200:
+            raise RuntimeError(f"metadata/search returned HTTP {resp.status_code}")
+        raw = resp.json()
+        page = raw if isinstance(raw, list) else (
+            raw.get("data") or raw.get("metadata") or
+            raw.get("results") or raw.get("objects") or []
+        )
+        for item in page:
+            if item.get("metadata_obj_id") == obj_id:
+                return True
+        if len(page) < page_size:
+            return False
+        offset += page_size
+
+
 def post_check(
     target_client: TSClient,
     manifest: list[dict],
@@ -45,31 +71,17 @@ def post_check(
 
         result = import_map.get(obj_id, {})
         if result.get("status") == "success":
-            # Search by specific identifier to avoid record_size=-1 truncation.
-            # ThoughtSpot accepts custom obj_id as `identifier` in metadata/search.
+            # ThoughtSpot's metadata/search `identifier` field resolves GUIDs and
+            # names, not custom obj_ids. Paginate all objects of this type and
+            # match client-side on metadata_obj_id — same approach as Stage 3.
             try:
-                resp = target_client.post("/metadata/search", {
-                    "metadata": [{"type": obj_type, "identifier": obj_id}],
-                    "include_headers": True,
-                    "record_size": 1,
-                })
-                if resp.status_code == 200:
-                    raw = resp.json()
-                    page = raw if isinstance(raw, list) else (
-                        raw.get("data") or raw.get("metadata") or
-                        raw.get("results") or raw.get("objects") or []
-                    )
-                    if page:
-                        by_type[obj_type]["confirmed"] += 1
-                    else:
-                        mismatches.append({
-                            "obj_id": obj_id, "name": name, "type": obj_type,
-                            "issue": "Not found in target by obj_id after import.",
-                        })
+                found = _find_by_obj_id(target_client, obj_type, obj_id)
+                if found:
+                    by_type[obj_type]["confirmed"] += 1
                 else:
                     mismatches.append({
                         "obj_id": obj_id, "name": name, "type": obj_type,
-                        "issue": f"Post-check search returned HTTP {resp.status_code}.",
+                        "issue": "Not found in target by obj_id after import.",
                     })
             except Exception as e:
                 mismatches.append({

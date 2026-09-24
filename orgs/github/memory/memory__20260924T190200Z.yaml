@@ -1,0 +1,311 @@
+memories:
+- type: RULE
+  content:
+    rule_definition: "Sales revenue is the total revenue from items sold, excluding shipping costs"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags:
+  - LOCAL
+- type: RULE
+  content:
+    rule_definition: Transactions represent the total count of completed customer purchase events
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RULE
+  content:
+    rule_definition: The percentage share of sales for a specific segment is calculated by dividing the sum of sales for that segment by the sum of total sales across all segments
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What is the total quantity sold each month?
+    recipe: "{\"task\":\"Measure total quantity sold by month\",\"steps\":[{\"instruction\":\"Sum the quantity of items sold grouped by transaction date at monthly granularity\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Quantity]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How does quantity sold vary by month and region?
+    recipe: "{\"task\":\"Analyze monthly quantity trends across sales regions\",\"steps\":[{\"instruction\":\"Show quantity sold aggregated by month and broken down by sales region\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Sales_Region] [Quantity]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What stores are in the dataset?
+    recipe: "{\"task\":\"List all available stores\",\"steps\":[{\"instruction\":\"Display the complete list of store names\",\"analytical_mappings\":{\"tml_tokens\":[\"[Store Name]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the total sales by month?
+    recipe: "{\"task\":\"Track monthly sales performance over time\",\"steps\":[{\"instruction\":\"Show total sales aggregated by month\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the top 10 products by total sales?
+    recipe: "{\"task\":\"Identify the highest-selling products by sales revenue\",\"steps\":[{\"instruction\":\"Show the top 10 products ranked by total sales, including their product category\",\"analytical_mappings\":{\"tml_tokens\":[\"top 10 [Product Name] [Sales] [Product Category]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How do sales trend monthly across different regions and product categories?
+    recipe: "{\"task\":\"Analyze monthly sales patterns by region and product category\",\"steps\":[{\"instruction\":\"Show total sales aggregated by month, grouped by both sales region and product category\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Sales] [Product Category] [Sales_Region]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are monthly sales using the global date filter?
+    recipe: "{\"task\":\"Calculate monthly sales within the globally filtered date range\",\"steps\":[{\"instruction\":\"Show total sales aggregated by month using the global date filter to define the time period\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Global Date Filter].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How many transactions occur each month?
+    recipe: "{\"task\":\"Track transaction volume by month\",\"steps\":[{\"instruction\":\"Count the number of transactions grouped by transaction date at monthly granularity\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Transactions]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: Which products have the highest sales?
+    recipe: "{\"task\":\"Identify the top 10 products by total sales\",\"steps\":[{\"instruction\":\"Rank products by total sales and display the top 10 results, including their product category\",\"analytical_mappings\":{\"tml_tokens\":[\"top 10 [Product Name] [Sales] [Product Category]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How many transactions occurred each month?
+    recipe: "{\"task\":\"Show monthly transaction counts\",\"steps\":[{\"instruction\":\"Calculate the total number of transactions grouped by month\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Transactions]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: Which stores have the highest sales with links to detailed analysis?
+    recipe: "{\"task\":\"Display stores ranked by sales performance with hyperlinks to store-specific analysis\",\"steps\":[{\"instruction\":\"Show sales, transactions, and quantity for each store sorted by sales in descending order, with each store name formatted as a hyperlink that navigates to a detailed liveboard filtered for that specific store using its store ID\",\"analytical_mappings\":{\"tml_tokens\":[\"[Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending\"],\"formulas\":[{\"name\":\"Liveboard Hyper Link With Store ID Runtime FIlter\",\"expression\":\"concat ( \\\"{caption}\\\" , Store Name , \\\"{/caption}\\\" , \\\"https://ps-internal.thoughtspot.cloud/#/pinboard/127d727f-f43b-4f36-a72b-fcd869cbe05d/tab/1f891640-354f-4486-b4dc-0aea3bbc5e04/?col1\\u003dstore id\\u0026op1\\u003deq\\u0026val1\\u003d\\\" , to_string ( Store Id ) )\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How many transactions are there by month for each product category?
+    recipe: "{\"task\":\"Analyze transaction counts by month and product category\",\"steps\":[{\"instruction\":\"Count transactions grouped by transaction date at monthly granularity and broken down by product category\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Transactions] [Product Category]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What is the monthly difference between pants and shirt sales?
+    recipe: "{\"task\":\"Calculate the monthly sales difference between pants and shirts\",\"steps\":[{\"instruction\":\"Compute the difference between pants sales and shirt sales for each month by subtracting shirt sales from pants sales\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Product Category].\\u0027pants\\u0027 vs [Product Category].\\u0027shirts\\u0027 [Difference] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[{\"name\":\"Difference\",\"expression\":\"Sales(pants) - Sales(shirts)\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How do sales trend monthly within the selected date range?
+    recipe: "{\"task\":\"Analyze monthly sales trends using the global date filter\",\"steps\":[{\"instruction\":\"Display total sales by month, respecting the global date filter settings to determine which months are included\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Global Date Filter].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What is the Github Testing metric?
+    recipe: "{\"task\":\"Display the Github Testing metric\",\"steps\":[{\"instruction\":\"Show the Github Testing measure\",\"analytical_mappings\":{\"tml_tokens\":[\"[Github Testing]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the monthly sales?
+    recipe: "{\"task\":\"Analyze sales trends aggregated by month\",\"steps\":[{\"instruction\":\"Aggregate total sales grouped by transaction date at monthly granularity\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the monthly sales for shirts?
+    recipe: "{\"task\":\"Show monthly sales trends for shirts\",\"steps\":[{\"instruction\":\"Calculate total sales filtered to the shirts product category, grouped by month\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Product Category].\\u0027shirts\\u0027 [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the monthly sales for pants?
+    recipe: "{\"task\":\"Show monthly sales trends for pants\",\"steps\":[{\"instruction\":\"Calculate total sales filtered to the pants product category, grouped by month\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Product Category].\\u0027pants\\u0027 [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the total monthly sales?
+    recipe: "{\"task\":\"Show overall monthly sales trends\",\"steps\":[{\"instruction\":\"Calculate total sales grouped by month across all product categories\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the total sales by zip code in New Jersey?
+    recipe: "{\"task\":\"Show total sales broken down by New Jersey zip codes\",\"steps\":[{\"instruction\":\"Calculate total sales grouped by zip code for New Jersey locations\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [NJ Zip Code]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What is the performance of each store with the ability to drill down into individual store details?
+    recipe: "{\"task\":\"Display store performance metrics including sales, transactions, and quantity sorted by sales with interactive links to filter by individual stores.\",\"steps\":[{\"instruction\":\"Show sales, transactions, and quantity for each store grouped by yearly transaction date, sorted in descending order by sales. Each store includes a clickable link that filters the view to that specific store using its store ID.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending [Transaction Date].\\u0027yearly\\u0027\"],\"formulas\":[{\"name\":\"Liveboard Hyper Link With Store ID Runtime FIlter\",\"expression\":\"concat ( \\\"{caption}\\\" , Store Name , \\\"{/caption}\\\" , \\\"https://ps-internal.thoughtspot.cloud/#/pinboard/127d727f-f43b-4f36-a72b-fcd869cbe05d/tab/1f891640-354f-4486-b4dc-0aea3bbc5e04/?col1\\u003dstore id\\u0026op1\\u003deq\\u0026val1\\u003d\\\" , to_string ( Store Id ) )\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How do sales trend over time by month?
+    recipe: "{\"task\":\"Track sales performance over time aggregated by month\",\"steps\":[{\"instruction\":\"Aggregate sales amounts by transaction date at the monthly level to show the time-series trend of sales performance\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How many transactions occurred each month with testing adjustment applied?
+    recipe: "{\"task\":\"Compute adjusted transaction count grouped by month\",\"steps\":[{\"instruction\":\"Count transactions grouped by transaction date at monthly granularity, then apply a testing formula that adds a small constant value to each count.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Transactions] [Testing]\"],\"formulas\":[{\"name\":\"Testing\",\"expression\":\"count ( Transaction Id ) + .2222\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What sales regions are available?
+    recipe: "{\"task\":\"List all distinct sales regions\",\"steps\":[{\"instruction\":\"Display the unique sales regions to show all geographic areas where sales are tracked\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales_Region]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How many transactions occurred each month?
+    recipe: "{\"task\":\"Compute transaction count grouped by month\",\"steps\":[{\"instruction\":\"Count the number of transactions, grouped by transaction date at monthly granularity.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Transactions]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the total sales by zip code in New Jersey?
+    recipe: "{\"task\":\"Calculate total sales grouped by zip code in New Jersey\",\"steps\":[{\"instruction\":\"Sum sales for all transactions, grouped by zip code, filtered to New Jersey locations\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [NJ Zip Code]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: Which products in the pants category generated the most sales?
+    recipe: "{\"task\":\"Identify top 10 products by sales in the pants category\",\"steps\":[{\"instruction\":\"Sum sales amounts by product name, filter to pants category only, and rank to show the top 10 products by sales.\",\"analytical_mappings\":{\"tml_tokens\":[\"top 10 [Product Name] [Sales] [Product Category] [Product Category].\\u0027pants\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: How did sales perform across regions and product categories each month?
+    recipe: "{\"task\":\"Compute monthly sales grouped by region and product category\",\"steps\":[{\"instruction\":\"Sum sales amounts grouped by transaction date at monthly granularity, product category, and sales region to show performance across both dimensions over time.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Sales] [Product Category] [Sales_Region]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What were the monthly sales amounts?
+    recipe: "{\"task\":\"Compute total sales grouped by month\",\"steps\":[{\"instruction\":\"Sum sales amounts grouped by transaction date at monthly granularity, applying the global date filter to constrain the time period.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Global Date Filter].\\u0027monthly\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the filtered monthly sales quantities by region?
+    recipe: "{\"task\":\"Show monthly sales quantities by region with filters applied\",\"steps\":[{\"instruction\":\"Group sales quantities by transaction date at the monthly level and by sales region, applying any active filters to show a focused subset of monthly volume data\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Sales_Region] [Quantity]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: "Show me sales, transactions, and quantity by store with links to drill into each store's details"
+    recipe: "{\"task\":\"Display sales metrics by store with hyperlinks to drill down into individual store performance\",\"steps\":[{\"instruction\":\"Show sales, transaction count, and quantity by store, sorted by sales in descending order, with each store name as a clickable hyperlink that filters to that store\\u0027s specific data\",\"analytical_mappings\":{\"tml_tokens\":[\"[Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending\"],\"formulas\":[{\"name\":\"Liveboard Hyper Link With Store ID Runtime FIlter\",\"expression\":\"concat ( \\\"{caption}\\\" , Store Name , \\\"{/caption}\\\" , \\\"https://ps-internal.thoughtspot.cloud/#/pinboard/127d727f-f43b-4f36-a72b-fcd869cbe05d/tab/1f891640-354f-4486-b4dc-0aea3bbc5e04/?col1\\u003dstore id\\u0026op1\\u003deq\\u0026val1\\u003d\\\" , to_string ( Store Id ) )\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the unfiltered monthly sales quantities by region?
+    recipe: "{\"task\":\"Show monthly sales quantities broken down by region without any filters applied\",\"steps\":[{\"instruction\":\"Group sales quantities by transaction date at the monthly level and by sales region to see the complete monthly volume across all regions\",\"analytical_mappings\":{\"tml_tokens\":[\"[Transaction Date].\\u0027monthly\\u0027 [Sales_Region] [Quantity]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the monthly sales transaction trends for the East and Midwest regions?
+    recipe: "{\"task\":\"View transaction volume by month for East and Midwest sales regions.\",\"steps\":[{\"instruction\":\"Analyze transactions grouped by monthly transaction date, filtered to only include the East and Midwest sales regions.\",\"analytical_mappings\":{\"tml_tokens\":[\"[Global Date Filter].\\u0027monthly\\u0027 [Sales_Region].\\u0027east\\u0027 [Sales_Region].\\u0027midwest\\u0027 [Transactions]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are the total sales by region?
+    recipe: "{\"task\":\"Compute total sales grouped by region\",\"steps\":[{\"instruction\":\"Sum the sales amounts for each sales region to show total sales performance across different geographic areas\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Sales_Region]\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What is the percentage share of pants in total sales by month?
+    recipe: "{\"task\":\"Track the percentage share of pants sales relative to total sales over time\",\"steps\":[{\"instruction\":\"Calculate the ratio of pants sales to total sales, grouped by month, to show the percentage share of pants in overall sales\",\"analytical_mappings\":{\"tml_tokens\":[\"[percentage share of pants in total sales] [Transaction Date].\\u0027monthly\\u0027\"],\"formulas\":[{\"name\":\"percentage share of pants in total sales\",\"expression\":\"sales (pants) / sales (all)\"}]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []
+- type: RECIPE
+  content:
+    user_query: What are total sales by region for 2022 and 2023?
+    recipe: "{\"task\":\"Compare total sales across regions for 2022 and 2023\",\"steps\":[{\"instruction\":\"Sum sales grouped by region and year, filtered to include only 2022 and 2023, to compare regional performance across these two years\",\"analytical_mappings\":{\"tml_tokens\":[\"[Sales] [Global Date Filter].\\u0027yearly\\u0027 [Region] [Global Date Filter].\\u00272022\\u0027 [Global Date Filter].\\u00272023\\u0027\"],\"formulas\":[]}}]}"
+  datamodel_sources:
+  - guid: b0d8d902-bdaa-40aa-b673-725535885fe2
+    obj_id: RetailApparelwithAGOWithInstructions-b0d8d902
+  tags: []

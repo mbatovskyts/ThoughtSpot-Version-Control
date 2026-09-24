@@ -1,0 +1,129 @@
+{
+  "answer": {
+    "answer_columns": [
+      {
+        "name": "Fill Duration",
+        "sort_info": {
+          "category": "DEFAULT"
+        }
+      },
+      {
+        "name": "Fill Time"
+      },
+      {
+        "name": "Maximum Fill Duration Secs"
+      },
+      {
+        "name": "Pull Time"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "store"
+      }
+    ],
+    "chart": {
+      "chart_columns": [
+        {
+          "column_id": "Fill Duration"
+        },
+        {
+          "column_id": "Fill Time"
+        },
+        {
+          "column_id": "Maximum Fill Duration Secs"
+        },
+        {
+          "column_id": "Pull Time"
+        },
+        {
+          "column_id": "date"
+        },
+        {
+          "column_id": "store"
+        }
+      ],
+      "client_state": "",
+      "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"store\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"date\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Pull Time\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Fill Time\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Fill Duration\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Maximum Fill Duration Secs\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"0aba42c3-9265-4d60-8259-1f339da762ad\",\"properties\": {\"axisType\": \"X\"}}]}",
+      "custom_visual_props": "{}",
+      "type": "ADVANCED_PIVOT_TABLE",
+      "viz_style": "{}"
+    },
+    "display_mode": "TABLE_MODE",
+    "formulas": [
+      {
+        "expr": "concat ( right ( concat ( '0' , to_string ( floor ( [formula_Fill Duration Secs] / 3600 ) ) ) , 2 ) , ':' , right ( concat ( '0' , to_string ( mod ( floor ( [formula_Fill Duration Secs] / 60 ) , 60 ) ) ) , 2 ) , ':' , right ( concat ( '0' , to_string ( mod ( [formula_Fill Duration Secs] , 60 ) ) ) , 2 ) )",
+        "id": "formula_Fill Duration",
+        "name": "Fill Duration",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "diff_time ( [formula_Fill Time] , [formula_Pull Time] )",
+        "id": "formula_Fill Duration Secs",
+        "name": "Fill Duration Secs",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "add_seconds ( [formula_Pull Time] , mod ( day_number_of_year ( [date] ) * 613 + strlen ( [store] ) * 91 , 14400 ) )",
+        "id": "formula_Fill Time",
+        "name": "Fill Time",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "add_seconds ( [date] , mod ( day_number_of_year ( [date] ) * 1447 + strlen ( [store] ) * 37 , 43200 ) )",
+        "id": "formula_Pull Time",
+        "name": "Pull Time",
+        "was_auto_generated": false
+      }
+    ],
+    "name": "Pull to Fill Duration in hh mm ss",
+    "search_query": "[store] [date] [date].detailed [formula_Pull Time] [formula_Pull Time].detailed [formula_Fill Time] [formula_Fill Time].detailed [formula_Fill Duration] max [formula_Fill Duration Secs] sort by [formula_Fill Duration] descending",
+    "table": {
+      "client_state": "",
+      "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"widthState\": [{\"columnId\": \"Fill Duration\",\"width\": 200.30245971679688}]}",
+      "ordered_column_ids": [
+        "store",
+        "date",
+        "Pull Time",
+        "Fill Time",
+        "Fill Duration",
+        "Maximum Fill Duration Secs"
+      ],
+      "table_columns": [
+        {
+          "column_id": "Fill Duration",
+          "show_headline": false
+        },
+        {
+          "column_id": "Fill Time",
+          "show_headline": false
+        },
+        {
+          "column_id": "Maximum Fill Duration Secs",
+          "show_headline": false
+        },
+        {
+          "column_id": "Pull Time",
+          "show_headline": false
+        },
+        {
+          "column_id": "date",
+          "show_headline": false
+        },
+        {
+          "column_id": "store",
+          "show_headline": false
+        }
+      ]
+    },
+    "tables": [
+      {
+        "id": "(Sample) Retail - Apparel",
+        "name": "(Sample) Retail - Apparel",
+        "obj_id": "SampleRetail-Apparel-cd252e5c"
+      }
+    ]
+  },
+  "obj_id": "TotalquantitypurchasedTotalsalesbycounty-d2677317"
+}

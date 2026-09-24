@@ -1,0 +1,82 @@
+{
+  "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "PRODUCTNAME",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "description": "This column is not indexed",
+        "name": "Product Name",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "value_casing": "ALL_LOWERCASE"
+        }
+      },
+      {
+        "db_column_name": "PRODUCTID",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "SKU",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonyms": [
+            "Product ID"
+          ]
+        }
+      },
+      {
+        "db_column_name": "PRODUCTTYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Product Category",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "value_casing": "MIXED"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "${bat_db_var}",
+    "db_table": "DIM_RETAPP_PRODUCTS",
+    "description": "ts_groups = Product Catigory or ts_groups = 'all categories'  Add back after test",
+    "name": "DIM_RETAPP_PRODUCTS",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    },
+    "rls_rules": {
+      "rules": [
+        {
+          "expr": "ts_groups = [DIM_RETAPP_PRODUCTS_1::Product Category] ",
+          "name": "RLS Rule Product Category"
+        }
+      ],
+      "table_paths": [
+        {
+          "column": [
+            "Product Category"
+          ],
+          "id": "DIM_RETAPP_PRODUCTS_1",
+          "table": "DIM_RETAPP_PRODUCTS"
+        }
+      ],
+      "tables": [
+        {
+          "name": "DIM_RETAPP_PRODUCTS",
+          "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f"
+        }
+      ]
+    },
+    "schema": "${bat_schema_var}"
+  }
+}

@@ -6,7 +6,7 @@ Uses export_options: include_obj_id=True, include_obj_id_ref=True,
                      include_guid=False, export_with_associated_feedbacks=True
 
 Saves TML as JSON files: orgs/<org_key>/<folder>/<slug>__<obj_id>__<timestamp>.<type>.tml
-Writeseexport_results.json with per-object success/failure.
+Writes export_results.json with per-object success/failure.
 """
 from __future__ import annotations
 

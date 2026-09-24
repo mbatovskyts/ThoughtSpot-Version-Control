@@ -3,8 +3,8 @@
 Stage 4b: Export Spotter Model Memory for all model-type objects.
 
 Calls /api/rest/2.0/ai/memory/export for every model in the manifest and
-saves the YAML payload to orgs/<org_key>/memory/memory.yaml, which Stage 6
-commits to ts-dev alongside TML.
+saves the YAML payload to orgs/<org_key>/memory/memory__<timestamp>.yaml,
+which Stage 6 commits to ts-dev alongside TML.
 
 Skips silently (exit 0, non-blocking) if:
   - No model-type objects exist in the manifest
@@ -26,8 +26,13 @@ from lib.ts_client import TSClient
 MODEL_FOLDERS = {"models"}
 
 
-def export_memory(source_client: TSClient, manifest: list[dict],
-                  org_key: str, repo_root: Path) -> dict:
+def export_memory(
+    source_client: TSClient,
+    manifest: list[dict],
+    org_key: str,
+    repo_root: Path,
+    timestamp: str = "",
+) -> dict:
     model_ids = [
         entry["obj_id"]
         for entry in manifest
@@ -69,7 +74,9 @@ def export_memory(source_client: TSClient, manifest: list[dict],
         print("[STAGE 4b] Memory export returned empty content — no memory to migrate.")
         return {"skipped": True, "reason": "empty_memory", "model_count": len(model_ids)}
 
-    out_path = repo_root / "orgs" / org_key / "memory" / "memory.yaml"
+    ts_suffix = f"__{timestamp}" if timestamp else ""
+    filename = f"memory{ts_suffix}.yaml"
+    out_path = repo_root / "orgs" / org_key / "memory" / filename
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(memory_yaml, encoding="utf-8")
     print(f"[STAGE 4b] Memory YAML saved -> {out_path} ({len(memory_yaml.encode())} bytes)")
@@ -88,6 +95,7 @@ def main():
     cfg_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
     manifest_path = os.environ.get("MANIFEST_OUT", f"/tmp/ts_migration_{org_key}_manifest.json")
     repo_root = Path(os.environ.get("REPO_ROOT", "."))
+    timestamp = os.environ.get("TIMESTAMP", "")
 
     cfg = json.loads(Path(cfg_path).read_text())
     manifest = json.loads(Path(manifest_path).read_text())
@@ -100,7 +108,7 @@ def main():
     )
     source_client.authenticate()
 
-    result = export_memory(source_client, manifest, org_key, repo_root)
+    result = export_memory(source_client, manifest, org_key, repo_root, timestamp)
 
     out_path = os.environ.get("MEMORY_EXPORT_OUT",
                               f"/tmp/ts_migration_{org_key}_memory_export.json")

@@ -5,8 +5,8 @@ Stage 4: Export TML for all manifest objects.
 Uses export_options: include_obj_id=True, include_obj_id_ref=True,
                      include_guid=False, export_with_associated_feedbacks=True
 
-Saves TML as JSON files: orgs/<org_key>/<folder>/<slug>__<obj_id>.<type>.tml
-Writes export_results.json with per-object success/failure.
+Saves TML as JSON files: orgs/<org_key>/<folder>/<slug>__<obj_id>__<timestamp>.<type>.tml
+Writeseexport_results.json with per-object success/failure.
 """
 from __future__ import annotations
 
@@ -28,8 +28,13 @@ TYPE_EXT = {
 }
 
 
-def export_objects(source_client: TSClient, manifest: list[dict], org_key: str,
-                  repo_root: Path) -> list[dict]:
+def export_objects(
+    source_client: TSClient,
+    manifest: list[dict],
+    org_key: str,
+    repo_root: Path,
+    timestamp: str = "",
+) -> list[dict]:
     results = []
 
     for entry in manifest:
@@ -41,7 +46,8 @@ def export_objects(source_client: TSClient, manifest: list[dict], org_key: str,
         ext = TYPE_EXT.get(obj_type, obj_type.lower())
 
         slug = slug_from_name(name)
-        filename = f"{slug}__{obj_id}.{ext}.tml"
+        ts_suffix = f"__{timestamp}" if timestamp else ""
+        filename = f"{slug}__{obj_id}{ts_suffix}.{ext}.tml"
         out_path = repo_root / "orgs" / org_key / folder / filename
 
         try:
@@ -93,6 +99,7 @@ def main():
     cfg_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
     manifest_path = os.environ.get("MANIFEST_OUT", f"/tmp/ts_migration_{org_key}_manifest.json")
     repo_root = Path(os.environ.get("REPO_ROOT", "."))
+    timestamp = os.environ.get("TIMESTAMP", "")
     cfg = json.loads(Path(cfg_path).read_text())
     manifest = json.loads(Path(manifest_path).read_text())
 
@@ -104,7 +111,7 @@ def main():
     )
     source_client.authenticate()
 
-    results = export_objects(source_client, manifest, org_key, repo_root)
+    results = export_objects(source_client, manifest, org_key, repo_root, timestamp)
 
     out_path = os.environ.get("EXPORT_OUT", f"/tmp/ts_migration_{org_key}_export_results.json")
     Path(out_path).write_text(json.dumps(results, indent=2), encoding="utf-8")

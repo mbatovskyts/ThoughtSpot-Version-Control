@@ -23,11 +23,19 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
 
 
-def _find_by_obj_id(client: TSClient, obj_type: str, obj_id: str) -> bool:
-    """Return True if an object with metadata_obj_id == obj_id exists in target."""
+def _scan_by_type(
+    client: TSClient, obj_type: str
+) -> tuple[dict[str, str], dict[str, str]]:
+    """
+    Paginate all objects of obj_type in target.
+    Returns two dicts:
+      obj_id_map: {metadata_obj_id -> metadata_name}
+      name_map:   {metadata_name -> metadata_obj_id or ""}  (first hit wins)
+    """
     page_size = 500
     offset = 0
-    all_obj_ids: list[str] = []
+    obj_id_map: dict[str, str] = {}
+    name_map: dict[str, str] = {}
     while True:
         resp = client.post("/metadata/search", {
             "metadata": [{"type": obj_type}],
@@ -43,19 +51,53 @@ def _find_by_obj_id(client: TSClient, obj_type: str, obj_id: str) -> bool:
             raw.get("results") or raw.get("objects") or []
         )
         for item in page:
-            found_id = item.get("metadata_obj_id")
-            if found_id:
-                all_obj_ids.append(found_id)
-            if found_id == obj_id:
-                return True
+            oid = item.get("metadata_obj_id") or ""
+            nm = item.get("metadata_name") or item.get("name") or ""
+            if oid:
+                obj_id_map[oid] = nm
+            if nm and nm not in name_map:
+                name_map[nm] = oid
         if len(page) < page_size:
-            print(
-                f"[DEBUG] _find_by_obj_id({obj_type}, {obj_id!r}): scanned "
-                f"{offset + len(page)} items, {len(all_obj_ids)} had metadata_obj_id set. "
-                f"Sample obj_ids: {all_obj_ids[:10]}"
-            )
-            return False
+            break
         offset += page_size
+    return obj_id_map, name_map
+
+
+def _find_by_obj_id(
+    obj_id_map: dict[str, str],
+    name_map: dict[str, str],
+    obj_id: str,
+    name: str,
+) -> str:
+    """
+    Check whether an object exists in pre-fetched target maps.
+
+    Returns:
+      "obj_id"   — found by metadata_obj_id (definitive)
+      "name"     — found by metadata_name only (metadata_obj_id not set in target;
+                   ThoughtSpot may not persist obj_id on TML update of an existing object)
+      "not_found"— object absent from target
+    """
+    if obj_id in obj_id_map:
+        return "obj_id"
+
+    # Fallback: object may exist without its custom obj_id (e.g. pre-existing object
+    # updated via TML import — ThoughtSpot does not always apply obj_id on update).
+    if name in name_map:
+        print(
+            f"[WARN] '{name}' ({obj_id}): found in target by name but metadata_obj_id "
+            f"is not set (stored as {name_map[name]!r}). "
+            f"Migration confirmed by name match."
+        )
+        return "name"
+
+    # Diagnostic: log what obj_ids are actually present
+    print(
+        f"[DEBUG] Not found: obj_id={obj_id!r} name={name!r}. "
+        f"Target has {len(obj_id_map)} objects with custom obj_id. "
+        f"All obj_ids: {sorted(obj_id_map)}"
+    )
+    return "not_found"
 
 
 def post_check(
@@ -65,6 +107,10 @@ def post_check(
 ) -> dict:
     """Compare manifest vs target. Returns post_check dict."""
     import_map = {r["obj_id"]: r for r in import_results}
+
+    # Scan target once per type — avoids redundant API calls when multiple
+    # objects of the same type appear in the manifest.
+    type_cache: dict[str, tuple[dict, dict]] = {}
 
     by_type: dict[str, dict] = {}
     mismatches = []
@@ -83,14 +129,20 @@ def post_check(
             # ThoughtSpot's metadata/search `identifier` field resolves GUIDs and
             # names, not custom obj_ids. Paginate all objects of this type and
             # match client-side on metadata_obj_id — same approach as Stage 3.
+            # Fallback to name match when metadata_obj_id is absent on the target
+            # object (ThoughtSpot does not always set obj_id when updating existing
+            # objects via TML import).
             try:
-                found = _find_by_obj_id(target_client, obj_type, obj_id)
-                if found:
+                if obj_type not in type_cache:
+                    type_cache[obj_type] = _scan_by_type(target_client, obj_type)
+                obj_id_map, name_map = type_cache[obj_type]
+                result_kind = _find_by_obj_id(obj_id_map, name_map, obj_id, name)
+                if result_kind in ("obj_id", "name"):
                     by_type[obj_type]["confirmed"] += 1
                 else:
                     mismatches.append({
                         "obj_id": obj_id, "name": name, "type": obj_type,
-                        "issue": "Not found in target by obj_id after import.",
+                        "issue": "Not found in target by obj_id or name after import.",
                     })
             except Exception as e:
                 mismatches.append({

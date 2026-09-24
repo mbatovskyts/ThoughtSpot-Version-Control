@@ -1,0 +1,117 @@
+{
+  "obj_id": "DIM_RETAPP_STORES-8cd69308",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "STOREID",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "Store ID",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "STORENAME",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Store Name",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "synonyms": [
+            "Store Full Name"
+          ]
+        }
+      },
+      {
+        "db_column_name": "CITY",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Store City",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "STATE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Store State",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "ZIPCODE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Store Zip Code",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "COUNTY",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Store County",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "LATITUDE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "Store Latitude",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "LONGITUDE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "Store Longitude",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "REGION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "Region",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "${bat_db_var}",
+    "db_table": "DIM_RETAPP_STORES",
+    "name": "DIM_RETAPP_STORES",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    },
+    "schema": "${bat_schema_var}"
+  }
+}

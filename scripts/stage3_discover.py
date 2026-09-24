@@ -241,13 +241,10 @@ def main():
     tagged_count = sum(1 for e in manifest if e.get("reason") == "tagged")
     if tagged_count == 0:
         print(
-            f"[ERROR] 0 objects with tag '{cfg['migration_tag']}' found in source org "
-            f"{src['org_id']}. Check [AUTH] lines above — if session_org != configured_org, "
-            f"the service account is not a member of that org and needs to be added in "
-            f"ThoughtSpot Admin > Orgs.",
+            f"[INFO] 0 objects with tag '{cfg['migration_tag']}' found in source org "
+            f"{src['org_id']}. Nothing to migrate — pipeline will exit cleanly.",
             file=sys.stderr,
         )
-        sys.exit(1)
 
 
 if __name__ == "__main__":

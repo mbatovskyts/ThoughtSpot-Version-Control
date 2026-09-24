@@ -1,0 +1,116 @@
+{
+  "obj_id": "FACT_RETAPP_SALES-1277592f",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "SALESID",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "Transaction ID",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "STOREID",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "Store ID",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "PRODUCTID",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "SKU",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "QUANTITYPURCHASED",
+        "db_column_properties": {
+          "data_type": "INT64"
+        },
+        "name": "Quantity",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "ITEMPRICE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "Item Price",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "is_additive": true
+        }
+      },
+      {
+        "db_column_name": "SALES",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "description": "This Description is coming from the table level.",
+        "name": "Sales",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "RECORDDATE",
+        "db_column_properties": {
+          "data_type": "DATE"
+        },
+        "name": "Transaction Date",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM dd, yyyy",
+          "index_type": "DONT_INDEX"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "${bat_db_var}",
+    "db_table": "FACT_RETAPP_SALES_NEW",
+    "joins_with": [
+      {
+        "destination": {
+          "name": "DIM_RETAPP_PRODUCTS",
+          "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f"
+        },
+        "name": "C_DIM_RETAPP_PRODUCTS",
+        "on": "[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]",
+        "type": "OUTER"
+      }
+    ],
+    "name": "FACT_RETAPP_SALES",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    },
+    "schema": "${bat_schema_var}"
+  }
+}

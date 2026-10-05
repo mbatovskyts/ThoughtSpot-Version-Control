@@ -140,11 +140,13 @@ liveboard:
         name: Liveboard Hyper Link With Store ID Runtime FIlter
         expr: "concat ( \"{caption}\" , [Store Name] , \"{/caption}\" , \"https://ps-internal.thoughtspot.cloud/#/pinboard/127d727f-f43b-4f36-a72b-fcd869cbe05d/tab/1f891640-354f-4486-b4dc-0aea3bbc5e04/?col1=store id&op1=eq&val1=\" , to_string ( [Store Id] ) )"
         was_auto_generated: false
-      search_query: "[formula_Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending top 3"
+      search_query: "[formula_Liveboard Hyper Link With Store ID Runtime FIlter] [Sales] [Transactions] [Quantity] sort by [Sales] descending"
       answer_columns:
       - name: Liveboard Hyper Link With Store ID Runtime FIlter
       - name: Total Quantity
       - name: Total Sales
+        sort_info:
+          category: DEFAULT
       - name: Transactions
       table:
         table_columns:

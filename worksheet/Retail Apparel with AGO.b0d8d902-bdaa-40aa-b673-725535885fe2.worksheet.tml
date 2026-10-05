@@ -35,6 +35,9 @@ model:
   - id: formula_Average Items Ordered
     name: Average Items Ordered
     expr: sum ( [FACT_RETAPP_SALES::Quantity] ) / unique count ( [FACT_RETAPP_SALES::Transaction ID] )
+  - id: formula_Average Order Rate
+    name: Average Order Rate
+    expr: 'unique count ( [FACT_RETAPP_SALES::Transaction ID] ) / sum ( [FACT_RETAPP_SALES::Quantity] ) '
   - id: formula_Global Date Filter
     name: Global Date Filter
     expr: if ( [Date Column Picker] = "shipping date" ) then [formula_Shipping Date] else if ( [Date Column Picker] = "transaction date" ) then [FACT_RETAPP_SALES::Transaction Date] else null
@@ -322,6 +325,12 @@ model:
       column_type: ATTRIBUTE
       index_type: DONT_INDEX
       is_mandatory_token_filter: false
+  - name: Average Order %
+    formula_id: formula_Average Order Rate
+    properties:
+      column_type: MEASURE
+      aggregation: SUM
+      index_type: DONT_INDEX
   properties:
     is_bypass_rls: false
     join_progressive: true

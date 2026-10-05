@@ -153,11 +153,11 @@ liveboard:
         - column_id: Liveboard Hyper Link With Store ID Runtime FIlter
           show_headline: false
         - column_id: Total Quantity
-          show_headline: false
+          headline_aggregation: SUM
         - column_id: Total Sales
-          show_headline: false
+          headline_aggregation: SUM
         - column_id: Transactions
-          show_headline: false
+          headline_aggregation: SUM
         ordered_column_ids:
         - Liveboard Hyper Link With Store ID Runtime FIlter
         - Total Sales
@@ -176,7 +176,7 @@ liveboard:
         - "y":
           - Liveboard Hyper Link With Store ID Runtime FIlter
         client_state: ""
-        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"}},\"columnProperties\": [{\"columnId\": \"Liveboard Hyper Link With Store ID Runtime FIlter\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"9ec4505c-c28b-4b02-8686-8f394c459cc5\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Liveboard Hyper Link With Store ID Runtime FIlter\"],\"isOpposite\": false}},{\"id\": \"215ceb61-9702-4032-abeb-0321bbbae2d7\",\"properties\": {\"axisType\": \"X\"}}]}"
+        client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true,\"showAnalyseChangeCta\": true}},\"columnProperties\": [{\"columnId\": \"Liveboard Hyper Link With Store ID Runtime FIlter\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9ec4505c-c28b-4b02-8686-8f394c459cc5\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Liveboard Hyper Link With Store ID Runtime FIlter\"],\"isOpposite\": false}},{\"id\": \"215ceb61-9702-4032-abeb-0321bbbae2d7\",\"properties\": {\"axisType\": \"X\"}}]}"
       display_mode: TABLE_MODE
     viz_guid: dfebce4d-6bbd-4b42-9184-b43024133ec9
   - id: Viz_5
@@ -816,6 +816,8 @@ liveboard:
       oper: in
       values:
       - East
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
@@ -824,15 +826,21 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: EXACT_DATE
         oper: =
+      applicability:
+        level: LIVEBOARD
     is_public: false
     view_parameters:
     - name: Date Column Picker
       id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+      applicability:
+        level: LIVEBOARD
   - view_guid: e48553c3-3306-42c8-b191-08fef8e1a57a
     name: All Views
     view_filters:
@@ -845,6 +853,8 @@ liveboard:
       - East
       - South
       - Southwest
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
@@ -853,6 +863,8 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -861,10 +873,14 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     is_public: false
     view_parameters:
     - name: Date Column Picker
       id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+      applicability:
+        level: LIVEBOARD
   - view_guid: 8ac8e1f6-2d22-4636-82e4-d54afdbd61e6
     name: Midwest
     view_filters:
@@ -873,6 +889,8 @@ liveboard:
       oper: in
       values:
       - Midwest
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
@@ -881,6 +899,8 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -889,10 +909,14 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     is_public: false
     view_parameters:
     - name: Date Column Picker
       id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+      applicability:
+        level: LIVEBOARD
   - view_guid: 8635dbc8-09a4-40af-a642-e20197b191b5
     name: South
     view_filters:
@@ -902,6 +926,8 @@ liveboard:
       values:
       - South
       - Southwest
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
@@ -910,6 +936,8 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -918,10 +946,14 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
     is_public: false
     view_parameters:
     - name: Date Column Picker
       id: 5df3f23f-7cdf-43a0-96a6-20c45704efac
+      applicability:
+        level: LIVEBOARD
   style:
     style_properties:
     - name: lb_border_type

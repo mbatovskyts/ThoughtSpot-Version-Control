@@ -16,6 +16,7 @@ Writes the GitHub job summary.
 """
 from __future__ import annotations
 
+import dataclasses
 import json
 import os
 import sys
@@ -44,6 +45,7 @@ def build_report(
     postcheck_data: dict,
     prod_prep_data: list[dict],
     spotter: dict | None = None,
+    discover_failures: list[dict] | None = None,
 ) -> RunReport:
     src = cfg["source"]
     tgt = cfg["target"]
@@ -112,6 +114,11 @@ def build_report(
                     suggested_action=f'Create connection "{conn}" in target org.',
                 )
                 report.mark_failed(rec)
+
+    # Failures found while discovering objects (no obj_id, missing dependencies, ...).
+    known = {f.name for f in dataclasses.fields(ObjectRecord)}
+    for d in discover_failures or []:
+        report.mark_failed(ObjectRecord(**{k: v for k, v in d.items() if k in known}))
 
     # Spotter memory / NL instructions: their stages never fail the job themselves.
     spotter = spotter or {}
@@ -207,6 +214,9 @@ def main():
                                  f"/tmp/ts_migration_{org_key}_instructions_import.json"), {}),
     )
 
+    discover_failures = load_json(
+        os.environ.get("DISCOVER_OUT", f"/tmp/ts_migration_{org_key}_discover_failures.json"), [])
+
     if not cfg:
         print("[STAGE 11] No config found — cannot produce full report.", file=sys.stderr)
         sys.exit(0)
@@ -214,7 +224,7 @@ def main():
     report = build_report(
         cfg, run_id, dry_run,
         manifest, export_results, import_results,
-        postcheck_data, prod_prep_data, spotter,
+        postcheck_data, prod_prep_data, spotter, discover_failures,
     )
 
     ts = report_timestamp()

@@ -66,6 +66,7 @@ jobs:
       SANITIZE_OUT: sanitize_results.json
       MEMORY_EXPORT_OUT: stage4b_memory_export.json
       INSTRUCTIONS_EXPORT_OUT: stage4c_instructions_export.json
+      DISCOVER_OUT: stage3_discover_failures.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
@@ -144,6 +145,7 @@ jobs:
             sanitize_results.json
             stage4b_memory_export.json
             stage4c_instructions_export.json
+            stage3_discover_failures.json
             orgs/${{ inputs.org_key }}/
           if-no-files-found: warn
           retention-days: 90
@@ -370,6 +372,7 @@ jobs:
       MEMORY_IMPORT_OUT: stage9b_memory_import.json
       INSTRUCTIONS_EXPORT_OUT: stage4c_instructions_export.json
       INSTRUCTIONS_IMPORT_OUT: stage9c_instructions_import.json
+      DISCOVER_OUT: stage3_discover_failures.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4

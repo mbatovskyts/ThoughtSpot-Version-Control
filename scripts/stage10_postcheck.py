@@ -187,7 +187,8 @@ def cleanup_tags(
             removed = len(to_remove)
             print(f"[STAGE 10] Removed migration tag from {removed} objects.")
         except Exception as e:
-            print(f"[ERROR] Tag removal failed: {e}", file=sys.stderr)
+            # The tags stay on the source objects, so a re-run will pick them up again.
+            print(f"[ERROR] Tag removal failed; tags were NOT removed: {e}", file=sys.stderr)
 
     return {"removed": removed, "retained": len(to_retain)}
 

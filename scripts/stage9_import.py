@@ -116,12 +116,17 @@ def import_tier(
                     _type_for_tag = _ts_type_for_tag(obj_type)
                     if _type_for_tag:
                         try:
+                            # The tags API takes a GUID or name; look the target GUID up by obj_id.
+                            tgt_guid = target_client.find_guid_by_obj_id(_type_for_tag, obj_id)
+                            if not tgt_guid:
+                                raise RuntimeError("object not found in target by obj_id")
                             target_client.assign_tags(
-                                [{"type": _type_for_tag, "identifier": obj_id}],
+                                [{"type": _type_for_tag, "identifier": tgt_guid}],
                                 other_tags,
                             )
                         except Exception as tag_err:
-                            print(f"[WARN] Failed to reapply tags for '{name}': {tag_err}")
+                            print(f"[WARN] Failed to reapply tags for '{name}': {tag_err}",
+                                  file=sys.stderr)
 
                 # Path B: bind variables after table import
                 if obj_type == "LOGICAL_TABLE" and entry["folder"] == "tables":

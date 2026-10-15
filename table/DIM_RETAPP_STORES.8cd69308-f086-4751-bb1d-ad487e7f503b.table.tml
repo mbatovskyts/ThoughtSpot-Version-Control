@@ -21,6 +21,7 @@ table:
       column_type: ATTRIBUTE
       synonyms:
       - Store Full Name
+      value_casing: MIXED
     db_column_properties:
       data_type: VARCHAR
   - name: Store City

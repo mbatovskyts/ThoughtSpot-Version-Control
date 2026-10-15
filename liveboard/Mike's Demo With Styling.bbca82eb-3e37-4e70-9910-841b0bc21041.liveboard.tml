@@ -56,10 +56,10 @@ liveboard:
           category: CURRENCY
           currencyFormatConfig:
             locale: USD
-            unit: THOUSANDS
+            unit: NONE
             decimals: 0.0
             toSeparateThousands: true
-            removeTrailingZeroes: true
+            removeTrailingZeroes: false
           isCategoryEditable: true
       table:
         table_columns:
@@ -90,7 +90,7 @@ liveboard:
           - Product Category
         client_state: ""
         client_state_v2: "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"AUTO_ON\",\"showLinearRegressionLine\": false,\"chartSpecific\": {\"markersEnabled\": true,\"customProps\": \"{\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnomalies\\\":false,\\\"showBounds\\\":true,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"pivotSummariesState\": {}},\"legendPosition\": \"TOP_LEGEND\"},\"columnProperties\": [{\"columnId\": \"Product Name\",\"columnProperty\": {}},{\"columnId\": \"Total Sales\",\"columnProperty\": {}},{\"columnId\": \"Product Category\",\"columnProperty\": {}}],\"axisProperties\": [{\"id\": \"b909f24f-f074-4c70-8c8a-862223943da0\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Sales\"],\"isOpposite\": false}},{\"id\": \"2ef2ce4b-0c17-45e5-90bc-a55fd11fb9a1\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Product Name\"]}}],\"seriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"}],\"systemSeriesColors\": [{\"serieName\": \"5d16988c-434c-4925-a32a-4addd7604daa\",\"color\": \"#2E75F0\"},{\"serieName\": \"highcharts-regression\",\"color\": \"#FF8142\"},{\"serieName\": \"Total Sales\",\"color\": \"#fe3bfc\"},{\"serieName\": \"bags\",\"color\": \"#Fce800\"},{\"serieName\": \"dresses\",\"color\": \"#25fb8a\"},{\"serieName\": \"jackets\",\"color\": \"#A83Dff\"},{\"serieName\": \"vests\",\"color\": \"#4E55fd\"}]}"
-        viz_style: "{\"overrides\": {\"legend_properties\": {\"show_legend\": true,\"position\": \"TOP_LEGEND\",\"color_palette\": {\"colors\": [\"#a8edd8\",\"#60d9ac\",\"#1abf85\",\"#128c60\",\"#0a5e40\",\"#a8e8e0\",\"#60cfc4\",\"#18b8b0\",\"#0e8880\",\"#075850\",\"#b0e8c0\",\"#70cf90\",\"#28b860\",\"#189048\",\"#0a6030\",\"#a8d8e8\",\"#60b8d0\",\"#1898c0\",\"#0e6e90\",\"#074860\",\"#c0d8e8\",\"#80b8d0\",\"#3898c0\",\"#1870a0\",\"#0a4870\",\"#a8d0c8\",\"#68b8b0\",\"#28a098\",\"#108878\",\"#087058\",\"#b8ddd0\",\"#78c4b4\",\"#38ac98\",\"#188878\",\"#0a6058\",\"#a0d8d0\",\"#60c0b8\",\"#20a8a0\",\"#108888\",\"#086868\"]}},\"data_label_properties\": {\"stack_labels_properties\": {\"is_visible\": true},\"column_data_label_properties\": [{\"column_id\": \"Total Sales\",\"properties\": {\"is_visible\": true}}]},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": true,\"y_gridline_enabled\": true}},\"axis_properties\": [{\"linked_columns\": [\"Total Sales\"],\"properties\": {\"is_name_visible\": false,\"is_label_visible\": true}},{\"linked_columns\": [\"Product Name\"],\"properties\": {\"is_name_visible\": false,\"is_label_visible\": true}}]}}"
+        viz_style: "{\"overrides\": {\"legend_properties\": {\"show_legend\": true,\"position\": \"TOP_LEGEND\",\"color_palette\": {\"colors\": [\"#ede8fc\",\"#d9cefc\",\"#b8a8f0\",\"#8b72d8\",\"#5e40b0\",\"#e8e0fa\",\"#d0c4f8\",\"#a98ee8\",\"#7a5cc8\",\"#4e34a0\",\"#f0ebfd\",\"#ddd5fb\",\"#c0aff2\",\"#9278dc\",\"#6448b8\",\"#eae4fb\",\"#d4caf9\",\"#b49cec\",\"#876ad4\",\"#5c3eac\",\"#f2eefe\",\"#e2d8fc\",\"#c8b4f4\",\"#9e82e0\",\"#7054bc\",\"#ede6fc\",\"#d8cefc\",\"#baa8f2\",\"#8d74da\",\"#6044b4\",\"#f0e8fd\",\"#ddd0fc\",\"#c0aaee\",\"#9278d8\",\"#6448b0\",\"#ebe4fc\",\"#d6ccfa\",\"#b8a0ee\",\"#8a6ed6\",\"#5e3eac\"]}},\"data_label_properties\": {\"stack_labels_properties\": {\"is_visible\": true},\"column_data_label_properties\": [{\"column_id\": \"Total Sales\",\"properties\": {\"is_visible\": false}}]},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": false,\"y_gridline_enabled\": false}},\"axis_properties\": [{\"linked_columns\": [\"Total Sales\"],\"properties\": {\"is_name_visible\": false,\"is_label_visible\": true}},{\"linked_columns\": [\"Product Name\"],\"properties\": {\"is_name_visible\": false,\"is_label_visible\": true}}]}}"
       display_mode: CHART_MODE
     viz_guid: d6133c94-2187-446f-bd14-127e7f2a38e4
   - id: Viz_3
@@ -459,10 +459,10 @@ liveboard:
         format:
           category: NUMBER
           numberFormatConfig:
-            unit: AUTO
+            unit: NONE
             decimals: 0.0
             toSeparateThousands: true
-            removeTrailingZeroes: true
+            removeTrailingZeroes: false
           isCategoryEditable: true
       table:
         table_columns:
@@ -507,7 +507,7 @@ liveboard:
               column: Product Category
             mode: AXIS_DRIVEN
         custom_visual_props: "{\"axisVisualProps\":{\"Month(Transaction Date)\":{\"name-color\":{\"color\":\"#5f5f5f\",\"style\":[]},\"label-color\":{\"color\":\"#858585\",\"style\":[]},\"show-x-axis-gridlines\":true,\"x-axis-gridline-style\":{\"dashStyle\":\"Solid\",\"thickness\":1,\"color\":\"#EAEDF2\"}},\"Transactions\":{\"log-scale\":false,\"inheritAxisNameStyle\":{\"textStyle\":{\"color\":\"#5f5f5f\",\"style\":[]},\"isLinked\":true},\"inheritNF\":{\"format\":{\"__typename\":\"FormatConfig\",\"category\":\"NUMBER\",\"isCategoryEditable\":true,\"numberFormatConfig\":{\"__typename\":\"NumberFormatConfig\",\"decimals\":0,\"negativeValueFormat\":\"PREFIX_DASH\",\"removeTrailingZeroes\":false,\"toSeparateThousands\":true,\"unit\":\"AUTO\"}},\"isLinked\":true},\"inheritValueLabelStyle\":{\"textStyle\":{\"color\":\"#858585\",\"style\":[]},\"isLinked\":true},\"show-y-axis-gridlines\":true,\"y-axis-gridline-style\":{\"dashStyle\":\"Solid\",\"thickness\":1,\"color\":\"#EAEDF2\"}}},\"columnVisualProps\":{\"Transactions\":{\"line-color\":\"#3AAFAF\",\"line-style\":{\"dashStyle\":\"Solid\",\"thickness\":2},\"data-marker\":false,\"conditionalFormatting\":{\"rows\":[]}},\"Month(Transaction Date)\":{\"cartesian-hide-null-values\":true}},\"dataLabelVisualProps\":{\"cartesian-data-labels\":{\"show-labels\":false},\"Transactions\":{\"cartesian-data-labels\":{\"cartesian-data-labels-enable\":false}}},\"tooltipVisualProps\":{\"global-tooltip\":{\"show-tooltip\":true,\"tooltip-show-details\":false,\"tooltip-show-aggregates\":false,\"tooltipBackground\":{\"backgroundColor\":\"#1d232f\",\"borderColor\":\"#1d232f\",\"backgroundOpacity\":\"100\"},\"tooltip-column-name\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]},\"tooltip-column-value\":{\"size\":\"12\",\"color\":\"#ffffff\",\"style\":[]}}},\"legendVisualProps\":{\"legend\":{\"show-legend\":true,\"legend-position\":\"Top\"}},\"displayVisualProps\":{\"display\":{\"fit-to-screen\":false},\"axis-display\":{\"x-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false},\"y-axis-display\":{\"show-axis\":true,\"show-axis-name\":true,\"show-axis-intervals\":false}},\"totals-summary\":{\"show-row-grand-totals\":false,\"show-column-grand-totals\":false,\"show-row-sub-totals\":false,\"show-column-sub-totals\":false,\"totals-position\":\"End\"},\"trellis\":{\"trellis-shared-axis\":false,\"trellis-subplot-color\":false,\"trellis-title-show\":true,\"trellis-title-color\":\"#000000\",\"trellis-border-show\":false,\"trellis-border-color\":\"#000000\"},\"other\":{\"chart-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"},\"plotted-area-background-color\":{\"backgroundColor\":\"#ffffff\",\"borderColor\":\"#ffffff\"}},\"regression-lines\":{\"show-regression-lines\":false}}}"
-        viz_style: "{\"overrides\": {\"legend_properties\": {\"show_legend\": true,\"position\": \"TOP_LEGEND\"},\"data_label_properties\": {\"column_data_label_properties\": [{\"column_id\": \"Transactions\",\"properties\": {\"is_visible\": true}}]},\"column_properties\": [{\"column_id\": \"Transactions\",\"properties\": {\"color\": \"#18b8b0\"}}]}}"
+        viz_style: "{\"overrides\": {\"legend_properties\": {\"show_legend\": true,\"position\": \"TOP_LEGEND\"},\"data_label_properties\": {\"column_data_label_properties\": [{\"column_id\": \"Transactions\",\"properties\": {\"is_visible\": true}}]},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": false,\"y_gridline_enabled\": false}},\"column_properties\": [{\"column_id\": \"Transactions\",\"properties\": {\"color\": \"#7a5cc8\"}}]}}"
       display_mode: CHART_MODE
     viz_guid: ddef3ba2-e8f1-4c65-bede-b434f2c8a589
   - id: Viz_12
@@ -607,8 +607,92 @@ liveboard:
         viz_style: "{}"
       display_mode: CHART_MODE
     viz_guid: dde6fa97-cc60-4069-9a02-5ccd6dd07f93
+  - id: Viz_15
+    answer:
+      name: Top 20 SKUs Monthly Sales
+      description: East region SKU sales trends
+      tables:
+      - id: Retail Apparel with AGO
+        name: Retail Apparel with AGO
+        fqn: b0d8d902-bdaa-40aa-b673-725535885fe2
+      search_query: "top 20 [Transaction Date].monthly [SKU] [Sales_Region] = 'east' [Transaction Date] = 'last 5 years' sort by [Sales]"
+      answer_columns:
+      - name: Month(Transaction Date)
+      - name: SKU
+      - name: Total Sales
+        format:
+          category: CURRENCY
+          currencyFormatConfig:
+            locale: USD
+            unit: NONE
+            decimals: 0.0
+            toSeparateThousands: true
+            removeTrailingZeroes: false
+          isCategoryEditable: true
+      table:
+        table_columns:
+        - column_id: Month(Transaction Date)
+          show_headline: false
+        - column_id: SKU
+          show_headline: false
+        - column_id: Total Sales
+          show_headline: false
+        ordered_column_ids:
+        - Month(Transaction Date)
+        - SKU
+        - Total Sales
+        client_state: ""
+      chart:
+        type: ADVANCED_BAR
+        chart_columns:
+        - column_id: Month(Transaction Date)
+        - column_id: SKU
+        - column_id: Total Sales
+        client_state: ""
+        custom_chart_config:
+        - key: basic
+          dimensions:
+          - key: x-axis
+            axes:
+            - type: FLAT
+              column: Total Sales
+            mode: AXIS_DRIVEN
+          - key: y-axis
+            axes:
+            - type: FLAT
+              column: Month(Transaction Date)
+            mode: AXIS_DRIVEN
+          - key: slice-with-color
+            mode: AXIS_DRIVEN
+          - key: trellis-by
+            mode: AXIS_DRIVEN
+        custom_visual_props: "{\"chartSettingsVersion\":\"1\"}"
+        viz_style: "{\"overrides\": {\"data_label_properties\": {\"all_labels\": true},\"display_properties\": {\"gridline_properties\": {\"x_gridline_enabled\": false,\"y_gridline_enabled\": false}},\"column_properties\": [{\"column_id\": \"Total Sales\",\"properties\": {\"color\": \"#9278dc\"}}]}}"
+      display_mode: CHART_MODE
+    viz_guid: b4c24d24-9446-4b87-a131-d328bbb5a571
   groups:
   - id: Group_1
+    name: Store Analytics
+    description: Store-level metrics and details
+    visualizations:
+    - Viz_6
+    - Viz_9
+    group_guid: c3d93d6c-61ac-4bf0-89d8-cca48d5b4f2c
+  - id: Group_2
+    name: Regional Analysis
+    description: Sales and quantity by region
+    visualizations:
+    - Viz_3
+    - Viz_5
+    group_guid: 90648342-236d-4922-8f43-fd80c7ed4bd1
+  - id: Group_3
+    name: Detailed Data
+    description: In-depth tables and breakdowns
+    visualizations:
+    - Viz_4
+    - Viz_7
+    group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
+  - id: Group_4
     name: Key Metrics - Arjun is Awesome!
     description: "Core KPIs tracking sales, transactions, and quantity trends"
     visualizations:
@@ -616,39 +700,24 @@ liveboard:
     - Viz_8
     - Viz_10
     group_guid: ee65dedf-6106-47f6-932f-daa27d777d01
-  - id: Group_2
+  - id: Group_5
     name: Sales Trends
     description: Monthly sales performance and transaction patterns
     visualizations:
     - Viz_11
     group_guid: 88e4435e-958a-440c-ae24-125596912460
-  - id: Group_3
+  - id: Group_6
     name: Product Performance
     description: Sales breakdown by product
     visualizations:
     - Viz_2
     group_guid: c351fe4a-c390-461a-91d0-ee718652e5f5
-  - id: Group_4
-    name: Store Analytics
-    description: Store-level metrics and details
+  - id: Group_7
+    name: SKU Performance
+    description: Top SKUs by sales
     visualizations:
-    - Viz_6
-    - Viz_9
-    group_guid: c3d93d6c-61ac-4bf0-89d8-cca48d5b4f2c
-  - id: Group_5
-    name: Regional Analysis
-    description: Sales and quantity by region
-    visualizations:
-    - Viz_3
-    - Viz_5
-    group_guid: 90648342-236d-4922-8f43-fd80c7ed4bd1
-  - id: Group_6
-    name: Detailed Data
-    description: In-depth tables and breakdowns
-    visualizations:
-    - Viz_4
-    - Viz_7
-    group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
+    - Viz_15
+    group_guid: 2826b40f-7e84-49ee-8bad-81501bf0145f
   filters:
   - column:
     - Retail Apparel with AGO::Shipping Date
@@ -699,24 +768,29 @@ liveboard:
         "y": 0
         height: 6
         width: 4
-      - visualization_id: Group_1
+      - visualization_id: Group_4
         x: 4
         "y": 0
         height: 6
         width: 8
-      - visualization_id: Group_2
+      - visualization_id: Group_5
         x: 0
         "y": 6
         height: 8
         width: 8
-      - visualization_id: Group_3
+      - visualization_id: Group_6
         x: 8
         "y": 6
         height: 8
         width: 4
+      - visualization_id: Group_7
+        x: 0
+        "y": 14
+        height: 8
+        width: 12
       id: 7811f14b-dc34-4d80-955e-308237df4327
       group_layouts:
-      - id: Group_1
+      - id: Group_4
         tiles:
         - visualization_id: Viz_1
           x: 0
@@ -733,16 +807,23 @@ liveboard:
           "y": 0
           height: 8
           width: 4
-      - id: Group_2
+      - id: Group_5
         tiles:
         - visualization_id: Viz_11
           x: 0
           "y": 0
           height: 8
           width: 12
-      - id: Group_3
+      - id: Group_6
         tiles:
         - visualization_id: Viz_2
+          x: 0
+          "y": 0
+          height: 8
+          width: 12
+      - id: Group_7
+        tiles:
+        - visualization_id: Viz_15
           x: 0
           "y": 0
           height: 8
@@ -750,17 +831,17 @@ liveboard:
     - name: Detail
       description: ""
       tiles:
-      - visualization_id: Group_4
+      - visualization_id: Group_1
         x: 0
         "y": 0
         height: 8
         width: 5
-      - visualization_id: Group_5
+      - visualization_id: Group_2
         x: 5
         "y": 0
         height: 8
         width: 7
-      - visualization_id: Group_6
+      - visualization_id: Group_3
         x: 0
         "y": 8
         height: 8
@@ -777,7 +858,7 @@ liveboard:
         width: 6
       id: bd9e25d5-407e-4c6c-a7fc-d460423a5374
       group_layouts:
-      - id: Group_4
+      - id: Group_1
         tiles:
         - visualization_id: Viz_6
           x: 0
@@ -789,7 +870,7 @@ liveboard:
           "y": 3
           height: 5
           width: 12
-      - id: Group_5
+      - id: Group_2
         tiles:
         - visualization_id: Viz_3
           x: 0
@@ -801,7 +882,7 @@ liveboard:
           "y": 0
           height: 8
           width: 6
-      - id: Group_6
+      - id: Group_3
         tiles:
         - visualization_id: Viz_4
           x: 0
@@ -993,7 +1074,7 @@ liveboard:
     - name: lb_border_type
       value: CURVED
     - name: lb_brand_color
-      value: LBC_E
+      value: LBC_B
     - name: hide_group_title
       value: "false"
     - name: hide_group_description
@@ -1005,7 +1086,7 @@ liveboard:
     - name: kpi_hero_font_size
       value: M
     overrides:
-    - object_id: Group_1
+    - object_id: Group_4
       style_properties:
       - name: group_brand_color
         value: GBC_B
@@ -1015,40 +1096,28 @@ liveboard:
         value: "true"
       - name: kpi_hero_font_size
         value: M
-    - object_id: Viz_9
-      style_properties:
-      - name: tile_brand_color
-        value: TBC_J
-      - name: tile_kpi_color
-        value: TKS_A
-    - object_id: Group_4
+    - object_id: Group_7
       style_properties:
       - name: group_brand_color
         value: GBC_B
+    - object_id: Viz_11
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_B
     - object_id: Viz_10
       style_properties:
       - name: tile_brand_color
         value: TBC_J
       - name: tile_kpi_color
         value: TKS_A
-    - object_id: Group_5
+    - object_id: Group_6
       style_properties:
       - name: group_brand_color
         value: GBC_B
-    - object_id: Group_3
-      style_properties:
-      - name: group_brand_color
-        value: GBC_B
-    - object_id: Viz_2
+    - object_id: Viz_15
       style_properties:
       - name: tile_brand_color
         value: TBC_B
-    - object_id: Viz_6
-      style_properties:
-      - name: tile_brand_color
-        value: TBC_J
-      - name: tile_kpi_color
-        value: TKS_A
     - object_id: Viz_8
       style_properties:
       - name: tile_brand_color
@@ -1057,7 +1126,11 @@ liveboard:
         value: TKS_A
       - name: kpi_hero_font_size
         value: S
-    - object_id: Group_2
+    - object_id: Viz_2
+      style_properties:
+      - name: tile_brand_color
+        value: TBC_B
+    - object_id: Group_5
       style_properties:
       - name: group_brand_color
         value: GBC_B

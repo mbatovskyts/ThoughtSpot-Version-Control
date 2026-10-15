@@ -220,3 +220,76 @@ def test_the_files_those_jobs_read_are_uploaded_by_the_jobs_that_write_them():
     assert "stage4c_instructions_export.json" in uploaded("extract")
     assert "stage9b_memory_import.json" in uploaded("import")
     assert "stage9c_instructions_import.json" in uploaded("import")
+
+
+# ------------------------------------------------- older clusters lack the beta endpoints
+from scripts import stage4b_export_memory as s4b            # noqa: E402
+from scripts import stage4c_export_instructions as s4c      # noqa: E402
+from scripts import stage9b_import_memory as s9b            # noqa: E402
+from scripts import stage9c_import_instructions as s9c      # noqa: E402
+
+
+def _resp(status, body=None):
+    r = MagicMock(status_code=status, text="")
+    r.json.return_value = body or {}
+    return r
+
+
+MODELS = [{"folder": "models", "obj_id": "M-1", "name": "One", "source_guid": "g1"}]
+
+
+@pytest.mark.parametrize("status", [404, 405, 501])
+def test_4b_missing_memory_endpoint_is_a_skip_and_a_note_not_a_failure(status, tmp_path):
+    c = MagicMock(); c.post.return_value = _resp(status)
+    res = s4b.export_memory(c, MODELS, "o", tmp_path)
+    assert res == {"skipped": True, "reason": "endpoint_unavailable", "http_status": status}
+    o = spotter_outcome(res, {}, {}, {})
+    assert o["failures"] == [] and len(o["notes"]) == 1 and not o["blocked_all_models"]
+
+
+def test_4b_a_real_server_error_is_still_a_failure(tmp_path):
+    c = MagicMock(); c.post.return_value = _resp(500)
+    res = s4b.export_memory(c, MODELS, "o", tmp_path)
+    assert res["reason"] == "http_error"
+    assert spotter_outcome(res, {}, {}, {})["blocked_all_models"]
+
+
+@pytest.mark.parametrize("status", [404, 405, 501])
+def test_4c_missing_instructions_endpoint_is_a_skip_and_a_note(status, tmp_path):
+    c = MagicMock(); c.get_nl_instructions.return_value = _resp(status)
+    res = s4c.export_instructions(c, MODELS, "o", tmp_path)
+    assert res["skipped"] and res["reason"] == "endpoint_unavailable"
+    o = spotter_outcome({}, {}, res, {})
+    assert o["failures"] == [] and len(o["notes"]) == 1
+
+
+def test_4c_a_real_server_error_is_still_a_per_model_failure(tmp_path):
+    c = MagicMock(); c.get_nl_instructions.return_value = _resp(500)
+    res = s4c.export_instructions(c, MODELS, "o", tmp_path)
+    assert [f["obj_id"] for f in spotter_outcome({}, {}, res, {})["failures"]] == ["M-1"]
+
+
+@pytest.mark.parametrize("status", [404, 405, 501])
+def test_9b_missing_memory_endpoint_is_a_skip_and_a_note(status):
+    c = MagicMock(); c.post.return_value = _resp(status)
+    res = s9b.import_memory(c, "memories:\n- type: RULE\n", dry_run=False)
+    assert res["skipped"] is True and "not available on this cluster" in res["reason"]
+    o = spotter_outcome({}, res, {}, {})
+    assert o["failures"] == [] and len(o["notes"]) == 1 and not o["blocked_all_models"]
+
+
+def test_9b_a_real_server_error_is_still_a_failure():
+    c = MagicMock(); c.post.return_value = _resp(500)
+    res = s9b.import_memory(c, "memories:\n- type: RULE\n", dry_run=False)
+    assert spotter_outcome({}, res, {}, {})["blocked_all_models"]
+
+
+@pytest.mark.parametrize("status", [404, 405, 501])
+def test_9c_missing_instructions_endpoint_is_a_skip_and_a_note(status):
+    c = MagicMock(); c.find_model_guid.return_value = "tg"; c.get_nl_instructions.return_value = _resp(status)
+    payload = {"models": [{"obj_id": "M-1", "name": "One",
+                           "nl_instructions_info": [{"scope": "GLOBAL", "instructions": ["x"]}]}]}
+    res = s9c.import_instructions(c, payload, dry_run=False)
+    assert res["skipped"] and res["reason"] == "endpoint_unavailable"
+    c.set_nl_instructions.assert_not_called()
+    assert spotter_outcome({}, {}, {}, res)["failures"] == []

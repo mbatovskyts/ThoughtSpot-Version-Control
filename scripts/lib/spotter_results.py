@@ -23,6 +23,11 @@ import json
 from pathlib import Path
 
 MEMORY_EXPORT_FAILURES = {"api_error", "http_error"}
+
+# The memory / instructions APIs are beta and absent on older clusters. These statuses mean
+# "this cluster does not have the endpoint": nothing the user can fix per run, so the Spotter
+# stages treat them like "Spotter not enabled" (a note), not a failure.
+ENDPOINT_UNAVAILABLE_STATUSES = {404, 405, 501}
 MEMORY_IMPORT_BAD_STATUSES = {"VALIDATION_FAILED", "FAILED"}
 
 
@@ -37,7 +42,10 @@ def load_json(path: str, default):
 
 
 def _spotter_off(reason: str) -> bool:
-    return "spotter not enabled" in str(reason).lower() or reason == "spotter_not_enabled"
+    """True when the stage was skipped because Spotter / its API is not available."""
+    low = str(reason).lower()
+    return ("spotter not enabled" in low or "not available on this cluster" in low
+            or reason in ("spotter_not_enabled", "endpoint_unavailable"))
 
 
 def spotter_outcome(
@@ -67,12 +75,13 @@ def spotter_outcome(
              f"Memory export failed ({memory_export['reason']}: {detail}).")
         blocked_all_models = True
     elif memory_export.get("skipped") and _spotter_off(memory_export.get("reason", "")):
-        notes.append({"kind": "memory", "reason": "Spotter not enabled; memory not exported."})
+        notes.append({"kind": "memory",
+                      "reason": "Spotter not enabled or its API is unavailable; memory not exported."})
 
     if memory_import.get("skipped"):
         if _spotter_off(memory_import.get("reason", "")):
-            notes.append({"kind": "memory", "reason": "Spotter not enabled on the target; "
-                                                       "memory not imported."})
+            notes.append({"kind": "memory", "reason": "Spotter not enabled or its API is unavailable "
+                                                       "on the target; memory not imported."})
     else:
         problems = memory_import.get("validation_failures") or []
         status = memory_import.get("validation_status", "")
@@ -97,12 +106,13 @@ def spotter_outcome(
         if oid:
             blocked_obj_ids.add(oid)
     if instructions_export.get("skipped") and _spotter_off(instructions_export.get("reason", "")):
-        notes.append({"kind": "instructions",
-                      "reason": "Spotter not enabled; instructions not exported."})
+        notes.append({"kind": "instructions", "reason": "Spotter not enabled or its API is "
+                                                        "unavailable; instructions not exported."})
 
     if instructions_import.get("skipped"):
         if _spotter_off(instructions_import.get("reason", "")):
-            notes.append({"kind": "instructions", "reason": "Spotter not enabled on the target; "
+            notes.append({"kind": "instructions", "reason": "Spotter not enabled or its API is "
+                                                             "unavailable on the target; "
                                                              "instructions not imported."})
     for item in instructions_import.get("results") or []:
         if item.get("status") == "failed":

@@ -1,0 +1,42 @@
+{
+  "obj_id": "DimDate-f7d19f53",
+  "view": {
+    "formulas": [
+      {
+        "expr": "start_of_month ( [Transaction Date] )",
+        "id": "formula_Shared Calendar",
+        "name": "Shared Calendar",
+        "was_auto_generated": false
+      }
+    ],
+    "name": "Dim Date",
+    "search_query": "[formula_Shared Calendar] [formula_Shared Calendar].daily [Transaction Date] [Transaction Date].daily",
+    "tables": [
+      {
+        "id": "FACT_RETAPP_SALES",
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      }
+    ],
+    "view_columns": [
+      {
+        "name": "Shared Monthly",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM yyyy",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Day(Shared Calendar)"
+      },
+      {
+        "name": "Shared Date",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MM/dd/yyyy",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Day(Transaction Date)"
+      }
+    ]
+  }
+}

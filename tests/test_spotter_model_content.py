@@ -202,3 +202,23 @@ class TestEmptyInstructions:
         data = json.loads((tmp_path / "orgs/org/instructions/instructions__TS1.json").read_text())
         assert [m["obj_id"] for m in data["models"]] == ["m2"]
         assert result["exported_count"] == 1
+
+
+class TestNeverClearTarget:
+    def test_empty_instructions_in_export_never_call_set(self):
+        c = MagicMock()
+        c.find_model_guid.return_value = "target-guid"
+        for info in ([], [{"scope": "GLOBAL", "instructions": []}],
+                     [{"scope": "GLOBAL", "instructions": ["", "  "]}]):
+            payload = {"models": [{"obj_id": "m1", "name": "M", "nl_instructions_info": info}]}
+            result = import_instructions(c, payload, dry_run=False)
+            assert result["results"][0]["reason"] == "no_source_instructions"
+        c.set_nl_instructions.assert_not_called()
+        c.get_nl_instructions.assert_not_called()
+
+    def test_models_absent_from_export_are_never_touched(self):
+        c = MagicMock()
+        result = import_instructions(c, {"models": []}, dry_run=False)
+        c.find_model_guid.assert_not_called()
+        c.set_nl_instructions.assert_not_called()
+        assert result["applied"] == 0

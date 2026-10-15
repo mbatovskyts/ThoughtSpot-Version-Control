@@ -6,7 +6,8 @@ Reads instructions__<TIMESTAMP>.json produced by Stage 4c (same run). For each
 model, resolves the target GUID by obj_id, then calls
 /api/rest/2.0/ai/instructions/set (setNLInstructions).
 
-Setting REPLACES the model's existing instructions, so the current target value
+Instructions are NEVER cleared: a model with no instructions in the export is left
+untouched on the target. Setting REPLACES the model's existing instructions, so the current target value
 is read first and the set is skipped when it is already identical (idempotent).
 
 Dry-run mode (DRY_RUN=true): reads target state and logs what would change;
@@ -47,6 +48,12 @@ def import_instructions(target_client: TSClient, payload: dict, dry_run: bool) -
         obj_id, name = model["obj_id"], model.get("name", "")
         desired = model["nl_instructions_info"]
         rec = {"obj_id": obj_id, "name": name}
+
+        # Never clear target instructions: nothing in dev means leave the target alone.
+        if not any((t or "").strip() for i in desired for t in i.get("instructions") or []):
+            print(f"[STAGE 9c] '{name}': no instructions in export — target left untouched.")
+            results.append({**rec, "status": "skipped", "reason": "no_source_instructions"})
+            continue
 
         guid = target_client.find_model_guid(obj_id)
         if not guid:

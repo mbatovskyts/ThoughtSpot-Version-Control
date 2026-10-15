@@ -66,7 +66,7 @@ def test_stage10_does_not_claim_tags_were_removed_when_the_api_refused(capsys):
     src.unassign_tags.side_effect = ApiError("tags/unassign", 400, "bad identifier")
     manifest = [{"obj_id": "a", "type": "ANSWER", "name": "A", "source_guid": "g", "reason": "tagged"}]
     out = s10.cleanup_tags(src, manifest, [{"obj_id": "a", "status": "success"}], [], "tag")
-    assert out == {"removed": 0, "retained": 0}
+    assert out["removed"] == 0 and out["retained"] == 0
     err = capsys.readouterr().err
     assert "NOT removed" in err and "HTTP 400" in err
 

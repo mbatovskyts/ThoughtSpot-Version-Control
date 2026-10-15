@@ -1,0 +1,33 @@
+{
+  "obj_id": "MonthlyBridge-838d11d5",
+  "view": {
+    "formulas": [
+      {
+        "expr": "start_of_month ( [Transaction Date] )",
+        "id": "formula_Shared Calendar",
+        "name": "Shared Calendar",
+        "was_auto_generated": false
+      }
+    ],
+    "name": "Monthly Bridge",
+    "search_query": "[formula_Shared Calendar] [formula_Shared Calendar].daily",
+    "tables": [
+      {
+        "id": "FACT_RETAPP_SALES",
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      }
+    ],
+    "view_columns": [
+      {
+        "name": "Shared Monthly",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM yyyy",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Day(Shared Calendar)"
+      }
+    ]
+  }
+}

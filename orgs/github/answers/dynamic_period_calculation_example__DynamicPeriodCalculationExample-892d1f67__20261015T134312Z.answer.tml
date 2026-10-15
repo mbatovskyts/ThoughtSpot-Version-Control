@@ -1,0 +1,263 @@
+{
+  "answer": {
+    "answer_columns": [
+      {
+        "format": {
+          "category": "CURRENCY",
+          "currencyFormatConfig": {
+            "decimals": 0.0,
+            "locale": "USD",
+            "toSeparateThousands": true,
+            "unit": "NONE"
+          },
+          "isCategoryEditable": true
+        },
+        "name": "Compare Range Sales Value"
+      },
+      {
+        "name": "Month(date)",
+        "sort_info": {
+          "category": "DEFAULT"
+        }
+      },
+      {
+        "format": {
+          "category": "CURRENCY",
+          "currencyFormatConfig": {
+            "decimals": 0.0,
+            "locale": "USD",
+            "toSeparateThousands": true,
+            "unit": "NONE"
+          },
+          "isCategoryEditable": true
+        },
+        "name": "Sales Variance"
+      },
+      {
+        "format": {
+          "category": "CURRENCY",
+          "currencyFormatConfig": {
+            "decimals": 0.0,
+            "locale": "USD",
+            "toSeparateThousands": true,
+            "unit": "NONE"
+          },
+          "isCategoryEditable": true
+        },
+        "name": "Total sales"
+      },
+      {
+        "format": {
+          "category": "PERCENTAGE",
+          "isCategoryEditable": true,
+          "percentageFormatConfig": {
+            "decimals": 2.0
+          }
+        },
+        "name": "Variance Percentage"
+      },
+      {
+        "name": "region"
+      }
+    ],
+    "chart": {
+      "axis_configs": [
+        {
+          "color": [
+            "Month(date)"
+          ],
+          "x": [
+            "region"
+          ],
+          "y": [
+            "Total sales",
+            "Compare Range Sales Value",
+            "Sales Variance",
+            "Variance Percentage"
+          ]
+        }
+      ],
+      "chart_columns": [
+        {
+          "column_id": "Compare Range Sales Value"
+        },
+        {
+          "column_id": "Month(date)"
+        },
+        {
+          "column_id": "Sales Variance"
+        },
+        {
+          "column_id": "Total sales"
+        },
+        {
+          "column_id": "Variance Percentage"
+        },
+        {
+          "column_id": "region"
+        }
+      ],
+      "client_state": "",
+      "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotState\": {\"fields\": [{\"dataField\": \"Month(date)\",\"sortBy\": \"value\",\"sortBySummaryField\": \"Month(date)\",\"sortOrder\": \"desc\",\"expanded\": false,\"area\": \"column\"}]},\"isStackedAsPercent\": false,\"dataFieldArea\": \"row\",\"pivotSummariesState\": {\"showColumnTotals\": false,\"showRowGrandTotals\": false,\"showColumnGrandTotals\": false}},\"kpiDisplayProperties\": {\"showDateLabel\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true,\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\"}},\"columnProperties\": [{\"columnId\": \"Total sales\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Variance Percentage\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"region\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Month(date)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {},\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true}}}],\"axisProperties\": [{\"id\": \"35f9dfac-d856-4aad-b507-fdfc78cb6792\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total sales\"],\"isOpposite\": false}},{\"id\": \"7a7e2e18-68ac-4399-a1eb-4df884dec3ff\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Compare Range Sales Value\"],\"isOpposite\": true}},{\"id\": \"6f782563-91c9-4b4e-8dcd-f0b6c3a753c2\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Sales Variance\"],\"isOpposite\": true}},{\"id\": \"f8384576-1392-49de-9a0e-cf10ef53037a\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Variance Percentage\"],\"isOpposite\": true}},{\"id\": \"311ecf27-1604-45e6-9433-17f136c5a1fa\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"region\"]}}]}",
+      "type": "PIVOT_TABLE"
+    },
+    "display_mode": "CHART_MODE",
+    "dynamic_name": "Dynamic Period Calculation Example",
+    "formulas": [
+      {
+        "expr": "sum ( [sales] ) - [formula_Compare Range Sales Value]",
+        "id": "formula_Sales Variance",
+        "name": "Sales Variance",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "( sum ( [sales] ) - [formula_Compare Range Sales Value] ) / [formula_Compare Range Sales Value]",
+        "id": "formula_Variance Percentage",
+        "name": "Variance Percentage",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "group_aggregate ( sum ( [sales] ) / unique count ( start_of_month ( [date] ) ) , query_groups ( ) - { [date] } , query_filters ( ) - { [date] } + { [date] >= [Start Date Parameter] and [date] <= [End Date Parameter] } )",
+        "id": "formula_Compare Range Sales Value",
+        "name": "Compare Range Sales Value",
+        "was_auto_generated": false
+      }
+    ],
+    "name": "Dynamic Period Calculation Example",
+    "parameters": [
+      {
+        "data_type": "DATE",
+        "default_value": "04/30/2025",
+        "description": "",
+        "id": "e86fee91-cf5e-47ae-9831-e1ac812e796d",
+        "list_config": {
+          "list_choice": [
+            {
+              "display_name": "Apr 2025",
+              "value": "04/30/2025"
+            },
+            {
+              "display_name": "Mar 2025",
+              "value": "03/31/2025"
+            },
+            {
+              "display_name": "Feb 2025",
+              "value": "02/28/2025"
+            },
+            {
+              "display_name": "Jan 2025",
+              "value": "01/31/2025"
+            },
+            {
+              "display_name": "Dec 2024",
+              "value": "12/31/2024"
+            },
+            {
+              "display_name": "Nov 2024",
+              "value": "11/30/2024"
+            },
+            {
+              "display_name": "Oct 2024",
+              "value": "10/31/2024"
+            },
+            {
+              "display_name": "Sept 2024",
+              "value": "09/30/2024"
+            }
+          ]
+        },
+        "name": "End Date Parameter"
+      },
+      {
+        "data_type": "DATE",
+        "default_value": "04/01/2025",
+        "description": "",
+        "id": "3a0bc16b-7cca-4807-8eed-4f5cde03477b",
+        "list_config": {
+          "list_choice": [
+            {
+              "display_name": "Apr 2025",
+              "value": "04/01/2025"
+            },
+            {
+              "display_name": "Mar 2025",
+              "value": "03/01/2025"
+            },
+            {
+              "display_name": "Feb 2025",
+              "value": "02/01/2025"
+            },
+            {
+              "display_name": "Jan 2025",
+              "value": "01/01/2025"
+            },
+            {
+              "display_name": "Dec 2024",
+              "value": "12/01/2024"
+            },
+            {
+              "display_name": "Nov 2024",
+              "value": "11/01/2024"
+            },
+            {
+              "display_name": "Oct 2024",
+              "value": "10/01/2024"
+            },
+            {
+              "display_name": "Sept 2024",
+              "value": "09/01/2024"
+            }
+          ]
+        },
+        "name": "Start Date Parameter"
+      }
+    ],
+    "search_query": "[sales] [formula_Compare Range Sales Value] [formula_Sales Variance] [formula_Variance Percentage] [region] [date].'year to date' [date].monthly [date].'last 12 months' [region].east sort by [date] descending",
+    "table": {
+      "client_state": "",
+      "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Total sales\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Compare Range Sales Value\",\"columnProperty\": {\"conditionalFormatting\": {}}},{\"columnId\": \"Sales Variance\",\"columnProperty\": {\"conditionalFormatting\": {\"rows\": [{\"operator\": \"LESS_THAN\",\"value\": \"0\",\"plotAsBand\": false,\"backgroundFormatType\": \"SOLID\",\"solidBackgroundAttrs\": {\"color\": \"#F9B3B9\"},\"comparisonType\": \"VALUE_BASED\",\"lhsColumnId\": \"Sales Variance\",\"isHighlightRow\": true}]}}}]}",
+      "ordered_column_ids": [
+        "region",
+        "Month(date)",
+        "Total sales",
+        "Compare Range Sales Value",
+        "Sales Variance",
+        "Variance Percentage"
+      ],
+      "table_columns": [
+        {
+          "column_id": "Compare Range Sales Value",
+          "show_headline": false
+        },
+        {
+          "column_id": "Month(date)",
+          "show_headline": false
+        },
+        {
+          "column_id": "Sales Variance",
+          "show_headline": false
+        },
+        {
+          "column_id": "Total sales",
+          "show_headline": false
+        },
+        {
+          "column_id": "Variance Percentage",
+          "show_headline": false
+        },
+        {
+          "column_id": "region",
+          "show_headline": false
+        }
+      ]
+    },
+    "tables": [
+      {
+        "id": "(Sample) Retail - Apparel",
+        "name": "(Sample) Retail - Apparel",
+        "obj_id": "SampleRetail-Apparel-cd252e5c"
+      }
+    ]
+  },
+  "obj_id": "DynamicPeriodCalculationExample-892d1f67"
+}

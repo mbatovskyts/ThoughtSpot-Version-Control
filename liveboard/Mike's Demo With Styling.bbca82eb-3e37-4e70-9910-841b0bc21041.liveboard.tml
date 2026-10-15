@@ -693,7 +693,7 @@ liveboard:
     - Viz_7
     group_guid: 63dfe3fa-c921-473f-8c0e-9f354efcf7a5
   - id: Group_4
-    name: Key Metrics - Arjun is Awesome!
+    name: Key Metrics - Mike is Awesome!
     description: "Core KPIs tracking sales, transactions, and quantity trends"
     visualizations:
     - Viz_1

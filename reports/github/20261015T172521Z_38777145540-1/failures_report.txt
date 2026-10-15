@@ -1,0 +1,37 @@
+Failures Report — Org: github   Run: 38777145540-1
+
+Type:            LOGICAL_TABLE
+Name:            All Views
+Obj ID:          AllViews-e48553c3
+Stage:           discover
+Endpoint:        
+HTTP Status:     0
+TS Error Code:   
+Error:           'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'AllViews-e48553c3', which was not found in the source org.
+TML Path:        
+Suggested:       If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists.
+------------------------------------------------------------
+
+Type:            LOGICAL_TABLE
+Name:            Midwest
+Obj ID:          Midwest-8ac8e1f6
+Stage:           discover
+Endpoint:        
+HTTP Status:     0
+TS Error Code:   
+Error:           'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'Midwest-8ac8e1f6', which was not found in the source org.
+TML Path:        
+Suggested:       If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists.
+------------------------------------------------------------
+
+Type:            LOGICAL_TABLE
+Name:            South
+Obj ID:          South-8635dbc8
+Stage:           discover
+Endpoint:        
+HTTP Status:     0
+TS Error Code:   
+Error:           'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'South-8635dbc8', which was not found in the source org.
+TML Path:        
+Suggested:       If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists.
+------------------------------------------------------------

@@ -1,0 +1,52 @@
+ThoughtSpot Migration Report
+Org: github   Run: 38777145540-1   Mode: DRY-RUN
+Started (UTC): 2026-10-15T17:26:55.378630+00:00   Ended: 2026-10-15T17:26:55.378683+00:00
+Source: https://ps-internal.thoughtspot.cloud/ org 1530174970   ->   Target: https://ps-internal.thoughtspot.cloud/ org 426706049
+Migration tag: Github_ReadyForMigration
+
+======================================================================
+1. PULLED (identified for migration)
+   Total: 6
+   LIVEBOARD: 1
+   LOGICAL_TABLE: 5
+
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902 No import result found
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb                   No import result found
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f         No import result found
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-8cd69308           No import result found
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f           No import result found
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a         No import result found
+
+======================================================================
+2. SUCCEEDED
+   Total: 0
+
+
+======================================================================
+3. FAILED
+   Total: 3
+   LOGICAL_TABLE        All Views                                AllViews-e48553c3                    [discover] 'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'AllViews-e48553c3', which was not found in the source org.
+   LOGICAL_TABLE        Midwest                                  Midwest-8ac8e1f6                     [discover] 'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'Midwest-8ac8e1f6', which was not found in the source org.
+   LOGICAL_TABLE        South                                    South-8635dbc8                       [discover] 'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'South-8635dbc8', which was not found in the source org.
+
+======================================================================
+4. SKIPPED
+   Total: 6
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902 No import result found
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb                   No import result found
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f         No import result found
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-8cd69308           No import result found
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f           No import result found
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a         No import result found
+
+======================================================================
+5. POST-MIGRATION CHECK
+   Not run
+
+======================================================================
+6. TAG CLEANUP
+   Not run
+
+======================================================================
+7. UNSUPPORTED CONTENT
+   Spotter conversation history: Per-user session data, not migratable metadata. Model-level memory (Stage 4b/9b) and NL instructions (Stage 4c/9c) are migrated.

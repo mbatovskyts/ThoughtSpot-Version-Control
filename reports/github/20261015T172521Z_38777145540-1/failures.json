@@ -1,0 +1,38 @@
+[
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "All Views",
+    "obj_id": "AllViews-e48553c3",
+    "stage": "discover",
+    "endpoint": "",
+    "http_status": 0,
+    "ts_error_code": "",
+    "error": "'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'AllViews-e48553c3', which was not found in the source org.",
+    "tml_path": "",
+    "suggested_action": "If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists."
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "Midwest",
+    "obj_id": "Midwest-8ac8e1f6",
+    "stage": "discover",
+    "endpoint": "",
+    "http_status": 0,
+    "ts_error_code": "",
+    "error": "'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'Midwest-8ac8e1f6', which was not found in the source org.",
+    "tml_path": "",
+    "suggested_action": "If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists."
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "South",
+    "obj_id": "South-8635dbc8",
+    "stage": "discover",
+    "endpoint": "",
+    "http_status": 0,
+    "ts_error_code": "",
+    "error": "'Mike's Demo With Styling' (MikesDemo-bbca82eb) depends on obj_id 'South-8635dbc8', which was not found in the source org.",
+    "tml_path": "",
+    "suggested_action": "If it is a built-in object, add its obj_id to dependency_exclude; otherwise check that it exists."
+  }
+]

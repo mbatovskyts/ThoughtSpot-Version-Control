@@ -2,7 +2,7 @@
 """
 Stage 9b: Import Spotter Model Memory into the target ThoughtSpot org.
 
-Reads memory.yaml produced by Stage 4b and imports it via
+Reads memory__<TIMESTAMP>.yaml produced by Stage 4b (same run) and imports it via
 /api/rest/2.0/ai/memory/import.
 
 Dry-run mode (DRY_RUN=true):
@@ -15,7 +15,8 @@ Live mode:
   overwrites whatever was added manually in the target between runs.
 
 Skips silently (exit 0, non-blocking) if:
-  - memory.yaml does not exist (Stage 4b was skipped)
+  - this run's memory export does not exist (Stage 4b was skipped); an older
+    run's file is never used when TIMESTAMP is set
   - Spotter is not enabled on target (HTTP 403)
   - Payload fails validation (logged as warning, pipeline continues)
 
@@ -29,6 +30,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.artifacts import resolve_export_file
 from lib.ts_client import TSClient
 
 
@@ -124,15 +126,20 @@ def main():
     cfg_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
     repo_root = Path(os.environ.get("REPO_ROOT", "."))
 
-    memory_path = repo_root / "orgs" / org_key / "memory" / "memory.yaml"
-    if not memory_path.exists():
-        print("[STAGE 9b] No memory.yaml found — Stage 4b was skipped, nothing to import.")
+    timestamp = os.environ.get("TIMESTAMP", "")
+    memory_path = resolve_export_file(
+        repo_root / "orgs" / org_key / "memory", "memory", ".yaml", timestamp
+    )
+    if memory_path is None:
+        print("[STAGE 9b] No memory export for this run — Stage 4b was skipped, "
+              "nothing to import.")
         result = {"skipped": True, "reason": "no_memory_file"}
         out_path = os.environ.get("MEMORY_IMPORT_OUT",
                                   f"/tmp/ts_migration_{org_key}_memory_import.json")
         Path(out_path).write_text(json.dumps(result, indent=2), encoding="utf-8")
         return
 
+    print(f"[STAGE 9b] Using memory export: {memory_path}")
     memory_yaml = memory_path.read_text(encoding="utf-8")
     cfg = json.loads(Path(cfg_path).read_text())
 

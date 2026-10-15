@@ -135,3 +135,70 @@ class TestImportInstructions:
         result = import_instructions(c, PAYLOAD, dry_run=False)
         assert result["skipped"] and result["reason"] == "spotter_not_enabled"
         c.set_nl_instructions.assert_not_called()
+
+
+# --- Models without memories / instructions (real API "empty" responses) ------ #
+import pytest
+from scripts.lib.artifacts import memory_is_empty
+from scripts.stage4b_export_memory import export_memory
+
+
+class TestEmptyMemory:
+    @pytest.mark.parametrize("text", ["memories: []\n", "memories: []", "", "  \n", "memories:\n", "{}\n"])
+    def test_empty_payloads(self, text):
+        assert memory_is_empty(text) is True
+
+    def test_real_memories_not_empty(self):
+        assert memory_is_empty("memories:\n- type: RULE\n  content:\n    rule_definition: x\n") is False
+
+    def test_unparseable_is_not_treated_as_empty(self):
+        assert memory_is_empty("memories: [unclosed") is False
+
+    def test_export_skips_api_empty_response(self, tmp_path):
+        client = MagicMock()
+        client.post.return_value = _resp(200, {"content": "memories: []\n"})
+        result = export_memory(client, MANIFEST, "org", tmp_path, "TS1")
+        assert result["skipped"] and result["reason"] == "empty_memory"
+        assert not (tmp_path / "orgs").exists()  # no file => 9b has nothing to import
+
+    def test_export_writes_when_memories_present(self, tmp_path):
+        client = MagicMock()
+        body = "memories:\n- type: RULE\n  content:\n    rule_definition: x\n"
+        client.post.return_value = _resp(200, {"content": body})
+        result = export_memory(client, MANIFEST, "org", tmp_path, "TS1")
+        assert result["skipped"] is False
+        assert (tmp_path / "orgs/org/memory/memory__TS1.yaml").read_text() == body
+
+    def test_import_stage_never_sends_empty_payload(self, tmp_path, monkeypatch):
+        """Even if an empty file exists, 9b must not call the (replacing) import API."""
+        from scripts import stage9b_import_memory as m
+        d = tmp_path / "orgs/o/memory"; d.mkdir(parents=True)
+        (d / "memory__TS1.yaml").write_text("memories: []\n")
+        out = tmp_path / "out.json"
+        for k, v in dict(ORG_KEY="o", REPO_ROOT=str(tmp_path), TIMESTAMP="TS1",
+                         MEMORY_IMPORT_OUT=str(out)).items():
+            monkeypatch.setenv(k, v)
+        monkeypatch.setattr(m, "TSClient", MagicMock(side_effect=AssertionError("must not connect")))
+        m.main()
+        assert json.loads(out.read_text())["reason"] == "empty_memory"
+
+
+class TestEmptyInstructions:
+    def test_api_empty_list_exports_nothing(self, tmp_path):
+        client = MagicMock()
+        client.get_nl_instructions.return_value = _resp(200, {"nl_instructions_info": []})
+        result = export_instructions(client, MANIFEST, "org", tmp_path, "TS1")
+        assert result["skipped"] and result["reason"] == "no_instructions"
+        assert not (tmp_path / "orgs").exists()
+
+    def test_mixed_models_only_exports_those_with_instructions(self, tmp_path):
+        manifest = MANIFEST + [{"folder": "models", "obj_id": "m2", "name": "M2", "source_guid": "g3"}]
+        client = MagicMock()
+        client.get_nl_instructions.side_effect = [
+            _resp(200, {"nl_instructions_info": []}),
+            _resp(200, {"nl_instructions_info": INFO}),
+        ]
+        result = export_instructions(client, manifest, "org", tmp_path, "TS1")
+        data = json.loads((tmp_path / "orgs/org/instructions/instructions__TS1.json").read_text())
+        assert [m["obj_id"] for m in data["models"]] == ["m2"]
+        assert result["exported_count"] == 1

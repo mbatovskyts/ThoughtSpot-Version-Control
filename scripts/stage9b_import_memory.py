@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib.artifacts import resolve_export_file
+from lib.artifacts import memory_is_empty, resolve_export_file
 from lib.ts_client import TSClient
 
 
@@ -127,6 +127,8 @@ def main():
     repo_root = Path(os.environ.get("REPO_ROOT", "."))
 
     timestamp = os.environ.get("TIMESTAMP", "")
+    out_path = os.environ.get("MEMORY_IMPORT_OUT",
+                              f"/tmp/ts_migration_{org_key}_memory_import.json")
     memory_path = resolve_export_file(
         repo_root / "orgs" / org_key / "memory", "memory", ".yaml", timestamp
     )
@@ -134,13 +136,17 @@ def main():
         print("[STAGE 9b] No memory export for this run — Stage 4b was skipped, "
               "nothing to import.")
         result = {"skipped": True, "reason": "no_memory_file"}
-        out_path = os.environ.get("MEMORY_IMPORT_OUT",
-                                  f"/tmp/ts_migration_{org_key}_memory_import.json")
         Path(out_path).write_text(json.dumps(result, indent=2), encoding="utf-8")
         return
 
     print(f"[STAGE 9b] Using memory export: {memory_path}")
     memory_yaml = memory_path.read_text(encoding="utf-8")
+    if memory_is_empty(memory_yaml):
+        # Import replaces target memory; an empty payload would wipe it.
+        print("[STAGE 9b] Memory export contains no memories — nothing to import.")
+        Path(out_path).write_text(
+            json.dumps({"skipped": True, "reason": "empty_memory"}, indent=2), encoding="utf-8")
+        return
     cfg = json.loads(Path(cfg_path).read_text())
 
     tgt = cfg["target"]
@@ -153,8 +159,6 @@ def main():
 
     result = import_memory(target_client, memory_yaml, dry_run)
 
-    out_path = os.environ.get("MEMORY_IMPORT_OUT",
-                              f"/tmp/ts_migration_{org_key}_memory_import.json")
     Path(out_path).write_text(json.dumps(result, indent=2), encoding="utf-8")
 
 

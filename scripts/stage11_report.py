@@ -24,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.report import RunReport, ObjectRecord
+from lib.spotter_results import spotter_outcome
 
 
 def load_json(path: str, default):
@@ -42,6 +43,7 @@ def build_report(
     import_results: list[dict],
     postcheck_data: dict,
     prod_prep_data: list[dict],
+    spotter: dict | None = None,
 ) -> RunReport:
     src = cfg["source"]
     tgt = cfg["target"]
@@ -110,6 +112,19 @@ def build_report(
                     suggested_action=f'Create connection "{conn}" in target org.',
                 )
                 report.mark_failed(rec)
+
+    # Spotter memory / NL instructions: their stages never fail the job themselves.
+    spotter = spotter or {}
+    for f in spotter.get("failures", []):
+        report.mark_failed(ObjectRecord(
+            obj_type="SPOTTER_MEMORY" if f["kind"] == "memory" else "SPOTTER_INSTRUCTIONS",
+            name=f["name"], obj_id=f.get("obj_id", ""), stage=f["stage"], error=f["error"],
+            suggested_action=("The migration tag was kept; fix the cause and re-run."
+                              if f.get("obj_id") else
+                              "Fix the cause and re-run; tags on models were kept."),
+        ))
+    for n in spotter.get("notes", []):
+        report.add_unsupported(f"Spotter {n['kind']}", n["reason"])
 
     # Post-check and tag cleanup
     report.post_check = postcheck_data.get("post_check", {})
@@ -181,6 +196,17 @@ def main():
         os.environ.get("PROD_PREP_OUT", f"/tmp/ts_migration_{org_key}_prod_prep.json"), []
     )
 
+    spotter = spotter_outcome(
+        load_json(os.environ.get("MEMORY_EXPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_memory_export.json"), {}),
+        load_json(os.environ.get("MEMORY_IMPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_memory_import.json"), {}),
+        load_json(os.environ.get("INSTRUCTIONS_EXPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_instructions_export.json"), {}),
+        load_json(os.environ.get("INSTRUCTIONS_IMPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_instructions_import.json"), {}),
+    )
+
     if not cfg:
         print("[STAGE 11] No config found — cannot produce full report.", file=sys.stderr)
         sys.exit(0)
@@ -188,7 +214,7 @@ def main():
     report = build_report(
         cfg, run_id, dry_run,
         manifest, export_results, import_results,
-        postcheck_data, prod_prep_data,
+        postcheck_data, prod_prep_data, spotter,
     )
 
     ts = report_timestamp()

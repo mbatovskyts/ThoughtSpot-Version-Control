@@ -1,0 +1,35 @@
+ThoughtSpot Migration Report
+Org: github   Run: 38922346759-1   Mode: DRY-RUN
+Started (UTC): 2026-10-16T15:16:58.364798+00:00   Ended: 2026-10-16T15:16:58.364811+00:00
+Source: https://ps-internal.thoughtspot.cloud/ org 1530174970   ->   Target: https://ps-internal.thoughtspot.cloud/ org 426706049
+Migration tag: Github_ReadyForMigration
+
+======================================================================
+1. PULLED (identified for migration)
+   Total: 0
+
+
+======================================================================
+2. SUCCEEDED
+   Total: 0
+
+
+======================================================================
+3. FAILED
+   Total: 0
+
+======================================================================
+4. SKIPPED
+   Total: 0
+
+======================================================================
+5. POST-MIGRATION CHECK
+   Not run
+
+======================================================================
+6. TAG CLEANUP
+   Not run
+
+======================================================================
+7. UNSUPPORTED CONTENT
+   Spotter conversation history: Per-user session data, not migratable metadata. Model-level memory (Stage 4b/9b) and NL instructions (Stage 4c/9c) are migrated.

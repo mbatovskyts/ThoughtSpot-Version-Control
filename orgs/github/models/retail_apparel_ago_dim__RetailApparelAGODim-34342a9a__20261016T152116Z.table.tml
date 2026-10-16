@@ -1,0 +1,127 @@
+{
+  "obj_id": "RetailApparelAGODim-34342a9a",
+  "view": {
+    "formulas": [
+      {
+        "expr": "if ( day ( [Transaction Date] ) <= day ( group_max ( [Transaction Date] ) ) ) then 'MTD' else null",
+        "id": "formula_Month To Date Filter",
+        "name": "Month To Date Filter",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "average ( diff_months ( today ( ) , [Transaction Date] ) ) + [formula_Month Off Set]",
+        "id": "formula_Months Ago",
+        "name": "Months Ago",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "average ( diff_weeks ( today ( ) , [Transaction Date] ) ) + [formula_Week Off Set]",
+        "id": "formula_Weeks Ago",
+        "name": "Weeks Ago",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "diff_weeks ( group_max ( [Transaction Date] ) , today ( ) )",
+        "id": "formula_Week Off Set",
+        "name": "Week Off Set",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "if ( day_number_of_year ( [Transaction Date] ) <= day_number_of_year ( group_max ( [Transaction Date] ) ) ) then 'YTD' else null",
+        "id": "formula_Year To Date Filter",
+        "name": "Year To Date Filter",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "average ( diff_years ( today ( ) , [Transaction Date] ) ) - [formula_Year Off Set]",
+        "id": "formula_Years Ago",
+        "name": "Years Ago",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "diff_months ( group_max ( [Transaction Date] ) , today ( ) )",
+        "id": "formula_Month Off Set",
+        "name": "Month Off Set",
+        "was_auto_generated": false
+      },
+      {
+        "expr": "group_aggregate ( year ( today ( ) ) - max ( year ( [Transaction Date] ) ) , { } , { } )",
+        "id": "formula_Year Off Set",
+        "name": "Year Off Set",
+        "was_auto_generated": false
+      }
+    ],
+    "name": "Retail Apparel AGO Dim",
+    "search_query": "[Transaction Date] [Transaction Date].daily [formula_Years Ago] [formula_Months Ago] [formula_Weeks Ago] [formula_Month To Date Filter] [formula_Year To Date Filter] sort by [Transaction Date] [Transaction Date].daily [formula_Week Off Set]",
+    "tables": [
+      {
+        "id": "FACT_RETAPP_SALES",
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      }
+    ],
+    "view_columns": [
+      {
+        "name": "Day(Transaction Date)",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MM/dd/yyyy",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Day(Transaction Date)"
+      },
+      {
+        "name": "Month To Date Filter",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Month To Date Filter"
+      },
+      {
+        "name": "Year To Date Filter",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Year To Date Filter"
+      },
+      {
+        "name": "Years Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Years Ago"
+      },
+      {
+        "name": "Months Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Months Ago"
+      },
+      {
+        "name": "Weeks Ago",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Weeks Ago"
+      },
+      {
+        "name": "Week Off Set",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Week Off Set"
+      }
+    ]
+  }
+}

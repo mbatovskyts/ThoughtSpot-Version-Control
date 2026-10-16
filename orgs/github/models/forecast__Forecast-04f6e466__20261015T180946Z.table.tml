@@ -1,0 +1,79 @@
+{
+  "obj_id": "Forecast-04f6e466",
+  "view": {
+    "formulas": [
+      {
+        "expr": "sum ( [FACT_RETAPP_SALES_1::Sales] ) * 1.09",
+        "id": "formula_Forecast",
+        "name": "Forecast",
+        "was_auto_generated": false
+      }
+    ],
+    "joins": [
+      {
+        "destination": "DIM_RETAPP_PRODUCTS",
+        "id": "C_DIM_RETAPP_PRODUCTS",
+        "name": "C_DIM_RETAPP_PRODUCTS",
+        "source": "FACT_RETAPP_SALES"
+      }
+    ],
+    "name": "Forecast",
+    "search_query": "[FACT_RETAPP_SALES_1::Transaction Date] [FACT_RETAPP_SALES_1::Transaction Date].monthly [DIM_RETAPP_PRODUCTS_1::Product Category] [formula_Forecast] sort by [FACT_RETAPP_SALES_1::Transaction Date]",
+    "table_paths": [
+      {
+        "id": "DIM_RETAPP_PRODUCTS_1",
+        "join_path": [
+          {
+            "join": [
+              "C_DIM_RETAPP_PRODUCTS"
+            ]
+          }
+        ],
+        "table": "DIM_RETAPP_PRODUCTS"
+      },
+      {
+        "id": "FACT_RETAPP_SALES_1",
+        "table": "FACT_RETAPP_SALES"
+      }
+    ],
+    "tables": [
+      {
+        "id": "DIM_RETAPP_PRODUCTS",
+        "name": "DIM_RETAPP_PRODUCTS",
+        "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f"
+      },
+      {
+        "id": "FACT_RETAPP_SALES",
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      }
+    ],
+    "view_columns": [
+      {
+        "name": "Forecast Month Year",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM yyyy",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Month(Transaction Date)"
+      },
+      {
+        "name": "Product Category",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        },
+        "search_output_column": "Product Category"
+      },
+      {
+        "name": "Forecast",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        },
+        "search_output_column": "Forecast"
+      }
+    ]
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "model": {
+    "columns": [
+      {
+        "column_id": "Monthly Bridge::Shared Monthly",
+        "name": "Shared Month",
+        "properties": {
+          "ai_context": "Monthly time dimension that connects daily sales transactions to corresponding forecast periods, facilitating accurate month-level performance comparisons.",
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM yyyy",
+          "index_priority": 5.0,
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Monthly Shared",
+            "Monthly Distribution"
+          ]
+        }
+      },
+      {
+        "description": "sum ( Sales ) / sum ( Quantity )",
+        "formula_id": "formula_Avg Sale Price Per Item",
+        "name": "Avg Sale Price Per Item",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Calculated average selling price derived from total sales revenue divided by total quantity sold, providing pricing effectiveness insights across transactions.",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Average Sale Price",
+            "Price Per Item"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Forecast Variance",
+        "name": "Forecast Variance",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Calculated difference between predicted forecast amounts and actual sales results, quantifying forecasting accuracy and prediction performance gaps.",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Variance",
+            "Forecast Difference"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_SKU Count",
+        "name": "SKU Count",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "column_id": "Forecast::Product Category",
+        "name": "Forecast Product Category",
+        "properties": {
+          "ai_context": "Product category classification used in monthly sales forecasting, matching actual product categories to enable forecast accuracy comparison and variance analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Prediction Item Type",
+            "Estimate Goods Classification"
+          ]
+        }
+      },
+      {
+        "column_id": "Product Category Bridge::Product Catigory",
+        "name": "Product Category",
+        "properties": {
+          "ai_context": "Classification grouping for products including apparel categories like bags, socks, shirts, jackets, and headwear, enabling category-level sales analysis.",
+          "column_type": "ATTRIBUTE",
+          "index_priority": 10.0,
+          "synonym_type": "USER_DEFINED",
+          "synonyms": [
+            "Category Product",
+            "Product Type",
+            "Product Level 1"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::Product Category",
+        "name": "Product Category (Product Table)",
+        "properties": {
+          "ai_context": "Product classification sourced from master product table, containing standardized category groupings for consistent product hierarchy and cross-reference analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED"
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::Product Name",
+        "name": "Product Name",
+        "properties": {
+          "ai_context": "Descriptive text label identifying the specific product being sold, providing human-readable product identification for sales analysis and reporting.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Product"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_PRODUCTS::SKU",
+        "name": "SKU",
+        "properties": {
+          "ai_context": "Stock Keeping Unit identifier - unique numerical code assigned to each distinct product for inventory management and product identification purposes.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Stock Keeping Unit",
+            "Stock Keeping Identification"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Name",
+        "name": "Store Name",
+        "properties": {
+          "ai_context": "Descriptive store identifier combining location details with zip codes, providing geographic context for regional sales performance analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "USER_DEFINED",
+          "synonyms": [
+            "Store long name"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Region",
+        "name": "Region",
+        "properties": {
+          "ai_context": "Geographic territory grouping that aggregates multiple stores into larger market areas for regional sales performance analysis and territory management.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Area"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store Zip Code",
+        "name": "Store Zip Code",
+        "properties": {
+          "ai_context": "Five-digit postal code identifying the specific geographic location of each store, enabling precise demographic and location-based sales analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Zip Code of Store"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store State",
+        "name": "Store State",
+        "properties": {
+          "ai_context": "U.S. state location where each retail store operates, enabling state-level geographic sales analysis and regional performance comparison.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "State",
+            "Store Location"
+          ]
+        }
+      },
+      {
+        "column_id": "DIM_RETAPP_STORES::Store ID",
+        "name": "Store ID",
+        "properties": {
+          "ai_context": "Unique numerical identifier for each retail store location, enabling precise store-level performance tracking and geographic sales analysis.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Sales",
+        "name": "Sales",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Total monetary revenue generated from each transaction, representing the core financial value captured from customer purchases for performance measurement.",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Revenue",
+            "Income"
+          ]
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Item Price",
+        "name": "Item Price",
+        "properties": {
+          "ai_context": "Unit price charged for individual products at the time of sale, reflecting the specific pricing strategy and market positioning for each item.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "is_additive": true,
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Price of Item",
+            "Item Cost"
+          ]
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Transaction Date",
+        "name": "Transaction Date",
+        "properties": {
+          "ai_context": "Calendar date when each individual sales transaction was completed, providing temporal context for daily sales performance analysis and trend identification.",
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "yyyy-MM-dd",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Date of Transaction",
+            "Transaction Occurrence Date"
+          ]
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Quantity",
+        "name": "Quantity",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Number of individual items sold within each transaction, indicating purchase volume and enabling unit-based sales analysis across products and stores.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Amount",
+            "Number"
+          ]
+        }
+      },
+      {
+        "column_id": "FACT_RETAPP_SALES::Transaction ID",
+        "name": "Transaction ID",
+        "properties": {
+          "ai_context": "Unique numerical identifier assigned to each individual sales transaction, enabling precise tracking and referencing of specific customer purchases within the system.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "USER_DEFINED"
+        }
+      },
+      {
+        "column_id": "Forecast::Forecast",
+        "name": "Forecast Amount",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Predicted monthly sales revenue target established for each product category, serving as the benchmark for measuring actual sales performance accuracy.",
+          "column_type": "MEASURE",
+          "currency_type": {
+            "iso_code": "USD"
+          },
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Prediction"
+          ]
+        }
+      },
+      {
+        "column_id": "Dim Date::Shared Date",
+        "name": "Shared Date",
+        "properties": {
+          "ai_context": "Common date dimension linking daily transaction data with monthly forecast periods, enabling proper temporal alignment for variance analysis calculations.",
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM dd, yyyy",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Date Shared",
+            "Date Distribution"
+          ]
+        }
+      },
+      {
+        "column_id": "Forecast::Forecast Month Year",
+        "name": "Forecast Month Year",
+        "properties": {
+          "ai_context": "Monthly time period for which sales forecasts were generated, establishing the temporal scope for comparing predicted versus actual performance results.",
+          "column_type": "ATTRIBUTE",
+          "format_pattern": "MMM yyyy",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Prediction Period",
+            "Estimate Month Year"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Version Control Testing",
+        "name": "Version Control Testing",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      }
+    ],
+    "description": "Delete",
+    "formulas": [
+      {
+        "expr": "sum ( [FACT_RETAPP_SALES::Sales] ) / sum ( [FACT_RETAPP_SALES::Quantity] ) ",
+        "id": "formula_Avg Sale Price Per Item",
+        "name": "Avg Sale Price Per Item"
+      },
+      {
+        "expr": "sum ( [FACT_RETAPP_SALES::Sales] ) - sum ( [Forecast::Forecast] ) ",
+        "id": "formula_Forecast Variance",
+        "name": "Forecast Variance"
+      },
+      {
+        "expr": "unique count ( [DIM_RETAPP_PRODUCTS::SKU] ) ",
+        "id": "formula_SKU Count",
+        "name": "SKU Count"
+      },
+      {
+        "expr": "'version 1' ",
+        "id": "formula_Version Control Testing",
+        "name": "Version Control Testing"
+      }
+    ],
+    "model_tables": [
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::SKU] = [DIM_RETAPP_PRODUCTS::SKU]",
+            "type": "INNER",
+            "with": "DIM_RETAPP_PRODUCTS"
+          },
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::Store ID] = [DIM_RETAPP_STORES::Store ID]",
+            "type": "INNER",
+            "with": "DIM_RETAPP_STORES"
+          },
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[FACT_RETAPP_SALES::Transaction Date] = [Dim Date::Shared Date]",
+            "type": "INNER",
+            "with": "Dim Date"
+          }
+        ],
+        "name": "FACT_RETAPP_SALES",
+        "obj_id": "FACT_RETAPP_SALES-1277592f"
+      },
+      {
+        "name": "DIM_RETAPP_STORES",
+        "obj_id": "DIM_RETAPP_STORES-9cf5b3be"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[DIM_RETAPP_PRODUCTS::Product Category] = [Product Category Bridge::Product Catigory]",
+            "type": "INNER",
+            "with": "Product Category Bridge"
+          }
+        ],
+        "name": "DIM_RETAPP_PRODUCTS",
+        "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[Dim Date::Shared Monthly] = [Monthly Bridge::Shared Monthly]",
+            "type": "INNER",
+            "with": "Monthly Bridge"
+          }
+        ],
+        "name": "Dim Date",
+        "obj_id": "DimDate-f7d19f53"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[Forecast::Forecast Month Year] = [Monthly Bridge::Shared Monthly]",
+            "type": "INNER",
+            "with": "Monthly Bridge"
+          },
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[Forecast::Product Category] = [Product Category Bridge::Product Catigory]",
+            "type": "INNER",
+            "with": "Product Category Bridge"
+          }
+        ],
+        "name": "Forecast",
+        "obj_id": "Forecast-04f6e466"
+      },
+      {
+        "name": "Monthly Bridge",
+        "obj_id": "MonthlyBridge-838d11d5"
+      },
+      {
+        "name": "Product Category Bridge",
+        "obj_id": "ProductCategoryBridge-fd69b69d"
+      }
+    ],
+    "name": "Chasm Trap Example",
+    "properties": {
+      "is_bypass_rls": false,
+      "join_progressive": true,
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    }
+  },
+  "obj_id": "ChasmTrapExample-6f0e17b2"
+}

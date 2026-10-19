@@ -25,6 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.variables import variable_config
+from lib.prod_prep import blocked_objects, DEFAULT_VALIDATION_GATE
 from lib.tml_utils import (
     parse_tml, to_tml_string,
     path_b_substitute, get_table_db_schema, is_variable_bound, extract_refs,
@@ -90,7 +91,10 @@ def import_tier(
     cfg: dict,
     repo_root: Path,
     failed_obj_ids: set[str],
+    blocked: dict[str, str] | None = None,
 ) -> list[dict]:
+    """`blocked` maps obj_id -> message for objects Stage 8's validate-only import rejected."""
+    blocked = blocked or {}
     results = []
     db_cfg, schema_cfg = variable_config(cfg, "database"), variable_config(cfg, "schema")
     src_db, tgt_db = db_cfg["source_value"], db_cfg["target_value"]
@@ -107,6 +111,15 @@ def import_tier(
         if not tml_path_rel:
             results.append({"obj_id": obj_id, "name": name, "type": obj_type,
                             "status": "skipped", "reason": "no tml_path"})
+            continue
+
+        if obj_id in blocked:
+            # Same handling as a failed import: whatever depends on it is skipped too.
+            failed_obj_ids.add(obj_id)
+            reason = f"validation failed in Stage 8: {blocked[obj_id]}"
+            results.append({"obj_id": obj_id, "name": name, "type": obj_type,
+                            "status": "skipped", "reason": reason})
+            print(f"[STAGE 9] Skipping '{name}': {reason}", file=sys.stderr)
             continue
 
         tml_path = repo_root / tml_path_rel
@@ -147,8 +160,9 @@ def import_tier(
                 create_new=False,
             )
 
-            # Parse per-object import status
-            # TODO(verify): confirm exact response structure against live cluster
+            # Per-object status: response.status.status_code (OK / WARNING / ERROR). The REST
+            # reference only says the response is an array of objects, so this shape is the one
+            # seen from a live cluster, not a documented one. Anything else fails closed.
             status_ok = _parse_import_status(resp, obj_id)
 
             if status_ok:
@@ -196,12 +210,19 @@ def import_tier(
 
 
 def _parse_import_status(resp: dict | list, obj_id: str) -> bool:
+    """True only if the API reported at least one object and every one of them OK or WARNING.
+
+    One TML is sent per call, so one object comes back; if the response ever holds more,
+    a single OK must not hide another object's ERROR. Anything unreadable counts as a failure.
+    """
     objects = resp if isinstance(resp, list) else resp.get("object", [resp])
+    if not objects:
+        return False
     for obj in objects:
         status = obj.get("response", {}).get("status", {}).get("status_code", "ERROR")
-        if status in ("OK", "WARNING"):
-            return True
-    return False  # no object reported OK/WARNING — treat as failure
+        if status not in ("OK", "WARNING"):
+            return False
+    return True
 
 
 def _extract_error(resp: dict | list) -> str:
@@ -210,7 +231,7 @@ def _extract_error(resp: dict | list) -> str:
         msg = obj.get("response", {}).get("status", {}).get("error_message", "")
         if msg:
             return msg
-    return str(resp)[:200]
+    return str(resp)[:200] if objects else "Import returned no objects."
 
 
 def _ts_type_for_tag(meta_type: str) -> str | None:
@@ -257,33 +278,57 @@ def safety_gate(
     failed_obj_ids: set[str],
 ) -> None:
     """After tables import: verify no source db/schema values remain."""
+    def fail(res: dict, message: str) -> None:
+        res["status"] = "failed"
+        res["error"] = message
+        failed_obj_ids.add(res["obj_id"])
+        print(f"[SAFETY GATE FAIL] Table {res['obj_id']}: {message}", file=sys.stderr)
+
     for res in table_results:
         if res["status"] != "success":
             continue
         obj_id = res["obj_id"]
+        # Fail closed: a table that cannot be read back is not known to be free of source
+        # values, so it is failed (it keeps its tag and a re-run retries it) rather than trusted.
         try:
             exported = target_client.export_tml(
                 [{"identifier": obj_id}],
                 include_obj_id=True, include_obj_id_ref=True, include_guid=False,
             )
             edocs = exported if isinstance(exported, list) else exported.get("object", [])
-            if edocs:
-                tml_dict = parse_tml(
-                    edocs[0].get("edoc") or edocs[0].get("content") or json.dumps(edocs[0])
-                    if isinstance(edocs[0].get("edoc") or edocs[0].get("content"), str)
-                    else json.dumps(edocs[0])
-                )
-                db, schema = get_table_db_schema(tml_dict)
-                if (db and db == src_db) or (schema and schema == src_schema):
-                    res["status"] = "failed"
-                    res["error"] = (
-                        f"Safety gate: table still has source db/schema "
-                        f"(db={db}, schema={schema}) after import."
-                    )
-                    failed_obj_ids.add(obj_id)
-                    print(f"[SAFETY GATE FAIL] Table {obj_id}: {res['error']}", file=sys.stderr)
+            if not edocs:
+                fail(res, "Safety gate: the table could not be read back from the target "
+                          "(export returned nothing), so it was not verified.")
+                continue
+            doc = edocs[0].get("edoc") or edocs[0].get("content")
+            tml_dict = parse_tml(doc if isinstance(doc, str) else json.dumps(edocs[0]))
+            db, schema = get_table_db_schema(tml_dict)
         except Exception as e:
-            print(f"[WARN] Safety gate check failed for {obj_id}: {e}")
+            fail(res, f"Safety gate: the table could not be read back from the target "
+                      f"({e}), so it was not verified.")
+            continue
+        if (db and db == src_db) or (schema and schema == src_schema):
+            fail(res, f"Safety gate: table still has source db/schema "
+                      f"(db={db}, schema={schema}) after import.")
+
+
+def untiered_results(manifest: list[dict], results: list[dict]) -> list[dict]:
+    """A failed result for every manifest object that no import tier handled.
+
+    An object whose type/folder matches no tier would otherwise never be attempted and show up
+    only as a quiet "no import result". Failing it keeps its tag and turns the run red.
+    """
+    done = {r["obj_id"] for r in results}
+    out = []
+    for e in manifest:
+        if e["obj_id"] in done:
+            continue
+        msg = (f"No import step handles type {e['type']} / folder {e.get('folder', '')!r}; "
+               "the object was not imported.")
+        print(f"[STAGE 9][FAIL] '{e['name']}' ({e['obj_id']}): {msg}", file=sys.stderr)
+        out.append({"obj_id": e["obj_id"], "name": e["name"], "type": e["type"],
+                    "status": "failed", "error": msg})
+    return out
 
 
 def main():
@@ -314,6 +359,17 @@ def main():
     )
     target_client.authenticate()
 
+    # Objects Stage 8's validate-only import rejected are not imported (validation_gate: block,
+    # the default). validation_gate: warn imports them anyway and leaves the outcome to the API.
+    blocked: dict[str, str] = {}
+    if cfg.get("validation_gate", DEFAULT_VALIDATION_GATE) == "block":
+        prep_path = Path(os.environ.get("PROD_PREP_OUT", f"/tmp/ts_migration_{org_key}_prod_prep.json"))
+        if prep_path.exists():
+            blocked = blocked_objects(json.loads(prep_path.read_text()))
+            if blocked:
+                print(f"[STAGE 9] {len(blocked)} object(s) failed validation in Stage 8 and will "
+                      f"be skipped: {', '.join(sorted(blocked))}")
+
     failed_obj_ids: set[str] = set()
     all_results = []
 
@@ -331,7 +387,7 @@ def main():
         tier_entries = order_by_dependencies(tier_entries, repo_root)
         print(f"[STAGE 9] Importing tier '{folder}': {len(tier_entries)} objects...")
         tier_results = import_tier(
-            target_client, tier_entries, cfg, repo_root, failed_obj_ids
+            target_client, tier_entries, cfg, repo_root, failed_obj_ids, blocked
         )
         all_results.extend(tier_results)
 
@@ -344,6 +400,8 @@ def main():
                 variable_config(cfg, "schema")["source_value"],
                 failed_obj_ids,
             )
+
+    all_results.extend(untiered_results(manifest, all_results))
 
     out_path = os.environ.get("IMPORT_OUT", f"/tmp/ts_migration_{org_key}_import_results.json")
     Path(out_path).write_text(json.dumps(all_results, indent=2), encoding="utf-8")

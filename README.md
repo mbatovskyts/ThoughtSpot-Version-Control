@@ -38,6 +38,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
 | 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), auto-merge requested (not on dry runs). If GitHub refuses auto-merge, for example because "Allow auto-merge" is off in the repository settings, the log shows a warning, the PR body says a person must merge it, and `stage7_promote.json` records `auto_merge: false` |
 | 7b | `stage7b_wait_for_merge` | Poll the promote PR until it is merged. Fails if the PR is closed unmerged or not merged within 330 minutes (`MERGE_WAIT_TIMEOUT_MIN`); the import is then skipped and the tag stays. Skipped on dry runs |
+| 8b | `stage8b_snapshot` | Before importing, save the target's current version of every object about to be overwritten (live runs only). Fails the run if a copy cannot be saved |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
 | 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values, then bind each table's database and schema to their own variables (by GUID). A failed bind is a warning on that table in `stage9_import.json` |
 | 9b | `stage9b_import_memory` | Import model memory |
@@ -45,7 +46,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 10 | `stage10_postcheck` | Post-check and remove the migration tag from successes |
 | 11 | `stage11_report` | Reports and job summary |
 
-Import order for Stage 9 is tables, views, models, sets, collections, answers, liveboards, then feedback.
+Import order for Stage 9 is tables, views, models, collections, answers, liveboards, then feedback. A tagged object that no step handles is reported as a failure and keeps its tag. Stage 9 fails closed: an import counts as successful only if every object in the response is OK or WARNING, and a table whose post-import read-back cannot be done is failed rather than trusted.
 
 ### Branches
 
@@ -64,6 +65,7 @@ The `extract` and `report` jobs run scripts from the branch you dispatch the wor
 | Variable definitions that the content references (`ts_var()`) | Per-user Spotter conversation history |
 | Model memory: rules and recipes (reference questions) | Schedules, custom actions, custom calendars, column security rules |
 | Model NL instructions | Deletions of any kind |
+| | Sets (the search API has no type for them, so they cannot be discovered) |
 
 ## Spotter memory and NL instructions
 
@@ -102,15 +104,15 @@ Dispatch **Actions → ThoughtSpot Migration → Run workflow** with an `org` ke
 |---|---|---|
 | Stages 1–6 (extract, export, commit to `ts-dev`) | Run, **including the commit to `ts-dev`** | Run |
 | Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **without auto-merge** | Runs, auto-merge requested |
-| Stage 8 (variables, connections, validate) | Runs, **and can create variable definitions or set org values in the target** | Runs |
+| Stage 8 (variables, connections, validate) | Runs, **writes nothing**: reports the variables it would create or set | Runs |
 | Stage 9 (TML import) | Skipped | Runs |
 | Stage 9b (memory) | Validates and logs counts, writes nothing | Validates, then applies |
 | Stage 9c (instructions) | Reads the target and logs `would replace`, writes nothing | Applies |
 | Stage 10 (untag source) | Skipped | Runs |
 
-A dry run does not import any objects, memory or instructions, but it is not write-free: Stages 6–7 write to this repository, and Stage 8 can create variable definitions and set org-scoped values in the target when your config calls for it.
+A dry run does not import any objects, memory or instructions, but it is not write-free: Stages 6–7 write to this repository. Stage 8 writes nothing to the target on a dry run; it logs `DRY RUN: would create variable ...` instead.
 
-Stage 8 prints one line per issue it finds, for example `[STAGE 8] ERROR [<variable>]: <message>`. It only records issues in `prod_prep.json`: it does not exclude objects or block the import, and Stage 11 treats only errors that name a connection as failures.
+Stage 8 prints one line per issue it finds, for example `[STAGE 8] ERROR [<variable>]: <message>`. It records them in `prod_prep.json`. An object that fails its validate-only import is **skipped** in Stage 9, together with whatever depends on it, and keeps its migration tag (`validation_gate: block`, the default; `warn` imports it anyway). Stage 11 reports every Stage 8 error, and every validation failure, as a failure of the run; on a dry run this is where a failure shows up before a live run. Variable and connection errors name no single object, so they fail the run but do not skip anything.
 
 ## Configuration
 
@@ -126,6 +128,7 @@ source: { base_url: https://dev-ts.example.com,  org_id: 12 }
 target: { base_url: https://prod-ts.example.com, org_id: 3 }   # same cluster, different org_id is fine
 
 dependency_mode: include   # include | skip_if_exists | require_tagged
+validation_gate: block     # block (default) | warn: what Stage 9 does with an object that failed Stage 8's validate-only import
 # dependency_exclude: [TSBIServer-eaab6de7]   # obj_ids never pulled in as dependencies
 
 variables:                 # TABLE_MAPPING variables for table database / schema
@@ -148,6 +151,20 @@ If `target_value` is blank, the variable must already exist in the target org. S
 
 Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, optionally `GH_AUTOMATION_TOKEN` for auto-merging promote PRs, and optionally per-org overrides such as `TS_TARGET_SECRET_KEY_SALES`. See the runbook.
 
+## Snapshot, redeploy and rollback
+
+**Snapshot.** Before Stage 9 overwrites anything, Stage 8b exports what the target holds for each object about to be imported and uploads it as the `snapshot-<org>-<run_id>` artifact (`snapshot/<org>/<folder>/<obj_id>.tml`, kept 90 days). Objects not yet in the target are listed as `new`. If a copy of an existing object cannot be saved the run stops before the import. Not covered: Spotter memory and NL instructions, sharing, and anything TML does not carry.
+
+**Redeploy / rollback.** *Actions → ThoughtSpot Redeploy → Run workflow* with an `org` and a `ref` (a tag or commit on `ts-prod`) puts the target back into the state recorded in git, without touching the source org and without extracting, opening a PR or removing tags. It restores `orgs/<org>/` exactly as it was at the ref, rebuilds the run inputs from those files, and runs the normal stages 5, 8b, 8, 9, 9b and 9c, then writes the report.
+
+- `dry_run` defaults to **true**; untick it to apply. It runs in the `prod` environment, so its required reviewers apply.
+- The ref must be part of `ts-prod`'s history; anything else is refused, so only reviewed and merged content can be deployed.
+- "State as of the ref" is the newest file for each object at that ref, and the newest Spotter memory and instructions files.
+- Nothing is ever deleted: an object created after the ref stays in the target as it is, and a redeploy replaces Spotter memory and NL instructions with the ref's.
+- It shares the `ts-migration-<org>` concurrency group, so it never runs alongside a migration of the same org.
+
+To roll back one bad migration, redeploy the commit on `ts-prod` just before that run's promote PR. The snapshot artifact is the other route, for objects that were not in git yet or that someone edited by hand in the target: it is plain TML you can import yourself.
+
 ## Running a migration
 
 1. Make sure each object has an `obj_id`.
@@ -165,19 +182,19 @@ Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, 
 ## Repository layout
 
 ```
-.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline)
+.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ts-redeploy.yml (redeploy/rollback), ci.yml (tests)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)
 docs/                runbook, API verification notes, open questions
-tests/               pytest suite
+tests/               pytest suite (run by ci.yml)
 ```
 
 ## Development
 
 ```
-pip install -r requirements.txt pytest
+pip install -r requirements-dev.txt
 python -m pytest
 ```
 
-`tests/test_spotter_model_content.py` and `tests/test_stage8_issue_logging.py` cover the Spotter content and Stage 8 logging. Several older test modules currently fail to import and are unrelated to those.
+The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs them on every pull request and on pushes to `ts-prod`.

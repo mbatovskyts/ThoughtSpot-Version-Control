@@ -11,7 +11,8 @@
 7. [Reading the Reports](#reading-the-reports)
 8. [Re-queuing a Failed Object](#re-queuing-a-failed-object)
 9. [Dry Run Mode](#dry-run-mode)
-10. [Troubleshooting](#troubleshooting)
+10. [Redeploy and Rollback](#redeploy-and-rollback)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -134,7 +135,7 @@ For the org `sales` that is `TS_TARGET_SECRET_KEY_SALES`. Each one is optional a
 
 Configure the `ts-prod` branch with:
 - **Require pull request reviews before merging** (at least 1 approving review). This is the approval the pipeline waits for, so it is required, not optional. Also turn on **Allow auto-merge** in the repository settings so the PR merges itself once approved
-- **Require status checks to pass** (add the `migrate` job from `ts-migration.yml`)
+- **Require status checks to pass**: add `Tests` (the job in `ci.yml`). It runs on every PR, including the pipeline's own promote PRs, so it always reports. Do not require jobs from `ts-migration.yml`: that workflow is dispatched by hand and never reports on a PR, so requiring it would block every merge
 - **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
 
 **Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job waits for the PR either way (Stage 7b polls every 30 seconds for up to 330 minutes, set by `MERGE_WAIT_TIMEOUT_MIN` on the `promote` job). The token's owner cannot approve their own PR, so use a bot or service account for `GH_AUTOMATION_TOKEN`, not a reviewer's personal account. If the wait times out, merge the PR and re-run: objects keep their tag, and a re-run exports and promotes again.
@@ -251,7 +252,7 @@ A dry run runs Stages 1–8 and the read-only forms of 9b and 9c. It does **not*
 
 - **Stage 6** still commits the exports to `ts-dev`.
 - **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Nothing waits for this PR on a dry run (Stage 7b is skipped). Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
-- **Stage 8** still runs as normal. It can create missing variable definitions and set org-scoped values in the target when your config provides a `target_value` (or the variable is not a TABLE_MAPPING).
+- **Stage 8** still runs, but writes nothing to the target on a dry run: it logs `DRY RUN: would create variable ...` / `would set the org value ...` and still checks connections and runs the validate-only import. A validation failure is reported as a failure of the dry run.
 
 What is skipped or read-only:
 
@@ -264,6 +265,27 @@ Use dry runs to:
 - Validate TML before committing to a migration
 - Detect missing connections or variable mismatches
 - Preview what would be migrated (objects, memory, instructions) before anything is imported
+
+---
+
+## Redeploy and Rollback
+
+### What the snapshot is
+Every live migration saves, before Stage 9, the target's current version of each object it is about to overwrite. It is the `snapshot-<org>-<run_id>` artifact of the run: `snapshot/<org>/<folder>/<obj_id>.tml` plus `stage8b_snapshot.json`, which lists each object as `captured`, `new` (not in the target yet, so there is nothing to save), `skipped` or `failed`. A `failed` object stops the run before the import; set `SNAPSHOT_REQUIRED=false` on the step to import anyway. To undo one object by hand, import its snapshot file into the target with the TML import API (or the UI).
+
+### Redeploying an approved state
+1. Find the commit on `ts-prod` you want the target to match (for a rollback, the commit just before the bad run's promote PR was merged).
+2. *Actions → ThoughtSpot Redeploy → Run workflow*: set `org`, `ref` (commit SHA or tag) and leave `dry_run` ticked first.
+3. Read the log: `[REDEPLOY] '<ref>' = <sha>: N object(s) ...` shows what will be applied. Stage 8 shows variable, connection and validation problems as in a migration.
+4. Run it again with `dry_run` unticked. It waits for the `prod` environment's reviewers.
+5. Read the report (`redeploy-<org>-<run>` artifact, `reports/<org>/...`). Failed objects make the job red.
+
+Rules it follows: the ref must be in `ts-prod`'s history (otherwise: `is not part of origin/ts-prod's history`); the content is the newest file per object at that ref; nothing is deleted in the target, so objects created after the ref remain; Spotter memory and NL instructions are replaced with the newest files at the ref; the source org and the migration tags are never touched.
+
+### Troubleshooting a redeploy
+- **`Cannot resolve '<ref>'`**: the workflow checks out the full history and tags of `ts-prod`; use a commit SHA or tag that exists there.
+- **`There is no content for org '<org>' at <sha>`**: nothing had been promoted for that org yet at that commit; pick a later one.
+- **`Safety gate` / validation errors**: same causes as in a migration; see below.
 
 ---
 
@@ -287,7 +309,10 @@ The Variable API (beta) is not enabled on the cluster. Contact ThoughtSpot Suppo
 ### Stage 8 reports errors about variables
 Stage 8 prints one line per issue, e.g. `[STAGE 8] ERROR [bat_db_var]: ...`. A configured TABLE_MAPPING variable with a blank `target_value` raises an error when the variable is missing in the target org or exists with a different type. Create it in the target (Admin > Variables) with the right type, or set `target_value` in the org config so the pipeline creates it.
 
-Stage 8 only records issues in `prod_prep.json`. It does not exclude objects or block the import, and Stage 11 only treats errors that name a connection as failures. Variable errors matter when you migrate tables that depend on those variables.
+Stage 8 records its issues in `prod_prep.json`, and Stage 11 reports every error in it as a failure of the run. Variable errors do not skip objects by themselves, but they matter when you migrate tables that depend on those variables.
+
+### An object was skipped with "validation failed in Stage 8"
+Stage 8's validate-only import rejected it, so Stage 9 did not import it (or anything that depends on it) and it kept its migration tag. The reason is in the report and in the `[STAGE 8]` log. Fix it in the source and re-run. If the validate-only call is rejecting objects that would import fine (for example, on a first run where a dependency exists only in the same batch), set `validation_gate: warn` in the org config to import them anyway.
 
 ### Memory or NL instructions were not migrated
 Check the Stage 4b / 4c / 9b / 9c lines in the job logs and the FAILED section of the report. The usual reasons that are *not* failures (nothing to do):

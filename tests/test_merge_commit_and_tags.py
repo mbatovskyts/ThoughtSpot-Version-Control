@@ -148,8 +148,12 @@ def test_an_org_with_no_files_at_the_commit_is_left_alone(repo, monkeypatch, cap
 # ---- the restore-point tag ---------------------------------------------------------------- #
 
 @pytest.fixture
-def tagged_repo(repo, tmp_path_factory):
+def tagged_repo(repo, tmp_path_factory, monkeypatch):
     path, merge_sha = repo
+    # The workflow runs `git config user.name/email` before the script; an annotated tag needs
+    # a committer identity, so give the script the same one here (a CI runner has none).
+    for key in ("GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL"):
+        monkeypatch.setenv(key, ENV[key])
     remote = tmp_path_factory.mktemp("remote")
     git(remote, "init", "-q", "--bare")
     git(path, "remote", "add", "origin", str(remote))

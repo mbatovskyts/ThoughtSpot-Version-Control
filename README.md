@@ -44,7 +44,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 10 | `stage10_postcheck` | Post-check and remove the migration tag from successes |
 | 11 | `stage11_report` | Reports and job summary |
 
-Import order for Stage 9 is tables, views, models, sets, collections, answers, liveboards, then feedback.
+Import order for Stage 9 is tables, views, models, collections, answers, liveboards, then feedback. A tagged object that no step handles is reported as a failure and keeps its tag. Stage 9 fails closed: an import counts as successful only if every object in the response is OK or WARNING, and a table whose post-import read-back cannot be done is failed rather than trusted.
 
 ### Branches
 
@@ -63,6 +63,7 @@ The `extract` and `report` jobs run scripts from the branch you dispatch the wor
 | Variable definitions that the content references (`ts_var()`) | Per-user Spotter conversation history |
 | Model memory: rules and recipes (reference questions) | Schedules, custom actions, custom calendars, column security rules |
 | Model NL instructions | Deletions of any kind |
+| | Sets (the search API has no type for them, so they cannot be discovered) |
 
 ## Spotter memory and NL instructions
 
@@ -165,19 +166,19 @@ Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, 
 ## Repository layout
 
 ```
-.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline)
+.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ci.yml (tests)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)
 docs/                runbook, API verification notes, open questions
-tests/               pytest suite
+tests/               pytest suite (run by ci.yml)
 ```
 
 ## Development
 
 ```
-pip install -r requirements.txt pytest
+pip install -r requirements-dev.txt
 python -m pytest
 ```
 
-`tests/test_spotter_model_content.py` and `tests/test_stage8_issue_logging.py` cover the Spotter content and Stage 8 logging. Several older test modules currently fail to import and are unrelated to those.
+The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs them on every pull request and on pushes to `ts-prod`.

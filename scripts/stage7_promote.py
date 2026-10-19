@@ -50,6 +50,11 @@ def run_files(listing: str, timestamp: str) -> list[str]:
     return [p for p in listing.splitlines() if p.strip() and marker in Path(p).name]
 
 
+_WAIT_NOTE = ("The `import` job waits for this PR to be approved and merged (Stage 7b), then "
+              "imports the merged content. If the PR is closed without merging, nothing is "
+              "imported and the migration tag stays.")
+
+
 def _pr_body(org_key: str, run_id: str, counts_lines: str, dry_run: bool,
              auto_merge_failed: bool = False) -> str:
     dry_banner = ""
@@ -62,20 +67,21 @@ def _pr_body(org_key: str, run_id: str, counts_lines: str, dry_run: bool,
         """)
         what_this_is = ("This PR holds the exports from a dry run (TML, plus Spotter memory and "
                         "NL instructions where present).")
-        dry_note = " On a dry run nothing waits for this PR: the run validates only and imports nothing."
+        wait_note = ("Nothing waits for this PR on a dry run: the run validates only and "
+                     "imports nothing.")
     elif auto_merge_failed:
         what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
                         "memory and NL instructions where present). **Auto-merge could not be "
                         "enabled** (GitHub refused it; see the run's Stage 7 log), so this PR "
                         "stays open until a person merges it. Turn on \"Allow auto-merge\" in "
                         "the repository settings for it to merge itself.")
-        dry_note = ""
+        wait_note = _WAIT_NOTE
     else:
         what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
                         "memory and NL instructions where present). Auto-merge is enabled, so "
                         "GitHub merges it once it has been approved and its other merge "
                         "requirements are met.")
-        dry_note = ""
+        wait_note = _WAIT_NOTE
     # Dedent the template BEFORE substituting: counts_lines is multi-line, and substituting
     # first leaves its later lines unindented, which defeats dedent and makes GitHub render
     # the whole body as an indented code block.
@@ -90,11 +96,9 @@ def _pr_body(org_key: str, run_id: str, counts_lines: str, dry_run: bool,
 
         {what_this_is}
 
-        The `import` job waits for this PR to be approved and merged (Stage 7b), then
-        imports the merged content. If the PR is closed without merging, nothing is
-        imported and the migration tag stays.{dry_note}
+        {wait_note}
     """).format(org_key=org_key, run_id=run_id, counts_lines=counts_lines,
-                what_this_is=what_this_is, dry_note=dry_note)
+                what_this_is=what_this_is, wait_note=wait_note)
 
 
 def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".",

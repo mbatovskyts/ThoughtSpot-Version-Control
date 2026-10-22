@@ -718,19 +718,6 @@ liveboard:
     group_guid: 2826b40f-7e84-49ee-8bad-81501bf0145f
   filters:
   - column:
-    - Retail Apparel with AGO::Sales_Region
-    oper: in
-    values:
-    - East
-    excluded_visualizations:
-    - Viz_3
-    - Viz_6
-    - Viz_5
-    - Viz_9
-    is_mandatory: false
-    is_single_value: false
-    display_name: ""
-  - column:
     - Retail Apparel with AGO::Transaction Date
     is_mandatory: false
     date_filter:
@@ -755,6 +742,19 @@ liveboard:
       oper: =
       date_period: YEAR
       include_current_period: false
+    display_name: ""
+  - column:
+    - Retail Apparel with AGO::Sales_Region
+    oper: in
+    values:
+    - East
+    excluded_visualizations:
+    - Viz_3
+    - Viz_6
+    - Viz_5
+    - Viz_9
+    is_mandatory: false
+    is_single_value: false
     display_name: ""
   layout:
     tabs:
@@ -826,6 +826,19 @@ liveboard:
           "y": 0
           height: 8
           width: 12
+      filters:
+      - column:
+        - Retail Apparel with AGO::Product Category
+        excluded_visualizations:
+        - Viz_11
+        - Viz_2
+        - Viz_15
+        is_mandatory: false
+        is_single_value: false
+        display_name: ""
+      ordered_chips:
+      - name: Retail Apparel with AGO::Product Category
+        type: FILTER
     - name: Detail
       description: ""
       tiles:
@@ -910,13 +923,6 @@ liveboard:
     name: Mike View
     view_filters:
     - column:
-      - Retail Apparel with AGO::Sales_Region
-      oper: in
-      values:
-      - East
-      applicability:
-        level: LIVEBOARD
-    - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
@@ -927,10 +933,23 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: TAB
+        target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: EXACT_DATE
         oper: =
+      applicability:
+        level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Sales_Region
+      oper: in
+      values:
+      - East
       applicability:
         level: LIVEBOARD
     is_public: false
@@ -947,17 +966,6 @@ liveboard:
     name: All Views
     view_filters:
     - column:
-      - Retail Apparel with AGO::Sales_Region
-      oper: in
-      values:
-      - midwest
-      - west
-      - East
-      - South
-      - Southwest
-      applicability:
-        level: LIVEBOARD
-    - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
@@ -968,6 +976,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: TAB
+        target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -975,6 +989,17 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Sales_Region
+      oper: in
+      values:
+      - midwest
+      - west
+      - East
+      - South
+      - Southwest
       applicability:
         level: LIVEBOARD
     is_public: false
@@ -991,13 +1016,6 @@ liveboard:
     name: Midwest
     view_filters:
     - column:
-      - Retail Apparel with AGO::Sales_Region
-      oper: in
-      values:
-      - Midwest
-      applicability:
-        level: LIVEBOARD
-    - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1008,6 +1026,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: TAB
+        target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1015,6 +1039,13 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Sales_Region
+      oper: in
+      values:
+      - Midwest
       applicability:
         level: LIVEBOARD
     is_public: false
@@ -1031,14 +1062,6 @@ liveboard:
     name: South
     view_filters:
     - column:
-      - Retail Apparel with AGO::Sales_Region
-      oper: in
-      values:
-      - South
-      - Southwest
-      applicability:
-        level: LIVEBOARD
-    - column:
       - Retail Apparel with AGO::Transaction Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1049,6 +1072,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: TAB
+        target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1056,6 +1085,14 @@ liveboard:
         oper: =
         date_period: YEAR
         include_current_period: false
+      applicability:
+        level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Sales_Region
+      oper: in
+      values:
+      - South
+      - Southwest
       applicability:
         level: LIVEBOARD
     is_public: false

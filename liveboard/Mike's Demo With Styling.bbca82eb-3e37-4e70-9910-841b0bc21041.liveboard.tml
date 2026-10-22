@@ -728,6 +728,24 @@ liveboard:
       include_current_period: false
     display_name: ""
   - column:
+    - Retail Apparel with AGO::Store Name
+    excluded_visualizations:
+    - Viz_1
+    - Viz_8
+    - Viz_10
+    - Viz_2
+    - Viz_15
+    - Viz_6
+    - Viz_9
+    - Viz_3
+    - Viz_5
+    - Viz_4
+    - Viz_7
+    - Viz_14
+    is_mandatory: false
+    is_single_value: false
+    display_name: ""
+  - column:
     - Retail Apparel with AGO::Shipping Date
     excluded_visualizations:
     - Viz_1
@@ -829,6 +847,10 @@ liveboard:
       filters:
       - column:
         - Retail Apparel with AGO::Product Category
+        oper: in
+        values:
+        - Bags
+        - Dresses
         excluded_visualizations:
         - Viz_11
         - Viz_2
@@ -918,6 +940,8 @@ liveboard:
     type: FILTER
   - name: Retail Apparel with AGO::Date Column Picker
     type: PARAMETER
+  - name: Retail Apparel with AGO::Store Name
+    type: FILTER
   views:
   - view_guid: e7c5b39b-4f3b-4ee5-a54b-36f58ebdd5b5
     name: Mike View
@@ -935,9 +959,17 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: TAB
         target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
+      - Retail Apparel with AGO::Store Name
+      oper: in
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -978,9 +1010,17 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: TAB
         target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
+      - Retail Apparel with AGO::Store Name
+      oper: in
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -1028,9 +1068,17 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: TAB
         target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
+      - Retail Apparel with AGO::Store Name
+      oper: in
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
@@ -1074,9 +1122,17 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: TAB
         target_id: 7811f14b-dc34-4d80-955e-308237df4327
+    - column:
+      - Retail Apparel with AGO::Store Name
+      oper: in
+      applicability:
+        level: LIVEBOARD
     - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:

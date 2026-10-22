@@ -729,8 +729,11 @@ liveboard:
     display_name: ""
   - column:
     - Retail Apparel with AGO::Product Category
+    oper: in
+    values:
+    - Bags
+    - Dresses
     excluded_visualizations:
-    - Viz_11
     - Viz_2
     - Viz_15
     - Viz_6
@@ -740,6 +743,9 @@ liveboard:
     - Viz_4
     - Viz_7
     - Viz_14
+    - Viz_1
+    - Viz_8
+    - Viz_10
     is_mandatory: false
     is_single_value: false
     display_name: ""
@@ -940,6 +946,9 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: LIVEBOARD
     - column:
@@ -982,6 +991,9 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: LIVEBOARD
     - column:
@@ -1031,6 +1043,9 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: LIVEBOARD
     - column:
@@ -1076,6 +1091,9 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
+      - Dresses
       applicability:
         level: LIVEBOARD
     - column:

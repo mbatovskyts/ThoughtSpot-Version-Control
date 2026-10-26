@@ -1,0 +1,14 @@
+[
+  {
+    "obj_type": "VARIABLE",
+    "name": "Color",
+    "obj_id": "",
+    "stage": "prod_prep",
+    "endpoint": "",
+    "http_status": 0,
+    "ts_error_code": "",
+    "error": "Failed to create variable 'Color': 400 Client Error: Bad Request for url: https://ps-internal.thoughtspot.cloud/api/rest/2.0/template/variables/create",
+    "tml_path": "",
+    "suggested_action": "Fix the cause in the target org or the org config, then re-run."
+  }
+]

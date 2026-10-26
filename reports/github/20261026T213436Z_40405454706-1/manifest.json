@@ -1,0 +1,144 @@
+[
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "DIM_RETAPP_PRODUCTS",
+    "obj_id": "DIM_RETAPP_PRODUCTS-ad7d476f",
+    "source_guid": "ad7d476f-1be7-42da-8f25-816af6ee5d16",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": [
+      "Data Masking",
+      "Chasm Trap",
+      "Data Masking WIth View"
+    ]
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "Retail Apparel with AGO",
+    "obj_id": "RetailApparelwithAGOWithInstructions-b0d8d902",
+    "source_guid": "b0d8d902-bdaa-40aa-b673-725535885fe2",
+    "reason": "validation failed in Stage 8: {'error_message': 'This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LIVEBOARD",
+    "name": "Clinical Trials - Pipeline Health & Portfolio Overview",
+    "obj_id": "data-41e28ff7",
+    "source_guid": "40fe3e1c-8e9d-4f05-83bf-d4d30cc200f6",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Viz_1: GUID 7c35ba48-ebce-47a2-b061-f315462ebefc is already being used by another object. New GUID e3115e4e-bcb8-4792-9981-72f235217209 will be used for viz. <br/>\\nViz_2: GUID 01573dc8-886f-4fe3-884e-8a0142a709c1 is already being used by another object. New GUID 0bd14059-dc51-4c41-830d-13329585bc86 will be used for viz. <br/>\\nViz_3: GUID af7a9361-ae33-4300-81ac-5afc8131db76 is already being used by another object. New GUID 7a3981f6-daa3-4b40-9f48-06992c2185a3 will be used for viz. <br/>\\nViz_4: GUID 0d111dc2-4eaa-482f-8de9-314846f3e18c is already being used by another object. New GUID 735c4617-ebae-4fde-b18b-3135f62991b2 will be used for viz. <br/>\\nViz_5: GUID 94c33479-86e0-4f84-918e-135de3f31445 is already being used by another object. New GUID 60c0efb2-13dd-4ad2-b7b4-63efaefeed95 will be used for viz. <br/>\\nViz_6: GUID 36ed96ee-c299-4d89-9617-6455acd89867 is already being used by another object. New GUID ce584099-c4c7-4e5b-9ee1-efc3dbb12c19 will be used for viz. <br/>\\nViz_7: GUID e8005662-a70e-4dd0-8a4d-1ce6e43ef946 is already being used by another object. New GUID 0d64066d-aae3-4b53-9a85-88300c6f6d9d will be used for viz. <br/>\\nViz_8: GUID 7bdd9cbc-7920-4ce3-ab24-66d0a2fa9dc0 is already being used by another object. New GUID 753b2153-7182-4b21-9936-133e34cf8103 will be used for viz. <br/>\\nViz_9: GUID c62e0fd8-2560-4562-89e7-0179cbab46c2 is already being used by another object. New GUID f6d3f9a6-a9bc-45fd-b13f-39b22a059617 will be used for viz. <br/>\\nViz_10: GUID a9905c6f-bd31-4583-a52e-57a878255805 is already being used by another object. New GUID 80a3f99b-30dc-4b2f-893b-a279e0385d35 will be used for viz. <br/>\\nViz_11: GUID 4cad6311-de7a-4e37-a7f5-b6d9f5e3768a is already being used by another object. New GUID 6f3445bc-2689-430a-8aa5-53c528708909 will be used for viz. <br/>\\nViz_12: GUID a6c6093b-2937-46ac-9f99-b95122f426b9 is already being used by another object. New GUID b690b049-6607-425d-b01f-13d5e4173042 will be used for viz. <br/>\\nViz_13: GUID ab5cf556-f08a-47e3-8146-9c457b77bf04 is already being used by another object. New GUID 65170b20-bee9-4bdf-86f2-10867aaa0729 will be used for viz. <br/>\\nViz_14: GUID dde4fb48-2700-459b-a731-42fb4fa09ec8 is already being used by another object. New GUID 6a3b3f64-f25e-4fba-bfd2-ec13820bc5c9 will be used for viz. <br/>\\nViz_15: GUID 87038721-37b4-43e0-b857-903b6a00438f is already being used by another object. New GUID ac23f36a-6a2c-4141-a775-17ea81bbfe1b will be used for viz. <br/>\\nViz_16: GUID 4eaf095c-7cdd-4302-a490-7232027d6b96 is already being used by another object. New GUID adcbcd6f-b963-45ff-8e6f-60ab8afba159 will be used for viz. <br/>\\n<br/>Group_1: GUID 8c3c7277-969c-4929-ab45-ba4906ee96b6 is already being used by another object. New GUID e87c69aa-a93c-40cd-9885-1c0bd9f76fc7 will be used for group. <br/>\\n', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LIVEBOARD",
+    "name": "Mike's Demo With Styling",
+    "obj_id": "MikesDemo-bbca82eb",
+    "source_guid": "bbca82eb-3e37-4e70-9910-841b0bc21041",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Viz_1: GUID 4898cf74-0294-4076-97e2-ac4d9cdf93c2 is already being used by another object. New GUID 4db5bde5-a8b2-4a1f-b9a3-cd24847b1207 will be used for viz. <br/>\\nViz_2: GUID d6133c94-2187-446f-bd14-127e7f2a38e4 is already being used by another object. New GUID 20b5dead-1bb6-496a-9435-53ef2d2670f7 will be used for viz. <br/>\\nViz_3: GUID b970c1df-c46f-4588-914f-2dd77acec6c9 is already being used by another object. New GUID 6ac10250-33ed-4425-88ce-baa0d555d8a4 will be used for viz. <br/>\\nViz_4: GUID dfebce4d-6bbd-4b42-9184-b43024133ec9 is already being used by another object. New GUID 6bdd48b7-7fd4-4cff-9a71-4afe423a0163 will be used for viz. <br/>\\nViz_5: GUID 18f8061f-ead0-4f23-ae37-b248f2fb87c5 is already being used by another object. New GUID 22fc2582-c028-4e1d-8ad0-ef8df83099ab will be used for viz. <br/>\\nViz_6: GUID 065d1ab4-cfdd-4225-bb71-416da74db3bb is already being used by another object. New GUID df856246-5bc0-4d84-8862-ce7540c40c9f will be used for viz. <br/>\\nViz_7: GUID 24d6cf74-ca70-473e-b59c-fdd302393bf8 is already being used by another object. New GUID 9c04328e-3daf-409f-80bb-a4ef37140c2d will be used for viz. <br/>\\nViz_8: GUID 3b5c40a2-2e6b-40c4-b0f7-5319c8bfe44b is already being used by another object. New GUID 317c7c1a-f461-41c9-96bf-0cd9aff6c08e will be used for viz. <br/>\\nViz_9: GUID 2e35ff3d-b17a-4544-ba11-894f09ec0435 is already being used by another object. New GUID 80231b35-a8a4-4f26-8563-1316cefc3f11 will be used for viz. <br/>\\nViz_10: GUID db56ae06-9e02-4b39-a529-6bdfd31bef25 is already being used by another object. New GUID 32b84f21-2a57-4a59-b0a4-6b1e24d043b7 will be used for viz. <br/>\\nViz_11: GUID ddef3ba2-e8f1-4c65-bede-b434f2c8a589 is already being used by another object. New GUID e517d81c-b686-49ba-99e1-b1cc2e3b09c9 will be used for viz. <br/>\\nViz_12: GUID 43af5c1b-ec5d-43c5-9338-3681bad7d95c is already being used by another object. New GUID 83cba718-c403-40e7-85cd-a13d4c630cfc will be used for viz. <br/>\\nViz_13: GUID 00cca2c8-5d9e-450e-adad-d4e4b10d4904 is already being used by another object. New GUID c1f5e41b-b047-425a-a19b-63e6ac8f7c24 will be used for viz. <br/>\\nViz_14: GUID dde6fa97-cc60-4069-9a02-5ccd6dd07f93 is already being used by another object. New GUID db540377-faef-4c70-87d5-06c8931e00ab will be used for viz. <br/>\\nViz_15: GUID b4c24d24-9446-4b87-a131-d328bbb5a571 is already being used by another object. New GUID 6d970182-5e92-43c3-8523-505d02d3c342 will be used for viz. <br/>\\n<br/>Group_1: GUID c3d93d6c-61ac-4bf0-89d8-cca48d5b4f2c is already being used by another object. New GUID 3e3b1c5a-0bd1-4699-969d-47e9bb7dd458 will be used for group. <br/>\\nGroup_2: GUID 90648342-236d-4922-8f43-fd80c7ed4bd1 is already being used by another object. New GUID e9f81f5b-662b-44c6-a577-09d62daaf0cf will be used for group. <br/>\\nGroup_3: GUID 63dfe3fa-c921-473f-8c0e-9f354efcf7a5 is already being used by another object. New GUID 1300d6d9-3b84-4fcc-a09a-df1ceab03c85 will be used for group. <br/>\\nGroup_4: GUID ee65dedf-6106-47f6-932f-daa27d777d01 is already being used by another object. New GUID 708bc7b9-0133-4e53-90d3-4cc4863d1028 will be used for group. <br/>\\nGroup_5: GUID 88e4435e-958a-440c-ae24-125596912460 is already being used by another object. New GUID 0243401b-5a6f-4cd8-b70e-a3b35d4b23ea will be used for group. <br/>\\nGroup_6: GUID c351fe4a-c390-461a-91d0-ee718652e5f5 is already being used by another object. New GUID 3f8f8b0b-771d-4bec-a0cb-366d4fbae6d4 will be used for group. <br/>\\nGroup_7: GUID 2826b40f-7e84-49ee-8bad-81501bf0145f is already being used by another object. New GUID eb31abc2-d6d8-4a48-a491-1c529fc48960 will be used for group. <br/>\\n<br/>Owner <b>91</b> could not be resolved for personalised view <b>Mike View</b> (guid: e7c5b39b-4f3b-4ee5-a54b-36f58ebdd5b5, obj_id: not set). It will be assigned to the user importing it. <br/><br/>Object with GUID e7c5b39b-4f3b-4ee5-a54b-36f58ebdd5b5 already exists. New GUID will be used. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": [
+      "LoadTesting"
+    ]
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "DIM_RETAPP_STORES",
+    "obj_id": "DIM_RETAPP_STORES-9cf5b3be",
+    "source_guid": "8cd69308-f086-4751-bb1d-ad487e7f503b",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "FACT_RETAPP_SALES",
+    "obj_id": "FACT_RETAPP_SALES-1277592f",
+    "source_guid": "1277592f-16a9-4f7d-8ffc-88970f6bd18c",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "Retail Apparel AGO Dim",
+    "obj_id": "RetailApparelAGODim-34342a9a",
+    "source_guid": "34342a9a-871b-4524-82d9-e4a3fd1b27b2",
+    "reason": "validation failed in Stage 8: {'error_message': 'This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "Study Overview",
+    "obj_id": "StudyOverview-29b76499",
+    "source_guid": "47c885e3-649b-4cd3-8b3c-a91b6b46c832",
+    "reason": "validation failed in Stage 8: {'error_message': 'This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "STUDIES",
+    "obj_id": "STUDIES-c2c55404",
+    "source_guid": "67e12117-eae0-4095-babc-2727675d76c8",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "FACILITIES",
+    "obj_id": "FACILITIES-f045bacf",
+    "source_guid": "412cc839-f7fa-481f-af77-aa37aa2aed61",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "COUNTRIES",
+    "obj_id": "COUNTRIES-c96e9d9d",
+    "source_guid": "7541bc35-1b10-4cfc-8cb4-13fc49b16873",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "BRIEF_SUMMARIES",
+    "obj_id": "BRIEF_SUMMARIES-c3de8168",
+    "source_guid": "c092368a-657b-4794-9e83-b248dbc653ac",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "MILESTONES",
+    "obj_id": "MILESTONES-cc5ed6d9",
+    "source_guid": "6cd9ea78-4f84-43c7-92a4-461948fdc6fe",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "INTERVENTIONS",
+    "obj_id": "INTERVENTIONS-8ab81656",
+    "source_guid": "ceadd0fe-7a53-47f2-8a42-bad6704dfb7e",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "CALCULATED_VALUES",
+    "obj_id": "CALCULATED_VALUES-93fc0ae7",
+    "source_guid": "01743466-cb0d-44e0-bac1-c9bccdf671ee",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "OUTCOMES",
+    "obj_id": "OUTCOMES-90c85100",
+    "source_guid": "e79c09a4-229b-49ae-b586-86d2912cc293",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  },
+  {
+    "obj_type": "LOGICAL_TABLE",
+    "name": "OUTCOME_MEASUREMENTS",
+    "obj_id": "OUTCOME_MEASUREMENTS-a5c20327",
+    "source_guid": "a9aef733-8157-4673-9922-084c947ccf70",
+    "reason": "validation failed in Stage 8: {'error_message': 'Error: This object could not be imported because a table in this import request has an invalid RLS rule(s).<br/><br/>What went wrong:<br/>Rls rule addition failed. Rls rule: RLS Rule Product Category, Error: Search did not find \"Color )\" in your data or metadata. <br/><br/>Fix the RLS rule(s) and import again.<br/>Warning: Please ensure that connection reference_object_id specified in TML file exists on this cluster. <br/>', 'status_code': 'ERROR', 'error_code': 14567}",
+    "other_tags": []
+  }
+]

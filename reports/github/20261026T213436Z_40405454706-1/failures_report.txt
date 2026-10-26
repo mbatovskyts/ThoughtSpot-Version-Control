@@ -1,0 +1,13 @@
+Failures Report — Org: github   Run: 40405454706-1
+
+Type:            VARIABLE
+Name:            Color
+Obj ID:          
+Stage:           prod_prep
+Endpoint:        
+HTTP Status:     0
+TS Error Code:   
+Error:           Failed to create variable 'Color': 400 Client Error: Bad Request for url: https://ps-internal.thoughtspot.cloud/api/rest/2.0/template/variables/create
+TML Path:        
+Suggested:       Fix the cause in the target org or the org config, then re-run.
+------------------------------------------------------------

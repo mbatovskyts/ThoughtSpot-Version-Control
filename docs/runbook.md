@@ -341,6 +341,9 @@ Stage 8 prints one line per issue, e.g. `[STAGE 8] ERROR [bat_db_var]: ...`. A c
 
 Stage 8 records its issues in `prod_prep.json`, and Stage 11 reports every error in it as a failure of the run. Variable errors do not skip objects by themselves, but they matter when you migrate tables that depend on those variables.
 
+### Every object failed validation with the same message
+Stage 8 validates all objects in one call, and ThoughtSpot reports some errors (for example "a table in this import request has an invalid RLS rule") on **every** object in it, however innocent. When one error covers at least 3 objects and at least half of those validated, Stage 8 treats it as a problem with the batch, records a single **WARNING** with the message and blocks none of them; Stage 9 then imports each object on its own, so only the objects that really fail (and what depends on them) are reported as failed. Fix the object named in the message, for example the table whose RLS rule is invalid, and re-run.
+
 ### An object was skipped with "validation failed in Stage 8"
 Stage 8's validate-only import rejected it, so Stage 9 did not import it (or anything that depends on it) and it kept its migration tag. The reason is in the report and in the `[STAGE 8]` log. Fix it in the source and re-run. If the validate-only call is rejecting objects that would import fine (for example, on a first run where a dependency exists only in the same batch), set `validation_gate: warn` in the org config to import them anyway.
 

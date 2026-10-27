@@ -399,12 +399,22 @@ class TSClient:
                 break
         return found
 
-    def create_variable(self, name: str, var_type: str, is_sensitive: bool = False) -> dict:
-        return self.post_json("/template/variables/create", {
-            "name": name,
-            "type": var_type,
-            "is_sensitive": is_sensitive,
-        })
+    def create_variable(self, name: str, var_type: str, is_sensitive: bool = False,
+                        data_type: str | None = None) -> dict:
+        """
+        Create a variable. `data_type` (VARCHAR, INT32, INT64, DOUBLE, DATE, DATE_TIME) applies to
+        FORMULA_VARIABLE only; it defaults to VARCHAR there and is never sent for other types.
+
+        A failure raises ApiError carrying the API's response body: a bare "400 Bad Request" does
+        not say whether the name is taken (variable names are unique across the whole cluster, so
+        a name already used by another org fails), the type is wrong, or the caller lacks a role.
+        """
+        body: dict = {"name": name, "type": var_type, "is_sensitive": is_sensitive}
+        if var_type == "FORMULA_VARIABLE":
+            body["data_type"] = data_type or "VARCHAR"
+        resp = self.post("/template/variables/create", body)
+        raise_for_api_error(resp, f"variables/create ({name})")
+        return resp.json()
 
     def set_variable_org_value(self, identifier: str, value: str) -> None:
         """

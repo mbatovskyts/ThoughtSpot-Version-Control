@@ -22,7 +22,7 @@ from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.tml_utils import parse_tml
-from lib.prod_prep import blocked_objects
+from lib.prod_prep import blocked_objects, collapse_batch_errors
 
 
 def _http_status(exc: Exception) -> int | None:
@@ -128,7 +128,8 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str],
                                           "in the target."})
             else:
                 try:
-                    target_client.create_variable(name, var_type, is_sensitive=is_sensitive)
+                    target_client.create_variable(name, var_type, is_sensitive=is_sensitive,
+                                                  data_type=v.get("data_type"))
                     print(f"[VARS] Created variable '{name}' ({var_type}) in target.")
                 except Exception as e:
                     issues.append({"severity": "ERROR", "variable": name,
@@ -196,13 +197,14 @@ def validate_import(target_client: TSClient, tml_strings: list[str],
         for idx, obj in enumerate(objects):
             status = obj.get("response", {}).get("status", {}).get("status_code", "")
             if status not in ("OK", "WARNING"):
+                state = obj.get("response", {}).get("status", {})
                 obj_id = obj.get("response", {}).get("header", {}).get("obj_id_ref", "")
                 if not obj_id and by_position:
                     obj_id = by_position[idx]
                 issues.append({
                     "severity": "VALIDATION_FAILED",
                     "obj_id": obj_id,
-                    "message": str(obj.get("response", {}).get("status", "")),
+                    "message": str(state.get("error_message") or state),
                 })
         return issues
     except Exception as e:
@@ -259,7 +261,8 @@ def main():
 
     validation_issues = []
     if tml_strings:
-        validation_issues = validate_import(target_client, tml_strings, tml_obj_ids)
+        validation_issues = collapse_batch_errors(
+            validate_import(target_client, tml_strings, tml_obj_ids), len(tml_strings))
 
     all_issues = var_issues + conn_issues + validation_issues
     out_path = os.environ.get("PROD_PREP_OUT",

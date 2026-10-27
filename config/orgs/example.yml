@@ -62,4 +62,7 @@ variables:
   # extra:
   #   - ts_variable_name: region_filter
   #     type: FORMULA_VARIABLE
+  #     data_type: VARCHAR      # FORMULA_VARIABLE only: VARCHAR (default), INT32, INT64, DOUBLE, DATE, DATE_TIME
   #     target_value: "EMEA"
+  # Variable names are unique across the whole cluster, so a name that already exists in another org
+  # of the same cluster (for example the source org) cannot be created again in the target org.

@@ -1,0 +1,86 @@
+ThoughtSpot Migration Report
+Org: github   Run: 40560250425-1   Mode: LIVE
+Started (UTC): 2026-10-27T19:01:31.101396+00:00   Ended: 2026-10-27T19:01:31.101475+00:00
+Source: https://ps-internal.thoughtspot.cloud/ org 1530174970   ->   Target: https://ps-internal.thoughtspot.cloud/ org 426706049
+Migration tag: Github_ReadyForMigration
+
+======================================================================
+1. PULLED (identified for migration)
+   Total: 17
+   LIVEBOARD: 2
+   LOGICAL_TABLE: 15
+
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f         tagged
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902 tagged
+   LIVEBOARD            Clinical Trials - Pipeline Health & Portfolio Overview data-41e28ff7                        tagged
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb                   tagged
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-9cf5b3be           dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f           dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a         dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        Study Overview                           StudyOverview-29b76499               dependency_of:data-41e28ff7
+   LOGICAL_TABLE        STUDIES                                  STUDIES-c2c55404                     dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        FACILITIES                               FACILITIES-f045bacf                  dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        COUNTRIES                                COUNTRIES-c96e9d9d                   dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        BRIEF_SUMMARIES                          BRIEF_SUMMARIES-c3de8168             dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        MILESTONES                               MILESTONES-cc5ed6d9                  dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        INTERVENTIONS                            INTERVENTIONS-8ab81656               dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        CALCULATED_VALUES                        CALCULATED_VALUES-93fc0ae7           dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        OUTCOMES                                 OUTCOMES-90c85100                    dependency_of:StudyOverview-29b76499
+   LOGICAL_TABLE        OUTCOME_MEASUREMENTS                     OUTCOME_MEASUREMENTS-a5c20327        dependency_of:StudyOverview-29b76499
+
+======================================================================
+2. SUCCEEDED
+   Total: 17
+   LIVEBOARD: 2
+   LOGICAL_TABLE: 15
+
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902
+   LIVEBOARD            Clinical Trials - Pipeline Health & Portfolio Overview data-41e28ff7
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-9cf5b3be
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a
+   LOGICAL_TABLE        Study Overview                           StudyOverview-29b76499
+   LOGICAL_TABLE        STUDIES                                  STUDIES-c2c55404
+   LOGICAL_TABLE        FACILITIES                               FACILITIES-f045bacf
+   LOGICAL_TABLE        COUNTRIES                                COUNTRIES-c96e9d9d
+   LOGICAL_TABLE        BRIEF_SUMMARIES                          BRIEF_SUMMARIES-c3de8168
+   LOGICAL_TABLE        MILESTONES                               MILESTONES-cc5ed6d9
+   LOGICAL_TABLE        INTERVENTIONS                            INTERVENTIONS-8ab81656
+   LOGICAL_TABLE        CALCULATED_VALUES                        CALCULATED_VALUES-93fc0ae7
+   LOGICAL_TABLE        OUTCOMES                                 OUTCOMES-90c85100
+   LOGICAL_TABLE        OUTCOME_MEASUREMENTS                     OUTCOME_MEASUREMENTS-a5c20327
+
+======================================================================
+3. FAILED
+   Total: 0
+
+======================================================================
+4. SKIPPED
+   Total: 0
+
+======================================================================
+5. POST-MIGRATION CHECK
+   {
+    "by_type": {
+        "LOGICAL_TABLE": {
+            "manifest": 15,
+            "confirmed": 15
+        },
+        "LIVEBOARD": {
+            "manifest": 2,
+            "confirmed": 2
+        }
+    },
+    "mismatches": []
+}
+
+======================================================================
+6. TAG CLEANUP
+   Removed: 4 objects
+   Retained (failed/skipped): 0 objects
+
+======================================================================
+7. UNSUPPORTED CONTENT
+   Spotter conversation history: Per-user session data, not migratable metadata. Model-level memory (Stage 4b/9b) and NL instructions (Stage 4c/9c) are migrated.

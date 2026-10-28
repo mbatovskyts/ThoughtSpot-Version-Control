@@ -8,6 +8,25 @@
   let repo = null;
   let token = "";
   let timer = null;
+  let connected = false;
+  const VIEWS = ["migrations", "approvals", "reports", "restore", "settings"];
+
+  // ---------------------------------------------------------------- navigation
+  function currentView() {
+    const v = (location.hash.replace(/^#\/?/, "") || "migrations").split("/")[0];
+    if (!connected) return "settings";
+    return VIEWS.includes(v) ? v : "migrations";
+  }
+  function route() {
+    const view = currentView();
+    document.querySelectorAll(".view").forEach((s) => { s.hidden = s.dataset.view !== view; });
+    document.querySelectorAll("[data-nav]").forEach((a) => {
+      if (a.dataset.nav === view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    document.title = view.charAt(0).toUpperCase() + view.slice(1) + " · ThoughtSpot Migration";
+    if (view === "reports" && connected && !$("report-run").options.length) loadReportRuns();
+  }
+  function go(view) { location.hash = "#/" + view; route(); }
 
   // ---------------------------------------------------------------- storage
   function store(kind) { try { return window[kind]; } catch (e) { return null; } }
@@ -75,16 +94,21 @@
     setItem(kind, "tsui.token", token);
     setItem("localStorage", "tsui.repo", repo.full);
     setMsg("connect-msg", "Connected to " + repo.full + ".", "ok");
-    $("app").hidden = false;
+    connected = true;
+    $("conn-chip").textContent = repo.full; $("conn-chip").hidden = false;
+    $("open-start").hidden = false;
+    $("report-run").replaceChildren();
+    if (location.hash === "" || location.hash === "#/settings") go("migrations"); else route();
     await refresh();
-    loadReportRuns();
     schedule();
   }
 
   function forget() {
     delItem("localStorage", "tsui.token"); delItem("sessionStorage", "tsui.token");
-    token = ""; $("token").value = ""; $("app").hidden = true;
+    token = ""; $("token").value = ""; connected = false;
+    $("conn-chip").hidden = true; $("open-start").hidden = true; $("nav-count").hidden = true;
     clearTimeout(timer);
+    go("settings");
     setMsg("connect-msg", "Token forgotten.");
   }
 
@@ -109,6 +133,7 @@
     try {
       await gh(base() + "/actions/workflows/" + L.WORKFLOW_FILE + "/dispatches", { method: "POST", body: body });
       setMsg("start-msg", (dry ? "Dry run" : "Live run") + " queued for " + org + ". It appears under Recent runs in a few seconds.", "ok");
+      setTimeout(() => { closeStart(); go("migrations"); }, 1200);
       setTimeout(refresh, 4000);
     } catch (e) {
       setMsg("start-msg", "Could not start the run: " + e.message + (e.status === 403 || e.status === 404 ? " (the token needs Actions: read and write)" : ""), "bad");
@@ -116,6 +141,9 @@
       $("start-btn").disabled = false;
     }
   }
+
+  function openStart() { setMsg("start-msg", ""); const d = $("start-dialog"); if (!d.open) d.showModal(); }
+  function closeStart() { const d = $("start-dialog"); if (d.open) d.close(); }
 
   // ---------------------------------------------------------------- refresh
   async function refresh() {
@@ -128,7 +156,10 @@
     try {
       const data = await gh(base() + "/actions/workflows/" + L.WORKFLOW_FILE + "/runs?per_page=8");
       const runs = data.workflow_runs || [];
-      if (!runs.length) return empty(box, "No runs yet.");
+      if (!runs.length) { $("tile-latest").textContent = "–"; $("tile-latest-sub").textContent = "No runs yet"; return empty(box, "No runs yet."); }
+      const latest = L.runState(runs[0]);
+      $("tile-latest").textContent = latest.label.charAt(0).toUpperCase() + latest.label.slice(1);
+      $("tile-latest-sub").textContent = "Run #" + runs[0].run_number + " · " + L.ago(runs[0].created_at);
       const active = runs.filter(L.isActive).slice(0, 2);
       const jobsById = {};
       await Promise.all(active.map(async (r) => {
@@ -148,7 +179,7 @@
     if (jobs) {
       const p = L.progress(jobs);
       kids.push(el("div", { class: "meta" },
-        p.waitingForMerge ? "Waiting for you to merge the promote PR (see above)." :
+        p.waitingForMerge ? "Waiting for you to merge the promote PR (see Approvals)." :
         p.job ? p.job + (p.step ? " · " + p.step : "") + " (" + p.done + " of " + p.total + " jobs done)" : ""));
     }
     return el("div", { class: "item" }, el("div", { class: "main" }, kids), el("div", { class: "btns" }, link(run.html_url, "Open in GitHub")));
@@ -158,6 +189,10 @@
     const box = $("prs");
     try {
       const prs = L.promotePrs(await gh(base() + "/pulls?state=open&per_page=30"));
+      const live = prs.filter((p) => !p.dryRun).length;
+      $("tile-waiting").textContent = String(live);
+      $("tile-waiting-sub").textContent = live ? "Promote PR to merge" : "Nothing needs you";
+      $("nav-count").textContent = String(live); $("nav-count").hidden = !live;
       if (!prs.length) return empty(box, "Nothing is waiting.");
       box.replaceChildren(...prs.map(prItem));
     } catch (e) {
@@ -209,6 +244,7 @@
     const box = $("tags");
     try {
       const tags = L.restorePoints(await gh(base() + "/tags?per_page=50"));
+      $("tile-restore").textContent = tags.length ? tags[0] : "None yet";
       if (!tags.length) return empty(box, "No restore points yet. A clean live run creates one.");
       box.replaceChildren(...tags.slice(0, 10).map((t) => el("div", { class: "item" }, el("div", { class: "main" }, el("code", {}, t)))));
     } catch (e) {
@@ -261,6 +297,9 @@
   $("connect-btn").addEventListener("click", connect);
   $("forget-btn").addEventListener("click", forget);
   $("start-btn").addEventListener("click", start);
+  $("open-start").addEventListener("click", openStart);
+  $("cancel-start").addEventListener("click", closeStart);
+  window.addEventListener("hashchange", route);
   $("refresh-btn").addEventListener("click", refresh);
   $("report-org").addEventListener("change", loadReportRuns);
   $("report-run").addEventListener("change", loadReport);
@@ -269,5 +308,6 @@
   const savedRepo = getItem("localStorage", "tsui.repo");
   if (savedRepo) $("repo").value = savedRepo;
   const savedToken = getItem("sessionStorage", "tsui.token") || getItem("localStorage", "tsui.token");
+  route();
   if (savedToken) { $("token").value = savedToken; $("remember").checked = !!getItem("localStorage", "tsui.token"); if (savedRepo) connect(); }
 })();

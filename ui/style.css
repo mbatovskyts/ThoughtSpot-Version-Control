@@ -1,0 +1,60 @@
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --ink: #1c2330; --muted: #5d6879; --line: #dde1e8;
+  --accent: #2b59c3; --accent-ink: #ffffff;
+  --ok: #17794a; --ok-bg: #e2f4ea; --bad: #b3261e; --bad-bg: #fbe5e3;
+  --run: #2b59c3; --run-bg: #e3ebfb; --wait: #8a5a00; --wait-bg: #fcefd2; --idle: #5d6879; --idle-bg: #eceff3;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161d; --card: #1b212b; --ink: #e8ecf2; --muted: #9aa5b6; --line: #2c3442;
+    --accent: #6c9bff; --accent-ink: #0d1320;
+    --ok: #6fd6a0; --ok-bg: #153325; --bad: #ff8d85; --bad-bg: #3a1c1a;
+    --run: #8db1ff; --run-bg: #1a2a4d; --wait: #f1c46a; --wait-bg: #3a2d10; --idle: #9aa5b6; --idle-bg: #262d39;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header, main { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+header { padding-top: 28px; }
+h1 { margin: 0; font-size: 24px; }
+h2 { margin: 0 0 12px; font-size: 17px; }
+.sub, .hint { color: var(--muted); margin: 6px 0 12px; }
+.hint { font-size: 13px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 16px 0; }
+.head { display: flex; align-items: center; justify-content: space-between; }
+.head h2 { margin: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.row.actions { margin-top: 12px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); flex: 1 1 220px; }
+label.check { flex-direction: row; align-items: center; gap: 8px; color: var(--ink); margin-top: 8px; font-size: 14px; }
+label.inline { margin-top: 0; flex: 1 1 320px; }
+input[type=text], input[type=password], input:not([type]), select { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); width: 100%; }
+button { font: inherit; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.danger { color: var(--bad); border-color: var(--bad); }
+button.quiet { background: transparent; }
+button:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.msg { min-height: 1.4em; margin: 8px 0 0; font-size: 13px; }
+.msg.bad { color: var(--bad); } .msg.ok { color: var(--ok); }
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; }
+.item .main { flex: 1 1 280px; min-width: 0; }
+.item .title { font-weight: 600; overflow-wrap: anywhere; }
+.item .meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.item .btns { display: flex; gap: 8px; }
+.empty { color: var(--muted); font-size: 14px; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 6px; vertical-align: 1px; }
+.badge.ok { background: var(--ok-bg); color: var(--ok); } .badge.bad { background: var(--bad-bg); color: var(--bad); }
+.badge.run { background: var(--run-bg); color: var(--run); } .badge.wait { background: var(--wait-bg); color: var(--wait); }
+.badge.idle { background: var(--idle-bg); color: var(--idle); }
+.counts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.count { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; min-width: 96px; }
+.count b { display: block; font-size: 20px; }
+.count span { color: var(--muted); font-size: 12px; }
+.count.bad b { color: var(--bad); }
+.report { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; max-height: 420px; overflow: auto; font-size: 12.5px; white-space: pre-wrap; overflow-wrap: anywhere; }
+a { color: var(--accent); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+[hidden] { display: none !important; }
+@media (max-width: 520px) { .row { flex-direction: column; align-items: stretch; } label, label.inline { flex: none; } }

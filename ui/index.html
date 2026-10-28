@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.github.com; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<title>ThoughtSpot Migration</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>ThoughtSpot Migration</h1>
+  <p class="sub">Run and monitor the migration pipeline. Everything still runs in GitHub Actions; this page only starts runs and shows their state.</p>
+</header>
+
+<main>
+  <section id="connect" class="card">
+    <h2>Connect</h2>
+    <div class="row">
+      <label>Repository
+        <input id="repo" placeholder="owner/repo" autocomplete="off" spellcheck="false">
+      </label>
+      <label>GitHub token
+        <input id="token" type="password" placeholder="fine-grained token" autocomplete="off" spellcheck="false">
+      </label>
+    </div>
+    <label class="check"><input id="remember" type="checkbox"> Remember the token on this device (otherwise it is forgotten when the tab closes)</label>
+    <div class="row actions">
+      <button id="connect-btn" class="primary">Connect</button>
+      <button id="forget-btn" class="quiet">Forget token</button>
+    </div>
+    <p class="hint">Use a fine-grained token limited to this repository with: Actions read and write, Contents read, Pull requests read and write. The token stays in your browser and is sent only to api.github.com.</p>
+    <p id="connect-msg" class="msg" role="status"></p>
+  </section>
+
+  <div id="app" hidden>
+    <section class="card">
+      <h2>Start a migration</h2>
+      <div class="row">
+        <label>Org
+          <select id="org"></select>
+        </label>
+        <label class="check inline"><input id="dry" type="checkbox" checked> Dry run (validate only, nothing is written to the target)</label>
+      </div>
+      <div class="row actions">
+        <button id="start-btn" class="primary">Start run</button>
+      </div>
+      <p id="start-msg" class="msg" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>Waiting for you</h2>
+      <p class="hint">A live run waits here for its promote PR to be merged. Merging it is the approval, and the import starts right after. A dry run's PR is never merged; close it when you are done looking.</p>
+      <div id="prs" class="list"></div>
+    </section>
+
+    <section class="card">
+      <div class="head"><h2>Recent runs</h2><button id="refresh-btn" class="quiet">Refresh</button></div>
+      <div id="runs" class="list"></div>
+    </section>
+
+    <section class="card">
+      <h2>Report</h2>
+      <div class="row">
+        <label>Org
+          <select id="report-org"></select>
+        </label>
+        <label>Run
+          <select id="report-run"></select>
+        </label>
+      </div>
+      <div id="counts" class="counts"></div>
+      <pre id="report" class="report" tabindex="0"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Restore points</h2>
+      <p class="hint">Each clean live run is tagged. Use a tag as the ref in the Redeploy workflow to roll back or redeploy.</p>
+      <div id="tags" class="list"></div>
+    </section>
+  </div>
+</main>
+
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

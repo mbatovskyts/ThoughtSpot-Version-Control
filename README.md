@@ -200,3 +200,20 @@ python -m pytest
 ```
 
 The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs them on every pull request and on pushes to `ts-prod`.
+
+## Optional run UI
+
+`ui/` is a small static page for starting and watching runs without opening the Actions tab. It
+is optional: the pipeline runs the same with or without it, and it only calls the GitHub API.
+
+- Pick an org, start a live run or a dry run, and watch which stage it is on.
+- "Waiting for you" lists the open promote PRs with a **Merge (approve)** button. Merging is the
+  approval, so the import starts right after. A dry run's PR gets a **Close** button instead.
+- Browse each run's report (read from `ts-dev`) and the restore-point tags.
+
+To publish it: *Settings -> Pages -> Source: GitHub Actions*, then run **Deploy UI** (it also runs
+whenever `ui/` changes on `ts-prod`). Open the Pages URL, enter `owner/repo` and a fine-grained
+token limited to this repository (Actions read/write, Contents read, Pull requests read/write).
+The token stays in the browser (the tab only, unless you tick "Remember") and goes only to
+api.github.com. GitHub Pages on a private repository needs a plan that supports it; you can also
+open `ui/index.html` locally or serve the folder with any static server.

@@ -14,7 +14,8 @@
 10. [Redeploy and Rollback](#redeploy-and-rollback)
 11. [Cleaning up promote branches](#cleaning-up-promote-branches)
 12. [Nightly backup](#nightly-backup)
-13. [Troubleshooting](#troubleshooting)
+13. [Starting a run from an issue](#starting-a-run-from-an-issue)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -340,6 +341,14 @@ It only ever deletes branches named exactly `promote/<org>/<run_id>`, and never 
 **The `prod` environment.** The prod side runs in the `prod` environment because its credentials live there. If that environment has required reviewers, the nightly job waits for one and times out unattended. Either remove the reviewer rule for this use (for example by adding the read-only credentials as repository secrets instead) or approve it each night.
 
 **When it fails.** The run turns red if a side cannot authenticate, a search fails, or an object cannot be exported. Objects that did export are still committed, and an object that failed keeps its last copy and version count. A side with nothing tagged is not a failure; it logs a notice.
+
+---
+
+## Starting a run from an issue
+
+`migration-request.yml` starts **ThoughtSpot Migration** when someone opens an issue titled `[migration-request] ...` whose body has the lines `org: <org key or all>` and `dry_run: <true|false>`. It is for tools that can open issues but cannot dispatch workflows, such as the migration console app. The run it starts is the same as *Actions -> ThoughtSpot Migration -> Run workflow*, so a live run still opens a promote PR and waits for a person to merge it. See [`migration-request.md`](migration-request.md) for the rules and the status block it writes back.
+
+Things to know: the issue must be opened by a **person** (a user account, not a bot or GitHub App) with write access to this repository, so the account the tool uses decides who can start migrations; a request is rejected with a reason on the issue otherwise. Requests are handled one at a time, so a burst of three or more quick requests can lose the last one (its issue stays open with no status). To turn it off, disable **Migration Request** in the Actions tab or delete the workflow file.
 
 ---
 

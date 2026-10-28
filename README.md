@@ -201,7 +201,7 @@ Every live migration that finishes with no failed object is tagged `migrate/<org
 ```
 .github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ts-redeploy.yml (redeploy/rollback),
                      ci.yml (tests), cleanup-promote-branches.yml, deploy-ui.yml (publishes ui/ to Pages),
-                     backup.yml (nightly backup)
+                     backup.yml (nightly backup), migration-request.yml (start a run from a request issue)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)

@@ -66,6 +66,11 @@ def load_and_validate_config(config_path: str) -> dict:
             f"validation_gate '{gate}' is not valid; must be one of: {list(ALLOWED_VALIDATION_GATES)}"
         )
 
+    # backup_tag: optional name of the tag the nightly backup looks for in both orgs.
+    backup_tag = cfg.get("backup_tag")
+    if backup_tag is not None and (not isinstance(backup_tag, str) or not backup_tag.strip()):
+        raise ConfigError("backup_tag must be a non-empty string")
+
     # dependency_exclude: optional list of obj_ids that are never migrated as dependencies.
     exclude = cfg.get("dependency_exclude")
     if exclude is not None and (

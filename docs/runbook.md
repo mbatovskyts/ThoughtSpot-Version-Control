@@ -13,7 +13,8 @@
 9. [Dry Run Mode](#dry-run-mode)
 10. [Redeploy and Rollback](#redeploy-and-rollback)
 11. [Cleaning up promote branches](#cleaning-up-promote-branches)
-12. [Troubleshooting](#troubleshooting)
+12. [Nightly backup](#nightly-backup)
+13. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -318,6 +319,27 @@ Every run pushes a `promote/<org>/<run_id>` branch for its promote PR. They are 
 - **One-off sweep** for branches left over from before this existed: *Actions → Clean up promote branches → Run workflow*. It starts as a **preview** (`dry_run` ticked) and only lists what it would delete; untick `dry_run` to delete.
 
 It only ever deletes branches named exactly `promote/<org>/<run_id>`, and never one that still has an open pull request. `ts-prod`, `ts-dev` and your own branches are never touched. Deleting a promote branch loses nothing: the exported TML is on `ts-dev`, and merged content is on `ts-prod`.
+
+---
+
+## Nightly backup
+
+**Nightly Backup** (`backup.yml`) saves every object tagged with the backup tag in both the dev (source) and prod (target) org of each configured org. It is read-only on ThoughtSpot and independent of migrations.
+
+**Set up**
+1. Create a tag in each org you want backed up (the default name is `Version Control`; set `backup_tag` in `config/orgs/<org>.yml` to use another). Tag the objects you want, in dev, prod or both.
+2. Merge `backup.yml` to `ts-prod`: GitHub only runs schedules from the default branch. The branch `ts-backup` is created by the first run. No other setup is needed; the workflow uses the same `dev` and `prod` environment secrets as a migration.
+3. To try it now: *Actions -> Nightly Backup -> Run workflow* (org `all`), or **Back up now** on the UI's Versions page.
+
+**Schedule.** 9 PM US Eastern, all year. GitHub cron is UTC only and does not follow daylight saving, so the workflow is scheduled at 01:05 and 02:05 UTC (21:05 in summer and in winter respectively) and a first job (`backup_gate`) lets only the one that lands on 9 PM continue. The other shows as a short, successful run that did nothing. A scheduled run can start several minutes late; if GitHub is badly delayed past 9:59 PM that night is skipped, and the next night (or a manual run) covers it.
+
+**Where the copies are.** The `ts-backup` branch holds `backups/<org>/<dev|prod>/<folder>/<obj_id>.tml` and `backups/<org>/<dev|prod>/index.json`. One commit per night, only when something changed; the history of a file is that object's versions (`git log -- <file>`). Objects are matched by `obj_id`, falling back to the GUID when an object has none. Nothing is ever deleted: untag an object and its file and history stay, marked *no longer tagged* in the index and the UI. Files are exported with GUIDs, so a copy is the object as it was in that org.
+
+**Restoring.** Download the file from the Versions page (**View**) or the branch and import it with ThoughtSpot's TML import in the same org, or use the GUID-preserving import API. The pipeline does not restore automatically; use Redeploy for migrated content.
+
+**The `prod` environment.** The prod side runs in the `prod` environment because its credentials live there. If that environment has required reviewers, the nightly job waits for one and times out unattended. Either remove the reviewer rule for this use (for example by adding the read-only credentials as repository secrets instead) or approve it each night.
+
+**When it fails.** The run turns red if a side cannot authenticate, a search fails, or an object cannot be exported. Objects that did export are still committed, and an object that failed keeps its last copy and version count. A side with nothing tagged is not a failure; it logs a notice.
 
 ---
 

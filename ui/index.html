@@ -24,6 +24,10 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h12M12 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Migrations</span>
     </a>
+    <a href="#/versions" data-nav="versions">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3 9l9 5 9-5zM3 14l9 5 9-5M3 11.5l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Versions</span>
+    </a>
     <a href="#/approvals" data-nav="approvals">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Approvals</span><b id="nav-count" class="count-dot" hidden></b>
@@ -53,6 +57,22 @@
       <div class="panel">
         <h2>Recent runs</h2>
         <div id="runs" class="list"></div>
+      </div>
+    </section>
+
+    <section class="view" data-view="versions" hidden>
+      <div class="page-head"><h1>Versions</h1><button id="backup-now" class="quiet">Back up now</button></div>
+      <div class="panel">
+        <p class="hint">Every night at 9 PM US Eastern, each object tagged for backup in dev or prod is saved. Open an object to see its versions, view any of them, or see what changed.</p>
+        <div class="row">
+          <label>Org<select id="v-org"></select></label>
+          <label>Environment<select id="v-env"><option value="dev">Dev</option><option value="prod">Prod</option></select></label>
+          <label>Search<input id="v-search" type="search" placeholder="Name or type" autocomplete="off" spellcheck="false"></label>
+        </div>
+        <label class="check"><input id="v-removed" type="checkbox"> Also show objects that are no longer tagged</label>
+        <p id="v-summary" class="hint" role="status"></p>
+        <p id="v-msg" class="msg" role="status"></p>
+        <div id="v-list" class="list"></div>
       </div>
     </section>
 

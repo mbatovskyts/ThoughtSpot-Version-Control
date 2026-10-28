@@ -5,16 +5,21 @@ Stage 7: Promote TML from ts-dev to ts-prod via PR.
 Creates branch promote/<org_key>/<run_id> from ts-prod,
 copies from ts-dev only this run's files under orgs/<org_key>/ (the ones stamped with the
 run's TIMESTAMP; the whole org folder when TIMESTAMP is not set),
-opens a PR into ts-prod, and asks GitHub to auto-merge it when checks pass. If GitHub
-refuses (for example "Allow auto-merge" is off in the repository settings), the run says so
-and the PR body is rewritten to say a person has to merge it.
+and opens a PR into ts-prod. The PR waits for a person: whoever merges it (the author
+included) is the approval, and nothing is imported until it is merged.
+
+Auto-merge is opt-in (PROMOTE_AUTO_MERGE=true, set from the repository variable of the same
+name). Without branch protection that requires a review, auto-merge would merge the PR the
+moment checks pass and skip the human gate, so it is off by default. Turn it on only when
+ts-prod requires an approving review: GitHub then merges the PR right after the approval. If
+GitHub refuses it, the run says so and the PR body says a person has to merge it.
 
 Dry run (DRY_RUN=true): the PR is still opened so the export can be inspected, but it
-is titled "[DRY RUN]" and auto-merge is NOT enabled, so dry-run content never lands on
+is titled "[DRY RUN]" and auto-merge is never enabled, so dry-run content never lands on
 ts-prod unless a person merges it.
 
-Stage 7b (stage7b_wait_for_merge) then waits for the PR to be approved and merged before the
-import job starts. Approval is enforced by branch protection on ts-prod.
+Stage 7b (stage7b_wait_for_merge) then waits for the PR to be merged before the import job
+starts. Required reviews, if any, are enforced by branch protection on ts-prod.
 
 Needs a token with contents:write + pull-requests:write. The workflow passes it as GH_TOKEN: a
 GitHub App's token when the repository has GH_APP_CLIENT_ID / GH_APP_PRIVATE_KEY (so the PR is
@@ -53,13 +58,13 @@ def run_files(listing: str, timestamp: str) -> list[str]:
     return [p for p in listing.splitlines() if p.strip() and marker in Path(p).name]
 
 
-_WAIT_NOTE = ("The `import` job waits for this PR to be approved and merged (Stage 7b), then "
-              "imports the merged content. If the PR is closed without merging, nothing is "
-              "imported and the migration tag stays.")
+_WAIT_NOTE = ("The `import` job waits for this PR to be merged (Stage 7b), then imports the "
+              "merged content. If the PR is closed without merging, nothing is imported and "
+              "the migration tag stays.")
 
 
 def _pr_body(org_key: str, run_id: str, counts_lines: str, dry_run: bool,
-             auto_merge_failed: bool = False) -> str:
+             auto_merge_failed: bool = False, auto_merge: bool = False) -> str:
     dry_banner = ""
     if dry_run:
         dry_banner = textwrap.dedent("""\
@@ -76,14 +81,19 @@ def _pr_body(org_key: str, run_id: str, counts_lines: str, dry_run: bool,
         what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
                         "memory and NL instructions where present). **Auto-merge could not be "
                         "enabled** (GitHub refused it; see the run's Stage 7 log), so this PR "
-                        "stays open until a person merges it. Turn on \"Allow auto-merge\" in "
-                        "the repository settings for it to merge itself.")
+                        "stays open until a person merges it; merging it is the approval.")
         wait_note = _WAIT_NOTE
-    else:
+    elif auto_merge:
         what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
                         "memory and NL instructions where present). Auto-merge is enabled, so "
                         "GitHub merges it once it has been approved and its other merge "
                         "requirements are met.")
+        wait_note = _WAIT_NOTE
+    else:
+        what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
+                        "memory and NL instructions where present). **Review the changes, then "
+                        "merge the PR: merging it is the approval** (you may merge a PR you "
+                        "opened yourself).")
         wait_note = _WAIT_NOTE
     # Dedent the template BEFORE substituting: counts_lines is multi-line, and substituting
     # first leaves its later lines unindented, which defeats dedent and makes GitHub render
@@ -177,7 +187,9 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
         counts[e["type"]] = counts.get(e["type"], 0) + 1
     counts_lines = "\n".join(f"- {t}: {n}" for t, n in sorted(counts.items()))
 
-    pr_body = _pr_body(org_key, run_id, counts_lines, dry_run)
+    want_auto_merge = (not dry_run
+                       and os.environ.get("PROMOTE_AUTO_MERGE", "").strip().lower() == "true")
+    pr_body = _pr_body(org_key, run_id, counts_lines, dry_run, auto_merge=want_auto_merge)
 
     created = run(
         ["gh", "pr", "create",
@@ -196,6 +208,10 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
 
     if dry_run:
         print("[STAGE 7] DRY_RUN=true — auto-merge NOT enabled on the promote PR.")
+        result["auto_merge"] = False
+    elif not want_auto_merge:
+        print("[STAGE 7] Auto-merge is off (PROMOTE_AUTO_MERGE is not 'true'): a person merges "
+              "the promote PR, and that merge is the approval.")
         result["auto_merge"] = False
     else:
         merged = run(["gh", "pr", "merge", pr_url, "--auto", "--squash"],

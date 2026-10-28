@@ -19,7 +19,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | Job | Stages | Environment | What happens |
 |---|---|---|---|
 | `extract` | 1–6 | `dev` | Validate config, authenticate, find tagged objects (and dependencies), export TML, export Spotter memory and NL instructions, sanitize, commit everything to `ts-dev` |
-| `promote` | 7, 7b | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, ask GitHub to auto-merge it, then **wait until it is approved and merged**. On a dry run the PR is titled `[DRY RUN]`, auto-merge is **not** requested and nothing waits |
+| `promote` | 7, 7b | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, then **wait until a person merges it** (merging is the approval; the PR's author may merge it). On a dry run the PR is titled `[DRY RUN]` and nothing waits |
 | `import` | 8–9c | `prod` | Take the org's TML from the promote PR's merge commit on `ts-prod` (so reviewer edits count), then sync variables, check connections, validate, import TML, then import memory and NL instructions |
 | `untag_source` | 10 | `dev` | Confirm each object exists in the target, then remove the migration tag from the successes |
 | `report` | 11 | – | Write the summary and failure reports (runs even if earlier jobs failed) |
@@ -37,7 +37,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 4c | `stage4c_export_instructions` | Export NL instructions for each model |
 | 5 | `stage5_sanitize` | Strip GUIDs and the migration tag, find `ts_var(name)` references (quoted or not; built-in variables like `ts_user_timezone` are ignored) |
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
-| 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), auto-merge requested (not on dry runs). If GitHub refuses auto-merge, for example because "Allow auto-merge" is off in the repository settings, the log shows a warning, the PR body says a person must merge it, and `stage7_promote.json` records `auto_merge: false` |
+| 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), left open for a person to merge. Auto-merge is opt-in: set the repository variable `PROMOTE_AUTO_MERGE` to `true` (only with branch protection that requires a review, or it would merge before anyone looks). If GitHub refuses it the log shows a warning and the PR body says a person must merge it; `stage7_promote.json` records `auto_merge` |
 | 7b | `stage7b_wait_for_merge` | Poll the promote PR until it is merged. Fails if the PR is closed unmerged or not merged within 330 minutes (`MERGE_WAIT_TIMEOUT_MIN`); the import is then skipped and the tag stays. Skipped on dry runs |
 | 8b | `stage8b_snapshot` | Before importing, save the target's current version of every object about to be overwritten (live runs only). Fails the run if a copy cannot be saved |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
@@ -105,7 +105,7 @@ Dispatch **Actions → ThoughtSpot Migration → Run workflow** with an `org` ke
 | | Dry run (`dry_run: true`) | Live run |
 |---|---|---|
 | Stages 1–6 (extract, export, commit to `ts-dev`) | Run, **including the commit to `ts-dev`** | Run |
-| Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **without auto-merge** | Runs, auto-merge requested |
+| Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **never auto-merged** | Runs; a person merges the PR (auto-merge only if opted in) |
 | Stage 8 (variables, connections, validate) | Runs, **writes nothing**: reports the variables it would create or set | Runs |
 | Stage 9 (TML import) | Skipped | Runs |
 | Stage 9b (memory) | Validates and logs counts, writes nothing | Validates, then applies |

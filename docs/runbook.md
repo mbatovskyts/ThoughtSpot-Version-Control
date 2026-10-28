@@ -24,7 +24,7 @@ This pipeline migrates ThoughtSpot content (Tables, Models, Answers, Liveboards,
 The pipeline:
 - Exports tagged objects as TML into the `ts-dev` GitHub branch
 - Exports Spotter model memory and model NL instructions alongside the TML
-- Opens a PR into `ts-prod` with auto-merge enabled (not on dry runs) and **waits for it to be approved and merged** (Stage 7b). Nothing is imported until then; if the PR is closed without merging, the run fails and the migration tag stays
+- Opens a PR into `ts-prod` and **waits for a person to merge it** (Stage 7b). Merging is the approval, and you may merge a PR you opened yourself. Nothing is imported until then; if the PR is closed without merging, the run fails and the migration tag stays
 - Imports TML, then model memory and NL instructions, into the target cluster
 - Removes the migration tag from successfully migrated objects
 - Produces a full report per run
@@ -136,13 +136,15 @@ For the org `sales` that is `TS_TARGET_SECRET_KEY_SALES`. Each one is optional a
 ### Branch protection
 
 Configure the `ts-prod` branch with:
-- **Require pull request reviews before merging** (at least 1 approving review). This is the approval the pipeline waits for, so it is required, not optional. Also turn on **Allow auto-merge** in the repository settings so the PR merges itself once approved
+- **Require pull request reviews before merging** is *optional*. The pipeline waits for the PR to be merged, and the person who merges it (even the PR's author) is the approval. Add a required review only if your team wants a second person to sign off; a solo maintainer leaves it off. If you require reviews, you may also set the repository variable `PROMOTE_AUTO_MERGE` to `true` and turn on **Allow auto-merge** so the PR merges itself once approved. Never enable auto-merge without a required review: it would merge as soon as checks pass, before anyone has looked
 - **Require status checks to pass**: add `Tests` (the job in `ci.yml`). It runs on every PR, including the pipeline's own promote PRs, so it always reports. Do not require jobs from `ts-migration.yml`: that workflow is dispatched by hand and never reports on a PR, so requiring it would block every merge
-- **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
+- **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (if you use one) and admins
 
 ### Approving the promote PRs as a solo maintainer
 
-GitHub never lets you approve a pull request you authored, and no branch-protection setting changes that. The promote PRs are authored by whoever owns the token that opens them, so if that is your own personal token you cannot approve them. The fix is to have a *different identity* open them: a GitHub App.
+**You do not need anything below to run solo.** Merge the promote PR yourself: the pipeline waits for the merge, not for a formal approval. The GitHub App is only for teams or solo users who want a real approving review on record.
+
+GitHub never lets you *approve* a pull request you authored, and no branch-protection setting changes that. The promote PRs are authored by whoever owns the token that opens them, so if that is your own personal token you cannot approve them. The fix is to have a *different identity* open them: a GitHub App.
 
 1. **Create the app.** GitHub → your profile → *Settings → Developer settings → GitHub Apps → New GitHub App*. Name it (for example `ts-version-control-bot`), set any homepage URL, untick *Webhook → Active*, and under *Repository permissions* grant **Contents: Read and write**, **Pull requests: Read and write** (Metadata read-only is added automatically). Create it.
 2. **Generate a private key** on the app's page (a `.pem` file downloads) and note the app's **Client ID**.
@@ -174,7 +176,7 @@ Each org runs in its own job with its own concurrency group (`ts-migration-<org_
 | Job | Stage | Environment | What it does |
 |-----|-------|-------------|-------------|
 | `extract` | 1–6 (incl. 4b, 4c) | `dev` | Config, auth, discover, export TML, export Spotter memory (4b) and NL instructions (4c), sanitize, commit to ts-dev |
-| `promote` | 7, 7b | — | Create promote branch, open PR into ts-prod with auto-merge enabled, then wait for it to be approved and merged (dry run: PR titled `[DRY RUN]`, no auto-merge, no wait) |
+| `promote` | 7, 7b | — | Create promote branch, open PR into ts-prod, then wait for a person to merge itd (dry run: PR titled `[DRY RUN]`, no auto-merge, no wait) |
 | `import` | 8–9c | `prod` | Sync variables, connection preflight, validate, import TML (9), import memory (9b), set NL instructions (9c) |
 | `untag_source` | 10 | `dev` | Post-check, remove migration tag from successes |
 | `report` | 11 | — | Generate all report files (runs even on failure) |
@@ -269,7 +271,7 @@ Because matching is done by `obj_id`, re-running **updates** the existing target
 A dry run runs Stages 1–8 and the read-only forms of 9b and 9c. It does **not** import objects, memory or instructions into the target, and it does not remove source tags. It is **not** write-free:
 
 - **Stage 6** still commits the exports to `ts-dev`.
-- **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Nothing waits for this PR on a dry run (Stage 7b is skipped). Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
+- **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but is **never** auto-merged. Nothing waits for this PR on a dry run (Stage 7b is skipped). Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
 - **Stage 8** still runs, but writes nothing to the target on a dry run: it logs `DRY RUN: would create variable ...` / `would set the org value ...` and still checks connections and runs the validate-only import. A validation failure is reported as a failure of the dry run.
 
 What is skipped or read-only:
@@ -359,8 +361,11 @@ These **are** failures (listed in the report, run red, tag kept): the export or 
 ### Stage 9 skipped unexpectedly
 Check that `dry_run` is set to `false` in the workflow dispatch inputs.
 
-### PR auto-merge not working
-`GH_AUTOMATION_TOKEN` is missing or the token user doesn't have write access to the repo. Either configure the secret or merge the PR manually.
+### The promote PR does not merge by itself
+By design: a person merges it (merging is the approval). Auto-merge only runs when the repository variable `PROMOTE_AUTO_MERGE` is `true`, and GitHub also needs *Allow auto-merge* turned on and a required review on `ts-prod`. Without those, merge the PR manually.
+
+### The run is green but migrated nothing
+Stage 3 found no objects with the migration tag (a successful migration removes it). The run shows a warning annotation and "Nothing was migrated" in its summary. Re-tag the objects in the source org and run again.
 
 ### Push to ts-dev fails with `non-fast-forward`
 Two orgs pushed simultaneously and one lost the race. The pipeline retries with jitter up to 6 times. If it still fails, re-run the workflow — this is a transient conflict.

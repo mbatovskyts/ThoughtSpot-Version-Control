@@ -1,4 +1,4 @@
-"""Stage 7: a dry run must open the promote PR but never enable auto-merge."""
+"""Stage 7: the promote PR waits for a person; auto-merge is opt-in and never on a dry run."""
 from types import SimpleNamespace
 
 import pytest
@@ -40,7 +40,19 @@ def _arg(cmd, flag):
     return cmd[cmd.index(flag) + 1]
 
 
-def test_live_run_enables_auto_merge(calls, tmp_path):
+def test_live_run_does_not_auto_merge_by_default(calls, tmp_path, capsys):
+    result = {}
+    url = s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=False, result=result)
+    assert url == PR_URL
+    assert _gh(calls, "merge") == []                 # a person merges; that merge is the approval
+    assert result["auto_merge"] is False
+    body = _arg(_gh(calls, "create")[0], "--body")
+    assert "merging it is the approval" in body and "Auto-merge is enabled" not in body
+    assert "Auto-merge is off" in capsys.readouterr().out
+
+
+def test_live_run_enables_auto_merge_when_opted_in(calls, tmp_path, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     url = s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=False)
     assert url == PR_URL
     merge = _gh(calls, "merge")
@@ -61,7 +73,8 @@ def test_dry_run_opens_pr_but_never_enables_auto_merge(calls, tmp_path, capsys):
     assert "auto-merge NOT enabled" in capsys.readouterr().out
 
 
-def test_dry_run_default_is_off(calls, tmp_path):
+def test_dry_run_default_is_off(calls, tmp_path, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     s7.promote("o", "run1", MANIFEST, str(tmp_path))
     assert len(_gh(calls, "merge")) == 1
 
@@ -95,10 +108,11 @@ def test_body_describes_whether_import_waits_for_the_pr(calls, tmp_path, dry_run
     if dry_run:
         assert "Nothing waits for this PR on a dry run" in body
     else:
-        assert "waits for this PR to be approved and merged" in body
+        assert "waits for this PR to be merged" in body
 
 
-def test_live_body_describes_auto_merge_and_dry_body_does_not(calls, tmp_path):
+def test_live_body_describes_auto_merge_and_dry_body_does_not(calls, tmp_path, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=False)
     live = _body(calls)
     assert "Auto-merge is enabled" in live and "imports nothing" not in live
@@ -198,7 +212,8 @@ def test_without_a_timestamp_the_whole_org_folder_is_used(calls, tmp_path, monke
 # ---------------------------------------------------------------- honest auto-merge reporting
 @pytest.fixture
 def refusing(monkeypatch, calls):
-    """gh pr merge --auto fails the way it did on the real run."""
+    """gh pr merge --auto fails the way it did on the real run (auto-merge opted in)."""
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     inner = s7.run
 
     def fake_run(cmd, check=True, capture=False, env=None):
@@ -222,11 +237,12 @@ def test_a_refused_auto_merge_is_reported_and_the_body_corrected(refusing, tmp_p
     assert result["auto_merge"] is False and "not allowed" in result["auto_merge_error"]
     edit = _gh(refusing, "edit")[0]
     body = _arg(edit, "--body")
-    assert "Auto-merge could not be enabled" in body and "stays open until a person merges it" in body
+    assert "Auto-merge could not be enabled" in body and "stays open until a person merges it" in body and "merging it is the approval" in body
     assert "Auto-merge is enabled" not in body
 
 
-def test_a_successful_auto_merge_leaves_the_body_alone(calls, tmp_path, capsys):
+def test_a_successful_auto_merge_leaves_the_body_alone(calls, tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     result = {}
     s7.promote("o", "run1", MANIFEST, str(tmp_path), result=result)
     assert result == {"pr_url": PR_URL, "branch": "promote/o/run1", "auto_merge": True}
@@ -235,6 +251,7 @@ def test_a_successful_auto_merge_leaves_the_body_alone(calls, tmp_path, capsys):
 
 
 def test_main_writes_the_promote_artifact(calls, tmp_path, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
     mf = tmp_path / "manifest.json"
     mf.write_text('[{"type":"LOGICAL_TABLE","folder":"models","name":"M","obj_id":"m1","source_guid":"g1"}]')
     out = tmp_path / "stage7_promote.json"
@@ -245,3 +262,9 @@ def test_main_writes_the_promote_artifact(calls, tmp_path, monkeypatch):
     import json
     assert json.loads(out.read_text()) == {"pr_url": PR_URL, "branch": "promote/o/r",
                                            "auto_merge": True}
+
+
+def test_dry_run_never_auto_merges_even_when_opted_in(calls, tmp_path, monkeypatch):
+    monkeypatch.setenv("PROMOTE_AUTO_MERGE", "true")
+    s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=True)
+    assert _gh(calls, "merge") == []

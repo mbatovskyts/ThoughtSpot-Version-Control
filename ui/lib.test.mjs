@@ -86,3 +86,17 @@ test("ago formats elapsed time", () => {
   assert.equal(L.ago("2026-10-26T12:00:00Z", now), "2d ago");
   assert.equal(L.ago("garbage", now), "");
 });
+
+test("repoFromPages reads owner/repo from a project Pages address", () => {
+  assert.equal(L.repoFromPages("mbatovskyts.github.io", "/ThoughtSpot-Version-Control/"), "mbatovskyts/ThoughtSpot-Version-Control");
+  assert.equal(L.repoFromPages("mbatovskyts.github.io", "/ThoughtSpot-Version-Control/index.html"), "mbatovskyts/ThoughtSpot-Version-Control");
+  for (const [h, p] of [["localhost", "/x/"], ["example.com", "/a/"], ["mbatovskyts.github.io", "/"]]) assert.equal(L.repoFromPages(h, p), "");
+});
+
+test("normalizeRepo completes a bare name on Pages and cleans URLs", () => {
+  assert.equal(L.normalizeRepo("ThoughtSpot-Version-Control", "mbatovskyts.github.io"), "mbatovskyts/ThoughtSpot-Version-Control");
+  assert.equal(L.normalizeRepo("a/b", "mbatovskyts.github.io"), "a/b");
+  assert.equal(L.normalizeRepo("https://github.com/a/b.git/", "x.com"), "a/b");
+  assert.equal(L.normalizeRepo("bare", "localhost"), "bare");   // no owner to borrow off Pages
+  assert.equal(L.normalizeRepo("", "mbatovskyts.github.io"), "");
+});

@@ -12,6 +12,23 @@
     return m ? { owner: m[1], repo: m[2], full: m[1] + "/" + m[2] } : null;
   }
 
+  // The Pages address names the repo: <owner>.github.io/<repo>/. Use it to fill in the field.
+  function repoFromPages(hostname, pathname) {
+    const h = /^([A-Za-z0-9-]+)\.github\.io$/i.exec(hostname || "");
+    const r = /^\/([A-Za-z0-9_.-]+)(?:\/|$)/.exec(pathname || "");
+    return h && r ? h[1] + "/" + r[1] : "";
+  }
+
+  // Accept a bare repo name (owner taken from the Pages address) or a github.com URL.
+  function normalizeRepo(text, hostname) {
+    let t = (text || "").trim().replace(/^https:\/\/github\.com\//i, "").replace(/\/+$/, "").replace(/\.git$/i, "");
+    if (t && !t.includes("/")) {
+      const h = /^([A-Za-z0-9-]+)\.github\.io$/i.exec(hostname || "");
+      if (h) t = h[1] + "/" + t;
+    }
+    return t;
+  }
+
   // Only GitHub links are ever put in an href.
   function safeUrl(url) {
     return typeof url === "string" && /^https:\/\/github\.com\//.test(url) ? url : "";
@@ -120,6 +137,6 @@
     return Math.floor(s / 86400) + "d ago";
   }
 
-  return { WORKFLOW_FILE, PROD_BRANCH, DEV_BRANCH, parseRepo, safeUrl, orgKeys, dispatchBody,
+  return { WORKFLOW_FILE, PROD_BRANCH, DEV_BRANCH, parseRepo, repoFromPages, normalizeRepo, safeUrl, orgKeys, dispatchBody,
            runState, isActive, progress, promotePrs, reportDirs, summaryCounts, restorePoints, ago };
 });

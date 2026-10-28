@@ -76,6 +76,7 @@
 
   // ---------------------------------------------------------------- connect
   async function connect() {
+    $("repo").value = L.normalizeRepo($("repo").value, location.hostname);
     repo = L.parseRepo($("repo").value);
     token = $("token").value.trim();
     if (!repo) return setMsg("connect-msg", "Enter the repository as owner/repo.", "bad");
@@ -306,7 +307,7 @@
   document.addEventListener("visibilitychange", () => { if (!document.hidden && repo && token) refresh(); });
 
   const savedRepo = getItem("localStorage", "tsui.repo");
-  if (savedRepo) $("repo").value = savedRepo;
+  $("repo").value = savedRepo || L.repoFromPages(location.hostname, location.pathname);
   const savedToken = getItem("sessionStorage", "tsui.token") || getItem("localStorage", "tsui.token");
   route();
   if (savedToken) { $("token").value = savedToken; $("remember").checked = !!getItem("localStorage", "tsui.token"); if (savedRepo) connect(); }

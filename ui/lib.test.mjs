@@ -100,3 +100,41 @@ test("normalizeRepo completes a bare name on Pages and cleans URLs", () => {
   assert.equal(L.normalizeRepo("bare", "localhost"), "bare");   // no owner to borrow off Pages
   assert.equal(L.normalizeRepo("", "mbatovskyts.github.io"), "");
 });
+
+test("backupIndexPath and backupDispatchBody reject odd input", () => {
+  assert.equal(L.backupIndexPath("github", "prod"), "backups/github/prod/index.json");
+  for (const [o, e] of [["../x", "dev"], ["a b", "dev"], ["github", "staging"], ["", "dev"]]) assert.throws(() => L.backupIndexPath(o, e));
+  assert.deepEqual(L.backupDispatchBody("github"), { ref: "ts-prod", inputs: { org: "github" } });
+  assert.equal(L.backupDispatchBody("all").inputs.org, "all");
+  assert.throws(() => L.backupDispatchBody("a;b"));
+});
+
+test("parseBackupIndex keeps well-formed entries only and rejects unsafe paths", () => {
+  const raw = { updated: "2026-10-28T01:05:00Z", tag: "Version Control", objects: [
+    { key: "LB-1", name: "Liveboard", type: "LIVEBOARD", folder: "liveboards", file: "backups/github/dev/liveboards/LB-1.tml", versions: 3, present: true, last_changed: "x", first_seen: "y", last_seen: "z" },
+    { key: "bad", name: "x", file: "backups/../../etc/passwd" },
+    { key: "bad2", name: "x", file: "other/x.tml" },
+    { name: "no key", file: "backups/a/b.tml" },
+    { key: "gone", name: "Old", type: "ANSWER", file: "backups/github/dev/answers/gone.tml", present: false }] };
+  const idx = L.parseBackupIndex(JSON.stringify(raw));
+  assert.deepEqual(idx.objects.map((o) => [o.key, o.versions, o.present]), [["LB-1", 3, true], ["gone", 0, false]]);
+  assert.equal(idx.tag, "Version Control");
+  for (const bad of ["not json", null, "{}", { objects: "x" }]) assert.equal(L.parseBackupIndex(bad), null);
+});
+
+test("filterBackups hides removed objects unless asked and searches name and type", () => {
+  const os = [{ key: "a", name: "Sales Board", type: "LIVEBOARD", present: true }, { key: "b", name: "Old", type: "ANSWER", present: false },
+    { key: "c", name: "Stores", type: "LOGICAL_TABLE", present: true }];
+  assert.deepEqual(L.filterBackups(os, "", false).map((o) => o.key), ["a", "c"]);
+  assert.deepEqual(L.filterBackups(os, "", true).map((o) => o.key), ["a", "b", "c"]);
+  assert.deepEqual(L.filterBackups(os, "sales", false).map((o) => o.key), ["a"]);
+  assert.deepEqual(L.filterBackups(os, "table", false).map((o) => o.key), ["c"]);
+});
+
+test("versionRows and patchFor read GitHub's commit shapes", () => {
+  const rows = L.versionRows([{ sha: "abcdef1234567", html_url: "https://github.com/o/r/commit/abc", commit: { message: "backup: 2026-10-28\n\nbody", committer: { date: "2026-10-28T01:06:00Z" } } }, null, {}]);
+  assert.deepEqual(rows, [{ sha: "abcdef1234567", short: "abcdef1", date: "2026-10-28T01:06:00Z", message: "backup: 2026-10-28", url: "https://github.com/o/r/commit/abc" }]);
+  assert.equal(L.patchFor({ files: [{ filename: "a", patch: "@@ -1 +1 @@" }, { filename: "b" }] }, "a"), "@@ -1 +1 @@");
+  assert.equal(L.patchFor({ files: [{ filename: "b" }] }, "b"), "");
+  assert.equal(L.patchFor(null, "a"), "");
+});

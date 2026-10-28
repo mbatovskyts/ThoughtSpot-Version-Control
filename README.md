@@ -55,6 +55,7 @@ Import order for Stage 9 is tables, views, models, collections, answers, liveboa
 |---|---|
 | `ts-prod` | Default branch: pipeline scripts, config, and approved TML |
 | `ts-dev` | Exports only (TML, memory, instructions, reports). Scripts are overlaid from `ts-prod` at run time |
+| `ts-backup` | Nightly backups of objects tagged for backup, one commit per night when something changed (see [Nightly backup](#nightly-backup)). Created by the first backup run |
 | `promote/<org>/<run_id>` | One short-lived branch per run, the head of that run's promote PR. Deleted automatically once the PR merges or is closed (Stage 7b, and `cleanup-promote-branches.yml` for PRs closed by hand) |
 
 The `extract` and `report` jobs run scripts from the branch you dispatch the workflow from. The `promote` and `import` jobs always check out and run `ts-prod`. A script change therefore only takes full effect once it is merged to `ts-prod`. The `import` job runs the current `ts-prod` scripts but imports the org's TML exactly as it was at the promote PR's merge commit (`import_source.json` and the job summary say which commit), never a later run's files.
@@ -129,6 +130,7 @@ migration_tag: sales_readyformigration   # the tag you apply in the source
 source: { base_url: https://dev-ts.example.com,  org_id: 12 }
 target: { base_url: https://prod-ts.example.com, org_id: 3 }   # same cluster, different org_id is fine
 
+backup_tag: Version Control   # optional; the tag the nightly backup looks for in both orgs (this is the default)
 dependency_mode: include   # include | skip_if_exists | require_tagged
 validation_gate: block     # block (default) | warn: what Stage 9 does with an object that failed Stage 8's validate-only import
 # dependency_exclude: [TSBIServer-eaab6de7]   # obj_ids never pulled in as dependencies
@@ -154,6 +156,16 @@ If `target_value` is blank, the variable must already exist in the target org. S
 Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, and optionally per-org overrides such as `TS_TARGET_SECRET_KEY_SALES`.
 
 Optional GitHub settings, all described in the runbook: the repository variable `PROMOTE_AUTO_MERGE=true` (auto-merge the promote PR once approved; needs a required review on `ts-prod`), a GitHub App (`GH_APP_CLIENT_ID` variable and `GH_APP_PRIVATE_KEY` secret) so the promote PR is opened by the app and a second identity can approve it, and `GH_AUTOMATION_TOKEN`. A solo maintainer needs none of them: merge the promote PR yourself and that merge is the approval.
+
+## Nightly backup
+
+Independent of migrations, **Nightly Backup** (`backup.yml`) saves a copy of every object carrying the backup tag (default **`Version Control`**, set by `backup_tag` in the org config) in **both** orgs of each configured org: the source (shown as *dev*) and the target (shown as *prod*). Tag an object in either org and it is included from the next night.
+
+- **When:** every day at 9 PM US Eastern, daylight saving included. GitHub schedules run in UTC only, so the workflow is scheduled at 01:05 and 02:05 UTC and `backup_gate` lets through whichever one lands on 9 PM. Scheduled runs can start a few minutes late. *Actions -> Nightly Backup -> Run workflow* (or **Back up now** in the UI) runs it at once.
+- **What:** only objects that carry the tag (no dependencies), exported as TML with their GUIDs so a copy can be put back in place. It is read-only: nothing is written to ThoughtSpot and no tag changes. A side with nothing tagged is normal, not a failure.
+- **Where:** the `ts-backup` branch, `backups/<org>/<dev|prod>/<folder>/<obj_id>.tml`, plus `backups/<org>/<dev|prod>/index.json` listing the objects. One commit per night, only when something changed, so a file's git history is that object's list of versions. Nothing is ever deleted: an object that is no longer tagged keeps its file and history and is marked *no longer tagged*.
+- **See it:** the **Versions** page of the run UI lists each object with its version count and, per object, every version with its date, the TML as it was, and what changed.
+- **Credentials:** the dev side runs in the `dev` environment and the prod side in the `prod` environment. If `prod` requires reviewers, the prod side waits for one each night; see the runbook.
 
 ## Snapshot, redeploy and rollback
 
@@ -188,7 +200,8 @@ Every live migration that finishes with no failed object is tagged `migrate/<org
 
 ```
 .github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ts-redeploy.yml (redeploy/rollback),
-                     ci.yml (tests), cleanup-promote-branches.yml, deploy-ui.yml (publishes ui/ to Pages)
+                     ci.yml (tests), cleanup-promote-branches.yml, deploy-ui.yml (publishes ui/ to Pages),
+                     backup.yml (nightly backup)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)
@@ -216,6 +229,7 @@ is optional: the pipeline runs the same with or without it, and it only calls th
 - **Start migration** (top right): pick an org, start a live run or a dry run (a live run asks to confirm). Recent runs show the current job and step.
 - **Approvals** lists the open promote PRs with a **Merge (approve)** button. Merging is the
   approval, so the import starts right after. A dry run's PR gets a **Close** button instead.
+- **Versions** lists the objects in the nightly backup, per org and environment, with every version of each (view it or see what changed), and a **Back up now** button.
 - Browse each run's report (read from `ts-dev`) and the restore-point tags.
 
 To publish it: *Settings -> Pages -> Source: GitHub Actions*, then run **Deploy UI** (it also runs

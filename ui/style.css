@@ -89,6 +89,15 @@ button:disabled { opacity: .5; cursor: default; }
 .badge.run { background: var(--run-bg); color: var(--run); } .badge.wait { background: var(--wait-bg); color: var(--wait); }
 .badge.idle { background: var(--idle-bg); color: var(--idle); }
 
+/* ---- versions ---- */
+.versions { margin: 10px 0 2px; border-left: 3px solid var(--line); padding-left: 12px; display: flex; flex-direction: column; gap: 4px; width: 100%; }
+.version { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; justify-content: space-between; font-size: 13px; }
+.version .when { font-weight: 600; }
+.version .btns { gap: 8px; }
+button.small { padding: 2px 10px; min-height: 28px; font-size: 12.5px; }
+.viewer { width: 100%; margin-top: 8px; }
+.diff .add { color: var(--ok); } .diff .del { color: var(--bad); }
+
 /* ---- reports ---- */
 .counts { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
 .count { border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 14px; min-width: 104px; }

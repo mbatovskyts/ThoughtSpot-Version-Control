@@ -6,6 +6,9 @@
   const WORKFLOW_FILE = "ts-migration.yml";
   const PROD_BRANCH = "ts-prod";
   const DEV_BRANCH = "ts-dev";
+  const BACKUP_BRANCH = "ts-backup";
+  const BACKUP_WORKFLOW = "backup.yml";
+  const BACKUP_ENVS = ["dev", "prod"];
 
   function parseRepo(text) {
     const m = /^\s*([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)\s*$/.exec(text || "");
@@ -137,6 +140,59 @@
     return Math.floor(s / 86400) + "d ago";
   }
 
-  return { WORKFLOW_FILE, PROD_BRANCH, DEV_BRANCH, parseRepo, repoFromPages, normalizeRepo, safeUrl, orgKeys, dispatchBody,
+  // ---- nightly backups: index.json per org and environment on the ts-backup branch ----
+  function backupIndexPath(org, env) {
+    if (!/^[A-Za-z0-9_.-]+$/.test(org || "") || !BACKUP_ENVS.includes(env)) throw new Error("Pick an org and environment");
+    return "backups/" + org + "/" + env + "/index.json";
+  }
+
+  function backupDispatchBody(org) {
+    if (!/^[A-Za-z0-9_.-]+$/.test(org || "") && org !== "all") throw new Error("Pick an org");
+    return { ref: PROD_BRANCH, inputs: { org: org } };
+  }
+
+  // Trust nothing in the file: keep only well-formed entries, with safe paths.
+  function parseBackupIndex(raw) {
+    let data = raw;
+    if (typeof raw === "string") { try { data = JSON.parse(raw); } catch (e) { return null; } }
+    if (!data || !Array.isArray(data.objects)) return null;
+    const objects = data.objects
+      .filter((o) => o && typeof o.key === "string" && typeof o.file === "string" && /^backups\/[A-Za-z0-9_.\/-]+\.tml$/.test(o.file) && !o.file.includes(".."))
+      .map((o) => ({
+        key: o.key, name: String(o.name || o.key), type: String(o.type || ""), folder: String(o.folder || ""),
+        file: o.file, firstSeen: o.first_seen || "", lastSeen: o.last_seen || "", lastChanged: o.last_changed || "",
+        versions: Number(o.versions) || 0, present: o.present !== false,
+      }));
+    return { updated: data.updated || "", tag: String(data.tag || ""), objects: objects };
+  }
+
+  function typeLabel(t) {
+    return ({ LIVEBOARD: "Liveboard", ANSWER: "Answer", LOGICAL_TABLE: "Table or model", COLLECTION: "Collection" })[t] || t || "Object";
+  }
+
+  function filterBackups(objects, query, showRemoved) {
+    const q = (query || "").trim().toLowerCase();
+    return (objects || []).filter((o) => (showRemoved || o.present) && (!q || o.name.toLowerCase().includes(q) || o.key.toLowerCase().includes(q) || typeLabel(o.type).toLowerCase().includes(q)));
+  }
+
+  // GET /commits?path=<file> -> one row per version, newest first (GitHub already orders them).
+  function versionRows(commits) {
+    return (commits || []).filter((c) => c && c.sha).map((c) => ({
+      sha: c.sha, short: c.sha.slice(0, 7),
+      date: (c.commit && c.commit.committer && c.commit.committer.date) || "",
+      message: ((c.commit && c.commit.message) || "").split("\n")[0],
+      url: safeUrl(c.html_url),
+    }));
+  }
+
+  // GET /commits/<sha> -> the diff of one file in that commit ("" when GitHub gave none).
+  function patchFor(commit, path) {
+    const f = ((commit && commit.files) || []).find((x) => x.filename === path);
+    return f && typeof f.patch === "string" ? f.patch : "";
+  }
+
+  return { WORKFLOW_FILE, PROD_BRANCH, DEV_BRANCH, BACKUP_BRANCH, BACKUP_WORKFLOW, BACKUP_ENVS,
+           backupIndexPath, backupDispatchBody, parseBackupIndex, typeLabel, filterBackups, versionRows, patchFor,
+           parseRepo, repoFromPages, normalizeRepo, safeUrl, orgKeys, dispatchBody,
            runState, isActive, progress, promotePrs, reportDirs, summaryCounts, restorePoints, ago };
 });

@@ -9,6 +9,10 @@ migration_tag: Github_ReadyForMigration
 # TAGMANAGEMENT privilege (can't resolve it via /tags/search).
 migration_tag_guid: "56778adb-9c24-452e-b933-d0f828da020a"
 
+# Tag the nightly backup looks for in BOTH orgs (dev and prod). Tag an object with it in
+# either org and its TML is saved to the ts-backup branch every night at 9 PM US Eastern.
+backup_tag: Version Control
+
 source:
   base_url: https://ps-internal.thoughtspot.cloud/
   org_id: 1530174970  # Mike Batovsky Dev

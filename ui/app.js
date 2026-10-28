@@ -9,7 +9,9 @@
   let token = "";
   let timer = null;
   let connected = false;
-  const VIEWS = ["migrations", "approvals", "reports", "restore", "settings"];
+  let backupLoaded = false;
+  let backupObjects = [];
+  const VIEWS = ["migrations", "versions", "approvals", "reports", "restore", "settings"];
 
   // ---------------------------------------------------------------- navigation
   function currentView() {
@@ -25,6 +27,7 @@
     });
     document.title = view.charAt(0).toUpperCase() + view.slice(1) + " · ThoughtSpot Migration";
     if (view === "reports" && connected && !$("report-run").options.length) loadReportRuns();
+    if (view === "versions" && connected && !backupLoaded) loadBackups();
   }
   function go(view) { location.hash = "#/" + view; route(); }
 
@@ -99,6 +102,7 @@
     $("conn-chip").textContent = repo.full; $("conn-chip").hidden = false;
     $("open-start").hidden = false;
     $("report-run").replaceChildren();
+    backupLoaded = false;
     if (location.hash === "" || location.hash === "#/settings") go("migrations"); else route();
     await refresh();
     schedule();
@@ -114,7 +118,7 @@
   }
 
   function fillOrgs(orgs) {
-    for (const id of ["org", "report-org"]) {
+    for (const id of ["org", "report-org", "v-org"]) {
       const sel = $(id);
       const opts = orgs.map((o) => el("option", { value: o }, o));
       if (id === "org" && orgs.length > 1) opts.push(el("option", { value: "all" }, "all orgs"));
@@ -285,6 +289,99 @@
     }
   }
 
+  // ---------------------------------------------------------------- versions (nightly backups)
+  async function loadBackups() {
+    const org = $("v-org").value, env = $("v-env").value;
+    const box = $("v-list");
+    backupLoaded = true;
+    setMsg("v-msg", ""); $("v-summary").textContent = "";
+    try {
+      const path = L.backupIndexPath(org, env);
+      const raw = await gh(base() + "/contents/" + path + "?ref=" + L.BACKUP_BRANCH, { raw: true });
+      const idx = L.parseBackupIndex(raw);
+      if (!idx) throw new Error("the backup index is not readable");
+      backupObjects = idx.objects;
+      $("v-summary").textContent = "Last backup " + L.ago(idx.updated) + " · tag \"" + idx.tag + "\" · " + idx.objects.filter((o) => o.present).length + " object(s) in " + env;
+      renderBackups();
+    } catch (e) {
+      backupObjects = [];
+      if (e.status === 404) empty(box, "No backups for " + org + " " + env + " yet. The first one runs at 9 PM US Eastern, or press Back up now. Tag an object with the backup tag first.");
+      else box.replaceChildren(el("p", { class: "msg bad" }, "Could not load backups: " + e.message + (e.status === 403 ? " (the token needs Contents: read)" : "")));
+    }
+  }
+
+  function renderBackups() {
+    const box = $("v-list");
+    const rows = L.filterBackups(backupObjects, $("v-search").value, $("v-removed").checked);
+    if (!rows.length) return empty(box, backupObjects.length ? "No objects match." : "Nothing is tagged for backup in this environment.");
+    box.replaceChildren(...rows.map(backupItem));
+  }
+
+  function backupItem(o) {
+    const holder = el("div", { class: "versions", hidden: true });
+    const btn = el("button", { class: "quiet small", onclick: () => toggleVersions(o, holder, btn) }, "Versions");
+    return el("div", { class: "item" },
+      el("div", { class: "main" },
+        el("div", { class: "title" }, o.name,
+          el("span", { class: "badge idle" }, L.typeLabel(o.type)),
+          o.present ? null : el("span", { class: "badge wait" }, "no longer tagged")),
+        el("div", { class: "meta" }, o.versions + " version" + (o.versions === 1 ? "" : "s") + " · last changed " + (L.ago(o.lastChanged) || "unknown") + " · first backed up " + (L.ago(o.firstSeen) || "unknown"))),
+      el("div", { class: "btns" }, btn),
+      holder);
+  }
+
+  async function toggleVersions(o, holder, btn) {
+    if (!holder.hidden) { holder.hidden = true; btn.textContent = "Versions"; return; }
+    holder.hidden = false; btn.textContent = "Hide";
+    holder.replaceChildren(el("span", { class: "meta" }, "Loading…"));
+    try {
+      const commits = await gh(base() + "/commits?sha=" + L.BACKUP_BRANCH + "&path=" + encodeURIComponent(o.file) + "&per_page=50");
+      const rows = L.versionRows(commits);
+      if (!rows.length) return holder.replaceChildren(el("span", { class: "meta" }, "No versions found."));
+      const viewer = el("div", { class: "viewer" });
+      holder.replaceChildren(...rows.map((r) => el("div", { class: "version" },
+        el("span", {}, el("span", { class: "when" }, new Date(r.date).toLocaleString()), " · ", el("code", {}, r.short)),
+        el("span", { class: "btns" },
+          el("button", { class: "quiet small", onclick: () => showVersion(o, r, viewer) }, "View"),
+          el("button", { class: "quiet small", onclick: () => showChanges(o, r, viewer) }, "Changes")))), viewer);
+    } catch (e) {
+      holder.replaceChildren(el("p", { class: "msg bad" }, "Could not load versions: " + e.message));
+    }
+  }
+
+  async function showVersion(o, r, viewer) {
+    viewer.replaceChildren(el("span", { class: "meta" }, "Loading…"));
+    try {
+      const text = await gh(base() + "/contents/" + o.file + "?ref=" + r.sha, { raw: true });
+      viewer.replaceChildren(el("pre", { class: "report", tabindex: "0" }, text));
+    } catch (e) { viewer.replaceChildren(el("p", { class: "msg bad" }, "Could not load this version: " + e.message)); }
+  }
+
+  async function showChanges(o, r, viewer) {
+    viewer.replaceChildren(el("span", { class: "meta" }, "Loading…"));
+    try {
+      const patch = L.patchFor(await gh(base() + "/commits/" + r.sha), o.file);
+      if (!patch) return viewer.replaceChildren(el("p", { class: "empty" }, "No line-by-line changes to show for this version."));
+      const lines = patch.split("\n").map((ln) => el("div", { class: ln.startsWith("+") ? "add" : ln.startsWith("-") ? "del" : "" }, ln || " "));
+      viewer.replaceChildren(el("pre", { class: "report diff", tabindex: "0" }, ...lines));
+    } catch (e) { viewer.replaceChildren(el("p", { class: "msg bad" }, "Could not load the changes: " + e.message)); }
+  }
+
+  async function backupNow() {
+    const org = $("v-org").value;
+    let body;
+    try { body = L.backupDispatchBody(org); } catch (e) { return setMsg("v-msg", e.message, "bad"); }
+    if (!window.confirm("Back up the objects tagged in '" + org + "' (dev and prod) now?\n\nIt only reads from ThoughtSpot and saves copies to the backup branch.")) return;
+    $("backup-now").disabled = true;
+    setMsg("v-msg", "Starting…");
+    try {
+      await gh(base() + "/actions/workflows/" + L.BACKUP_WORKFLOW + "/dispatches", { method: "POST", body: body });
+      setMsg("v-msg", "Backup started. Refresh this page in a minute or two to see the new versions.", "ok");
+    } catch (e) {
+      setMsg("v-msg", "Could not start the backup: " + e.message + (e.status === 404 ? " (the Nightly Backup workflow is not on ts-prod yet)" : e.status === 403 ? " (the token needs Actions: read and write)" : ""), "bad");
+    } finally { $("backup-now").disabled = false; }
+  }
+
   // ---------------------------------------------------------------- refresh loop
   function schedule() {
     clearTimeout(timer);
@@ -303,6 +400,11 @@
   window.addEventListener("hashchange", route);
   $("refresh-btn").addEventListener("click", refresh);
   $("report-org").addEventListener("change", loadReportRuns);
+  $("v-org").addEventListener("change", loadBackups);
+  $("v-env").addEventListener("change", loadBackups);
+  $("v-search").addEventListener("input", renderBackups);
+  $("v-removed").addEventListener("change", renderBackups);
+  $("backup-now").addEventListener("click", backupNow);
   $("report-run").addEventListener("change", loadReport);
   document.addEventListener("visibilitychange", () => { if (!document.hidden && repo && token) refresh(); });
 

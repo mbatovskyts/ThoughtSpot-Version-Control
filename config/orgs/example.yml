@@ -8,6 +8,10 @@ display_name: Sales
 migration_tag: sales_readyformigration
 
 # Source cluster (dev / read-only except for tag removal in Stage 10)
+# Optional. Tag the nightly backup (backup.yml) looks for in both orgs; every object carrying it is
+# saved to the ts-backup branch each night. Defaults to "Version Control".
+# backup_tag: Version Control
+
 source:
   base_url: https://dev-ts.mycompany.com  # No trailing slash
   org_id: 12                               # Integer org ID

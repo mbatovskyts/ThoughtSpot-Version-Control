@@ -206,8 +206,9 @@ The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.gi
 `ui/` is a small static page for starting and watching runs without opening the Actions tab. It
 is optional: the pipeline runs the same with or without it, and it only calls the GitHub API.
 
-- Pick an org, start a live run or a dry run, and watch which stage it is on.
-- "Waiting for you" lists the open promote PRs with a **Merge (approve)** button. Merging is the
+- Styled like the ThoughtSpot application: a top bar, a left rail (Migrations, Approvals, Reports, Restore, Settings; a bottom tab bar on phones) and light and dark themes that follow the system. Colours are tokens at the top of `ui/style.css`.
+- **Start migration** (top right): pick an org, start a live run or a dry run, and watch which stage it is on.
+- **Approvals** lists the open promote PRs with a **Merge (approve)** button. Merging is the
   approval, so the import starts right after. A dry run's PR gets a **Close** button instead.
 - Browse each run's report (read from `ts-dev`) and the restore-point tags.
 

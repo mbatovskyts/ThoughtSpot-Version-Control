@@ -214,7 +214,7 @@ is optional: the pipeline runs the same with or without it, and it only calls th
 
 To publish it: *Settings -> Pages -> Source: GitHub Actions*, then run **Deploy UI** (it also runs
 whenever `ui/` changes on `ts-prod`). Open the Pages URL, enter `owner/repo` and a fine-grained
-token limited to this repository (Actions read/write, Contents read, Pull requests read/write).
+token limited to this repository (Actions read/write, Contents read/write, Pull requests read/write).
 The token stays in the browser (the tab only, unless you tick "Remember") and goes only to
 api.github.com. GitHub Pages on a private repository needs a plan that supports it; you can also
 open `ui/index.html` locally or serve the folder with any static server.

@@ -225,7 +225,7 @@
       note.textContent = "Merged. The import starts within about 30 seconds."; note.className = "msg ok";
       setTimeout(refresh, 3000);
     } catch (e) {
-      note.textContent = "Could not merge: " + e.message + (e.status === 405 ? " (not mergeable yet; checks may still be running or a review is required)" : ""); note.className = "msg bad";
+      note.textContent = "Could not merge: " + e.message + (e.status === 405 ? " (not mergeable yet; checks may still be running or a review is required)" : e.status === 403 ? " (the token needs Contents: read and write and Pull requests: read and write on this repository)" : ""); note.className = "msg bad";
     }
   }
 
@@ -237,7 +237,7 @@
       note.textContent = "Closed."; note.className = "msg ok";
       setTimeout(refresh, 3000);
     } catch (e) {
-      note.textContent = "Could not close: " + e.message; note.className = "msg bad";
+      note.textContent = "Could not close: " + e.message + (e.status === 403 ? " (the token needs Pull requests: read and write)" : ""); note.className = "msg bad";
     }
   }
 

@@ -1,7 +1,3 @@
-# MOVE THIS FILE TO: .github/workflows/migration-request.yml
-# (It sits in docs/ only because the app's GitHub connection cannot write workflow files.
-#  Outside .github/workflows/ it is inert and never runs.)
-#
 # Start a ThoughtSpot Migration run from a request issue.
 #
 # The migration console app (or any collaborator) opens an issue whose title starts with
@@ -139,7 +135,8 @@ jobs:
             }
 
             // 3. Dispatch the existing workflow with exactly these inputs.
-            const since = new Date(Date.now() - 10000).toISOString();
+            // Whole seconds only: GitHub's `created` filter is not guaranteed to accept milliseconds.
+            const since = new Date(Date.now() - 10000).toISOString().replace(/\.\d{3}Z$/, 'Z');
             try {
               await github.rest.actions.createWorkflowDispatch({
                 owner, repo, workflow_id: WORKFLOW, ref: REF,

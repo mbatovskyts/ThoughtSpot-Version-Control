@@ -444,6 +444,10 @@ def main():
             f"{src['org_id']}. Nothing to migrate — pipeline will exit cleanly.",
             file=sys.stderr,
         )
+        # A green run that migrated nothing looks like success; make it visible on the run page.
+        print(f"::warning::Stage 3 found no objects tagged '{cfg['migration_tag']}' in the "
+              "source org, so this run migrates nothing. Tag the objects first (a successful "
+              "migration removes the tag).")
 
 
 if __name__ == "__main__":

@@ -4,8 +4,8 @@ Stage 7b: Wait for the promote PR to be approved and merged into ts-prod.
 
 The import job runs after this step, so nothing is imported into the target until a
 reviewer has approved the PR (branch protection on ts-prod requires the approval) and
-it has merged. Stage 7 asks GitHub to auto-merge the PR, so the merge normally follows
-the approval on its own; if auto-merge was refused, a person merges it.
+it has merged. A person merges it (merging is the approval, and the PR's author may do it);
+auto-merge is only used when PROMOTE_AUTO_MERGE=true.
 
 Outcome:
   merged                -> exit 0, merge commit recorded in stage7b_wait.json
@@ -109,8 +109,8 @@ def main() -> None:
         return
 
     if promote.get("auto_merge") is False:
-        print("::notice::Auto-merge is not enabled on the promote PR; a person must approve "
-              f"and merge {pr_url} before the import starts.")
+        print("::notice::Waiting for a person to merge the promote PR; merging it is the "
+              f"approval (you may merge your own): {pr_url}")
 
     timeout_min = float(os.environ.get("MERGE_WAIT_TIMEOUT_MIN", "330"))
     interval_s = float(os.environ.get("MERGE_WAIT_INTERVAL_S", "30"))

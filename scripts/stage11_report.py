@@ -188,6 +188,9 @@ def write_job_summary(report: RunReport, summary_path: str) -> None:
         f"| Failed | {len(report.failed)} |",
         f"| Skipped | {len(report.skipped)} |",
     ]
+    if not report.pulled:
+        lines += ["", "> **Nothing was migrated.** No objects carried the migration tag. "
+                      "Tag the objects in the source org and run again."]
     if summary_path:
         with open(summary_path, "a", encoding="utf-8") as f:
             f.write("\n".join(lines) + "\n")

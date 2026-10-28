@@ -219,6 +219,8 @@ jobs:
       - name: Stage 7 — Promote to ts-prod
         env:
           GH_TOKEN: ${{ steps.app.outputs.token || secrets.GH_AUTOMATION_TOKEN || github.token }}
+          # Off unless the repository variable is 'true'; see scripts/stage7_promote.py.
+          PROMOTE_AUTO_MERGE: ${{ vars.PROMOTE_AUTO_MERGE }}
         run: python -m scripts.stage7_promote
 
       - name: Stage 7b — Wait for PR approval and merge

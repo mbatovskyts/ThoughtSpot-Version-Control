@@ -8,7 +8,7 @@ It also carries over Spotter content that TML does not include: **model memory**
 - **Nothing is ever deleted** in the target.
 - **Objects are matched by `obj_id`**, so re-running updates the existing target object instead of creating a duplicate.
 
-For setup (secrets, environments, branch protection) and troubleshooting, see [`docs/runbook.md`](docs/runbook.md). For API details, see [`docs/api-verification.md`](docs/api-verification.md).
+You can run it from the Actions tab or from the optional [run UI](#optional-run-ui). For setup (secrets, environments, branch protection) and troubleshooting, see [`docs/runbook.md`](docs/runbook.md). For API details, see [`docs/api-verification.md`](docs/api-verification.md).
 
 ## How it works
 
@@ -31,7 +31,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 |---|---|---|
 | 1 | `stage1_config` | Load and validate `config/orgs/<org>.yml` |
 | 2 | `stage2_auth` | Trusted-auth tokens for source and target; abort on org mismatch |
-| 3 | `stage3_discover` | Find objects with the migration tag, then what they are built on (a liveboard's model, a model's tables, joined tables), read from their TML and handled per `dependency_mode`. Objects without an `obj_id` are excluded and reported |
+| 3 | `stage3_discover` | Find objects with the migration tag, then what they are built on (a liveboard's model, a model's tables, joined tables), read from their TML and handled per `dependency_mode`. Objects without an `obj_id` are excluded and reported. If nothing carries the tag the run still ends green, but shows a warning and "Nothing was migrated" in its summary |
 | 4 | `stage4_export` | Export TML (obj_id included, GUIDs excluded, coaching feedback included) |
 | 4b | `stage4b_export_memory` | Export Spotter memory for each model |
 | 4c | `stage4c_export_instructions` | Export NL instructions for each model |
@@ -39,8 +39,8 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
 | 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), left open for a person to merge. Auto-merge is opt-in: set the repository variable `PROMOTE_AUTO_MERGE` to `true` (only with branch protection that requires a review, or it would merge before anyone looks). If GitHub refuses it the log shows a warning and the PR body says a person must merge it; `stage7_promote.json` records `auto_merge` |
 | 7b | `stage7b_wait_for_merge` | Poll the promote PR until it is merged. Fails if the PR is closed unmerged or not merged within 330 minutes (`MERGE_WAIT_TIMEOUT_MIN`); the import is then skipped and the tag stays. Skipped on dry runs |
-| 8b | `stage8b_snapshot` | Before importing, save the target's current version of every object about to be overwritten (live runs only). Fails the run if a copy cannot be saved |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
+| 8b | `stage8b_snapshot` | Before importing, save the target's current version of every object about to be overwritten (live runs only). Fails the run if a copy cannot be saved |
 | 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values, then bind each table's database and schema to their own variables (by GUID). A failed bind is a warning on that table in `stage9_import.json` |
 | 9b | `stage9b_import_memory` | Import model memory |
 | 9c | `stage9c_import_instructions` | Set model NL instructions |
@@ -136,7 +136,7 @@ validation_gate: block     # block (default) | warn: what Stage 9 does with an o
 variables:                 # TABLE_MAPPING variables for table database / schema
   database: { ts_variable_name: ts_db_name,     source_value: DEV_DB,     target_value: PROD_DB }
   schema:   { ts_variable_name: ts_schema_name, source_value: DEV_SCHEMA, target_value: PROD_SCHEMA }
-  extra: []
+  extra: []                # more variables; a FORMULA_VARIABLE may set data_type (VARCHAR default). See example.yml
 ```
 
 **Dependencies.** For each tagged object Stage 3 exports its TML and follows the `obj_id` references it contains, repeatedly, so a tagged liveboard brings its model and the model brings its tables. Connections are not followed (they must already exist in the target).
@@ -151,7 +151,9 @@ variables:                 # TABLE_MAPPING variables for table database / schema
 
 If `target_value` is blank, the variable must already exist in the target org. Stage 8 reports an error when it is missing or has a different type.
 
-Secrets live in the `dev` and `prod` GitHub Environments (a repository variable `GH_APP_CLIENT_ID` and secret `GH_APP_PRIVATE_KEY` make a GitHub App open the promote PRs, so a lone maintainer can approve them; see the runbook): `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, optionally `GH_AUTOMATION_TOKEN` for auto-merging promote PRs, and optionally per-org overrides such as `TS_TARGET_SECRET_KEY_SALES`. See the runbook.
+Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, and optionally per-org overrides such as `TS_TARGET_SECRET_KEY_SALES`.
+
+Optional GitHub settings, all described in the runbook: the repository variable `PROMOTE_AUTO_MERGE=true` (auto-merge the promote PR once approved; needs a required review on `ts-prod`), a GitHub App (`GH_APP_CLIENT_ID` variable and `GH_APP_PRIVATE_KEY` secret) so the promote PR is opened by the app and a second identity can approve it, and `GH_AUTOMATION_TOKEN`. A solo maintainer needs none of them: merge the promote PR yourself and that merge is the approval.
 
 ## Snapshot, redeploy and rollback
 
@@ -171,9 +173,10 @@ Every live migration that finishes with no failed object is tagged `migrate/<org
 
 1. Make sure each object has an `obj_id`.
 2. Apply the migration tag to the objects in the source org.
-3. Run the workflow with `dry_run: true` and read the `import` and `extract` job logs.
-4. Run it again with `dry_run: false`.
-5. Check the run summary and the reports. Objects that failed or were skipped keep their tag, so a re-run retries them.
+3. Run the workflow (from the Actions tab or the run UI) with `dry_run: true` and read the `import` and `extract` job logs.
+4. Run it again with `dry_run: false`. It opens a promote PR and waits.
+5. Review the promote PR and **merge it**; merging is the approval, and the import starts within about 30 seconds. Close it instead to cancel (nothing is imported and the tag stays).
+6. Check the run summary and the reports. Objects that failed or were skipped keep their tag, so a re-run retries them. A successful migration removes the tag, so tag the objects again before the next run.
 
 ## Reading the results
 
@@ -184,11 +187,14 @@ Every live migration that finishes with no failed object is tagged `migrate/<org
 ## Repository layout
 
 ```
-.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ts-redeploy.yml (redeploy/rollback), ci.yml (tests)
+.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ts-redeploy.yml (redeploy/rollback),
+                     ci.yml (tests), cleanup-promote-branches.yml, deploy-ui.yml (publishes ui/ to Pages),
+                     debug-list-objects.yml (list objects without the tag filter, for debugging)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)
 docs/                runbook, API verification notes, open questions
+ui/                  optional run UI (static page: index.html, app.js, lib.js, style.css, lib.test.mjs)
 tests/               pytest suite (run by ci.yml)
 ```
 
@@ -197,9 +203,10 @@ tests/               pytest suite (run by ci.yml)
 ```
 pip install -r requirements-dev.txt
 python -m pytest
+node --test ui/lib.test.mjs     # the run UI's logic (Node 20 or later)
 ```
 
-The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs them on every pull request and on pushes to `ts-prod`.
+The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs both on every pull request and on pushes to `ts-prod`.
 
 ## Optional run UI
 
@@ -207,7 +214,7 @@ The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.gi
 is optional: the pipeline runs the same with or without it, and it only calls the GitHub API.
 
 - Styled like the ThoughtSpot application: a top bar, a left rail (Migrations, Approvals, Reports, Restore, Settings; a bottom tab bar on phones) and light and dark themes that follow the system. Colours are tokens at the top of `ui/style.css`.
-- **Start migration** (top right): pick an org, start a live run or a dry run, and watch which stage it is on.
+- **Start migration** (top right): pick an org, start a live run or a dry run (a live run asks to confirm). Recent runs show the current job and step.
 - **Approvals** lists the open promote PRs with a **Merge (approve)** button. Merging is the
   approval, so the import starts right after. A dry run's PR gets a **Close** button instead.
 - Browse each run's report (read from `ts-dev`) and the restore-point tags.

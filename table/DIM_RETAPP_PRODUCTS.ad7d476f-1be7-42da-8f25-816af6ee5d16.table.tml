@@ -45,7 +45,7 @@ table:
       - Product Category
     rules:
     - name: RLS Rule Product Category
-      expr: "ts_groups = [DIM_RETAPP_PRODUCTS_1::Product Category] "
+      expr: "[DIM_RETAPP_PRODUCTS_1::Product Category] = ts_groups "
   properties:
     spotter_config:
       is_spotter_enabled: true

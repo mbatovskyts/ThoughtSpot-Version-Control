@@ -1,0 +1,20 @@
+{
+  "models": [
+    {
+      "obj_id": "RetailApparelwithAGOWithInstructions-b0d8d902",
+      "name": "Retail Apparel with AGO",
+      "nl_instructions_info": [
+        {
+          "instructions": [
+            "When someone asked about Transactions only show them at a monthly level even if they ask for daily .Please do not add daily or weekly tokens into search and use Weekly instead.",
+            "Weeks Ago, Months Ago, and Years Ago should only ever be filters and never measures or attributes",
+            "When doing metric time comparisons always use the ago columns. For example if a user ask show me sales for the last 4 weeks compared to the prior 4 weeks, you should compare weeks ago <=5 to weeks 6-9. If the question is comparing to the prior year, find the range that is on a 52 weeks behind. For example the last 4 weeks compared to the same time last year would compare weeks 0-5 to weeks 54-57.",
+            "If the ask is months ago it should follow the same pattern as week but be on a 12 value lag instead of a 52 value lag like weeks.",
+            "Also show the difference in verancne and percentage when comparing to a prior period."
+          ],
+          "scope": "GLOBAL"
+        }
+      ]
+    }
+  ]
+}

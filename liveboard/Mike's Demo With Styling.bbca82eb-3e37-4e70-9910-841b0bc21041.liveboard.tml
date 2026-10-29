@@ -687,6 +687,9 @@ liveboard:
     filters:
     - column:
       - Retail Apparel with AGO::Product Category
+      oper: in
+      values:
+      - Bags
       is_mandatory: false
       is_single_value: false
       display_name: ""
@@ -725,6 +728,15 @@ liveboard:
     visualizations:
     - Viz_6
     group_guid: 88e4435e-958a-440c-ae24-125596912460
+    filters:
+    - column:
+      - Retail Apparel with AGO::Product Category
+      is_mandatory: false
+      is_single_value: false
+      display_name: ""
+    ordered_chips:
+    - name: Retail Apparel with AGO::Product Category
+      type: FILTER
   filters:
   - column:
     - Retail Apparel with AGO::Transaction Date
@@ -929,6 +941,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: EXACT_DATE
@@ -938,6 +956,8 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
       applicability:
         level: GROUP
         target_id: Group_2
@@ -972,6 +992,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -984,6 +1010,8 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
       applicability:
         level: GROUP
         target_id: Group_2
@@ -1022,6 +1050,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1034,6 +1068,8 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
       applicability:
         level: GROUP
         target_id: Group_2
@@ -1068,6 +1104,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1080,6 +1122,8 @@ liveboard:
     - column:
       - Retail Apparel with AGO::Product Category
       oper: in
+      values:
+      - Bags
       applicability:
         level: GROUP
         target_id: Group_2

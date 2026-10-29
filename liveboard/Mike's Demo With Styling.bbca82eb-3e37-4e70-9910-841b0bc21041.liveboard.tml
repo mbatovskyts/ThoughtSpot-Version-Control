@@ -684,6 +684,15 @@ liveboard:
     - Viz_4
     - Viz_2
     group_guid: ee65dedf-6106-47f6-932f-daa27d777d01
+    filters:
+    - column:
+      - Retail Apparel with AGO::Product Category
+      is_mandatory: false
+      is_single_value: false
+      display_name: ""
+    ordered_chips:
+    - name: Retail Apparel with AGO::Product Category
+      type: FILTER
   - id: Group_3
     name: SKU Performance
     description: Top SKUs by sales
@@ -716,6 +725,15 @@ liveboard:
     visualizations:
     - Viz_6
     group_guid: 88e4435e-958a-440c-ae24-125596912460
+    filters:
+    - column:
+      - Retail Apparel with AGO::Product Category
+      is_mandatory: false
+      is_single_value: false
+      display_name: ""
+    ordered_chips:
+    - name: Retail Apparel with AGO::Product Category
+      type: FILTER
   filters:
   - column:
     - Retail Apparel with AGO::Transaction Date
@@ -920,12 +938,24 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: EXACT_DATE
         oper: =
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     - column:
       - Retail Apparel with AGO::Sales_Region
       oper: in
@@ -957,6 +987,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -966,6 +1002,12 @@ liveboard:
         include_current_period: false
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     - column:
       - Retail Apparel with AGO::Sales_Region
       oper: in
@@ -1001,6 +1043,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1010,6 +1058,12 @@ liveboard:
         include_current_period: false
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     - column:
       - Retail Apparel with AGO::Sales_Region
       oper: in
@@ -1041,6 +1095,12 @@ liveboard:
       applicability:
         level: LIVEBOARD
     - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_7
+    - column:
       - Retail Apparel with AGO::Shipping Date
       date_filter:
         type: LAST_N_PERIOD
@@ -1050,6 +1110,12 @@ liveboard:
         include_current_period: false
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Category
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     - column:
       - Retail Apparel with AGO::Sales_Region
       oper: in

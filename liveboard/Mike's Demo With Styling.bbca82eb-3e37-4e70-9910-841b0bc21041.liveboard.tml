@@ -684,6 +684,15 @@ liveboard:
     - Viz_4
     - Viz_2
     group_guid: ee65dedf-6106-47f6-932f-daa27d777d01
+    filters:
+    - column:
+      - Retail Apparel with AGO::Product Name
+      is_mandatory: false
+      is_single_value: false
+      display_name: ""
+    ordered_chips:
+    - name: Retail Apparel with AGO::Product Name
+      type: FILTER
   - id: Group_3
     name: SKU Performance
     description: Top SKUs by sales
@@ -945,6 +954,12 @@ liveboard:
       - East
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Name
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO::Date Column Picker
@@ -994,6 +1009,12 @@ liveboard:
       - Southwest
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Name
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO::Date Column Picker
@@ -1039,6 +1060,12 @@ liveboard:
       - Midwest
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Name
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO::Date Column Picker
@@ -1085,6 +1112,12 @@ liveboard:
       - Southwest
       applicability:
         level: LIVEBOARD
+    - column:
+      - Retail Apparel with AGO::Product Name
+      oper: in
+      applicability:
+        level: GROUP
+        target_id: Group_2
     is_public: false
     view_parameters:
     - name: Retail Apparel with AGO::Date Column Picker

@@ -4,14 +4,15 @@
 org_key: sales
 display_name: Sales
 
-# migration_tag MUST equal "<org_key>_readyformigration". Validated at Stage 1.
+# The tag you apply in the source org to queue objects for migration. Any non-empty name works;
+# the convention is "<org_key>_readyformigration".
 migration_tag: sales_readyformigration
 
-# Source cluster (dev / read-only except for tag removal in Stage 10)
 # Optional. Tag the nightly backup (backup.yml) looks for in both orgs; every object carrying it is
 # saved to the ts-backup branch each night. Defaults to "Version Control".
 # backup_tag: Version Control
 
+# Source cluster (dev / read-only except for tag removal in Stage 10)
 source:
   base_url: https://dev-ts.mycompany.com  # No trailing slash
   org_id: 12                               # Integer org ID

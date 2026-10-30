@@ -115,8 +115,13 @@ The pipeline uses two GitHub Environments:
 | `TS_SOURCE_SECRET_KEY` | Trusted Authentication secret key for the source cluster |
 | `TS_TARGET_USERNAME` | ThoughtSpot username for the target cluster |
 | `TS_TARGET_SECRET_KEY` | Trusted Authentication secret key for the target cluster |
-| `GH_AUTOMATION_TOKEN` | (Optional) GitHub PAT with `repo` + `workflow` scopes, needed for auto-merging PRs. If it is *your own* PAT, you cannot approve the PRs it opens; see below |
-| `GH_APP_CLIENT_ID` (repository **variable**) and `GH_APP_PRIVATE_KEY` (secret) | (Optional) A GitHub App that opens the promote PRs, so one maintainer can approve them. Takes priority over `GH_AUTOMATION_TOKEN` |
+
+The next two are **repository-level** (*Settings → Secrets and variables → Actions*), not environment secrets, because the `promote` job does not use an environment:
+
+| Name | Description |
+|-------------|-------------|
+| `GH_AUTOMATION_TOKEN` (secret) | (Optional) A token for a service account with Contents and Pull requests read/write, used to open the promote PR so checks run on it and other people can approve it. If it is *your own* token, you cannot approve the PRs it opens; see below |
+| `GH_APP_CLIENT_ID` (**variable**) and `GH_APP_PRIVATE_KEY` (secret) | (Optional) A GitHub App that opens the promote PRs, so one maintainer can approve them. Takes priority over `GH_AUTOMATION_TOKEN` |
 
 **Per-org secret overrides:** by default every org uses the four secrets above. To give one org its own credentials, add secrets with the org key as a suffix, in the same environments (`dev` for the source side, `prod` for the target side):
 

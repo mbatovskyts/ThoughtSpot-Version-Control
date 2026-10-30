@@ -8,7 +8,7 @@ It also carries over Spotter content that TML does not include: **model memory**
 - **Nothing is ever deleted** in the target.
 - **Objects are matched by `obj_id`**, so re-running updates the existing target object instead of creating a duplicate.
 
-You can run it from the Actions tab or from the optional [run UI](#optional-run-ui). For setup (secrets, environments, branch protection) and troubleshooting, see [`docs/runbook.md`](docs/runbook.md). For API details, see [`docs/api-verification.md`](docs/api-verification.md).
+**New here? Follow [`DEPLOYMENT_INSTRUCTIONS.md`](DEPLOYMENT_INSTRUCTIONS.md) to set the tool up in your own repository.** You can run it from the Actions tab or from the optional [run UI](#optional-run-ui). For setup (secrets, environments, branch protection) and troubleshooting, see [`docs/runbook.md`](docs/runbook.md). For API details, see [`docs/api-verification.md`](docs/api-verification.md).
 
 ## How it works
 

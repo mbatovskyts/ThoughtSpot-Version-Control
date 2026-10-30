@@ -1,0 +1,64 @@
+ThoughtSpot Migration Report
+Org: github   Run: 41071732601-1   Mode: LIVE
+Started (UTC): 2026-10-30T14:33:57.865304+00:00   Ended: 2026-10-30T14:33:57.865334+00:00
+Source: https://ps-internal.thoughtspot.cloud/ org 1530174970   ->   Target: https://ps-internal.thoughtspot.cloud/ org 426706049
+Migration tag: Github_ReadyForMigration
+
+======================================================================
+1. PULLED (identified for migration)
+   Total: 6
+   LIVEBOARD: 1
+   LOGICAL_TABLE: 5
+
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb                   tagged
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902 dependency_of:MikesDemo-bbca82eb
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f         dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-9cf5b3be           dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f           dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a         dependency_of:RetailApparelwithAGOWithInstructions-b0d8d902
+
+======================================================================
+2. SUCCEEDED
+   Total: 6
+   LIVEBOARD: 1
+   LOGICAL_TABLE: 5
+
+   LIVEBOARD            Mike's Demo With Styling                 MikesDemo-bbca82eb
+   LOGICAL_TABLE        Retail Apparel with AGO                  RetailApparelwithAGOWithInstructions-b0d8d902
+   LOGICAL_TABLE        DIM_RETAPP_PRODUCTS                      DIM_RETAPP_PRODUCTS-ad7d476f
+   LOGICAL_TABLE        DIM_RETAPP_STORES                        DIM_RETAPP_STORES-9cf5b3be
+   LOGICAL_TABLE        FACT_RETAPP_SALES                        FACT_RETAPP_SALES-1277592f
+   LOGICAL_TABLE        Retail Apparel AGO Dim                   RetailApparelAGODim-34342a9a
+
+======================================================================
+3. FAILED
+   Total: 0
+
+======================================================================
+4. SKIPPED
+   Total: 0
+
+======================================================================
+5. POST-MIGRATION CHECK
+   {
+    "by_type": {
+        "LIVEBOARD": {
+            "manifest": 1,
+            "confirmed": 1
+        },
+        "LOGICAL_TABLE": {
+            "manifest": 5,
+            "confirmed": 5
+        }
+    },
+    "mismatches": []
+}
+
+======================================================================
+6. TAG CLEANUP
+   Removed: 1 objects
+   Retained (failed/skipped): 0 objects
+
+======================================================================
+7. UNSUPPORTED CONTENT
+   Spotter conversation history: Per-user session data, not migratable metadata. Model-level memory (Stage 4b/9b) and NL instructions (Stage 4c/9c) are migrated.
